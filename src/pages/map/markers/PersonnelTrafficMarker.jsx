@@ -6,12 +6,15 @@ import personnelImg from '../../../assets/personnel.svg'
 
 const PersonnelMarker = ({ item, index, selectedPersonnel, handlePersonnelMarkerClick }) => (
     <Marker 
-              key={`cargo-${index}`} 
+        key={`cargo-${index}`} 
               position={[item.glatitude, item.glongitude]}
               icon={
                   L.divIcon({
                     className: `personnel-marker`,
-                    html: `<div class="personnel-icon" ><img src="${personnelImg}" alt="" /></div>`,
+                    html: `<div class="personnel-icon" >
+                    <p>${item.address !== null ? item.address : ''}</p>
+                    <img src="${personnelImg}" alt="" />
+                    </div>`,
                   })
                 }
                 eventHandlers={{
@@ -23,7 +26,7 @@ const PersonnelMarker = ({ item, index, selectedPersonnel, handlePersonnelMarker
               >
                 <Popup>
                 {selectedPersonnel && selectedPersonnel.user === item.user && (
-                        <div className="card">
+                        <div className="popup_card">
                           <h2>Personnel</h2>
                           <p>Username: <span>{selectedPersonnel.username}</span></p>
                           <p>Lat: <span>{selectedPersonnel.latitude}</span></p>

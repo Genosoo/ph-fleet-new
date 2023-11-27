@@ -21,7 +21,7 @@ const MarineTrafficMarker = ({ item, index, selectedMarineTraffic, handleMarineT
     >
       <Popup>
     {selectedMarineTraffic && selectedMarineTraffic.ship_id === item.ship_id &&  (
-      <div className="card">
+      <div className="popup_card">
         <h2>MarineTraffic</h2>
         <p >Ship Name: <span>{selectedMarineTraffic.shipname}</span></p>
         <p>Ship Name: <span>{selectedMarineTraffic.shiptype}</span></p>

@@ -21,7 +21,7 @@ const VideoStreamMarker = ({ item, index, selectedVideoStream, handleVideoStream
   >
     <Popup>
       {selectedVideoStream && selectedVideoStream.user === item.user && (
-        <div className="card">
+        <div className="popup_card">
           <h2>Video Stream</h2>
           <p>Username: <span>{selectedVideoStream.username}</span></p>
           <p>Lat: <span>{selectedVideoStream.latitude}</span></p>

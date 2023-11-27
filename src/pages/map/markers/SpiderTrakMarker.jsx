@@ -3,17 +3,26 @@
 import { Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 
+// Import the image files
+import helicopterIcon from '../../../assets/helicopter.svg';
+import airplaneIcon from '../../../assets/airplane.svg';
+
 const SpiderTrakMarker = ({ item, selectedSpiderTrak, showSpiderTrakDesc, handleSpiderTrack }) => {
   if (item.glatitude !== null && item.glongitude !== null) {
+    // Check if the unit_id is "NH434" to set the helicopter icon
+    const iconUrl = item.unit_id === 'NH434' ? helicopterIcon : airplaneIcon;
+
     return (
       <Marker
         position={[item.glatitude, item.glongitude]}
         icon={
           L.divIcon({
-            className: `spidertrak-marker`,
-            html: `<div class="glow-marker-traksat">🛨</div>
-            ${showSpiderTrakDesc ? `<div class="text-[9px] mr-16  text-white bg-blue-500  border  p-1 absolute">
-            ${item.unit_id}</div>` : `<div></div>` }`,
+            className: 'spidertrak-marker',
+            html: `<div class="spiderTrak-container">
+            ${showSpiderTrakDesc ? `<span class="spiderTrak-text">${item.unit_id}</span>` : `<div></div>` }
+            <div style="transform: rotate(${item.cog}deg);" class="spiderTrak-icon"><img src="${iconUrl}" alt="Icon" /></div>
+            </div>
+            `,
           })
         }
         eventHandlers={{
@@ -22,7 +31,7 @@ const SpiderTrakMarker = ({ item, selectedSpiderTrak, showSpiderTrakDesc, handle
       >
         <Popup>
           {selectedSpiderTrak && (
-            <div className="card">
+            <div className="">
               <p >Aircraft: <span>{selectedSpiderTrak.unit_id}</span></p>
               <p >Track ID: <span>{selectedSpiderTrak.track_id}</span></p>
               <p >Altitude: <span>{selectedSpiderTrak.altitude}</span></p>

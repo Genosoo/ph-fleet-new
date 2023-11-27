@@ -1,108 +1,77 @@
 import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import { linkItem1 } from './Link';
+import {BiAlignLeft } from "react-icons/bi";
+
+import axios from 'axios'
 import Logo from '../../assets/logo.png'
-import { GrMapLocation } from "react-icons/gr";
-import { LuShip } from "react-icons/lu";
-import { BsAirplaneEngines } from "react-icons/bs";
-import { BiGridAlt, BiUser, BiUserCircle, BiGroup, BiNews, BiCog, BiInfoCircle, BiAlignLeft } from "react-icons/bi";
-
-const linkItem1 = [
-    {
-        path:"/fleet/dashboard",
-        name:"Dashboard",
-        icon:<BiGridAlt/>
-    },
-    {
-        path:"/fleet/map",
-        name:"Map",
-        icon:<GrMapLocation/>
-    },
-   
-    {
-        path:"/fleet/roles",
-        name:"Roles",
-        icon:<BiUser/>
-    },
-
-    {
-        path:"/fleet/users",
-        name:"Users",
-        icon:<BiUserCircle/>
-    },
-
-    {
-        path:"/fleet/personnel",
-        name:"Personnel",
-        icon:<BiGroup/>
-    },
-    
-    {
-        path:"/fleet/vessels",
-        name:"Vessels",
-        icon:<LuShip/>
-    },
-    {
-        path:"/fleet/aircrafts",
-        name:"Aircrafts",
-        icon:<BsAirplaneEngines/>
-    },
-
-    {
-        path:"/fleet/commercial-vessels",
-        name:"Vessels-Commercial",
-        icon:<LuShip/>
-    },
-    {
-        path:"/fleet/commercial-aircrafts",
-        name:"Aircrafts-Commercial",
-        icon:<BsAirplaneEngines/>
-    },
-
-    {
-        path:"/fleet/reports",
-        name:"Reports",
-        icon:<BiNews/>
-    },
-    {
-        path:"/fleet/alerts",
-        name:"Alerts",
-        icon:<BiInfoCircle/>
-    },
-
-     
-    {
-        path:"/fleet/settings",
-        name:"Settings",
-        icon:<BiCog/>
-    },
-]
 
 
 
 
-
-
+const baseUrl = import.meta.env.VITE_URL;
+const getAccount = `${baseUrl}/api/myaccount/`;
 
 
 const Sidebar = () => {
     const[isOpen ,setIsOpen] = useState(true);
     const toggle = () => setIsOpen (!isOpen);
     const [specificMenuItems1, setSpecificMenuItems1] = useState(["Map"]);
+    const [specificMenuItems5, setSpecificMenuItems5] = useState("");
+    const [accountData, setAccountData] = useState({});
+
 
     useEffect(() => {
-        // Retrieve the username from local storage
-        const username = localStorage.getItem('user');
+        const fetchData = async () => {
+          try {
+            const accountResponse = await axios.get(getAccount);
+            const responseData = accountResponse.data.success
+            console.log(responseData);
+            setAccountData(responseData);
+          } catch (error) {
+            console.log(error);
+          }
+        };
+        fetchData();
+      }, []);
 
-        // Update specificMenuItems1 based on the username
-        if (username === "admin") {
-            setSpecificMenuItems1(["Dashboard", "Map", "Roles", "Users", "Personnel"]);
+
+      useEffect(() => {
+        // Check if accountData.groups is defined and has at least one item
+        if (accountData.groups && accountData.groups.length > 0) {
+            const userRole = accountData.roles[0];
+
+            console.log('Hello!:',userRole)
+    
+            // Update specificMenuItems1 based on the user role
+            if (userRole === "Administrator") {
+                setSpecificMenuItems1(["Dashboard", "Map", "Roles", "Users", "Personnel","Office", "Vehicle"]);
+                setSpecificMenuItems5(["Settings"]);
+            }
         }
-    }, []); // Empty dependency array means this effect runs once on mount
+    }, [accountData]);
+    
 
-    const specificMenuItems2 = ["Vessels", "Aircrafts"];
+    // useEffect(() => {
+    //     // Simulate the error response status as 403 (for demonstration)
+    //     const error = {
+    //         response: {
+    //             status: 402
+    //         }
+    //     };
+    
+    //     if (error.response.status === 403) {
+    //         setSpecificMenuItems1(["Map", "Roles", "Users"]);
+    //     } else {
+    //         setSpecificMenuItems1(["Dashboard", "Map", "Roles", "Users", "Personnel"]);
+    //         setSpecificMenuItems5(["Settings"]);
+
+    //     }
+    // }, []); 
+
+const specificMenuItems2 = ["Vessels", "Aircrafts"];
 const specificMenuItems3 = ["Vessels-Commercial", "Aircrafts-Commercial"];
 const specificMenuItems4 = ["Reports", "Alerts"];
-const specificMenuItems5 = ["Settings"];
 
 const filteredLinkItems1 = linkItem1.filter(item => specificMenuItems1.includes(item.name));
 const filteredLinkItems2 = linkItem1.filter(item => specificMenuItems2.includes(item.name));
@@ -116,7 +85,7 @@ const filteredLinkItems5 = linkItem1.filter(item => specificMenuItems5.includes(
         <div className="sidebar_container">
            
 
-           <div style={{width: isOpen ? "280px" : "120px"}} className="sidebar">
+           <div style={{width: isOpen ? "250px" : "100px"}} className="sidebar">
               
 
               <div className="link_wrapper">
@@ -131,40 +100,40 @@ const filteredLinkItems5 = linkItem1.filter(item => specificMenuItems5.includes(
                    
                </div>
                
-              {filteredLinkItems1.map((item, index) => (
-                   // Check the 'disabled' property and conditionally disable the menu item
-                   !item.disabled ? (
-                       <NavLink to={item.path} key={index} className={`link ${({ isActive }) => isActive ? "active" : ''}`} style={{ justifyContent: isOpen ? "start" : "center" }}>
-                           <div className="icon">{item.icon}</div>
-                           <h2 style={{ display: isOpen ? "block" : "none" }} className="link_text">{item.name}</h2>
-                       </NavLink>
-                   ) : (
-                       // Render a disabled menu item
-                       <div key={index} className="link disabled" style={{ justifyContent: isOpen ? "start" : "center" }}>
-                           <div className="icon">{item.icon}</div>
-                           <h2 style={{ display: isOpen ? "block" : "none" }} className="link_text">{item.name}</h2>
-                       </div>
-                   )
-               ))}
+               {filteredLinkItems1.map((item, index) => (
+                <div key={index}>
+                    {item.disabled ? (
+                        <div className="link disabled" style={{ justifyContent: isOpen ? "start" : "center" }}>
+                            <div className="icon">{item.icon}</div>
+                            <h2 style={{ display: isOpen ? "block" : "none" }} className="link_text">{item.name}</h2>
+                        </div>
+                    ) : (
+                        <NavLink to={item.path} className={`link ${({ isActive }) => isActive ? "active" : ''}`} style={{ justifyContent: isOpen ? "start" : "center" }}>
+                            <div className="icon">{item.icon}</div>
+                            <h2 style={{ display: isOpen ? "block" : "none" }} className="link_text">{item.name}</h2>
+                        </NavLink>
+                    )}
+                </div>
+            ))}
               </div>
 
               <div className="link_wrapper2">
-              {filteredLinkItems2.map((item, index) => (
-                   // Check the 'disabled' property and conditionally disable the menu item
-                   !item.disabled ? (
-                       <NavLink to={item.path} key={index} className={`link ${({ isActive }) => isActive ? "active" : ''}`} style={{ justifyContent: isOpen ? "start" : "center" }}>
-                           <div className="icon">{item.icon}</div>
-                           <h2 style={{ display: isOpen ? "block" : "none" }} className="link_text">{item.name}</h2>
-                       </NavLink>
-                   ) : (
-                       // Render a disabled menu item
-                       <div key={index} className="link disabled" style={{ justifyContent: isOpen ? "start" : "center" }}>
-                           <div className="icon">{item.icon}</div>
-                           <h2 style={{ display: isOpen ? "block" : "none" }} className="link_text">{item.name}</h2>
-                       </div>
-                   )
-               ))}
-              </div>
+                    {filteredLinkItems2.map((item, index) => (
+                        // Check the 'disabled' property and conditionally disable the menu item
+                        item.disabled ? (
+                            <div key={index} className="link disabled" style={{ justifyContent: isOpen ? "start" : "center" }}>
+                                <div className="icon">{item.icon}</div>
+                                <h2 style={{ display: isOpen ? "block" : "none" }} className="link_text">{item.name}</h2>
+                            </div>
+                        ) : (
+                            // Render an active NavLink
+                            <NavLink to={item.path} key={index} className={`link ${({ isActive }) => isActive ? "active" : ''}`} style={{ justifyContent: isOpen ? "start" : "center" }}>
+                                <div className="icon">{item.icon}</div>
+                                <h2 style={{ display: isOpen ? "block" : "none" }} className="link_text">{item.name}</h2>
+                            </NavLink>
+                        )
+                    ))}
+                </div>
 
 
               <div className="link_wrapper2">

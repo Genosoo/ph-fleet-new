@@ -1,60 +1,89 @@
-import { Routes, Route } from 'react-router-dom'
-import Map from '../pages/map/Map'
-import Vessels from '../pages/vessels/Vessels'
-import Aircrafts from '../pages/aircrafts/Aircrafts'
-import Dashboard from '../pages/dashboard/Dashboard'
-import Roles from '../pages/roles/Roles'
-import Users from '../pages/users/Users'
-import Personnel from '../pages/personnel/Personnel'
-import VesselsCommercial from '../pages/commercial/vessels/VesselsCom'
-import AircraftsCommercial from '../pages/commercial/aircrafts/AircraftsCom'
-import Reports from '../pages/reports/Reports'
-import Alerts from '../pages/alerts/Alerts'
-import { useAuth } from '../auth/authContext/AuthContext'
+import { Routes, Route } from 'react-router-dom';
+import Map from '../pages/map/Map';
+import Vessels from '../pages/vessels/Vessels';
+import Aircrafts from '../pages/aircrafts/Aircrafts';
+import Dashboard from '../pages/dashboard/Dashboard';
+import Roles from '../pages/roles/Roles';
+import Users from '../pages/users/Users';
+import Personnel from '../pages/personnel/Personnel';
+import VesselsCommercial from '../pages/commercial/vessels/VesselsCom';
+import AircraftsCommercial from '../pages/commercial/aircrafts/AircraftsCom';
+import Settings from '../pages/settings/Settings';
+import Reports from '../pages/reports/Reports';
+import Alerts from '../pages/alerts/Alerts';
+import Account from '../pages/account/Account';
+import AppLogout from '../auth/autoLogout/AutoLogout';
+import Office from '../pages/office/Office';
+import Vehicle from '../pages/vehicle/Vehicle';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+
+const baseUrl = import.meta.env.VITE_URL;
+const getAccount = `${baseUrl}/api/myaccount/`;
 
 export default function FleetRoutes() {
-  const { authState } = useAuth();
+  const [accountData, setAccountData] = useState({});
 
-  const isUserAuthorized = () => {
-    const userRole = localStorage.getItem('user');
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const accountResponse = await axios.get(getAccount);
+        const responseData = accountResponse.data.success;
+        console.log(responseData);
+        setAccountData(responseData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-    // Check if the user is logged in and has the admin role
-    return authState.token !== null && userRole === 'admin';
-  };
+    fetchData();
+  }, []);
+
+  // Check if accountData.groups exists before accessing its properties
+  const isAdministrator = accountData.roles && accountData.roles[0] === 'Administrator';
 
   return (
-    <Routes>
-     {isUserAuthorized() ? (
-        <>
-          <Route index element={<Dashboard />} />
-          <Route path='dashboard' element={<Dashboard />} />
-          <Route path='roles' element={<Roles />} />
-          <Route path='users' element={<Users />} />
-          <Route path='personnel' element={<Personnel />} />
-          <Route path='reports' element={<Reports/>} />
-          <Route path='alerts' element={<Alerts />} />
-          <Route path='map' element={<Map />} />
-          <Route path='vessels' element={<Vessels />} />
-          <Route path='aircrafts' element={<Aircrafts />} />
-          <Route path='commercial-vessels' element={<VesselsCommercial />} />
-          <Route path='commercial-aircrafts' element={<AircraftsCommercial />} />
-        </>
-      ) : (
-        <>
-        <Route index element={<Map />} />
-        <Route path='map' element={<Map />} />
-        <Route path='vessels' element={<Vessels />} />
-        <Route path='aircrafts' element={<Aircrafts />} />
-        <Route path='commercial-vessels' element={<VesselsCommercial />} />
-        <Route path='commercial-aircrafts' element={<AircraftsCommercial />} />
-        <Route path='reports' element={<Reports/>} />
-        <Route path='alerts' element={<Alerts />} />
-        </>
-      )}
+    <AppLogout>
+      <Routes>
+        {isAdministrator ? (
+          // Your existing routes for authorized users
+          <>
+            <Route index element={<Dashboard />} />
+            <Route path='dashboard' element={<Dashboard />} />
+            <Route path='roles' element={<Roles />} />
+            <Route path='users' element={<Users />} />
+            <Route path='personnel' element={<Personnel />} />
+            <Route path='reports' element={<Reports />} />
+            <Route path='alerts' element={<Alerts />} />
+            <Route path='map' element={<Map />} />
+            <Route path='vessels' element={<Vessels />} />
+            <Route path='aircrafts' element={<Aircrafts />} />
+            <Route path='commercial-vessels' element={<VesselsCommercial />} />
+            <Route path='commercial-aircrafts' element={<AircraftsCommercial />} />
+            <Route path='settings' element={<Settings />} />
+            <Route path='office' element={<Office />} />
+            <Route path='vehicle' element={<Vehicle />} />
+          </>
+        ) : (
+          // Your existing routes for non-authorized users
+          <>
+            <Route index element={<Map />} />
+            <Route path='map' element={<Map />} />
+            <Route path='vessels' element={<Vessels />} />
+            <Route path='aircrafts' element={<Aircrafts />} />
+            <Route path='commercial-vessels' element={<VesselsCommercial />} />
+            <Route path='commercial-aircrafts' element={<AircraftsCommercial />} />
+            <Route path='reports' element={<Reports />} />
+            <Route path='alerts' element={<Alerts />} />
+          </>
+        )}
 
-<Route path='*' element={<h1>No Permission</h1>} />
+        {/* Common route for both authorized and non-authorized users */}
+        <Route path='account' element={<Account />} />
 
-     
-    </Routes>
-  )
+        {/* Fallback route for unknown paths */}
+        <Route path='*' element={<h1>No Permission</h1>} />
+      </Routes>
+    </AppLogout>
+  );
 }

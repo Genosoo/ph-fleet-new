@@ -5,6 +5,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import BtnLogout from './btnLogout';
+import { Link } from 'react-router-dom';
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -84,11 +85,14 @@ export default function CustomizedMenus() {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose} disableRipple>
+        {/* <MenuItem onClick={handleClose} disableRipple>
           Home
-        </MenuItem>
+        </MenuItem> */}
         <MenuItem onClick={handleClose} disableRipple>
+        <Link to={'fleet/account'} className='w-full'>
           My Account
+          </Link>
+
         </MenuItem>
 
         <MenuItem>

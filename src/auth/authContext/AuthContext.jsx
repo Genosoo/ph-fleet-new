@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }) => {
           token: action.payload.token,
         };
       case 'LOGOUT':
-        Cookies.remove('sessionid');
+        Cookies.remove('sessionid'); 
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         return{

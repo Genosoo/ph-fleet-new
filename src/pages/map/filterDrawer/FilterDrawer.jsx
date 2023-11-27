@@ -10,6 +10,11 @@ import {
   
   import cameramanImg from '../../../assets/cameraman.png'
   import personnelImg from '../../../assets/personnel.svg'
+
+  import helicopterImg from '../../../assets/helicopter.svg'
+  import airplaneImg from '../../../assets/airplane.svg'
+  import weatherImg from '../../../assets/weather.svg'
+  import campImg from '../../../assets/camp.svg'
   
 export default function FilterDrawer({
     isDrawerOpen,
@@ -29,6 +34,10 @@ export default function FilterDrawer({
     handlePersonnel,
     showVideoStream,
     handleVideoStream,
+    toggleWeather,
+
+    handleOffice,
+    showOffice,
   }) {
   return (
     <Drawer
@@ -75,7 +84,10 @@ export default function FilterDrawer({
 
       <ListItem>
         <ListItemIcon>
-          <span className="bg-white w-[25px] ml-3 flex items-center justify-center h-[25px] text-base rounded-full text-blue-400">🛨</span>
+        <span className="ml-3 p-1  w-[30px] flex items-center justify-center h-[30px] rounded-full">
+              <img src={airplaneImg} alt="" />
+              <img src={helicopterImg} alt="" />
+            </span>
         </ListItemIcon>
         <ListItemText primary="SpiderTrak" />
         <Checkbox checked={showSpiderTrak} onChange={handleSpiderTrak} />
@@ -105,6 +117,16 @@ export default function FilterDrawer({
 
       <ListItem>
         <ListItemIcon>
+        <span className="ml-3 p-1  w-[30px] flex items-center justify-center h-[30px] rounded-full">
+              <img src={weatherImg} alt="" />
+            </span>
+        </ListItemIcon>
+        <ListItemText primary="Weather" />
+        <Checkbox  onChange={toggleWeather} />
+      </ListItem>
+
+      <ListItem>
+        <ListItemIcon>
           <div className="flex gap-2">
             <span className="ml-3 p-1 bg-white w-[30px] flex items-center justify-center h-[30px] rounded-full">
               <img src={personnelImg} alt="" />
@@ -113,6 +135,18 @@ export default function FilterDrawer({
         </ListItemIcon>
         <ListItemText primary="Personnel" />
         <Checkbox checked={showPersonnel} onChange={handlePersonnel} />
+      </ListItem>
+
+      <ListItem>
+        <ListItemIcon>
+          <div className="flex gap-2">
+            <span className="ml-3 p-1 bg-white w-[30px] flex items-center justify-center h-[30px] rounded-full">
+              <img src={campImg} alt="" />
+            </span>
+          </div>
+        </ListItemIcon>
+        <ListItemText primary="Office" />
+        <Checkbox checked={showOffice} onChange={handleOffice} />
       </ListItem>
 
       <ListItem>

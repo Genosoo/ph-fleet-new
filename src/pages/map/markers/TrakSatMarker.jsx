@@ -31,8 +31,8 @@ const TrakSatMarker = ({ item, selectedTrakSat, showDescription, handleTrakSatMa
       >
         <Popup>
           {selectedTrakSat && selectedTrakSat.description === item.description && (
-            <div className="card">
-              <h2>Traksat</h2>
+            <div className="popup_card">
+              <h2>TrakSat</h2>
               <p>Description: <span>{selectedTrakSat.description}</span></p>
               <p>Group: <span>{selectedTrakSat.group}</span></p>
               <p>Last gps: <span>{selectedTrakSat.last_gps_gmt}</span></p>
