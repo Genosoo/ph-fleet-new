@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from './authContext/AuthContext';
 import axios from 'axios';
 import loginLogo from '../assets/logo.png';
+import nlogo from '../assets/nlgo.jpg';
+import nlogo1 from '../assets/fleet_logo.png';
 
 const baseUrl = import.meta.env.VITE_URL;
 const getCsrfTokenUrl = `${baseUrl}/api/csrf_cookie/`;
@@ -83,14 +85,16 @@ export default function Login() {
     <div className="login_container">
       <div className="login_form_wrapper w-[550px]">
       <div className='flex gap-4 w-full items-center justify-center'>
-      <img className='w-[200px] h-[80px] ' src='https://www.navy.mil.ph/images/org_image/fleet_logo.png' alt="" />
+      <img className='w-[200px] h-[80px] ' src={nlogo1} alt="" />
         <img src={loginLogo} alt="" />
-        <img className='w-[200px] h-[100px] ' src="https://navy.mil.ph/images/org_image/Philippine%20Navy%20Logo.png" alt="" />
+        <img className='w-[200px] h-[100px] ' src={nlogo} alt="" />
       </div>
+      <h2 className='text-[2rem] mt-10'>WELCOME</h2>
         <span className='mt-10'>
-          <h2>WELCOME</h2>
-          <p className='px-10 mt-2 text-center font-semibold'>Access to this site is limited to authorized users only. If you are not an authorized user, 
-            please close your browser. All activities in this site is monitored and logged. Thank you!</p>
+          <p className='px-10 text-center font-semibold '><b className='font-lato font-medium text-base text-red-600 '>Disclaimer: </b> 
+           <span className='text-sm'>Access to this site is limited to authorized users only. If you are not an authorized user,
+            please close your browser and do not attempt further access. All activities in this 
+            site is monitored and logged. Thank you!</span></p>
         </span>
         <form onSubmit={handleSubmit}>
           <input

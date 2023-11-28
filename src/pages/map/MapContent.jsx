@@ -4,7 +4,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, {useEffect, useRef, useState } from 'react';
-import { MapContainer, TileLayer,useMapEvents } from 'react-leaflet';
+import { MapContainer, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
 import FilterDrawer from './filterDrawer/FilterDrawer';
@@ -15,6 +15,8 @@ import TrakSatMarker from './markers/TrakSatMarker';
 import SpiderTrakMarker from './markers/SpiderTrakMarker';
 import OfficeMarker from './markers/OfficeMarker'
 import WeatherMarker from './markers/WeatherMarker';
+import VehiclesMarker from './markers/VehiclesMarker'
+import IncidentsMarker from './markers/IncidentsMarker'
 
 import ButtonToggleDrawer from './buttons/btnToggleDrawer';
 import ButtonMapChange from './buttons/btnChangeMap';
@@ -32,61 +34,47 @@ export default function MapComponent({
   spiderTrakData, 
   personnelData,
   videoStreamData,
-  officeData
+  officeData,
+  vehiclesData,
+  incidentData
   
 }) {
   const mapRef = useRef(null);
   const [showMarineTraffic, setShowMarineTraffic] = useState(false);
+  const [showTrakSat, setShowTrakSat] = useState(false);
+  const [showIncident, setShowIncident] = useState(false)
+  const [showVehicles, setShowVehicles] = useState(false)
+  const [showVideoStream, setShowVideoStream] = useState(false)
+  const [showWeather, setShowWeather] = useState(false);
+  const [showSpiderTrak, setShowSpiderTrak] = useState(false);
+  const [showDescription, setShowDescription] = useState(false);
+  const [showOffice, setShowOffice] = useState(false)
+  const [showSpiderTrakDesc, setShowSpiderTrakDesc] = useState(false);
+  const [showTrakSatLabel, setShowTrakSatLabel] = useState(false);
+  const [showSpiderTrakLabel, setShowSpiderTrakLabel] = useState(false);
+
+  const [showPersonnel, setShowPersonnel] = useState(false)
+  const [showOnDuty, setShowOnDuty] = useState(false);
+  const [showOnLeave, setShowOnLeave] = useState(false);
+  const [showRnr, setShowRnr] = useState(false);
+  const [showNonUniform, setShowNonUniform] = useState(false);
+  const [showAllUsernames, setShowAllUsernames] = useState(false);
+
   const [selectedMarineTraffic, setSelectedMarineTraffic] = useState(null);
   const [selectedTrakSat, setSelectedTrakSat] = useState(null);
   const [selectedPersonnel, setSelectedPersonnel] = useState(null);
+  const [selectedIncident, setSelectedIncident] = useState(null);
+  const [selectedVehicles, setSelectedVehicles] = useState(null);
   const [selectedVideoStream, setSelectedVideoStream] = useState(null);
   const [selectedSpiderTrak, setSelectedSpiderTrak] = useState(null);
-  const [showSpiderTrak, setShowSpiderTrak] = useState(false);
-  const [showDescription, setShowDescription] = useState(false);
-  const [showSpiderTrakDesc, setShowSpiderTrakDesc] = useState(false);
-  
+
   const [weatherData, setWeatherData] = useState([]);
+  const [cities, setCities] = useState([]);
   const isCelsius = true;
 
-  const [cities, setCities] = useState([]);
-  const [showWeather, setShowWeather] = useState(false);
-
-  const [showTrakSat, setShowTrakSat] = useState(false);
-  const [showLabel, setShowLabel] = useState(false);
-  const [showSpiderTrakLabel, setShowSpiderTrakLabel] = useState(false);
-
   const [mapLayer, setMapLayer] = useState('osm');
- 
-  const [showPersonnel, setShowPersonnel] = useState(false)
-  const [showVideoStream, setShowVideoStream] = useState(false)
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
-
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-
-
-  const [showOffice, setShowOffice] = useState(false)
-
-
-  console.log('dsadasdasdasd',weatherData)
-
-
-  function GetCoodinates() {
-    const map = useMapEvents({
-      click: () => {
-        map.locate();
-      },
-      locationfound: (location) => {
-        console.log('location found:', location);
-        setUserLocation(location);
-      },
-    });
-    return null;
-  }
-
-
-    
-  
 
   const updateLocalStorage = (key, value) => {
     localStorage.setItem(key, JSON.stringify(value));
@@ -108,33 +96,62 @@ export default function MapComponent({
   useEffect(() => {
     setShowMarineTraffic(getCheckboxState('showMarineTraffic', false));
     setShowTrakSat(getCheckboxState('showTrakSat', false));
+
     setShowSpiderTrak(getCheckboxState('showSpiderTrak', false));
-    setShowPersonnel(getCheckboxState('showPersonnel', false));
     setShowVideoStream(getCheckboxState('showVideoStream', false));
+    setShowPersonnel(getCheckboxState('showShowPersonnel', false));
+    setShowWeather(getCheckboxState('showWeather', false));
+    setShowVehicles(getCheckboxState('showVehicles', false));
+    setShowIncident(getCheckboxState('showIncident', false));
   }, []);
 
-  useEffect(() => {
+   // Update local storage based on state changes
+   useEffect(() => {
     updateLocalStorage('showMarineTraffic', showMarineTraffic);
-  }, [showMarineTraffic]);
-
-  useEffect(() => {
     updateLocalStorage('showTrakSat', showTrakSat);
-  }, [showTrakSat]);
-
-  useEffect(() => {
     updateLocalStorage('showSpiderTrak', showSpiderTrak);
-  }, [showSpiderTrak]);
-
-  useEffect(() => {
-    updateLocalStorage('showPersonnel', showPersonnel);
-  }, [showPersonnel]);
-
-
-  useEffect(() => {
     updateLocalStorage('showVideoStream', showVideoStream);
-  }, [showVideoStream]);
+    updateLocalStorage('showPersonnel', showPersonnel);
+    updateLocalStorage('showWeather', showWeather);
+    updateLocalStorage('showVehicles', showVehicles);
+    updateLocalStorage('showIncident', showIncident);
+  }, [
+    showMarineTraffic,
+    showTrakSat,
+    showSpiderTrak,
+    showPersonnel,
+    showVideoStream,
+    showWeather,
+    showVehicles,
+    showIncident,
+  ]);
+
+  const handleToggleOnDuty = () => {
+    setShowOnDuty(!showOnDuty);
+
+    };
+  
+  const handleToggleOnLeave = () => {
+    setShowOnLeave(!showOnLeave);
+
+  };
+
+  const handleToggleRnr = () => {
+    setShowRnr(!showRnr);
+   };
 
 
+    const handleToggleShowAllUsernames = () => {
+      setShowAllUsernames(!showAllUsernames);
+    };
+
+
+    
+  const handleToggleNonUniform = () => {
+    setShowNonUniform(!showNonUniform);
+
+    };
+  
 
   const handleToggleVideo = () => {
     setIsVideoPlaying(!isVideoPlaying);
@@ -144,6 +161,15 @@ export default function MapComponent({
   const handlePersonnel = () => {
     setShowPersonnel(!showPersonnel)
   }
+
+  const handleVehicles = () => {
+    setShowVehicles(!showVehicles)
+  }
+
+  const handleIncident = () => {
+    setShowIncident(!showIncident)
+  }
+
   const handleVideoStream = () => {
     setShowVideoStream(!showVideoStream)
   }
@@ -157,14 +183,21 @@ export default function MapComponent({
 
   const handleTrakSat = () => {
     setShowTrakSat(!showTrakSat)
-    setShowLabel(!showLabel)
-
+    setShowTrakSatLabel(!showTrakSatLabel)
   }
 
   const handleSpiderTrak = () => {
     setShowSpiderTrak(!showSpiderTrak)
     setShowSpiderTrakLabel(!showSpiderTrakLabel)
 
+  };
+
+  const handleVehiclesMarkerClick = (vehiclesData) => {
+    setSelectedVehicles(vehiclesData);
+  };
+
+  const handleIncidentMarkerClick = (incidentData) => {
+    setSelectedIncident(incidentData);
   };
 
 
@@ -203,7 +236,7 @@ export default function MapComponent({
   }
 
   const toggleWeather = () => {
-    setShowWeather(prevState => !prevState); // Toggle the state to show/hide weather
+    setShowWeather(!showWeather); // Toggle the state to show/hide weather
   };
 
 
@@ -212,7 +245,7 @@ export default function MapComponent({
     const philippinesCities = CityData.filter(city => city.country === 'PH');
     
     // Update state with filtered cities
-    const limitedCities = philippinesCities.slice(0, 1);
+    const limitedCities = philippinesCities.slice(0, 3);
       setCities(limitedCities);
   }, []); // Empty dependency array ensures useEffect runs only once (on mount)
   
@@ -269,24 +302,56 @@ export default function MapComponent({
     <FilterDrawer
       isDrawerOpen={isDrawerOpen}
       toggleDrawer={toggleDrawer}
+
+
+      showOnDuty={showOnDuty}
+      handleToggleOnDuty={handleToggleOnDuty}
+      showOnLeave={showOnLeave}
+      handleToggleOnLeave={handleToggleOnLeave}
+
+      showRnr={showRnr}
+      handleToggleRnr={handleToggleRnr}
+
+      showAllUsernames={showAllUsernames}
+      handleToggleShowAllUsernames={handleToggleShowAllUsernames}
+
+      showIncident={showIncident}
+      handleIncident={handleIncident}
+
+      showVehicles={showVehicles}
+      handleVehicles={handleVehicles}
+
       showMarineTraffic={showMarineTraffic}
       handleMarineTraffic={handleMarineTraffic}
+
       showTrakSat={showTrakSat}
       handleTrakSat={handleTrakSat}
-      showLabel={showLabel}
+      showTrakSatLabel={showTrakSatLabel}
+
       showDescription={showDescription}
       setShowDescription={setShowDescription}
+
       showSpiderTrak={showSpiderTrak}
       handleSpiderTrak={handleSpiderTrak}
+
       showSpiderTrakDesc={showSpiderTrakDesc}
       setShowSpiderTrakDesc={setShowSpiderTrakDesc}
+
       showPersonnel={showPersonnel}
       handlePersonnel={handlePersonnel}
+
       showVideoStream={showVideoStream}
       handleVideoStream={handleVideoStream}
+      
       handleOffice={handleOffice}
       showOffice={showOffice}
+
+      showWeather={showWeather}
       toggleWeather={toggleWeather}
+
+      showNonUniform={showNonUniform}
+      handleToggleNonUniform={handleToggleNonUniform}
+    
     />
   <div className='map_container'>
      
@@ -335,8 +400,38 @@ export default function MapComponent({
               videoStreamUrl={videoStreamUrl}
             />
             )))}
-         
-          {showPersonnel && personnelData && personnelData.map((item, index) => (
+
+
+{showPersonnel &&
+  personnelData &&
+  personnelData
+    .filter(
+      (item) =>
+        item &&
+        item.glatitude &&
+        item.glongitude &&
+        item.personal_details &&  
+        (!showOnDuty || item.personal_details.status_name === 'On-Duty') &&
+        (!showOnLeave || item.personal_details.status_name === 'On-Leave') &&
+        (!showRnr || item.personal_details.status_name === 'Rest and Recreation') &&
+        (!showNonUniform || item.personal_details.status_name === 'non-uniform')  // Check if showAllUsernames is true or if username is available
+    )
+    .map((item, index) => (
+      item &&
+      item.glatitude &&
+      item.glongitude && (
+        <PersonnelMarker
+          key={`cargo-${index}`}
+          item={item}
+          index={index}
+          selectedPersonnel={selectedPersonnel}
+          handlePersonnelMarkerClick={handlePersonnelMarkerClick}
+          showAllUsernames={showAllUsernames}  // Pass showAllUsernames as a prop to PersonnelMarker
+        />
+      )
+    ))}
+
+          {/* {showPersonnel && personnelData && personnelData.map((item, index) => (
             item && item.glatitude && item.glongitude && (
              <PersonnelMarker 
              key={`cargo-${index}`}
@@ -344,6 +439,35 @@ export default function MapComponent({
              index={index}
              selectedPersonnel={selectedPersonnel}
              handlePersonnelMarkerClick={handlePersonnelMarkerClick}
+             />
+            )
+            
+          ))} */}
+
+
+          
+{showIncident && incidentData && incidentData.map((item, index) => (
+            item && item.glatitude_incident && item.glongitude_incident && (
+             <IncidentsMarker 
+             key={`cargo-${index}`}
+             item={item}
+             index={index}
+             selectedIncident={selectedIncident}
+             handleIncidentMarkerClick={handleIncidentMarkerClick}
+             />
+            )
+            
+          ))}
+
+
+{showVehicles && vehiclesData && vehiclesData.map((item, index) => (
+            item && item.latitude && item.longitude && (
+             <VehiclesMarker 
+             key={`cargo-${index}`}
+             item={item}
+             index={index}
+             selectedVehicles={selectedVehicles}
+             handleVehiclesMarkerClick={handleVehiclesMarkerClick}
              />
             )
             
@@ -382,7 +506,6 @@ export default function MapComponent({
               handleSpiderTrack={handleSpiderTrack}
             />
           ))}
-      <GetCoodinates/>  
      </MapContainer>
 
    </div>

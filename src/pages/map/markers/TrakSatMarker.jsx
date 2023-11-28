@@ -1,9 +1,54 @@
 /* eslint-disable react/prop-types */
 // src/components/TrakSatMarker.js
-import { Marker, Popup } from 'react-leaflet';
+import { Marker, Popup, Polyline, CircleMarker, useMapEvent } from 'react-leaflet';
 import L from 'leaflet';
+import { useState } from 'react';
+
+
+const calculateDistance = (lat1, lon1, lat2, lon2) => {
+  if (lat1 == null || lon1 == null || lat2 == null || lon2 == null) {
+    return null;
+  }
+
+  const R = 3440.065; // Radius of the Earth in nautical miles
+  const dLat = (lat2 - lat1) * (Math.PI / 180);
+  const dLon = (lon2 - lon1) * (Math.PI / 180);
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(lat1 * (Math.PI / 180)) *
+      Math.cos(lat2 * (Math.PI / 180)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const distance = R * c; // Distance in nautical miles
+  return distance;
+};
 
 const TrakSatMarker = ({ item, selectedTrakSat, showDescription, handleTrakSatMarkerClick }) => {
+ 
+  const [endPosition, setEndPosition] = useState([0, 0]); // Default values or any valid initial coordinates
+  const [showDistance, setShowDistance] = useState(false);
+
+  const startPosition = [item.glatitude, item.glongitude];
+
+  useMapEvent({
+    click: (e) => {
+      // Set the endPosition to the clicked coordinates
+      setEndPosition([e.latlng.lat, e.latlng.lng]);
+    },
+  });
+
+  const distance = calculateDistance(
+    startPosition[0],
+    startPosition[1],
+    endPosition[0],
+    endPosition[1]
+  );
+ 
+ 
+ 
+ 
+ 
   if (item.glatitude !== null && item.glongitude !== null) {
     let iconHtml;
 
@@ -14,13 +59,15 @@ const TrakSatMarker = ({ item, selectedTrakSat, showDescription, handleTrakSatMa
     }
 
     return (
+     <>
       <Marker
-        position={[item.glatitude, item.glongitude]}
+      position={startPosition}
+       x
         icon={L.divIcon({
           className: `traksat-marker ${selectedTrakSat && selectedTrakSat.asset_id === item.asset_id ? 'selected-marker-traksat' : ''}`,
           html: `
             ${iconHtml}
-            ${showDescription ? `<div class="text-[9px] mr-16  text-white bg-blue-500  border  p-1 absolute">
+            ${showDescription ? `<div class="text-[9px] left-7 text-white font-bold px-2 rounded-[10px] bg-green-600  p-1 absolute">
               ${item.description}
             </div>` : `<div></div>` }
           `,
@@ -41,10 +88,40 @@ const TrakSatMarker = ({ item, selectedTrakSat, showDescription, handleTrakSatMa
               <p>Speed kph: <span>{selectedTrakSat.speed_kph}</span></p>
               <p>Heading: <span>{selectedTrakSat.heading}</span></p>
               <p>Heading deg: <span>{selectedTrakSat.heading_deg}&#xb0;</span></p>
-            </div>
+           
+             <div className='flex flex-col'>
+             <button className={`text-sm p-3 rounded-[10px] text-white ${showDistance ? 'bg-red-600' : 'bg-yellow-600'}`} onClick={() => setShowDistance(!showDistance)}>
+                {showDistance ? 'Stop Measurement' : 'Start Measurement'}
+              </button>
+              {showDistance && (
+                <p className='text-center'>
+                  Please <b>Point</b> on the map! <br />
+                  double <b>click </b>the point to show the distance
+                  {/* Distance: {distance != null ? distance.toFixed(2) + ' nautical miles' : 'N/A'} */}
+                </p>
+              )}
+             </div>
+           </div>
           )}
         </Popup>
       </Marker>
+        {showDistance && endPosition && (
+          <Polyline positions={[startPosition, endPosition]} color="rgb(7, 230, 29)">
+            {distance != null && (
+              <Popup>
+               <div className='flex flex-col gap-5'>
+               <h1 className='text-base'>{`Distance: ${distance.toFixed(2)} nautical miles`}</h1>
+               <button className={`text-sm  p-2 text-white ${showDistance ? 'bg-red-600' : 'bg-yellow-600'}`} onClick={() => setShowDistance(!showDistance)}>
+                  {showDistance ? 'Stop Measurement' : 'Start Measurement'}
+                </button>
+               </div>
+               </Popup>
+              
+            )}
+            <CircleMarker center={endPosition} radius={6} color="rgb(7, 230, 29)" />
+          </Polyline>
+        )}
+     </>
     );
   }
   return null; // Skip rendering the marker if latitude or longitude is null

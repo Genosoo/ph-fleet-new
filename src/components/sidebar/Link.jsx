@@ -2,9 +2,14 @@ import { GrMapLocation } from "react-icons/gr";
 import { LuShip } from "react-icons/lu";
 import { BsAirplaneEngines } from "react-icons/bs";
 import { BiGridAlt, BiUser, BiUserCircle, BiGroup, BiNews, BiCog, BiInfoCircle } from "react-icons/bi";
+import { PiBuildingsLight } from "react-icons/pi";
+import { MdOutlineDirectionsCar } from "react-icons/md";
+import { PiWarningDiamond } from "react-icons/pi";
 
 
 export const linkItem1 = [
+
+    //________________________________________________________________LINKS 1_______________________________________________________________________ //
     {
         path:"/fleet/dashboard",
         name:"Dashboard",
@@ -15,12 +20,39 @@ export const linkItem1 = [
         name:"Map",
         icon:<GrMapLocation/>
     },
-   
+
+
+    //________________________________________________________________LINKS 2_______________________________________________________________________ //
+    {
+        path:"/fleet/reports",
+        name:"Reports",
+        icon:<BiNews/>,
+        disabled:false
+
+    },
+    {
+        path:"/fleet/alerts",
+        name:"Alerts",
+        icon:<BiInfoCircle/>,
+        disabled:true
+
+    },
+
+    {
+        path:"/fleet/incidents",
+        name:"Incidents",
+        icon:<PiWarningDiamond />,
+        disabled:false
+
+    },
+
+
+    //________________________________________________________________LINKS 3_______________________________________________________________________ //
     {
         path:"/fleet/roles",
         name:"Roles",
         icon:<BiUser/>,
-        disabled:true
+        disabled:false
 
     },
 
@@ -28,10 +60,13 @@ export const linkItem1 = [
         path:"/fleet/users",
         name:"Users",
         icon:<BiUserCircle/>,
-        disabled:true
+        disabled:false
 
     },
 
+
+    //________________________________________________________________LINKS 4_______________________________________________________________________ //
+   
     {
         path:"/fleet/personnel",
         name:"Personnel",
@@ -39,38 +74,39 @@ export const linkItem1 = [
         disabled:false
 
     },
-
-    {
-        path:"/fleet/office",
-        name:"Office",
-        icon:<BiGroup/>,
-        disabled:false
-    },
-
-    {
-        path:"/fleet/vehicle",
-        name:"Vehicle",
-        icon:<BiGroup/>,
-        disabled:false
-    },
-
-
-    
     {
         path:"/fleet/vessels",
         name:"Vessels",
         icon:<LuShip/>,
-        disabled:true
+        disabled:false
 
     },
     {
         path:"/fleet/aircrafts",
         name:"Aircrafts",
         icon:<BsAirplaneEngines/>,
-        disabled:true
+        disabled:false
 
     },
 
+    {
+        path:"/fleet/offices",
+        name:"Offices",
+        icon:<PiBuildingsLight/>,
+        disabled:false
+    },
+
+    {
+        path:"/fleet/vehicles",
+        name:"Vehicles",
+        icon:<MdOutlineDirectionsCar/>,
+        disabled:false
+    },
+
+
+    
+  
+    //________________________________________________________________LINKS 5_______________________________________________________________________ //
     {
         path:"/fleet/commercial-vessels",
         name:"Vessels-Commercial",
@@ -86,22 +122,51 @@ export const linkItem1 = [
 
     },
 
-    {
-        path:"/fleet/reports",
-        name:"Reports",
-        icon:<BiNews/>,
-        disabled:true
+    
+    //________________________________________________________________LINKS 6_______________________________________________________________________ //
+    // {
+    //     path:"/fleet/other-personnel",
+    //     name:"Other Personnel",
+    //     icon:<BsAirplaneEngines/>,
+    //     disabled:true
 
-    },
-    {
-        path:"/fleet/alerts",
-        name:"Alerts",
-        icon:<BiInfoCircle/>,
-        disabled:true
+    // },
 
-    },
+    // {
+    //     path:"/fleet/other-offices",
+    //     name:"Other Offices",
+    //     icon:<BsAirplaneEngines/>,
+    //     disabled:true
 
-     
+    // },
+
+    //  {
+    //     path:"/fleet/other-vessels",
+    //     name:"Other Vessels",
+    //     icon:<LuShip/>,
+    //     disabled:true
+
+    // },
+
+    // {
+    //     path:"/fleet/other-aircrafts",
+    //     name:"Other Aircrafts",
+    //     icon:<BsAirplaneEngines/>,
+    //     disabled:true
+
+    // },
+
+    // {
+    //     path:"/fleet/other-vehicles",
+    //     name:"Other Vehicles",
+    //     icon:<BsAirplaneEngines/>,
+    //     disabled:true
+
+    // },
+
+   
+
+    //________________________________________________________________LINKS 7_______________________________________________________________________ //
     {
         path:"/fleet/settings",
         name:"Settings",

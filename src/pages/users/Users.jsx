@@ -1,111 +1,134 @@
-import { useState } from 'react';
-import axios from 'axios';
+/* eslint-disable react/prop-types */
+import { useEffect, useState } from "react";
+import axios from "axios";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Collapse,
+  IconButton,
+  TablePagination,
+} from "@mui/material";
+import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
 
-const CreateUserForm = () => {
-  const [formData, setFormData] = useState({
-    username: '',
-    firstName: '',
-    lastName: '',
-    password: '',
-    email: '',
-    role: 'User', // default role
-  });
+const baseUrl = import.meta.env.VITE_URL;
+const getUsersData = `${baseUrl}/api/users/`;
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+const CollapsibleRow = ({ user }) => {
+  const [open, setOpen] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      // Assuming your API endpoint for user creation is '/api/users'
-      const response = await axios.post('/api/users', formData);
-
-      // Handle success
-      console.log('User created successfully:', response.data);
-
-      // Optionally, you can redirect the user to another page or perform other actions.
-    } catch (error) {
-      // Handle error
-      console.error('Error creating user:', error);
-    }
+  const handleToggle = () => {
+    setOpen(!open);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Username:
-        <input
-          type="text"
-          name="username"
-          value={formData.username}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <br />
-
-      <label>
-        First Name:
-        <input
-          type="text"
-          name="firstName"
-          value={formData.firstName}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <br />
-
-      <label>
-        Last Name:
-        <input
-          type="text"
-          name="lastName"
-          value={formData.lastName}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <br />
-
-      <label>
-        Password:
-        <input
-          type="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <br />
-
-      <label>
-        Email:
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <br />
-
-      <label>
-        Role:
-        <select name="role" value={formData.role} onChange={handleChange}>
-          <option value="User">User</option>
-          <option value="Administrator">Administrator</option>
-        </select>
-      </label>
-      <br />
-
-      <button type="submit">Create User</button>
-    </form>
+    <>
+      <TableRow>
+        <TableCell>
+          {user.personal_details && (
+            <IconButton aria-label="expand row" size="small" onClick={handleToggle}>
+              {open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
+            </IconButton>
+          )}
+        </TableCell>
+        {/* <TableCell>{user.id}</TableCell> */}
+        <TableCell>{user.username}</TableCell>
+        <TableCell>{user.roles}</TableCell>
+      </TableRow>
+      {user.personal_details && (
+        <TableRow>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <div className="border p-4">
+                <h1>Personal Details</h1>
+                {user.personal_details ? (
+                  <>
+                  <p>Serial No: {user.personal_details.serial_number || "N/A"}</p>
+                  <p>Rank: {user.personal_details.rank || "N/A"}</p>
+                    <p>First Name: {user.personal_details.first_name ||"N/A"}</p>
+                    <p>Last Name: {user.personal_details.last_name ||"N/A"}</p>
+                    <p>Rank: {user.personal_details.rank_name ||"N/A"}</p>
+                    <p>Unit Name: {user.personal_details.unit_name ||"N/A"}</p>
+                    {/* Add more properties as needed */}
+                  </>
+                ) : (
+                  <p>No personal details available</p>
+                )}
+              </div>
+            </Collapse>
+          </TableCell>
+        </TableRow>
+      )}
+    </>
   );
 };
 
-export default CreateUserForm;
+const Users = () => {
+  const [usersData, setUsersData] = useState([]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const usersResponse = await axios.get(getUsersData);
+        setUsersData(usersResponse.data.success);
+        console.log("Users", usersResponse.data.success);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  return (
+    <div className="pr-20">
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead  className="bg-gray-800 ">
+            <TableRow>
+              <TableCell />
+              {/* <TableCell>ID</TableCell> */}
+              <TableCell>
+                <b className="text-white">Username</b>
+              </TableCell>
+              <TableCell><b className="text-white">Roles</b></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {usersData
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((user, index) => (
+                <CollapsibleRow key={index} user={user} />
+              ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[5, 10, 25]}
+        component="div"
+        count={usersData.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
+    </div>
+  );
+};
+
+export default Users;

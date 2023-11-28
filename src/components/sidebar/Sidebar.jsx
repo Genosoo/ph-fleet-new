@@ -17,6 +17,9 @@ const Sidebar = () => {
     const[isOpen ,setIsOpen] = useState(true);
     const toggle = () => setIsOpen (!isOpen);
     const [specificMenuItems1, setSpecificMenuItems1] = useState(["Map"]);
+    const [specificMenuItems2, setSpecificMenuItems2] = useState("");
+    const [specificMenuItems3, setSpecificMenuItems3] = useState("");
+    const [specificMenuItems4, setSpecificMenuItems4] = useState("");
     const [specificMenuItems5, setSpecificMenuItems5] = useState("");
     const [accountData, setAccountData] = useState({});
 
@@ -45,7 +48,10 @@ const Sidebar = () => {
     
             // Update specificMenuItems1 based on the user role
             if (userRole === "Administrator") {
-                setSpecificMenuItems1(["Dashboard", "Map", "Roles", "Users", "Personnel","Office", "Vehicle"]);
+                setSpecificMenuItems1(["Dashboard", "Map"]);
+                setSpecificMenuItems2(["Reports", "Alerts", "Incidents"]);
+                setSpecificMenuItems3(["Roles", "Users"]);
+                setSpecificMenuItems4(["Personnel", "Offices", "Vessels", "Aircrafts", "Vehicles"]);
                 setSpecificMenuItems5(["Settings"]);
             }
         }
@@ -69,9 +75,9 @@ const Sidebar = () => {
     //     }
     // }, []); 
 
-const specificMenuItems2 = ["Vessels", "Aircrafts"];
-const specificMenuItems3 = ["Vessels-Commercial", "Aircrafts-Commercial"];
-const specificMenuItems4 = ["Reports", "Alerts"];
+
+// const specificMenuItems3 = ["Vessels-Commercial", "Aircrafts-Commercial"];
+// const specificMenuItems4 = ["Reports", "Alerts"];
 
 const filteredLinkItems1 = linkItem1.filter(item => specificMenuItems1.includes(item.name));
 const filteredLinkItems2 = linkItem1.filter(item => specificMenuItems2.includes(item.name));

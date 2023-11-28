@@ -13,10 +13,11 @@ import Reports from '../pages/reports/Reports';
 import Alerts from '../pages/alerts/Alerts';
 import Account from '../pages/account/Account';
 import AppLogout from '../auth/autoLogout/AutoLogout';
-import Office from '../pages/office/Office';
-import Vehicle from '../pages/vehicle/Vehicle';
+import Offices from '../pages/offices/Offices';
+import Vehicles from '../pages/vehicles/Vehicles';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import Incidents from '../pages/incidents/Incidents';
 
 const baseUrl = import.meta.env.VITE_URL;
 const getAccount = `${baseUrl}/api/myaccount/`;
@@ -50,19 +51,22 @@ export default function FleetRoutes() {
           <>
             <Route index element={<Dashboard />} />
             <Route path='dashboard' element={<Dashboard />} />
+            <Route path='map' element={<Map />} />
+
+            <Route path='reports' element={<Reports />} />
+            <Route path='alerts' element={<Alerts />} />
+            <Route path='incidents' element={<Incidents />} />
+
             <Route path='roles' element={<Roles />} />
             <Route path='users' element={<Users />} />
             <Route path='personnel' element={<Personnel />} />
-            <Route path='reports' element={<Reports />} />
-            <Route path='alerts' element={<Alerts />} />
-            <Route path='map' element={<Map />} />
             <Route path='vessels' element={<Vessels />} />
             <Route path='aircrafts' element={<Aircrafts />} />
             <Route path='commercial-vessels' element={<VesselsCommercial />} />
             <Route path='commercial-aircrafts' element={<AircraftsCommercial />} />
             <Route path='settings' element={<Settings />} />
-            <Route path='office' element={<Office />} />
-            <Route path='vehicle' element={<Vehicle />} />
+            <Route path='offices' element={<Offices />} />
+            <Route path='vehicles' element={<Vehicles />} />
           </>
         ) : (
           // Your existing routes for non-authorized users

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import Cards from "./cards/Cards";
 import Charts from "./charts/Charts";
@@ -13,6 +14,8 @@ const getSpiderTrakData = `${baseUrl}/api/spidertracks_latest/`;
 const getAllUsers = `${baseUrl}/api/users/`;
 const getCheckInToday = `${baseUrl}/api/checked_in_users/`;
 const getPersonnelData = `${baseUrl}/api/personnel_latest`;
+const getOfficesData = `${baseUrl}/api/office/`;
+const getVehiclesData = `${baseUrl}/api/vehicle/`;
 
 export default function Dashboard() {
   const [loading, setLoading] = useState(true);
@@ -21,7 +24,12 @@ export default function Dashboard() {
   const [spiderTrakData, setSpiderTrakData] = useState([]);
   const [personnelData, setPersonnelData] = useState([]);
   const [checkInData, setCheckInData] = useState([]);
+  const [officesData, setOfficesData] = useState([]);
+  const [vehiclesData, setVehiclesData] = useState([]);
 
+
+
+  useEffect(() => {
   const fetchData = async () => {
     try {
       setLoading(true);
@@ -32,19 +40,25 @@ export default function Dashboard() {
       const getAllUserData = await axios.get(getAllUsers);
       const personnelResponse = await axios.get(getPersonnelData);
       const checkInResponse = await axios.get(getCheckInToday);
+      const officesResponse = await axios.get(getOfficesData);
+      const vehiclesResponse = await axios.get(getVehiclesData);
 
       setMarineTrafficData(marineTrafficResponse.data.success);
       setTrakSatData(trackSatResponse.data.success);
       setSpiderTrakData(spiderTrakResponse.data.success);
       setPersonnelData(personnelResponse.data.success);
       setCheckInData(checkInResponse.data.success);
+      setOfficesData(officesResponse.data.success);
+      setVehiclesData(vehiclesResponse.data.success);
 
-      console.log("Marine Traffic", marineTrafficResponse.data);
+      console.log("Marine Traffic ", marineTrafficResponse.data);
       console.log("TrakSat", trackSatResponse.data);
       console.log("Spider Track", spiderTrakResponse.data);
       console.log("all users", getAllUserData.data);
       console.log("Check in Today", checkInResponse.data);
       console.log("Personnel", personnelResponse.data);
+      console.log("Offices", officesResponse.data);
+      console.log("Vehicles", vehiclesResponse.data);
 
       setLoading(false);
     } catch (error) {
@@ -53,16 +67,9 @@ export default function Dashboard() {
     }
   };
 
-  useEffect(() => {
-    fetchData(); // Fetch data initially
-
-    // const intervalId = setInterval(() => {
-    //   fetchData(); // Fetch data at regular intervals
-    // }, 60000); // Fetch data every 60 seconds (adjust the interval as needed)
-
-    // Clear interval on component unmount to prevent memory leaks
-    // return () => clearInterval(intervalId);
+    fetchData(); 
   }, []);
+
 
   return (
     <div className="dashboard_container">
@@ -79,6 +86,8 @@ export default function Dashboard() {
             spiderTrakData={spiderTrakData}
             personnelData={personnelData}
             checkInData={checkInData}
+            officesData={officesData}
+            vehiclesData={vehiclesData}
           />
           <Charts />
           <ListCards

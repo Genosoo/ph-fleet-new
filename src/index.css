@@ -133,7 +133,7 @@
   }
 
   .cards_wrapper{
-    @apply flex flex-col gap-5 shadow-md  p-5 rounded-[10px]
+    @apply flex flex-col gap-5  p-5 rounded-[10px]
   }
 
   .card_box{
@@ -141,11 +141,15 @@
   }
 
   .card{
-    @apply w-[200px]  xl:w-[360px] xl:h-[200px] rounded-[10px] text-white p-5
+    @apply w-[200px] lg:w-[300px]  relative  xl:w-[350px] xl:h-[150px] rounded-[10px] text-white p-5
   }
 
   .card h2{
-    @apply text-[2rem] xl:text-[3.5rem] font-bold
+    @apply text-[2rem] font-bold  lg:text-[2.5rem]
+  }
+
+  .card span{
+    @apply text-sm xl:text-base
   }
 
   .card_box_1 .card{
@@ -260,17 +264,22 @@
  
 }
 
+
 .disabled{
   opacity:.4;
 }
 
+/* .css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root.Mui-checked{
+  color: greenyellow !important;
+} */
+
+
 
 .MuiDrawer-paper{
-  background: #29ADB2 !important;
+  background: rgb(40, 41, 41) !important;
   border-radius:5px;
   border:0 !important;
-  box-shadow: -10px 10px 10px #00000031 !important;
-  height:450px !important; 
+  height:650px !important; 
   margin-top:150px;
   padding:10px !important;
   margin-right:80px ;
@@ -278,8 +287,10 @@
 
 
 .MuiListItem-root{
-  background-color: #f9f9f949; 
+  background-color: #eae7e749; 
   margin-top:10px;
+  color: #fff ;
+  border-radius:10px !important;
   
 }
 
@@ -309,10 +320,7 @@
   justify-content: center;
 }
 
-.spiderTrak-container{
-  display: flex;
-  flex-direction:row-reverse;
-}
+
 
 .spiderTrak-icon img{
   width:35px;
@@ -438,20 +446,63 @@
   box-shadow: 0 0 0px 5px rgba(0, 140, 255, 0.519);
 }
 
+
+.vehicle-icon{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap:5px;
+}
+
+.vehicle-icon p{
+  background-color: rgb(40, 147, 155);
+  color:#fff;
+  width:100px;
+  text-align: center;
+  border-radius:5px;
+}
+
+.vehicle-icon img{
+  height: 20px;
+  width: 20px;
+}
+
+.incident-icon{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap:5px;
+}
+
+.incident-icon p{
+  background-color: rgb(214, 59, 59);
+  color:#fff;
+  width:100px;
+  text-align: center;
+  border-radius:5px;
+}
+
+.incident-icon img{
+  height: 20px;
+  width: 20px;
+}
+
+.personnel-icon{
+  position: relative;
+  display: flex;
+}
+
 .personnel-icon img{
-  height: 30px;
-  width: 30px;
+  height: 23px;
+  width: 23px;
 }
 
 .personnel-icon p{
-  display: flex;
-  background-color:#fff;
-  top: 0;
-  text-align: center;
-  width:100px; 
-  align-items: center;
-  justify-content: center;
-  font-size:12px;
+  position: absolute;
+  background: rgb(228, 228, 228);
+  padding:1px 10px;
+  border-radius:10px;
+  margin-left:24px;
 }
 
 .office-icon{
@@ -465,8 +516,8 @@
 
 
 .office-icon img{
-  height: 30px;
-  width: 30px;
+  height: 20px;
+  width: 20px;
 }
 
 .office-icon p{
@@ -483,13 +534,6 @@
   border-radius:4px;
 }
 
-.personnel-icon{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap:3px;
-}
 
 
 

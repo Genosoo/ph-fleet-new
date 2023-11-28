@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import MapContent from "./MapContent";
+import RefreshData from "./refreshData/RefreshData";
 
 const baseUrl = import.meta.env.VITE_URL;
 
@@ -11,6 +12,9 @@ const getSpiderTrakData = `${baseUrl}/api/spidertracks_latest/`;
 const getPersonnelData = `${baseUrl}/api/personnel_latest`;
 const getVideoStreamData = `${baseUrl}/api/video_stream_latest`;
 const getOfficeData = `${baseUrl}/api/office/`;
+const getVehiclesData = `${baseUrl}/api/vehicle/`;
+const getIncidentData = `${baseUrl}/api/incident/`;
+
 
 export default function MainApp() {
   const [marineTrafficData, setMarineTrafficData] = useState([]);
@@ -19,6 +23,8 @@ export default function MainApp() {
   const [personnelData, setPersonnelData] = useState([]);
   const [videoStreamData, setVideoStreamData] = useState([]);
   const [officeData, setOfficeData] = useState([]);
+  const [vehiclesData, setVehiclesData] = useState([]);
+  const [incidentData, setIncidentData] = useState([]);
 
 
   useEffect(() => {
@@ -30,7 +36,8 @@ export default function MainApp() {
         const personnelResponse = await axios.get(getPersonnelData);
         const videoStreamResponse = await axios.get(getVideoStreamData);
         const officeResponse = await axios.get(getOfficeData);
-
+        const vehiclesResponse = await axios.get(getVehiclesData);
+        const incidentResponse = await axios.get(getIncidentData);
   
 
         setMarineTrafficData(marineTrafficResponse.data.success);
@@ -38,7 +45,9 @@ export default function MainApp() {
         setSpiderTrakData(spiderTrakResponse.data.success);
         setPersonnelData(personnelResponse.data.success);
         setVideoStreamData(videoStreamResponse.data.success);
-        setOfficeData(officeResponse.data.success);
+        setOfficeData(officeResponse.data.success)
+        setVehiclesData(vehiclesResponse.data.success);
+        setIncidentData(incidentResponse.data.success);
 
         console.log("Marine Traffic", marineTrafficResponse.data);
         console.log("Tracksat", tracksatResponse.data);
@@ -46,6 +55,8 @@ export default function MainApp() {
         console.log("Personnel", personnelResponse.data);
         console.log("video Stream", videoStreamResponse.data);
         console.log("Office", officeResponse.data);
+        console.log("Vehicles", vehiclesResponse.data);
+        console.log("Incident", incidentResponse.data);
       } catch (error) {
         console.log(error);
       }
@@ -56,6 +67,7 @@ export default function MainApp() {
 
   return (
     <div>
+      <RefreshData />
       <MapContent
         marineTrafficData={marineTrafficData}
         tracksatData={tracksatData}
@@ -63,6 +75,8 @@ export default function MainApp() {
         personnelData={personnelData}
         videoStreamData={videoStreamData}
         officeData={officeData}
+        vehiclesData={vehiclesData}
+        incidentData={incidentData}
       />
     </div>
   );
