@@ -7,6 +7,7 @@ import React, {useEffect, useRef, useState } from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
+
 import FilterDrawer from './filterDrawer/FilterDrawer';
 import MarineTrafficMarker from './markers/MarineTrafficMarker';
 import VideoStreamMarker from './markers/VideoStreamMarker';
@@ -20,6 +21,7 @@ import IncidentsMarker from './markers/IncidentsMarker'
 
 import ButtonToggleDrawer from './buttons/btnToggleDrawer';
 import ButtonMapChange from './buttons/btnChangeMap';
+import ButtonFullScreenMap from './buttons/btnFullScreenMap'
 import axios from "axios";
 import CityData from '../../city.list.json'
 
@@ -67,6 +69,7 @@ export default function MapComponent({
   const [selectedVehicles, setSelectedVehicles] = useState(null);
   const [selectedVideoStream, setSelectedVideoStream] = useState(null);
   const [selectedSpiderTrak, setSelectedSpiderTrak] = useState(null);
+  const [selectedOffice, setSelectedOffice] = useState(null);
 
   const [weatherData, setWeatherData] = useState([]);
   const [cities, setCities] = useState([]);
@@ -75,6 +78,29 @@ export default function MapComponent({
   const [mapLayer, setMapLayer] = useState('osm');
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  useEffect(() => {
+    const map = mapRef.current;
+
+    if (map) {
+      map.on('fullscreenchange', () => {
+        setIsFullscreen(document.fullscreenElement !== null);
+      });
+    }
+  }, []);
+
+  const toggleFullscreen = () => {
+    const map = mapRef.current;
+    setIsFullscreen(!isFullscreen)
+    if (map) {
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+      } else {
+        map.getContainer().requestFullscreen();
+      }
+    }
+  };
 
   const updateLocalStorage = (key, value) => {
     localStorage.setItem(key, JSON.stringify(value));
@@ -96,7 +122,6 @@ export default function MapComponent({
   useEffect(() => {
     setShowMarineTraffic(getCheckboxState('showMarineTraffic', false));
     setShowTrakSat(getCheckboxState('showTrakSat', false));
-
     setShowSpiderTrak(getCheckboxState('showSpiderTrak', false));
     setShowVideoStream(getCheckboxState('showVideoStream', false));
     setShowPersonnel(getCheckboxState('showShowPersonnel', false));
@@ -200,6 +225,11 @@ export default function MapComponent({
     setSelectedIncident(incidentData);
   };
 
+  const handleOfficeMarkerClick = (officeData) => {
+    setSelectedOffice(officeData,);
+  };
+
+
 
   const handleMarineTrafficMarkerClick = (vesselData) => {
     setSelectedMarineTraffic(vesselData);
@@ -294,12 +324,23 @@ export default function MapComponent({
 
   return (
     <>
-    <div className='button_map_wrapper'>
-      <ButtonMapChange setMapLayer={setMapLayer} mapLayer={mapLayer} />
-      <ButtonToggleDrawer  toggleDrawer={toggleDrawer} />
-    </div>
+  <div className='map_container' >
+     <MapContainer ref={mapRef} center={[12.8797, 121.7740]} zoom={3} style={{ height: '100%', width: '100%' }}>
+       {mapLayer === 'osm' ? (
+           <TileLayer
+           url="https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}&hl=en"
+           subdomains={['mt0', 'mt1', 'mt2', 'mt3']}
+         />
+     
+        ) : (
+          <TileLayer
+       url="http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&hl=en"
+       subdomains={['mt0', 'mt1', 'mt2', 'mt3']}
+     />
+        )}
 
-    <FilterDrawer
+
+<FilterDrawer
       isDrawerOpen={isDrawerOpen}
       toggleDrawer={toggleDrawer}
 
@@ -353,22 +394,12 @@ export default function MapComponent({
       handleToggleNonUniform={handleToggleNonUniform}
     
     />
-  <div className='map_container'>
-     
 
-     <MapContainer ref={mapRef} center={[12.8797, 121.7740]} zoom={3} style={{ height: '100%', width: '100%' }}>
-       {mapLayer === 'osm' ? (
-           <TileLayer
-           url="https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}&hl=en"
-           subdomains={['mt0', 'mt1', 'mt2', 'mt3']}
-         />
-     
-        ) : (
-          <TileLayer
-       url="http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&hl=en"
-       subdomains={['mt0', 'mt1', 'mt2', 'mt3']}
-     />
-        )}
+   <div className='button_map_wrapper'>
+          <ButtonFullScreenMap isFullscreen={isFullscreen} toggleFullscreen={toggleFullscreen} />
+         <ButtonMapChange setMapLayer={setMapLayer} mapLayer={mapLayer} />
+      <ButtonToggleDrawer  toggleDrawer={toggleDrawer} />
+    </div>
 
 
 {showWeather &&
@@ -382,6 +413,8 @@ export default function MapComponent({
              key={`cargo-${index}`}
              item={item}
              index={index}
+             selectedOffice={selectedOffice}
+             handleOfficeMarkerClick={handleOfficeMarkerClick}
              />
             )
             
@@ -484,6 +517,7 @@ export default function MapComponent({
           ))}
 
 
+         
 
 
           {showTrakSat && tracksatData && tracksatData.map((item, index) => (

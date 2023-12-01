@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { Marker } from 'react-leaflet';
+import { Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import campImg from '../../../assets/camp.svg'
 
 
-const OfficeMarker = ({ item, index }) => (
+const OfficeMarker = ({ item, index, selectedOffice,  handleOfficeMarkerClick }) => (
     <Marker 
         key={`cargo-${index}`} 
               position={[item.latitude, item.longitude]}
@@ -13,24 +13,27 @@ const OfficeMarker = ({ item, index }) => (
                   L.divIcon({
                     className: `office-marker`,
                     html: `<div class="office-icon" >
-                    <p>${item.office_name !== null ? item.office_name : ''}</p>
                     <img src="${campImg}" alt="" />
                     </div>`,
                   })
                 }
+
+                eventHandlers={{
+                  click: () => {
+                    handleOfficeMarkerClick(item);
+                  }
+                }}
                 
               >
-                {/* <Popup>
-                {selectedPersonnel && selectedPersonnel.user === item.user && (
-                        <div className="popup_card">
-                          <h2>Personnel</h2>
-                          <p>Username: <span>{selectedPersonnel.username}</span></p>
-                          <p>Lat: <span>{selectedPersonnel.latitude}</span></p>
-                          <p>Lon: <span>{selectedPersonnel.longitude}</span></p>
+                <Popup>
+                {selectedOffice && selectedOffice.user === item.user && (
+                        <div className="">
+                          <h2>Office Name: <b>{selectedOffice.office_name}</b></h2>
+                          <h2>Address: <b>{selectedOffice.office_address}</b></h2>
                         </div>
                       )}
               </Popup>
-             */}
+            
 
             </Marker>
 );

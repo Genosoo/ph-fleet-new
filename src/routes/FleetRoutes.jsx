@@ -73,12 +73,6 @@ export default function FleetRoutes() {
           <>
             <Route index element={<Map />} />
             <Route path='map' element={<Map />} />
-            <Route path='vessels' element={<Vessels />} />
-            <Route path='aircrafts' element={<Aircrafts />} />
-            <Route path='commercial-vessels' element={<VesselsCommercial />} />
-            <Route path='commercial-aircrafts' element={<AircraftsCommercial />} />
-            <Route path='reports' element={<Reports />} />
-            <Route path='alerts' element={<Alerts />} />
           </>
         )}
 

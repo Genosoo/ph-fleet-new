@@ -15,7 +15,6 @@ const getOfficeData = `${baseUrl}/api/office/`;
 const getVehiclesData = `${baseUrl}/api/vehicle/`;
 const getIncidentData = `${baseUrl}/api/incident/`;
 
-
 export default function MainApp() {
   const [marineTrafficData, setMarineTrafficData] = useState([]);
   const [tracksatData, setTracksatData] = useState([]);
@@ -25,7 +24,6 @@ export default function MainApp() {
   const [officeData, setOfficeData] = useState([]);
   const [vehiclesData, setVehiclesData] = useState([]);
   const [incidentData, setIncidentData] = useState([]);
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,14 +36,13 @@ export default function MainApp() {
         const officeResponse = await axios.get(getOfficeData);
         const vehiclesResponse = await axios.get(getVehiclesData);
         const incidentResponse = await axios.get(getIncidentData);
-  
 
         setMarineTrafficData(marineTrafficResponse.data.success);
         setTracksatData(tracksatResponse.data.success);
         setSpiderTrakData(spiderTrakResponse.data.success);
         setPersonnelData(personnelResponse.data.success);
         setVideoStreamData(videoStreamResponse.data.success);
-        setOfficeData(officeResponse.data.success)
+        setOfficeData(officeResponse.data.success);
         setVehiclesData(vehiclesResponse.data.success);
         setIncidentData(incidentResponse.data.success);
 
@@ -62,7 +59,11 @@ export default function MainApp() {
       }
     };
 
-    fetchData();
+    fetchData(); // Initial fetch
+
+    const intervalId = setInterval(fetchData, 60000); // Fetch data every 1 minute
+
+    return () => clearInterval(intervalId); // Cleanup interval on component unmount
   }, []); // Include csrfToken as a dependency
 
   return (

@@ -122,47 +122,47 @@ export const linkItem1 = [
 
     },
 
-    
-    //________________________________________________________________LINKS 6_______________________________________________________________________ //
-    // {
-    //     path:"/fleet/other-personnel",
-    //     name:"Other Personnel",
-    //     icon:<BsAirplaneEngines/>,
-    //     disabled:true
+     //________________________________________________________________LINKS 6_______________________________________________________________________ //
+   
+    {
+        path:"/other-personnel",
+        name:"Other Personnel",
+        icon:<BiGroup/>,
+        disabled:false
 
-    // },
+    },
 
-    // {
-    //     path:"/fleet/other-offices",
-    //     name:"Other Offices",
-    //     icon:<BsAirplaneEngines/>,
-    //     disabled:true
+    {
+        path:"/other-offices",
+        name:"Other Offices",
+        icon:<PiBuildingsLight/>,
+        disabled:false
 
-    // },
+    },
 
-    //  {
-    //     path:"/fleet/other-vessels",
-    //     name:"Other Vessels",
-    //     icon:<LuShip/>,
-    //     disabled:true
+     {
+        path:"/other-vessels",
+        name:"Other Vessels",
+        icon:<LuShip/>,
+        disabled:false
 
-    // },
+    },
 
-    // {
-    //     path:"/fleet/other-aircrafts",
-    //     name:"Other Aircrafts",
-    //     icon:<BsAirplaneEngines/>,
-    //     disabled:true
+    {
+        path:"/other-aircrafts",
+        name:"Other Aircrafts",
+        icon:<BsAirplaneEngines/>,
+        disabled:false
 
-    // },
+    },
 
-    // {
-    //     path:"/fleet/other-vehicles",
-    //     name:"Other Vehicles",
-    //     icon:<BsAirplaneEngines/>,
-    //     disabled:true
+    {
+        path:"/other-vehicles",
+        name:"Other Vehicles",
+        icon:<MdOutlineDirectionsCar/>,
+        disabled:false
 
-    // },
+    },
 
    
 

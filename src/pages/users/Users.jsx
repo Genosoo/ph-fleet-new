@@ -1,5 +1,8 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
+import { FaTrash, FaEdit } from "react-icons/fa";
+
+
 import axios from "axios";
 import {
   Table,
@@ -9,74 +12,194 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Collapse,
-  IconButton,
   TablePagination,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from "@mui/material";
-import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
 
 const baseUrl = import.meta.env.VITE_URL;
-const getUsersData = `${baseUrl}/api/users/`;
+const usersApi = `${baseUrl}/api/users/`;
+const rolesApi = `${baseUrl}/api/groups/`;
+const getCsrfTokenUrl = `${baseUrl}/api/csrf_cookie/`;
 
-const CollapsibleRow = ({ user }) => {
-  const [open, setOpen] = useState(false);
-
-  const handleToggle = () => {
-    setOpen(!open);
-  };
-
-  return (
-    <>
-      <TableRow>
-        <TableCell>
-          {user.personal_details && (
-            <IconButton aria-label="expand row" size="small" onClick={handleToggle}>
-              {open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
-            </IconButton>
-          )}
-        </TableCell>
-        {/* <TableCell>{user.id}</TableCell> */}
-        <TableCell>{user.username}</TableCell>
-        <TableCell>{user.roles}</TableCell>
-      </TableRow>
-      {user.personal_details && (
-        <TableRow>
-          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-            <Collapse in={open} timeout="auto" unmountOnExit>
-              <div className="border p-4">
-                <h1>Personal Details</h1>
-                {user.personal_details ? (
-                  <>
-                  <p>Serial No: {user.personal_details.serial_number || "N/A"}</p>
-                  <p>Rank: {user.personal_details.rank || "N/A"}</p>
-                    <p>First Name: {user.personal_details.first_name ||"N/A"}</p>
-                    <p>Last Name: {user.personal_details.last_name ||"N/A"}</p>
-                    <p>Rank: {user.personal_details.rank_name ||"N/A"}</p>
-                    <p>Unit Name: {user.personal_details.unit_name ||"N/A"}</p>
-                    {/* Add more properties as needed */}
-                  </>
-                ) : (
-                  <p>No personal details available</p>
-                )}
-              </div>
-            </Collapse>
-          </TableCell>
-        </TableRow>
-      )}
-    </>
-  );
-};
 
 const Users = () => {
   const [usersData, setUsersData] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [open, setOpen] = useState(false);
+  const [username, setUsername] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [selectedRole, setSelectedRole] = useState("User");
+  const [updateOpen, setUpdateOpen] = useState(false);
+  const [updateUserId, setUpdateUserId] = useState(null);
+  const [rolesData, setRolesData] = useState([]);
+
+  const [csrfToken, setCsrfToken] = useState('');
+  const [deleteUserId, setDeleteUserId] = useState(null);
+  const [deleteConfirmDialogOpen, setDeleteConfirmDialogOpen] = useState(false);
+
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const usersResponse = await axios.get(getUsersData);
-        setUsersData(usersResponse.data.success);
+        const rolesResponse = await axios.get(rolesApi);
+        setRolesData(rolesResponse.data.success);
+        console.log("roles", rolesResponse.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+
+  const handleUpdateUser = (id) => {
+    const userToUpdate = usersData.find((user) => user.id === id);
+    setUpdateUserId(id);
+    setUsername(userToUpdate.username);
+    setFirstName(userToUpdate.first_name);
+    setLastName(userToUpdate.last_name);
+    setEmail(userToUpdate.email);
+    setSelectedRole(userToUpdate.groups);
+    setUpdateOpen(true);
+  };
+
+  const handleUpdateConfirm = async () => {
+    // Similar to handleCreateUser, send a PUT request to update user details
+    try {
+      const updatedUser = {
+        id: updateUserId,
+        username,
+        first_name: firstName,
+        last_name: lastName,
+        email,
+        password,
+        groups:[selectedRole],
+      };
+
+      const headers = {
+        headers: {
+          'X-CSRFToken': csrfToken,
+        },
+      };
+
+      await axios.put(usersApi, updatedUser, headers);
+
+      const updatedUsersData = usersData.map((user) =>
+        user.id === updateUserId ? updatedUser : user
+      );
+      setUsersData(updatedUsersData);
+
+      // Close the update dialog
+      setUpdateOpen(false);
+      window.location.reload()
+
+    } catch (error) {
+      console.error("Error updating user:", error);
+    }
+  };
+
+
+  const handleRoleChange = (event) => {
+    setSelectedRole(event.target.value);
+  };
+
+  const handleCreateUser = async () => {
+    // Create a new user object with form data
+    const newUser = {
+      username,
+      first_name: firstName, // Adjusted to match backend expectation
+      last_name: lastName,   // Adjusted to match backend expectation
+      email,
+      password,
+      groups: [selectedRole], 
+    };
+
+    // Include CSRF token in the headers
+    const headers = {
+      headers: {
+        'X-CSRFToken': csrfToken,
+      },
+    };
+
+    try {
+      // Make a POST request to create a new user with CSRF token in the headers and newUser in the body
+      await axios.post(usersApi, newUser, headers);
+
+      // Update the usersData state with the new user
+      setUsersData((prevUsers) => [...prevUsers, newUser]);
+
+      // Clear the form fields after submission
+      setUsername("");
+      setFirstName("");
+      setLastName("");
+      setEmail("");
+      setSelectedRole(""); // Reset role to default after submission
+      window.location.reload()
+    } catch (error) {
+      console.error("Error creating user:", error);
+    }
+  };
+
+  const handleDeleteUser = (id) => {
+    setDeleteUserId(id);
+    setDeleteConfirmDialogOpen(true);
+  };
+
+
+  const handleDeleteConfirm = async () => {
+    try {
+      const headers = {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken,
+      };
+
+      const requestBody = { id: deleteUserId };
+
+      await axios.delete(`${usersApi}`, { headers, data: requestBody });
+
+      const updatedUsersData = usersData.filter((user) => user.id !== deleteUserId);
+      setUsersData(updatedUsersData);
+
+      setDeleteConfirmDialogOpen(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
+  useEffect(() => {
+    const getTheCsrfToken = async () => {
+      try {
+        const response = await axios.get(getCsrfTokenUrl);
+        setCsrfToken(response.data['csrf-token']);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getTheCsrfToken();
+  }, []);
+
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const usersResponse = await axios.get(usersApi);
+        setUsersData(usersResponse.data.success ?? []);
         console.log("Users", usersResponse.data.success);
       } catch (error) {
         console.log(error);
@@ -85,6 +208,7 @@ const Users = () => {
 
     fetchData();
   }, []);
+
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -95,38 +219,229 @@ const Users = () => {
     setPage(0);
   };
 
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setDeleteConfirmDialogOpen(false);
+    setUpdateOpen(false)
+  };
+
+
+
   return (
     <div className="pr-20">
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead  className="bg-gray-800 ">
-            <TableRow>
-              <TableCell />
-              {/* <TableCell>ID</TableCell> */}
-              <TableCell>
-                <b className="text-white">Username</b>
-              </TableCell>
-              <TableCell><b className="text-white">Roles</b></TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {usersData
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((user, index) => (
-                <CollapsibleRow key={index} user={user} />
+      <div className="mb-3">
+        <Button size="small"  variant="contained" color="success" onClick={handleOpen}>
+          Create User
+        </Button>
+      </div>
+
+{/* Update dialog */}
+<Dialog open={updateOpen} onClose={handleClose}>
+  <DialogTitle>Update User</DialogTitle>
+  <DialogContent>
+    <TextField
+      name="username"
+      label="Username"
+      fullWidth
+      value={username}
+      margin="normal"
+      onChange={(e) => setUsername(e.target.value)}
+    />
+    <TextField
+      name="firstName"
+      label="First Name"
+      fullWidth
+      margin="normal"
+      value={firstName}
+      onChange={(e) => setFirstName(e.target.value)}
+    />
+    <TextField
+      name="lastName"
+      label="Last Name"
+      fullWidth
+      margin="normal"
+      value={lastName}
+      onChange={(e) => setLastName(e.target.value)}
+    />
+    <TextField
+      name="email"
+      label="Email"
+      fullWidth
+      margin="normal"
+      value={email}
+      onChange={(e) => setEmail(e.target.value)}
+    />
+    <TextField
+      name="password"
+      label="Password"
+      type="password"
+      fullWidth
+      margin="normal"
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+    />
+
+    <FormControl fullWidth margin="normal">
+      <InputLabel id="role-label">Role</InputLabel>
+      <Select
+        labelId="role-label"
+        name="groups"
+        value={selectedRole}
+        onChange={handleRoleChange}
+      >
+        {rolesData.map((item,index) => (
+           <MenuItem key={index} value={item.name}>{item.name}</MenuItem>
+        ))}
+      </Select>
+    </FormControl>
+  </DialogContent>
+  <DialogActions>
+    <Button onClick={handleClose}>Cancel</Button>
+    <Button onClick={handleUpdateConfirm} color="primary">
+      Update
+    </Button>
+  </DialogActions>
+</Dialog>
+
+
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Create New User</DialogTitle>
+        <DialogContent>
+          <TextField
+            name="username"
+            label="Username"
+            fullWidth
+            value={username}
+            margin="normal"
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <TextField
+            name="firstName"
+            label="First Name"
+            fullWidth
+            margin="normal"
+            value={firstName} 
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+          <TextField
+            name="lastName"
+            label="Last Name"
+            fullWidth
+            margin="normal"
+            value={lastName} 
+            onChange={(e) => setLastName(e.target.value)}
+          />
+          <TextField
+            name="email"
+            label="Email"
+            fullWidth
+            margin="normal"
+            value={email} 
+            onChange={(e) => setEmail(e.target.value)} 
+          />
+
+          <TextField
+            name="password"
+            label="Password"
+            type="password"
+            fullWidth
+            margin="normal"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+
+          <FormControl fullWidth margin="normal">
+            <InputLabel id="role-label">Role</InputLabel>
+            <Select
+            labelId="role-label"
+            name="groups"  // Change to "groups"
+            value={selectedRole} onChange={handleRoleChange}
+          >
+              {rolesData.map((item,index) => (
+                  <MenuItem key={index} value={item.name}>{item.name}</MenuItem>
+                ))}
+            </Select>
+          </FormControl>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleCreateUser} color="primary">
+            Create
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+
+
+         {/* Dialog for confirming deletion */}
+         <Dialog  open={deleteConfirmDialogOpen}  onClose={handleClose}>
+        <DialogTitle>Confirm Deletion</DialogTitle>
+        <DialogContent>
+        <span className="flex flex-col gap-3">
+        <p> Are you sure you want to delete this user?</p>
+         <Button size="small" variant="outlined" color="success"  onClick={handleDeleteConfirm}>
+            Confirm
+          </Button>
+          <Button size="small" variant="outlined" color="error"  onClick={handleClose}>
+            Cancel
+          </Button>
+        </span>
+        </DialogContent>
+      </Dialog>
+
+    
+      
+      {usersData.length === 0 ? (
+        <p>No data available</p>
+      ) : (
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead className="bg-gray-800">
+              <TableRow>
+                <TableCell><b className="text-white">Username</b></TableCell>
+                <TableCell><b className="text-white">groups</b></TableCell>
+                <TableCell><b className="text-white">Actions</b></TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {(rowsPerPage > 0
+                ? usersData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                : usersData
+              ).map((item, index) => (
+                <TableRow key={index}>
+                  <TableCell>{item.username}</TableCell>
+                  <TableCell>{item.groups && item.groups.length > 0 ? item.groups[0].name : ''}</TableCell>
+                  <TableCell>
+                    <span className="flex gap-4">
+                      <button onClick={() => handleDeleteUser(item.id)}  className="p-2 bg-red-400 text-white rounded-full hover:bg-slate-500 duration-200">
+                      <FaTrash  />
+                    </button>
+                    <button   onClick={() => handleUpdateUser(item.id)} className="p-2 bg-green-400 text-white rounded-full hover:bg-slate-500 duration-200">
+                      <FaEdit />
+                    </button>
+                    </span>
+                 
+                  </TableCell>
+                </TableRow>
               ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[5, 10, 25]}
-        component="div"
-        count={usersData.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
+            </TableBody>
+          </Table>
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={usersData.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </TableContainer>
+      )}
+      
     </div>
   );
 };

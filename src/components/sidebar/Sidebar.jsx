@@ -21,6 +21,7 @@ const Sidebar = () => {
     const [specificMenuItems3, setSpecificMenuItems3] = useState("");
     const [specificMenuItems4, setSpecificMenuItems4] = useState("");
     const [specificMenuItems5, setSpecificMenuItems5] = useState("");
+    const [specificMenuItems6, setSpecificMenuItems6] = useState("");
     const [accountData, setAccountData] = useState({});
 
 
@@ -52,7 +53,8 @@ const Sidebar = () => {
                 setSpecificMenuItems2(["Reports", "Alerts", "Incidents"]);
                 setSpecificMenuItems3(["Roles", "Users"]);
                 setSpecificMenuItems4(["Personnel", "Offices", "Vessels", "Aircrafts", "Vehicles"]);
-                setSpecificMenuItems5(["Settings"]);
+                setSpecificMenuItems5(["Other Vessels", "Other Aircrafts", "Other Vehicles", "Other Offices", "Other Personnel"]);
+                setSpecificMenuItems6(["Settings"]);
             }
         }
     }, [accountData]);
@@ -84,6 +86,7 @@ const filteredLinkItems2 = linkItem1.filter(item => specificMenuItems2.includes(
 const filteredLinkItems3 = linkItem1.filter(item => specificMenuItems3.includes(item.name));
 const filteredLinkItems4 = linkItem1.filter(item => specificMenuItems4.includes(item.name));
 const filteredLinkItems5 = linkItem1.filter(item => specificMenuItems5.includes(item.name));
+const filteredLinkItems6 = linkItem1.filter(item => specificMenuItems6.includes(item.name));
 
 
 
@@ -123,7 +126,7 @@ const filteredLinkItems5 = linkItem1.filter(item => specificMenuItems5.includes(
             ))}
               </div>
 
-              <div className="link_wrapper2">
+              <div  className={`link_wrapper2 ${filteredLinkItems2.length === 0 ? "border-none" : ""}`}>
                     {filteredLinkItems2.map((item, index) => (
                         // Check the 'disabled' property and conditionally disable the menu item
                         item.disabled ? (
@@ -142,26 +145,26 @@ const filteredLinkItems5 = linkItem1.filter(item => specificMenuItems5.includes(
                 </div>
 
 
-              <div className="link_wrapper2">
-              {filteredLinkItems3.map((item, index) => (
-                   // Check the 'disabled' property and conditionally disable the menu item
-                   !item.disabled ? (
-                       <NavLink to={item.path} key={index} className={`link ${({ isActive }) => isActive ? "active" : ''}`} style={{ justifyContent: isOpen ? "start" : "center" }}>
-                           <div className="icon">{item.icon}</div>
-                           <h2 style={{ display: isOpen ? "block" : "none" }} className="link_text">{item.name}</h2>
-                       </NavLink>
-                   ) : (
-                       // Render a disabled menu item
-                       <div key={index} className="link disabled" style={{ justifyContent: isOpen ? "start" : "center" }}>
-                           <div className="icon">{item.icon}</div>
-                           <h2 style={{ display: isOpen ? "block" : "none" }} className="link_text">{item.name}</h2>
-                       </div>
-                   )
-               ))}
-              </div>
+                <div className={`link_wrapper2 ${filteredLinkItems3.length === 0 ? "border-none" : ""}`}>
+    {filteredLinkItems3.map((item, index) => (
+        // Check the 'disabled' property and conditionally disable the menu item
+        !item.disabled ? (
+            <NavLink to={item.path} key={index} className={`link ${({ isActive }) => isActive ? "active" : ''}`} style={{ justifyContent: isOpen ? "start" : "center" }}>
+                <div className="icon">{item.icon}</div>
+                <h2 style={{ display: isOpen ? "block" : "none" }} className="link_text">{item.name}</h2>
+            </NavLink>
+        ) : (
+            // Render a disabled menu item
+            <div key={index} className="link disabled" style={{ justifyContent: isOpen ? "start" : "center" }}>
+                <div className="icon">{item.icon}</div>
+                <h2 style={{ display: isOpen ? "block" : "none" }} className="link_text">{item.name}</h2>
+            </div>
+        )
+    ))}
+</div>
 
 
-              <div className="link_wrapper2">
+              <div  className={`link_wrapper2 ${filteredLinkItems4.length === 0 ? "border-none" : ""}`}>
               {filteredLinkItems4.map((item, index) => (
                    // Check the 'disabled' property and conditionally disable the menu item
                    !item.disabled ? (
@@ -180,7 +183,7 @@ const filteredLinkItems5 = linkItem1.filter(item => specificMenuItems5.includes(
               </div>
 
               
-              <div className="link_wrapper3">
+              <div className={`link_wrapper3 ${filteredLinkItems5.length === 0 ? "border-none" : ""}`}>
               {filteredLinkItems5.map((item, index) => (
                    // Check the 'disabled' property and conditionally disable the menu item
                    !item.disabled ? (
@@ -198,6 +201,27 @@ const filteredLinkItems5 = linkItem1.filter(item => specificMenuItems5.includes(
                ))}
 
               </div>
+
+              <div  className={`link_wrapper3 ${filteredLinkItems6.length === 0 ? "border-none" : ""}`}>
+              {filteredLinkItems6.map((item, index) => (
+                   // Check the 'disabled' property and conditionally disable the menu item
+                   !item.disabled ? (
+                       <NavLink to={item.path} key={index} className={`link ${({ isActive }) => isActive ? "active" : ''}`} style={{ justifyContent: isOpen ? "start" : "center" }}>
+                           <div className="icon">{item.icon}</div>
+                           <h2 style={{ display: isOpen ? "block" : "none" }} className="link_text">{item.name}</h2>
+                       </NavLink>
+                   ) : (
+                       // Render a disabled menu item
+                       <div key={index} className="link disabled" style={{ justifyContent: isOpen ? "start" : "center" }}>
+                           <div className="icon">{item.icon}</div>
+                           <h2 style={{ display: isOpen ? "block" : "none" }} className="link_text">{item.name}</h2>
+                       </div>
+                   )
+               ))}
+
+              </div>
+
+              
               
            </div>
 

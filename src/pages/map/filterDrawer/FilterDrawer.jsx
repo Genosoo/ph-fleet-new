@@ -1,13 +1,12 @@
 /* eslint-disable react/prop-types */
 import {
     Drawer,
-    List,
     ListItem,
     ListItemIcon,
     ListItemText,
     Checkbox,
   } from '@mui/material';
-  
+  import { IoClose } from "react-icons/io5";
   import cameramanImg from '../../../assets/cameraman.png'
   import personnelImg from '../../../assets/personnel.svg'
 
@@ -40,18 +39,23 @@ import {
 export default function FilterDrawer({
     isDrawerOpen,
     toggleDrawer,
+
     showMarineTraffic,
     handleMarineTraffic,
+    
     showTrakSat,
     handleTrakSat,
     showDescription,
     setShowDescription,
+
     showSpiderTrak,
     handleSpiderTrak,
     showSpiderTrakDesc,
     setShowSpiderTrakDesc,
+
     showPersonnel,
     handlePersonnel,
+
     showVideoStream,
     handleVideoStream,
 
@@ -81,17 +85,25 @@ export default function FilterDrawer({
     handleToggleShowAllUsernames
     
   }) {
+
+
+    
   return (
-    <Drawer
+    <div className="drawer_wrapper">
+      <Drawer
     anchor="right"
     variant="persistent"
     open={isDrawerOpen}
-    onClose={toggleDrawer}
     hideBackdrop={true}
   
   >
-    <List>
-      <ListItem>
+
+    <div className='drawer_list_wrapper'>
+    <button className='btn_close_drawer' onClick={toggleDrawer}>
+        <IoClose />
+      </button>
+    <div className="drawer_list_box">
+    <ListItem>
         <ListItemIcon>
           <span className="ml-3 text-[30px] text-[yellow]">🢙</span>
         </ListItemIcon>
@@ -118,7 +130,7 @@ export default function FilterDrawer({
       </ListItem>
 
       {showTrakSat && (
-<div className='px-5'>
+<div className=''>
         <ListItem >
           <ListItemText primary="Vessels Name" />
           <Checkbox
@@ -148,7 +160,7 @@ export default function FilterDrawer({
       </ListItem>
 
       {showSpiderTrak && (
-         <div className='px-5'>
+         <div className=''>
         <ListItem>
           <ListItemText primary="Aircraft Name" />
           <Checkbox
@@ -203,7 +215,7 @@ export default function FilterDrawer({
   </ListItem>
 
   {showPersonnel && (
-    <div className='px-5'>
+    <div className=''>
     <ListItem >
         {/* <ListItemIcon>
           <div className="flex gap-2">
@@ -348,7 +360,9 @@ export default function FilterDrawer({
         <Checkbox
          sx={iconStyle}  checked={showVideoStream} onChange={handleVideoStream} />
       </ListItem>
-    </List>
+    </div>
+    </div>
   </Drawer>
+    </div>
   )
 }

@@ -9,7 +9,7 @@ import 'chart.js/auto';
 const BarChart = ({ trakSatData, marineTrafficData, spiderTrakData }) => {
   // Use localStorage to persist state
   const [selectedData, setSelectedData] = useState(trakSatData);
-  const [groupingProperty, setGroupingProperty] = useState("network");
+  const [groupingProperty, setGroupingProperty] = useState("group");
 
   useEffect(() => {
     // Update localStorage whenever state changes
@@ -21,7 +21,7 @@ const BarChart = ({ trakSatData, marineTrafficData, spiderTrakData }) => {
   useEffect(() => {
     // Set default data and grouping property when the component mounts
     setSelectedData(trakSatData);
-    setGroupingProperty("network");
+    setGroupingProperty("group");
   }, [trakSatData]); // Run when trakSatData changes
 
   const groupData = selectedData.reduce((acc, item) => {

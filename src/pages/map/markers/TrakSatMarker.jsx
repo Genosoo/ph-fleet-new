@@ -62,7 +62,6 @@ const TrakSatMarker = ({ item, selectedTrakSat, showDescription, handleTrakSatMa
      <>
       <Marker
       position={startPosition}
-       x
         icon={L.divIcon({
           className: `traksat-marker ${selectedTrakSat && selectedTrakSat.asset_id === item.asset_id ? 'selected-marker-traksat' : ''}`,
           html: `

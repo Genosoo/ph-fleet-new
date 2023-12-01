@@ -20,9 +20,8 @@ import RoleForm from "./RolesForm"; // Assuming RoleForm is in the same director
 const baseUrl = import.meta.env.VITE_URL;
 
 const getCsrfTokenUrl = `${baseUrl}/api/csrf_cookie/`;
-const getRolesData = `${baseUrl}/api/groups/`;
-const createRoleEndpoint = `${baseUrl}/api/groups/`;
-const deleteRoleEndpoint = `${baseUrl}/api/groups/`;
+const rolesApi = `${baseUrl}/api/groups/`;
+
 
 export default function Roles() {
   const [rolesData, setRolesData] = useState([]);
@@ -36,7 +35,7 @@ export default function Roles() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const rolesResponse = await axios.get(getRolesData);
+        const rolesResponse = await axios.get(rolesApi);
         setRolesData(rolesResponse.data.success);
         console.log("roles", rolesResponse.data);
       } catch (error) {
@@ -67,11 +66,11 @@ export default function Roles() {
         'X-CSRFToken': csrfToken,
       };
 
-      const createRoleResponse = await axios.post(createRoleEndpoint, data, { headers });
+      const createRoleResponse = await axios.post(rolesApi, data, { headers });
       console.log("create role response", createRoleResponse.data);
 
       // Fetch updated roles data after creating a role
-      const updatedRolesResponse = await axios.get(getRolesData);
+      const updatedRolesResponse = await axios.get(rolesApi);
       setRolesData(updatedRolesResponse.data.success);
 
       setOpenDialog(false);
@@ -86,10 +85,6 @@ export default function Roles() {
         'Content-Type': 'application/json',
         'X-CSRFToken': csrfToken,
       };
-
-      // Remove the id from the URL
-      const updateRoleEndpoint = `${baseUrl}/api/groups/`;
-
       // Include the id in the request body
       const updateRoleData = {
         id: data.id,
@@ -97,11 +92,11 @@ export default function Roles() {
         // Other fields if needed
       };
 
-      const updateRoleResponse = await axios.put(updateRoleEndpoint, updateRoleData, { headers });
+      const updateRoleResponse = await axios.put(rolesApi, updateRoleData, { headers });
       console.log("update role response", updateRoleResponse.data);
 
       // Fetch updated roles data after updating a role
-      const updatedRolesResponse = await axios.get(getRolesData);
+      const updatedRolesResponse = await axios.get(rolesApi);
       setRolesData(updatedRolesResponse.data.success);
 
       setUpdateDialog(false);
@@ -124,7 +119,7 @@ export default function Roles() {
           'X-CSRFToken': csrfToken,
         };
 
-        await axios.delete(deleteRoleEndpoint, {
+        await axios.delete(rolesApi, {
           headers,
           data: { id: roleToDelete },
         });
@@ -170,11 +165,11 @@ export default function Roles() {
                 <TableCell>{item.name}</TableCell>
                 <TableCell>
                   <span className="flex gap-4">
-                    <div className="p-2 bg-red-400 text-white rounded-full hover:bg-slate-500 duration-200">
-                      <FaTrash onClick={() => handleDeleteRole(item.id)} />
+                    <div onClick={() => handleDeleteRole(item.id)} className="p-2 bg-red-400 text-white rounded-full hover:bg-slate-500 duration-200">
+                      <FaTrash  />
                     </div>
-                    <div className="p-2 bg-green-400 text-white rounded-full hover:bg-slate-500 duration-200">
-                    <FaEdit onClick={() => handleEditRole(item)} />
+                    <div onClick={() => handleEditRole(item)} className="p-2 bg-green-400 text-white rounded-full hover:bg-slate-500 duration-200">
+                    <FaEdit  />
                     </div>
                    
                   </span>
@@ -212,7 +207,7 @@ export default function Roles() {
         <DialogContent>
         <span className="flex flex-col gap-3">
         <p>Are you sure you want to delete this role?</p>
-         <Button size="small" variant="contained" color="success" onClick={confirmDelete}>
+         <Button size="small" variant="outlined" color="success" onClick={confirmDelete}>
             Confirm
           </Button>
           <Button size="small" variant="outlined" color="error" onClick={cancelDelete}>

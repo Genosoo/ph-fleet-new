@@ -85,13 +85,13 @@ export default function Login() {
     <div className="login_container">
       <div className="login_form_wrapper w-[550px]">
       <div className='flex gap-4 w-full items-center justify-center'>
-      <img className='w-[200px] h-[80px] ' src={nlogo1} alt="" />
-        <img src={loginLogo} alt="" />
-        <img className='w-[200px] h-[100px] ' src={nlogo} alt="" />
+      <img className='w-[140px] h-[110px]' src={nlogo1} alt="" />
+        <img className='w-[100px] h-[100px] ' src={loginLogo} alt="" />
+        <img className='w-[100px] h-[100px] ' src={nlogo} alt="" />
       </div>
       <h2 className='text-[2rem] mt-10'>WELCOME</h2>
         <span className='mt-10'>
-          <p className='px-10 text-center font-semibold '><b className='font-lato font-medium text-base text-red-600 '>Disclaimer: </b> 
+          <p className='px-10 text-center font-semibold '> 
            <span className='text-sm'>Access to this site is limited to authorized users only. If you are not an authorized user,
             please close your browser and do not attempt further access. All activities in this 
             site is monitored and logged. Thank you!</span></p>
