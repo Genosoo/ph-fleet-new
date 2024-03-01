@@ -80,11 +80,30 @@
   }
 
   .content_container{
-    @apply flex flex-col gap-5 h-[100vh] w-[100%] overflow-y-auto 
+    @apply flex flex-col gap-5  h-[100vh] w-[100%] overflow-y-auto 
     }
 
+  /* Track */
+  .content_container::-webkit-scrollbar {
+    width:10px;
+  }
+  
+  /* Handle */
+  .content_container::-webkit-scrollbar-thumb {
+    background-color: rgb(117, 144, 189) ;
+  }
+  
+  /* Handle on hover */
+  .content_container::-webkit-scrollbar-thumb:hover {
+    background-color:rgb(45, 97, 187);
+  }
+  
+
+
+
   .navbar_container{
-    @apply flex items-center h-[6vh] justify-between px-5 
+    @apply flex items-center bg-gray-100 py-3 h-[6vh]
+    justify-between px-5  sticky top-0 z-50
   }
 
   .navbar_menu_wrapper{
@@ -166,7 +185,7 @@
   }
 
   .button_map_wrapper{
-    @apply  absolute z-[3000] right-5 top-5 flex flex-col gap-2
+    @apply  absolute z-[2000] right-5 top-40 flex flex-col gap-2
   }
 
   .button_toggle_drawer{
@@ -188,7 +207,7 @@
   }
  
   .button_change_map{
-    @apply rounded  text-white  bg-slate-800 p-2 hover:bg-slate-800 hover:text-[#29ADB2] duration-300
+    @apply rounded  text-white  bg-slate-800 p-2 hover:bg-slate-800 hover:text-[#29ADB2] 
   }
 
   
@@ -204,7 +223,7 @@
   }
 
   .drawer_wrapper{
-    @apply absolute z-[4000] right-5 flex  
+    @apply absolute z-[3500] right-5 flex  
   }
 
   .drawer_list_box{
@@ -378,6 +397,11 @@
 } */
 
 
+.profile_card{
+  z-index:5000 !important;
+}
+
+
 
 .MuiDrawer-paper{
   background: #232c3b !important;
@@ -387,6 +411,7 @@
   padding:10px !important;
   border-radius:5px !important;
   margin-right:80px;
+  overflow-y: hidden !important;
 }
 
 
@@ -423,8 +448,6 @@
   align-items: center;
   justify-content: center;
 }
-
-
 
 .spiderTrak-icon img{
   width:35px;
@@ -481,14 +504,14 @@
 
 @keyframes pulse2{
   0%{
-    box-shadow:rgb(38, 214, 214) 0 0 0 0;
+    box-shadow:rgb(50, 214, 38) 0 0 0 0;
   }
   50%{
-    box-shadow: 0 0 0 16px rgb(38, 214, 214);
+    box-shadow: 0 0 0 16px rgb(38, 214, 70);
   }
 
   50%{
-   box-shadow: 0 0 0 20px rgba(38, 214, 214, 0.246);
+   box-shadow: 0 0 0 20px rgba(38, 214, 50, 0.246);
 
   }
 }
@@ -502,6 +525,17 @@
   animation:pulse2 1500ms infinite;
   border:2px solid rgb(38, 214, 214);
 }
+
+
+.selected-marker-spiderTrak{
+  border:2px solid white;
+  animation:pulse 1500ms infinite;
+  width:100px;
+  height:100px;
+  border-radius:50%;
+  position: absolute;
+}
+
 
 .circle-marker{
   background-color: rgb(7, 230, 29);
@@ -552,6 +586,19 @@
   box-shadow: 0 0 0px 5px rgba(1, 255, 1, 0.547);
 }
 
+.incident-cluster-icon {
+  background-color: rgb(255, 109, 114);
+  height: 40px;
+  width: 40px;
+  color: #0e0e0e;
+  font-weight:600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  box-shadow: 0 0 0px 5px rgba(255, 103, 103, 0.547);
+}
 
 .personnel-cluster-icon {
   background-color: rgb(8, 235, 247);
@@ -565,6 +612,34 @@
   border-radius: 50%;
   font-size: 1.2rem;
   box-shadow: 0 0 0px 5px rgba(1, 217, 255, 0.547);
+}
+
+.vehicle-cluster-icon {
+  background-color: rgb(5, 201, 255);
+  height: 40px;
+  width: 40px;
+  color: #000000;
+  font-weight:600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  box-shadow: 0 0 0px 5px rgba(9, 211, 247, 0.547);
+}
+
+.car-cluster-icon {
+  background-color: rgb(209, 195, 67);
+  height: 40px;
+  width: 40px;
+  color: #000000;
+  font-weight:600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  box-shadow: 0 0 0px 5px rgba(210, 193, 36, 0.547);
 }
 
 .videoStream-cluster-icon {

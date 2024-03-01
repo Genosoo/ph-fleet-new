@@ -63,7 +63,7 @@ export default function CustomizedMenus() {
 
 
   return (
-    <div>
+    <div className=''>
       <Button
         id="demo-customized-button"
         aria-controls={open ? 'demo-customized-menu' : undefined}
@@ -84,6 +84,7 @@ export default function CustomizedMenus() {
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
+        className="profile_card"
       >
         {/* <MenuItem onClick={handleClose} disableRipple>
           Home

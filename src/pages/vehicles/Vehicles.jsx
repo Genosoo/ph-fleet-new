@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination } from "@mui/material";
-
-const baseUrl = import.meta.env.VITE_URL;
-const getvehiclesData = `${baseUrl}/api/vehicle/`;
+import { apiVehiclesData } from "../../api/api_urls";
 
 export default function Personnel() {
   const [vehiclesData, setvehiclesData] = useState([]);
@@ -13,7 +11,7 @@ export default function Personnel() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const vehiclesResponse = await axios.get(getvehiclesData);
+        const vehiclesResponse = await axios.get(apiVehiclesData);
 
         setvehiclesData(vehiclesResponse.data.success);
         console.log("vehicles", vehiclesResponse.data);

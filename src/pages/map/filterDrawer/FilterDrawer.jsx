@@ -15,6 +15,7 @@ import {
   import weatherImg from '../../../assets/weather.svg'
   import campImg from '../../../assets/camp.svg'
   import vehiclesImg from '../../../assets/vehicle.svg'
+  import carImg from '../../../assets/car.svg'
   import incidentImg from '../../../assets/incident.svg'
   import dutyImg from '../../../assets/duty.svg'
   import leaveImg from '../../../assets/leave.svg'
@@ -37,6 +38,7 @@ import {
 
   
 export default function FilterDrawer({
+
     isDrawerOpen,
     toggleDrawer,
 
@@ -82,7 +84,10 @@ export default function FilterDrawer({
     handleToggleNonUniform,
 
     showAllUsernames,
-    handleToggleShowAllUsernames
+    handleToggleShowAllUsernames,
+
+    showCarTrack,
+    handleCarTrack
     
   }) {
 
@@ -103,13 +108,16 @@ export default function FilterDrawer({
         <IoClose />
       </button>
     <div className="drawer_list_box">
+    
+   
+ 
     <ListItem>
         <ListItemIcon>
           <span className="ml-3 text-[30px] text-[yellow]">🢙</span>
         </ListItemIcon>
         <ListItemText primary="Marine Traffic" />
         <Checkbox
-           sx={iconStyle} checked={showMarineTraffic} onChange={handleMarineTraffic} />
+           sx={iconStyle}  checked={showMarineTraffic}  onChange={handleMarineTraffic} />
       </ListItem>
 
       <div className="border p-2 rounded-[10px] mt-2">
@@ -346,6 +354,20 @@ export default function FilterDrawer({
         <Checkbox
          sx={iconStyle} 
         checked={showVehicles} onChange={handleVehicles} />
+      </ListItem>
+
+      <ListItem>
+        <ListItemIcon>
+          <div className="flex gap-2">
+            <span className="ml-3 p-1 bg-white w-[30px] flex items-center justify-center h-[30px] rounded-full">
+              <img src={carImg} alt="" />
+            </span>
+          </div>
+        </ListItemIcon>
+        <ListItemText primary="CarTrack" />
+        <Checkbox
+         sx={iconStyle} 
+        checked={showCarTrack} onChange={handleCarTrack} />
       </ListItem>
 
       <ListItem>

@@ -4,9 +4,8 @@ import { useAuth } from '../../../auth/authContext/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const baseUrl = import.meta.env.VITE_URL;
-const getCsrfTokenUrl = `${baseUrl}/api/csrf_cookie/`
-const logoutUrl = `${baseUrl}/api/logout/`
+import { apilogout, getCsrfToken } from '../../../api/api_urls';
+
 
 
 export default function btnLogout() {
@@ -17,7 +16,7 @@ export default function btnLogout() {
     useEffect(() => {
         const getTheCsrfToken = async () => {
           try {
-            const response = await axios.get(getCsrfTokenUrl);
+            const response = await axios.get(getCsrfToken);
             setCsrfToken(response.data['csrf-token']);
             console.log(response.data['csrf-token'])
           } catch (error) {
@@ -37,7 +36,7 @@ export default function btnLogout() {
             'X-CSRFToken': csrfToken // Include the CSRF token in the request headers
           };
       
-          await axios.get(logoutUrl, null, { headers });
+          await axios.get(apilogout, null, { headers });
           dispatch({ type: 'LOGOUT' });
           navigate('/login');
         } catch (error) {

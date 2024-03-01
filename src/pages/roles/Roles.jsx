@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { FaTrash, FaEdit } from "react-icons/fa";
 import axios from "axios";
+import { apiRoles, getCsrfToken } from "../../api/api_urls";
 import {
   Table,
   TableBody,
@@ -17,10 +18,6 @@ import {
 } from "@mui/material";
 import RoleForm from "./RolesForm"; // Assuming RoleForm is in the same directory
 
-const baseUrl = import.meta.env.VITE_URL;
-
-const getCsrfTokenUrl = `${baseUrl}/api/csrf_cookie/`;
-const rolesApi = `${baseUrl}/api/groups/`;
 
 
 export default function Roles() {
@@ -35,7 +32,7 @@ export default function Roles() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const rolesResponse = await axios.get(rolesApi);
+        const rolesResponse = await axios.get(apiRoles);
         setRolesData(rolesResponse.data.success);
         console.log("roles", rolesResponse.data);
       } catch (error) {
@@ -49,7 +46,7 @@ export default function Roles() {
   useEffect(() => {
     const getTheCsrfToken = async () => {
       try {
-        const response = await axios.get(getCsrfTokenUrl);
+        const response = await axios.get(getCsrfToken);
         setCsrfToken(response.data['csrf-token']);
       } catch (error) {
         console.log(error);
@@ -66,11 +63,11 @@ export default function Roles() {
         'X-CSRFToken': csrfToken,
       };
 
-      const createRoleResponse = await axios.post(rolesApi, data, { headers });
+      const createRoleResponse = await axios.post(apiRoles, data, { headers });
       console.log("create role response", createRoleResponse.data);
 
       // Fetch updated roles data after creating a role
-      const updatedRolesResponse = await axios.get(rolesApi);
+      const updatedRolesResponse = await axios.get(apiRoles);
       setRolesData(updatedRolesResponse.data.success);
 
       setOpenDialog(false);
@@ -92,11 +89,11 @@ export default function Roles() {
         // Other fields if needed
       };
 
-      const updateRoleResponse = await axios.put(rolesApi, updateRoleData, { headers });
+      const updateRoleResponse = await axios.put(apiRoles, updateRoleData, { headers });
       console.log("update role response", updateRoleResponse.data);
 
       // Fetch updated roles data after updating a role
-      const updatedRolesResponse = await axios.get(rolesApi);
+      const updatedRolesResponse = await axios.get(apiRoles);
       setRolesData(updatedRolesResponse.data.success);
 
       setUpdateDialog(false);
@@ -119,7 +116,7 @@ export default function Roles() {
           'X-CSRFToken': csrfToken,
         };
 
-        await axios.delete(rolesApi, {
+        await axios.delete(apiRoles, {
           headers,
           data: { id: roleToDelete },
         });

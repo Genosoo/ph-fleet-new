@@ -4,7 +4,7 @@ import L from 'leaflet';
 import vehiclesImg from '../../../assets/vehicle.svg'
 
 
-const PersonnelMarker = ({ item, index, selectedVehicles, handleVehiclesMarkerClick }) => (
+const VehiclesMarker = ({ item, index, selectedVehicles, handleVehiclesMarkerClick }) => (
     <Marker 
         key={`cargo-${index}`} 
               position={[item.latitude, item.longitude]}
@@ -36,4 +36,4 @@ const PersonnelMarker = ({ item, index, selectedVehicles, handleVehiclesMarkerCl
             </Marker>
 );
 
-export default PersonnelMarker;
+export default VehiclesMarker;

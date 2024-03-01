@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination } from "@mui/material";
-
-const baseUrl = import.meta.env.VITE_URL;
-const getAircraftData = `${baseUrl}/api/internal_aircraft/`;
+import { apiAircraftData } from "../../api/api_urls";
 
 export default function Personnel() {
   const [aircraftData, setAircraftData] = useState([]);
@@ -13,7 +11,7 @@ export default function Personnel() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const AircraftResponse = await axios.get(getAircraftData);
+        const AircraftResponse = await axios.get(apiAircraftData);
 
         setAircraftData(AircraftResponse.data.success);
         console.log("Aircraft", AircraftResponse.data);

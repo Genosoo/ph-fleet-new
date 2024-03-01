@@ -5,17 +5,18 @@ import Charts from "./charts/Charts";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import ListCards from "./listcards/ListCards";
+import { 
+  apiMarineTrafficData, 
+  apiTrakSatData, 
+  apiSpiderTrakData,
+  apiUsers,
+  apiCheckInToday,
+  apiPersonnelData,
+  apiOfficesData,
+  apiVehiclesData
+ } from "../../api/api_urls";
 
-const baseUrl = import.meta.env.VITE_URL;
 
-const getMarineTrafficData = `${baseUrl}/api/marine_traffic_latest/`;
-const getTrakSatData = `${baseUrl}/api/traksat_latest/`;
-const getSpiderTrakData = `${baseUrl}/api/spidertracks_latest/`;
-const getAllUsers = `${baseUrl}/api/users/`;
-const getCheckInToday = `${baseUrl}/api/checked_in_users/`;
-const getPersonnelData = `${baseUrl}/api/personnel_latest`;
-const getOfficesData = `${baseUrl}/api/office/`;
-const getVehiclesData = `${baseUrl}/api/vehicle/`;
 
 export default function Dashboard() {
   const [loading, setLoading] = useState(true);
@@ -34,14 +35,14 @@ export default function Dashboard() {
     try {
       setLoading(true);
 
-      const marineTrafficResponse = await axios.get(getMarineTrafficData);
-      const trackSatResponse = await axios.get(getTrakSatData);
-      const spiderTrakResponse = await axios.get(getSpiderTrakData);
-      const getAllUserData = await axios.get(getAllUsers);
-      const personnelResponse = await axios.get(getPersonnelData);
-      const checkInResponse = await axios.get(getCheckInToday);
-      const officesResponse = await axios.get(getOfficesData);
-      const vehiclesResponse = await axios.get(getVehiclesData);
+      const marineTrafficResponse = await axios.get(apiMarineTrafficData);
+      const trackSatResponse = await axios.get(apiTrakSatData);
+      const spiderTrakResponse = await axios.get(apiSpiderTrakData);
+      const getAllUserData = await axios.get(apiUsers);
+      const personnelResponse = await axios.get(apiPersonnelData);
+      const checkInResponse = await axios.get(apiCheckInToday);
+      const officesResponse = await axios.get(apiOfficesData);
+      const vehiclesResponse = await axios.get(apiVehiclesData);
 
       setMarineTrafficData(marineTrafficResponse.data.success);
       setTrakSatData(trackSatResponse.data.success);

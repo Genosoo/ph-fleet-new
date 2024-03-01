@@ -2,32 +2,22 @@ import BarChart from "./barchart/BarChart";
 import DoughnutChart from "./doughnutchart/DoughnutChart";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { apiMarineTrafficData, apiTrakSatData, apiSpiderTrakData } from "../../../api/api_urls";
 
-const baseUrl = import.meta.env.VITE_URL;
-
-const getMarineTrafficData = `${baseUrl}/api/marine_traffic_latest/`;
-const getTrakSatData = `${baseUrl}/api/traksat_latest/`;
-const getSpiderTrakData = `${baseUrl}/api/spidertracks_latest/`;
-// const getPersonnelData = `${baseUrl}/api/personnel_latest`;
-// const getVideoStreamData = `${baseUrl}/api/video_stream_latest`;
 
 export default function Charts() {
   const [loading, setLoading] = useState(false);
   const [marineTrafficData, setMarineTrafficData] = useState([]);
   const [trakSatData, setTrakSatData] = useState([]);
   const [spiderTrakData, setSpiderTrakData] = useState([]);
-  // const [personnelData, setPersonnelData] = useState([]);
-  // const [videoStreamData, setVideoStreamData] = useState([]);
 
   const fetchData = async () => {
     try {
       setLoading(true);
 
-      const marineTrafficResponse = await axios.get(getMarineTrafficData);
-      const trackSatResponse = await axios.get(getTrakSatData);
-      const spiderTrakResponse = await axios.get(getSpiderTrakData);
-      // const personnelResponse = await axios.get(getPersonnelData);
-      // const videoStreamResponse = await axios.get(getVideoStreamData);
+      const marineTrafficResponse = await axios.get(apiMarineTrafficData);
+      const trackSatResponse = await axios.get(apiTrakSatData);
+      const spiderTrakResponse = await axios.get(apiSpiderTrakData);
 
       setMarineTrafficData(marineTrafficResponse.data.success);
       setTrakSatData(trackSatResponse.data.success);

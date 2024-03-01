@@ -18,7 +18,32 @@ export const trakSatClusterCustomIcon = function (cluster) {
 
 export const personnelClusterCustomIcon = function (cluster) {
   return new divIcon({
-    html: `<span class="personnel-cluster-icon">${cluster.getChildCount()}</span>`,
+    html: `<span class="incident-cluster-icon">${cluster.getChildCount()}</span>`,
+    className: "custom-marker-cluster",
+    iconSize: point(33, 33, true),
+  });
+};
+
+export const vehicleClusterCustomIcon = function (cluster) {
+  return new divIcon({
+    html: `<span class="vehicle-cluster-icon">${cluster.getChildCount()}</span>`,
+    className: "custom-marker-cluster",
+    iconSize: point(33, 33, true),
+  });
+};
+
+
+export const carClusterCustomIcon = function (cluster) {
+  return new divIcon({
+    html: `<span class="car-cluster-icon">${cluster.getChildCount()}</span>`,
+    className: "custom-marker-cluster",
+    iconSize: point(33, 33, true),
+  });
+};
+
+export const incidentClusterCustomIcon = function (cluster) {
+  return new divIcon({
+    html: `<span class="incident-cluster-icon">${cluster.getChildCount()}</span>`,
     className: "custom-marker-cluster",
     iconSize: point(33, 33, true),
   });

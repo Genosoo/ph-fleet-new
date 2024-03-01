@@ -1,0 +1,54 @@
+id,user_id,memship_id,prefix,first_name,middle_name,last_name,suffix,nickname,mobile_number,email,occupation,region,province,municipality,barangay,bldg_number,bldg_name,street_number,street_name,memship_type,position,parallel_group,application_date,approved_date,closed_date,memship_status,photo,birth_date,gender,referred_by,parallel_groups_multiple,created_by_id,created_at,updated_at
+6,13,,,Tribong Maharlika Nat'l Org. Inc.,,,,,,tribongmaharlikanat'lorg.inc.,,,,,,,,,,,,7,,,,,,,,,,,2024-01-06 23:54:40,2024-01-06 23:54:40
+20,27,,,PVAID,,,,,,pvaid,,,,,,,,,,,,21,,,,,,,,,21,,2024-01-06 23:54:49,2024-01-10 15:04:04
+46,55,591071,,GENO,,URETA,,,09473778502,genojo@gmail.com,,,,,,,,,,,,5,,,,,Individual/photo/Rectangle_257.jpg,1999-10-01,male,,,,2024-01-08 22:14:53,2024-01-08 22:14:53
+47,1,,,Admin,,,,,,,,,,,,,,,,,,,,,,,,,,,,,2024-01-08 22:39:38,2024-01-08 22:39:38
+48,2,,,Admin 2,,,,,,,,,,,,,,,,,,,,,,,,,,,,,2024-01-08 22:40:29,2024-01-08 22:40:29
+49,4,,,Admin 3,,,,,,,,,,,,,,,,,,,,,,,,,,,,,2024-01-08 22:40:48,2024-01-08 22:40:48
+50,58,120066,,Steven,,Dela Rosa,,,09111111111,steven@GGmail.com,,,,,,,,,,,,13,,,,,,2000-01-01,male,,,,2024-01-09 00:07:31,2024-01-09 00:07:31
+51,59,550529,,Archie,,Cruz,,,09955382499,niel@tambulilabs.com,,,,,,,,,,,,2,,,,,,1971-02-25,male,,,,2024-01-09 08:15:48,2024-01-09 08:15:48
+12,19,,,BBMSUS,,,,,,bbmsus,,,,,,,,,,,,13,,,,,,,,,13,,2024-01-06 23:54:44,2024-01-10 14:11:44
+53,61,784332,,Steven,,Dela Rosa,,,09112222322,stevent@tambuli.com,,,,,,,,,,,,13,,,,,,1982-01-09,male,,,,2024-01-09 17:37:16,2024-01-09 17:37:16
+1,5,10000,1,Juan,,Dela Cruz,1,Juan,09123456789,juan@gmail.com,1,1,128,12801,12802001,11,Building 1,1,Street 1,1,,1,,,,2,Individual/photo/stevensMethodOfRewiring.png,,,,,,2023-12-12 11:37:55,2024-01-09 08:26:06
+52,60,471780,,Jexter,,Morojo,,,09197525002,pdp.angono@gmail.com,,,,,,,,,,,,1,,,,,Individual/photo/received_345221830933393.jpeg.jpeg,1985-03-24,male,,,,2024-01-09 16:24:04,2024-01-09 17:39:25
+2,9,,,BLESSED Movement,,,,,,blessedmovement,,,,,,,,,,,,1,,,,,,,,,1,,2024-01-06 23:54:38,2024-01-10 14:10:53
+3,10,,,Team BBM 2022,,,,,,teambbm2022,,,,,,,,,,,,2,,,,,,,,,2,,2024-01-06 23:54:38,2024-01-10 14:11:23
+45,52,,,BBM Alyansa ng mga Filipino,,,,,,bbmalyansangmgafilipino,,,,,,,,,,,,46,,,,,,,,,46,,2024-01-06 23:55:05,2024-01-10 14:57:54
+44,51,,,Laguna Bagong Pag Asa Bayanihan Movement,,,,,,lagunabagongpagasabayanihanmovement,,,,,,,,,,,,45,,,,,,,,,45,,2024-01-06 23:55:04,2024-01-10 14:59:18
+43,50,,,Todo Asenso Pilipino,,,,,,todoasensopilipino,,,,,,,,,,,,44,,,,,,,,,44,,2024-01-06 23:55:04,2024-01-10 14:59:32
+42,49,,,Samahang Walang Umay Organization,,,,,,samahangwalangumayorganization,,,,,,,,,,,,43,,,,,,,,,43,,2024-01-06 23:55:03,2024-01-10 14:59:53
+41,48,,,BongBongMarcos Alliance of Supporters Worldwide,,,,,,bongbongmarcosallianceofsupportersworldwide,,,,,,,,,,,,42,,,,,,,,,42,,2024-01-06 23:55:02,2024-01-10 15:00:11
+40,47,,,Maharlika Ilo-ilo,,,,,,maharlikailo-ilo,,,,,,,,,,,,41,,,,,,,,,41,,2024-01-06 23:55:01,2024-01-10 15:00:23
+39,46,,,YACAP,,,,,,yacap,,,,,,,,,,,,40,,,,,,,,,40,,2024-01-06 23:55:00,2024-01-10 15:00:35
+38,45,,,BBM Youth Ilo-ilo,,,,,,bbmyouthilo-ilo,,,,,,,,,,,,39,,,,,,,,,39,,2024-01-06 23:55:00,2024-01-10 15:00:54
+37,44,,,BBM Rider & Volunteer of the Phil,,,,,,bbmrider&volunteerofthephil,,,,,,,,,,,,38,,,,,,,,,38,,2024-01-06 23:54:59,2024-01-10 15:01:02
+36,43,,,BBM-Sara Hugpong Panay,,,,,,bbm-sarahugpongpanay,,,,,,,,,,,,37,,,,,,,,,37,,2024-01-06 23:54:59,2024-01-10 15:01:08
+35,42,,,BBM Kaberks United Warrior,,,,,,bbmkaberksunitedwarrior,,,,,,,,,,,,36,,,,,,,,,36,,2024-01-06 23:54:58,2024-01-10 15:01:15
+34,41,,,Solid Marcos Loyalist International,,,,,,solidmarcosloyalistinternational,,,,,,,,,,,,35,,,,,,,,,35,,2024-01-06 23:54:57,2024-01-10 15:01:25
+33,40,,,BBM Volunteers Friends Nationwide,,,,,,bbmvolunteersfriendsnationwide,,,,,,,,,,,,34,,,,,,,,,34,,2024-01-06 23:54:57,2024-01-10 15:01:31
+32,39,,,Bagong Bansang Masagana BBM Loyalist,,,,,,bagongbansangmasaganabbmloyalist,,,,,,,,,,,,33,,,,,,,,,33,,2024-01-06 23:54:56,2024-01-10 15:01:38
+31,38,,,Samasama at Nagkakaisang Kabitenyo BBM/Sara,,,,,,samasamaatnagkakaisangkabitenyobbm/sara,,,,,,,,,,,,32,,,,,,,,,32,,2024-01-06 23:54:55,2024-01-10 15:01:44
+30,37,,,Marcos Loyalist for God & Country,,,,,,marcosloyalistforgod&country,,,,,,,,,,,,31,,,,,,,,,31,,2024-01-06 23:54:55,2024-01-10 15:01:51
+29,36,,,BBM Frontliner Loyalist,,,,,,bbmfrontlinerloyalist,,,,,,,,,,,,30,,,,,,,,,30,,2024-01-06 23:54:54,2024-01-10 15:01:57
+28,35,,,FUPAC,,,,,,fupac,,,,,,,,,,,,29,,,,,,,,,29,,2024-01-06 23:54:54,2024-01-10 15:02:04
+27,34,,,We Love Marcos Global,,,,,,welovemarcosglobal,,,,,,,,,,,,28,,,,,,,,,28,,2024-01-06 23:54:53,2024-01-10 15:02:09
+26,33,,,Undivided Lanao-Volunter for BBM,,,,,,undividedlanao-volunterforbbm,,,,,,,,,,,,27,,,,,,,,,27,,2024-01-06 23:54:53,2024-01-10 15:03:15
+25,32,,,Marcos Defender Worldwide,,,,,,marcosdefenderworldwide,,,,,,,,,,,,26,,,,,,,,,26,,2024-01-06 23:54:52,2024-01-10 15:03:22
+24,31,,,Marcos Loyalist Socmed,,,,,,marcosloyalistsocmed,,,,,,,,,,,,25,,,,,,,,,25,,2024-01-06 23:54:51,2024-01-10 15:03:28
+23,30,,,BBM Loyalist International,,,,,,bbmloyalistinternational,,,,,,,,,,,,24,,,,,,,,,24,,2024-01-06 23:54:51,2024-01-10 15:03:34
+22,29,,,BBM-Pilipinas,,,,,,bbm-pilipinas,,,,,,,,,,,,23,,,,,,,,,23,,2024-01-06 23:54:50,2024-01-10 15:03:42
+21,28,,,BBM Ikaw ang Presidente Ko,,,,,,bbmikawangpresidenteko,,,,,,,,,,,,22,,,,,,,,,22,,2024-01-06 23:54:49,2024-01-10 15:03:50
+19,26,,,Trolab Pilipinas,,,,,,trolabpilipinas,,,,,,,,,,,,20,,,,,,,,,20,,2024-01-06 23:54:48,2024-01-10 15:05:04
+18,25,,,Diehard for BBM,,,,,,diehardforbbm,,,,,,,,,,,,19,,,,,,,,,19,,2024-01-06 23:54:48,2024-01-10 15:09:18
+17,24,,,Samahang Walang Umay kay BBM,,,,,,samahangwalangumaykaybbm,,,,,,,,,,,,18,,,,,,,,,18,,2024-01-06 23:54:47,2024-01-10 15:09:24
+16,23,,,BBMLFP,,,,,,bbmlfp,,,,,,,,,,,,17,,,,,,,,,17,,2024-01-06 23:54:46,2024-01-10 15:09:32
+15,22,,,SBPWM,,,,,,sbpwm,,,,,,,,,,,,16,,,,,,,,,16,,2024-01-06 23:54:46,2024-01-10 15:09:39
+14,21,,,All Out for BBM Sara,,,,,,alloutforbbmsara,,,,,,,,,,,,15,,,,,,,,,15,,2024-01-06 23:54:45,2024-01-10 15:09:44
+13,20,,,Bangon Bayanihan Movement Inc.,,,,,,bangonbayanihanmovementinc.,,,,,,,,,,,,14,,,,,,,,,14,,2024-01-06 23:54:45,2024-01-10 15:09:50
+11,18,,,BBM Alliance of Supporters,,,,,,bbmallianceofsupporters,,,,,,,,,,,,12,,,,,,,,,12,,2024-01-06 23:54:43,2024-01-10 15:10:02
+10,17,,,Aviation Volunteers for Marcos,,,,,,aviationvolunteersformarcos,,,,,,,,,,,,11,,,,,,,,,11,,2024-01-06 23:54:43,2024-01-10 15:10:08
+9,16,,,Marcos-Duterte Team Pilipinas,,,,,,marcos-duterteteampilipinas,,,,,,,,,,,,10,,,,,,,,,10,,2024-01-06 23:54:42,2024-01-10 15:10:14
+8,15,,,Marcos Volunteer Movement Alliance,,,,,,marcosvolunteermovementalliance,,,,,,,,,,,,9,,,,,,,,,9,,2024-01-06 23:54:41,2024-01-10 15:10:20
+7,14,,,The Original Marcos Loyalist,,,,,,theoriginalmarcosloyalist,,,,,,,,,,,,8,,,,,,,,,8,,2024-01-06 23:54:41,2024-01-10 15:10:26
+5,12,,,Great Nation Philippines Org.,,,,,,greatnationphilippinesorg.,,,,,,,,,,,,6,,,,,,,,,6,,2024-01-06 23:54:39,2024-01-10 15:10:31
+4,11,,,KBL - Kay BBM Lagi,,,,,,kbl-kaybbmlagi,,,,,,,,,,,,5,,,,,,,,,5,,2024-01-06 23:54:39,2024-01-10 15:10:38

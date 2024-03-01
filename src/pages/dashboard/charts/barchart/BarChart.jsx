@@ -60,7 +60,7 @@ const BarChart = ({ trakSatData, marineTrafficData, spiderTrakData }) => {
     const selectedValue = event.target.value;
     if (selectedValue === "trakSatData") {
       setSelectedData(trakSatData);
-      setGroupingProperty("network");
+      setGroupingProperty("group");
     } else if (selectedValue === "marineTrafficData") {
       setSelectedData(marineTrafficData);
       setGroupingProperty("ais_type_summary");

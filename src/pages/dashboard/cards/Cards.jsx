@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import  { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Cards({
     marineTrafficData, 
@@ -78,19 +79,21 @@ export default function Cards({
         <div className="cards_container">
             <div className="cards_wrapper">
                 <div className="card_box card_box_1">
-                <div className="card">
-                    <h2>{marineTrafficCount}</h2>
-                    <span>No.of Commercial Vessels (Marine Traffic)</span>
-                </div>
-                <div className="card">
+                 <Link  className="card" to={'/fleet/marinetraffic-list'}>
+                        <h2>{marineTrafficCount}</h2>
+                        <span>No.of Commercial Vessels (Marine Traffic)</span>
+                 </Link>
+
+                 <Link className="card" to={'/fleet/traksat-list'}>
                     <h2>{trakSatCount}</h2>
                     <span>No. of PF Vessels (TrakSat)</span>
-                </div>
-                <div className="card">
+                </Link>
+
+                <Link className="card"  to={'/fleet/spidertrak-list'}>
                     <h2>{spiderTrakCount}</h2>
                     <span>No. of PF Aircrafts (SpiderTrak)</span>
-                    
-                </div>
+                </Link>
+
                 <div className="card opacity-[0.3]">
                     <h2>0</h2>
                     <span>No. of Commercial Aircrafts (FlightRadar)</span>

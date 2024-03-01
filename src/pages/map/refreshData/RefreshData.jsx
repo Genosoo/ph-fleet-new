@@ -1,11 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { apiLatestMarineTraffic, apiLatestTraksat, apiLatestSpiderTrak } from "../../../api/api_urls";
 
 
-const baseUrl = import.meta.env.VITE_URL;
-const getLatestMarineTraffic = `${baseUrl}/api/get_latest_marine_traffic/`;
-const getLatestTraksat = `${baseUrl}/api/get_traksat_latest/`;
-const getLatestSpiderTrak = `${baseUrl}/api/get_spidertracks_latest/`;
 
 export default function RefreshData() {
   const refreshInterval = 120000; // 2 minutes
@@ -15,7 +12,7 @@ export default function RefreshData() {
 
   const refreshMarineTraffic = async () => {
     try {
-      const responseMarineTraffic = await axios.get(getLatestMarineTraffic);
+      const responseMarineTraffic = await axios.get(apiLatestMarineTraffic);
       console.log('refresh MarineTraffic', responseMarineTraffic);
     } catch (error) {
       console.error("Error Marine Traffic",error);
@@ -26,7 +23,7 @@ export default function RefreshData() {
 
   const refreshTraksat = async () => {
     try {
-      const responseTraksat = await axios.get(getLatestTraksat);
+      const responseTraksat = await axios.get(apiLatestTraksat);
       console.log('refresh Traksat', responseTraksat);
       if (responseTraksat.status === 400) {
         console.log("Error: Bad Request for Traksat data");
@@ -38,7 +35,7 @@ export default function RefreshData() {
   
   const refreshSpiderTrak = async () => {
     try {
-      const responseSpiderTrak = await axios.get(getLatestSpiderTrak);
+      const responseSpiderTrak = await axios.get(apiLatestSpiderTrak);
       console.log('refresh SpiderTrak', responseSpiderTrak);
     } catch (error) {
       console.error("Error refresh SpiderTrak",error);

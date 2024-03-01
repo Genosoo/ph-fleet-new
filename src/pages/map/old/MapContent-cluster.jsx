@@ -34,7 +34,8 @@ export default function Map({
   tracksatData, 
   spiderTrakData, 
   personnelData,
-  videoStreamData
+  videoStreamData,
+  carData
   
 }) {
   const mapRef = useRef(null);
@@ -44,7 +45,9 @@ export default function Map({
   const [selectedPersonnel, setSelectedPersonnel] = useState(null);
   const [selectedVideoStream, setSelectedVideoStream] = useState(null);
   const [selectedSpiderTrak, setSelectedSpiderTrak] = useState(null);
+  const [selectedCar, setSelectedCar] = useState(null);
   const [showSpiderTrak, setShowSpiderTrak] = useState(false);
+  const [showCar, setShowCar] = useState(false);
   const [showDescription, setShowDescription] = useState(false);
   const [showSpiderTrakDesc, setShowSpiderTrakDesc] = useState(false);
 
@@ -78,6 +81,7 @@ export default function Map({
     setShowSpiderTrak(getCheckboxState('showSpiderTrak', false));
     setShowPersonnel(getCheckboxState('showPersonnel', false));
     setShowVideoStream(getCheckboxState('showVideoStream', false));
+    setShowCar(getCheckboxState('ShowCar', false));
   }, []);
 
   useEffect(() => {
@@ -100,6 +104,10 @@ export default function Map({
   useEffect(() => {
     updateLocalStorage('showVideoStream', showVideoStream);
   }, [showVideoStream]);
+
+  useEffect(() => {
+    updateLocalStorage('show Card', showCar);
+  }, [showCar]);
 
 
 
@@ -131,8 +139,14 @@ export default function Map({
   const handleSpiderTrak = () => {
     setShowSpiderTrak(!showSpiderTrak)
     setShowSpiderTrakLabel(!showSpiderTrakLabel)
+  };
+
+  const handleCar = () => {
+    setShowCar(!showCar)
+    // setShowSpiderTrakLabel(!showSpiderTrakLabel)
 
   };
+
 
 
   const handleMarineTrafficMarkerClick = (vesselData) => {
@@ -190,6 +204,8 @@ export default function Map({
       handlePersonnel={handlePersonnel}
       showVideoStream={showVideoStream}
       handleVideoStream={handleVideoStream}
+      showCar={showCar}
+      handleCar={handleCar}
     />
   <div className='map_container'>
      
@@ -209,6 +225,7 @@ export default function Map({
            subdomains={['mt0', 'mt1', 'mt2', 'mt3']}
          />
         )}
+
 
 
     

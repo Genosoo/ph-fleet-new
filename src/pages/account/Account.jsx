@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react"
 import axios from "axios";
+import { apiAccount } from "../../api/api_urls";
 
-const baseUrl = import.meta.env.VITE_URL;
-const getAccount = `${baseUrl}/api/myaccount/`;
 
 export default function Account() {
   const [accountData, setAccountData] = useState({});
@@ -10,7 +9,7 @@ export default function Account() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const accountResponse = await axios.get(getAccount);
+        const accountResponse = await axios.get(apiAccount);
         const responseData = accountResponse.data.success
         console.log(responseData);
         setAccountData(responseData);

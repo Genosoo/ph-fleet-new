@@ -1,19 +1,19 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from './authContext/AuthContext';
 import axios from 'axios';
 import loginLogo from '../assets/logo.png';
 import nlogo from '../assets/nlgo.jpg';
 import nlogo1 from '../assets/fleet_logo.png';
+import { apilogin} from '../api/api_urls';
+import GetToken from '../components/token/GetToken';
 
-const baseUrl = import.meta.env.VITE_URL;
-const getCsrfTokenUrl = `${baseUrl}/api/csrf_cookie/`;
-const loginUrl = `${baseUrl}/api/login/`;
 
 export default function Login() {
+  const csrfToken = GetToken()
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const { authState, dispatch } = useAuth();
@@ -22,20 +22,7 @@ export default function Login() {
     password: '',
   });
 
-  const [csrfToken, setCsrfToken] = useState('');
 
-  useEffect(() => {
-    const getTheCsrfToken = async () => {
-      try {
-        const response = await axios.get(getCsrfTokenUrl);
-        setCsrfToken(response.data['csrf-token']);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    getTheCsrfToken();
-  }, []);
 
   const navigate = useNavigate();
 
@@ -48,7 +35,7 @@ export default function Login() {
     try {
       setLoading(true);
 
-      const response = await axios.post(loginUrl, formData, {
+      const response = await axios.post(apilogin, formData, {
         headers: {
           'X-CSRFToken': csrfToken,
         },
@@ -74,12 +61,7 @@ export default function Login() {
     }
   };
 
-  // Redirect to dashboard if the user is already authenticated
-  useEffect(() => {
-    if (authState.user || localStorage.getItem('token')) {
-      navigate('/fleet');
-    }
-  }, [authState.user]);
+ 
 
   return (
     <div className="login_container">

@@ -8,19 +8,13 @@ import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import axios from 'axios'
-
-
-const baseUrl = import.meta.env.VITE_URL;
-
-const getCsrfTokenUrl = `${baseUrl}/api/csrf_cookie/`
-
-const getMarineTrafficSettingUrl = `${baseUrl}/api/marine_traffic_settings/`
-const getTraksatSettingUrl = `${baseUrl}/api/traksat_settings/`
-const getSpiderTrakSettingUrl = `${baseUrl}/api/spidertracks_settings/`
-
-const postMarineTrafficSettingUrl = `${baseUrl}/api/marine_traffic_settings/`
-const postTraksatSettingUrl = `${baseUrl}/api/traksat_settings/`
-const postSpiderTrakSettingUrl = `${baseUrl}/api/spidertracks_settings/`
+import { 
+  getCsrfToken,
+  apiMarineTrafficSetting,
+  apiTraksatSetting,
+  apiSpiderTrakSetting,
+  apiCarTrackSettings
+ } from '../../api/api_urls';
 
 export default function Settings() {
   const [marineTrafficApiKey, setMarineTrafficApikey] = useState('')
@@ -33,6 +27,11 @@ export default function Settings() {
   const [userName, setUserName] = useState('');
   const [userPassword, setUserPassword] = useState('');
 
+  const [carTrackUrl, setCarTrackUrl] = useState('');
+  const [carTrackUsername, setCarTrackUsername] = useState('');
+  const [carTrackPassword, setCarTrackPassword] = useState('');
+  const [carTrackToken, setCarTrackToken] = useState('');
+  
   // const [isForbidden, setIsForbidden] = useState(false);
   const [updateMessageInfo, setUpdateMessageInfo] = useState({ message: '', visible: false });
   const [urlErrorInfo, setUrlErrorInfo] = useState({ message: '', visible: false });
@@ -43,85 +42,70 @@ export default function Settings() {
   useEffect(() => {
     const getTheCsrfToken = async () => {
       try {
-        const response = await axios.get(getCsrfTokenUrl);
+        const response = await axios.get(getCsrfToken);
         setCsrfToken(response.data['csrf-token']);
         console.log(response.data['csrf-token'])
       } catch (error) {
         console.log(error);
       }
     };
-
   
     getTheCsrfToken();
   }, []); 
 
-    // Fetch and set the API key when the component mounts
-    useEffect(() => {
-      const fetchData = async () => {
-          try {
-              const response = await axios.get(getMarineTrafficSettingUrl,{
-                headers: {
-                  'X-CSRFToken': csrfToken
-                }
-              });
-              console.log("Marine Traffic Settings: ",response.data.success)
-              setMarineTrafficApikey(response.data.success[0].marine_traf_api_key)
-              setMarineTrafficUrl(response.data.success[0].marine_traf_base_url)
-          } catch (error) {
-              console.error('Failed to fetch API key:', error);
-              if (error.response && error.response.status === 403) {
-                setIsForbidden(true); // Set status to forbidden
-            }
-          }
-      };
-  
-      fetchData();
+
+  const fetchData = async (url, stateSetter, additionalHeaders = {}) => {
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          'X-CSRFToken': getCsrfToken(),
+          ...additionalHeaders,
+        },
+      });
+      stateSetter(response.data.success[0]);
+    } catch (error) {
+      console.error(`Failed to fetch data from ${url}:`, error);
+    }
+  };
+
+
+  useEffect(() => {
+    fetchData(apiMarineTrafficSetting, (data) => {
+      setMarineTrafficApikey(data.marine_traf_api_key);
+      setMarineTrafficUrl(data.marine_traf_base_url);
+    });
   }, []);
 
 
   useEffect(() => {
-    const fetchDataTraksat = async () => {
+    const fetchDataCar = async () => {
       try {
-        const response = await axios.get(getTraksatSettingUrl, {
+        const response = await axios.get(apiCarTrackSettings, {
           headers: {
-            'X-CSRFToken': csrfToken,
+            'X-CSRFToken': getCsrfToken(),
           },
         });
-        setTrakSatUrl(response.data.success[0].traksat_base_url);
-        console.log('tracksat settings', response.data.success[0].traksat_base_url);
+
+        console.log("car settings", response)
       } catch (error) {
-        console.error('Failed to fetch traksat_base_url:', error);
-        // if (error.response && error.response.status === 403) {
-        //   setIsForbidden(true);
-        // }
+        console.error(`Failed to fetch data from ${url}:`, error);
       }
     };
-  
-   
-    fetchDataTraksat();
+
+    fetchDataCar()
   }, []);
 
 
   useEffect(() => {
-    const fetchDataSpiderTrak = async () => {
-      try {
-        const response = await axios.get(getSpiderTrakSettingUrl, {
-          headers: {
-            'X-CSRFToken': csrfToken,
-          },
-        });
-        setSpiderTrakUrl(response.data.success[0].spidertracks_base_url);
-        console.log('spidertrack settings', response.data.success);
-      } catch (error) {
-        console.error('Failed to fetch traksat_base_url:', error);
-        // if (error.response && error.response.status === 403) {
-        //   setIsForbidden(true);
-        // }
-      }
-    };
-  
-   
-    fetchDataSpiderTrak();
+    fetchData(apiTraksatSetting, (data) => {
+      setTrakSatUrl(data.traksat_base_url);
+    });
+  }, []);
+
+  useEffect(() => {
+    fetchData(apiSpiderTrakSetting, (data) => {
+      setSpiderTrakUrl(data.spidertracks_base_url);
+    });
   }, []);
 
 
@@ -141,7 +125,7 @@ export default function Settings() {
       // Define the data to be sent with the PUT request
       const data = { traksat_base_url: trakSatUrl };
   
-      await axios.put(postTraksatSettingUrl, data, { headers });
+      await axios.put(apiTraksatSetting, data, { headers });
       setUpdateMessageInfo({ message: 'URL updated successfully', visible: true });
   
       // Clear the update message after 3 seconds
@@ -174,7 +158,7 @@ export default function Settings() {
       // Define the data to be sent with the PUT request
       const data = { spidertracks_base_url: spiderTrakUrl };
   
-      await axios.put(postSpiderTrakSettingUrl, data, { headers });
+      await axios.put(apiSpiderTrakSetting, data, { headers });
       setUpdateMessageInfo({ message: 'URL updated successfully', visible: true });
   
     // Clear the update message after 3 seconds
@@ -206,7 +190,7 @@ export default function Settings() {
       };
   
       // Send the request and get the updated data
-      const response = await axios.put(postSpiderTrakSettingUrl, data, { headers });
+      const response = await axios.put(apiSpiderTrakSetting, data, { headers });
       console.log('Username and Password Settings updated successfully', response.data.success);
       setUpdateMessageInfo({ message: 'Username and Password updated successfully', visible: true });
       // Clear the update message after 3 seconds
@@ -236,7 +220,7 @@ const handleApiKeySubmit = async (e) => {
     };
 
     // Send the request and get the updated data
-    const response = await axios.put(postMarineTrafficSettingUrl, data, { headers });
+    const response = await axios.put(apiMarineTrafficSetting, data, { headers });
     console.log('Marine Traffice API KEY Sucessfully updated', response.data.success);
     setUpdateMessageInfo({ message: 'API KEY updated successfully', visible: true });
  // Clear the update message after 3 seconds
@@ -264,7 +248,7 @@ const handleMarineTrafficUrlSubmit = async (e) => {
     };
 
     // Send the request and get the updated data
-    const response = await axios.put(postMarineTrafficSettingUrl, data, { headers });
+    const response = await axios.put(apiMarineTrafficSetting, data, { headers });
 
     console.log('Marine Traffice Url Sucessfully updated', response.data.success);
     setUpdateMessageInfo({ message: 'URL updated successfully', visible: true });
@@ -293,7 +277,7 @@ const handleMarineTrafficMessageSubmit = async (e) => {
     };
 
     // Send the request and get the updated data
-    const response = await axios.put(postMarineTrafficSettingUrl, data, { headers });
+    const response = await axios.put(apiMarineTrafficSetting, data, { headers });
 
     console.log('Marine Traffice Message Type Sucessfully updated', response.data.success);
     setUpdateMessageInfo({message: 'Message Type updated successfully', visible: true});
@@ -307,6 +291,38 @@ const handleMarineTrafficMessageSubmit = async (e) => {
     // You can add an error message here if needed.
   }
 };
+
+
+const handleCarTrackSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const headers = {
+      'X-CSRFToken': csrfToken, // Include the CSRF token in the request headers
+    };
+
+    const data = {
+      cartrack_base_url: carTrackUrl,
+      cartrack_username: carTrackUsername,
+      cartrack_password: carTrackPassword,
+      cartrack_token: carTrackToken
+    };
+
+    const response = await axios.put(apiCarTrackSettings, data, { headers });
+    console.log('Car Track settings updated successfully', response.data.success);
+    setUpdateMessageInfo({ message: 'Car Track settings updated successfully', visible: true });
+
+    // Clear the update message after 3 seconds
+    setTimeout(() => {
+      setUpdateMessageInfo({ message: '', visible: false });
+    }, 3000);
+  } catch (error) {
+    console.error('Car Track settings update error:', error);
+    // Handle error here if needed
+  }
+};
+
+
 
   return (
     <div>
@@ -380,6 +396,18 @@ const handleMarineTrafficMessageSubmit = async (e) => {
 
       </div>
         </div>
+
+        <div className='settings_box'>
+  <span>Car Track</span>
+  <div className="flex gap-2">
+    <TextField value={carTrackUrl} onChange={(e) => setCarTrackUrl(e.target.value)} id="outlined-basic" label="URL" variant="outlined" />
+    <TextField value={carTrackUsername} onChange={(e) => setCarTrackUsername(e.target.value)} id="outlined-basic" label="Username" variant="outlined" />
+    <TextField value={carTrackPassword} onChange={(e) => setCarTrackPassword(e.target.value)} id="outlined-basic" label="Password" variant="outlined" />
+    <TextField value={carTrackToken} onChange={(e) => setCarTrackToken(e.target.value)} id="outlined-basic" label="Token" variant="outlined" />
+    <Button variant="contained" onClick={handleCarTrackSubmit}>Submit</Button>
+  </div>
+</div>
+
 
      
 

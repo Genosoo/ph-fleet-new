@@ -24,12 +24,7 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-
-const baseUrl = import.meta.env.VITE_URL;
-const usersApi = `${baseUrl}/api/users/`;
-const rolesApi = `${baseUrl}/api/groups/`;
-const getCsrfTokenUrl = `${baseUrl}/api/csrf_cookie/`;
-
+import { apiUsers, apiRoles, getCsrfToken } from "../../api/api_urls";
 
 const Users = () => {
   const [usersData, setUsersData] = useState([]);
@@ -54,7 +49,7 @@ const Users = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const rolesResponse = await axios.get(rolesApi);
+        const rolesResponse = await axios.get(apiRoles);
         setRolesData(rolesResponse.data.success);
         console.log("roles", rolesResponse.data);
       } catch (error) {
@@ -96,7 +91,7 @@ const Users = () => {
         },
       };
 
-      await axios.put(usersApi, updatedUser, headers);
+      await axios.put(apiUsers, updatedUser, headers);
 
       const updatedUsersData = usersData.map((user) =>
         user.id === updateUserId ? updatedUser : user
@@ -137,7 +132,7 @@ const Users = () => {
 
     try {
       // Make a POST request to create a new user with CSRF token in the headers and newUser in the body
-      await axios.post(usersApi, newUser, headers);
+      await axios.post(apiUsers, newUser, headers);
 
       // Update the usersData state with the new user
       setUsersData((prevUsers) => [...prevUsers, newUser]);
@@ -169,7 +164,7 @@ const Users = () => {
 
       const requestBody = { id: deleteUserId };
 
-      await axios.delete(`${usersApi}`, { headers, data: requestBody });
+      await axios.delete(`${apiUsers}`, { headers, data: requestBody });
 
       const updatedUsersData = usersData.filter((user) => user.id !== deleteUserId);
       setUsersData(updatedUsersData);
@@ -184,7 +179,7 @@ const Users = () => {
   useEffect(() => {
     const getTheCsrfToken = async () => {
       try {
-        const response = await axios.get(getCsrfTokenUrl);
+        const response = await axios.get(getCsrfToken);
         setCsrfToken(response.data['csrf-token']);
       } catch (error) {
         console.log(error);
@@ -198,7 +193,7 @@ const Users = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const usersResponse = await axios.get(usersApi);
+        const usersResponse = await axios.get(apiUsers);
         setUsersData(usersResponse.data.success ?? []);
         console.log("Users", usersResponse.data.success);
       } catch (error) {

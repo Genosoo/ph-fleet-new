@@ -1,21 +1,17 @@
 /* eslint-disable react/prop-types */
 import { createContext, useContext, useReducer } from "react";
-import Cookies from "js-cookie";
-
+import Cookies from 'js-cookie';
 const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
-  const token = localStorage.getItem('token')
   const initialState = {
     user: null,
-    token: token || null,
   };
 
   const authReducer = (state, action) => {
     switch(action.type){
       case 'LOGIN':
         console.log('User logged in:', action.payload.user);
-        localStorage.setItem('token', action.payload.token);
         localStorage.setItem('user', action.payload.user);
         return{
           ...state,
@@ -23,9 +19,8 @@ export const AuthProvider = ({ children }) => {
           token: action.payload.token,
         };
       case 'LOGOUT':
-        Cookies.remove('sessionid'); 
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
+        Cookies.remove("sessionid")
+        Cookies.remove('csrftoken'); // Remove CSRF token from cookie
         return{
           ...state,
           user:null,

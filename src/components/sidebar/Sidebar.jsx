@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { linkItem1 } from './Link';
 import {BiAlignLeft } from "react-icons/bi";
+import { apiAccount } from '../../api/api_urls';
 
 import axios from 'axios'
 import Logo from '../../assets/logo.png'
@@ -9,8 +10,6 @@ import Logo from '../../assets/logo.png'
 
 
 
-const baseUrl = import.meta.env.VITE_URL;
-const getAccount = `${baseUrl}/api/myaccount/`;
 
 
 const Sidebar = () => {
@@ -28,7 +27,7 @@ const Sidebar = () => {
     useEffect(() => {
         const fetchData = async () => {
           try {
-            const accountResponse = await axios.get(getAccount);
+            const accountResponse = await axios.get(apiAccount);
             const responseData = accountResponse.data.success
             console.log(responseData);
             setAccountData(responseData);
@@ -59,60 +58,39 @@ const Sidebar = () => {
         }
     }, [accountData]);
     
-
-    // useEffect(() => {
-    //     // Simulate the error response status as 403 (for demonstration)
-    //     const error = {
-    //         response: {
-    //             status: 402
-    //         }
-    //     };
-    
-    //     if (error.response.status === 403) {
-    //         setSpecificMenuItems1(["Map", "Roles", "Users"]);
-    //     } else {
-    //         setSpecificMenuItems1(["Dashboard", "Map", "Roles", "Users", "Personnel"]);
-    //         setSpecificMenuItems5(["Settings"]);
-
-    //     }
-    // }, []); 
-
-
-// const specificMenuItems3 = ["Vessels-Commercial", "Aircrafts-Commercial"];
-// const specificMenuItems4 = ["Reports", "Alerts"];
-
-const filteredLinkItems1 = linkItem1.filter(item => specificMenuItems1.includes(item.name));
-const filteredLinkItems2 = linkItem1.filter(item => specificMenuItems2.includes(item.name));
-const filteredLinkItems3 = linkItem1.filter(item => specificMenuItems3.includes(item.name));
-const filteredLinkItems4 = linkItem1.filter(item => specificMenuItems4.includes(item.name));
-const filteredLinkItems5 = linkItem1.filter(item => specificMenuItems5.includes(item.name));
-const filteredLinkItems6 = linkItem1.filter(item => specificMenuItems6.includes(item.name));
+    const filteredLinkItems1 = linkItem1.filter(item => specificMenuItems1.includes(item.name));
+    const filteredLinkItems2 = linkItem1.filter(item => specificMenuItems2.includes(item.name));
+    const filteredLinkItems3 = linkItem1.filter(item => specificMenuItems3.includes(item.name));
+    const filteredLinkItems4 = linkItem1.filter(item => specificMenuItems4.includes(item.name));
+    const filteredLinkItems5 = linkItem1.filter(item => specificMenuItems5.includes(item.name));
+    const filteredLinkItems6 = linkItem1.filter(item => specificMenuItems6.includes(item.name));
 
 
 
     return (
         <div className="sidebar_container">
-           
-
-           <div style={{width: isOpen ? "250px" : "100px"}} className="sidebar">
-              
-
+           <div 
+             style={{width: isOpen ? "250px" : "100px"}} 
+             className="sidebar"
+            >
               <div className="link_wrapper">
-              <div className="logo_wrapper">
-                   <div className="logo ">
-                   <img src={Logo} alt="logo"  style={{
-                        width: isOpen ? '30%' : '80px',
-                        transition: 'width 0.3s ease',
-                    }} />
-                   </div>
-              <span>Navigate</span>
-                   
-               </div>
+                <div className="logo_wrapper">
+                    <div className="logo ">
+                        <img 
+                            src={Logo}
+                            alt="logo"  
+                            style={{ width: isOpen ? '30%' : '80px', transition: 'width 0.3s ease'}} 
+                        />
+                    </div>
+                    <span>Navigate</span>
+                </div>
                
                {filteredLinkItems1.map((item, index) => (
                 <div key={index}>
                     {item.disabled ? (
-                        <div className="link disabled" style={{ justifyContent: isOpen ? "start" : "center" }}>
+                        <div 
+                        className="link disabled" 
+                        style={{ justifyContent: isOpen ? "start" : "center" }}>
                             <div className="icon">{item.icon}</div>
                             <h2 style={{ display: isOpen ? "block" : "none" }} className="link_text">{item.name}</h2>
                         </div>

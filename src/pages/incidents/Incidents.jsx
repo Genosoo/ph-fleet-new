@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination } from "@mui/material";
-
-const baseUrl = import.meta.env.VITE_URL;
-const getincidentData = `${baseUrl}/api/incident/`;
+import { apiIncident } from "../../api/api_urls";
 
 export default function Personnel() {
   const [incidentData, setincidentData] = useState([]);
@@ -13,7 +11,7 @@ export default function Personnel() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const incidentResponse = await axios.get(getincidentData);
+        const incidentResponse = await axios.get(apiIncident);
 
         setincidentData(incidentResponse.data.success);
         console.log("incident", incidentResponse.data);

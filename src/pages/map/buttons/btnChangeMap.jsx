@@ -29,6 +29,8 @@ export default function MapLayerSelector({ mapLayer, setMapLayer }) {
           >
             <option value="osm">Satellite Maps</option>
             <option value="google">Google Maps</option>
+            {/* Add Windy Maps option */}
+            <option value="windy">Windy Maps</option>
           </select>
         ) : null}
       </div>

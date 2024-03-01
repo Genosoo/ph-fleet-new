@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination } from "@mui/material";
-
-const baseUrl = import.meta.env.VITE_URL;
-const getOfficesData = `${baseUrl}/api/office/`;
+import { apiOfficesData } from "../../api/api_urls";
 
 export default function Personnel() {
   const [officesData, setOfficesData] = useState([]);
@@ -13,7 +11,7 @@ export default function Personnel() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const OfficesResponse = await axios.get(getOfficesData);
+        const OfficesResponse = await axios.get(apiOfficesData);
 
         setOfficesData(OfficesResponse.data.success);
         console.log("Offices", OfficesResponse.data);

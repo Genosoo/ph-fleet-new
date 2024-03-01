@@ -124,7 +124,9 @@ const handleCloseButtonClick = () => {
             </div>
            </div>
            <div className='mt_ship_img'>
-             <img src={`https://photos.marinetraffic.com/ais/showphoto.aspx?shipid=${selectedMarineTraffic.ship_id}&size=thumb300`} alt="ship image" />
+           <img src={`https://www.marinetraffic.com/photoCollection/getAssetDefaultPhoto?asset_id=${selectedMarineTraffic.ship_id}&asset_type_id=0&photo_size=300`} alt="ship image" />
+
+             {/* <img src={`https://photos.marinetraffic.com/ais/showphoto.aspx?shipid=${selectedMarineTraffic.ship_id}&size=thumb300`} alt="ship image" /> */}
            </div>
             <div className='flex justify-between p-2 bg-white'>
               <h4><b>ATD:</b> {selectedMarineTraffic.timestamp}</h4>

@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { 
+  apiOfficesData, 
+  apiPersonnelData, 
+  apiVesselsData,
+  apiAircraftData,
+  apiVehiclesData
+} from "../../api/api_urls";
 
-const baseUrl = import.meta.env.VITE_URL;
-const getOfficesData = `${baseUrl}/api/office/`;
-const getPersonnelData = `${baseUrl}/api/personnel_latest`;
-const getVesselsData = `${baseUrl}/api/internal_vessel/`;
-const getAircraftData = `${baseUrl}/api/internal_aircraft/`;
-const getvehiclesData = `${baseUrl}/api/vehicle/`;
 
 export default function Reports() {
   const [officesCount, setOfficesCount] = useState(0);
@@ -26,11 +27,11 @@ export default function Reports() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const officesResponse = await axios.get(getOfficesData);
-        const personnelResponse = await axios.get(getPersonnelData);
-        const vesselsResponse = await axios.get(getVesselsData);
-        const aircraftResponse = await axios.get(getAircraftData);
-        const vehiclesResponse = await axios.get(getvehiclesData);
+        const officesResponse = await axios.get(apiOfficesData);
+        const personnelResponse = await axios.get(apiPersonnelData);
+        const vesselsResponse = await axios.get(apiVesselsData);
+        const aircraftResponse = await axios.get(apiAircraftData);
+        const vehiclesResponse = await axios.get(apiVehiclesData);
 
         setOfficesData(officesResponse.data.success)
         setPersonnelData(personnelResponse.data.success)
