@@ -20,7 +20,6 @@ export const AuthProvider = ({ children }) => {
         };
       case 'LOGOUT':
         Cookies.remove("sessionid")
-        Cookies.remove('csrftoken'); // Remove CSRF token from cookie
         return{
           ...state,
           user:null,
