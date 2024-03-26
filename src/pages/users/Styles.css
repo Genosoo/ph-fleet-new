@@ -1,0 +1,19 @@
+@tailwind components;
+
+@layer components{
+    .userContainer{
+        @apply flex flex-col items-start gap-5 pr-20
+    }
+
+    .userBtnBox{
+        @apply flex gap-4 text-[#eef5ff]
+    }
+
+    .userBtnDelete{
+        @apply p-2 bg-[#be3144]  rounded-full hover:bg-[#e94560] duration-200
+    }
+
+    .userBtnEdit{
+        @apply p-2 bg-[#46466e] rounded-full hover:bg-[#5432d3] duration-200
+    }
+}

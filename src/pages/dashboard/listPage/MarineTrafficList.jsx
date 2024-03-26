@@ -3,12 +3,11 @@ import axios from "axios";
 import { Table, TableBody, TableContainer, TableHead, 
          TableRow, Paper, TablePagination, CircularProgress, 
          Collapse, TextField, Box } from "@mui/material";
-import { apiMarineTrafficData } from "../../../api/api_urls";
+import { apiMarineTrafficData, apiMarineTrafficHistory } from "../../../api/api_urls";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import IconButton from '@mui/material/IconButton';
 import { StyledTableCell } from "./StyledComponent";
-import MarineTrafficHistory from './history/MarineTrafficHistory'
 
 
 export default function MarineTrafficList() {
@@ -20,8 +19,10 @@ export default function MarineTrafficList() {
   const [expandedRow, setExpandedRow] = useState(null); // State to manage expanded row
   const [open, setOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("")
+  const [historyData, setHistoryData] = useState([])
+  const [historyLoading, setHistoryLoading] = useState(false); // State for loading historical data
 
-  const historyData =  MarineTrafficHistory()
+
   console.log('MarineTraffic History Data', historyData)
 
   useEffect(() => {
@@ -57,8 +58,19 @@ export default function MarineTrafficList() {
     setPage(0);
   };
 
-  const handleRowClick = (index) => {
+  const handleRowClick =  async(mmsi,index) => {
     setExpandedRow(expandedRow === index ? null : index);
+      try {
+        setHistoryLoading(true);
+        // Fetch historical data based on MMSI
+        const response = await axios.get(`${apiMarineTrafficHistory}?mmsi=${mmsi}`);
+        const limitedData = response.data.success.slice(0, 50);
+        setHistoryData(limitedData);
+      } catch (error) {
+        console.error('Error fetching historical data:', error);
+      } finally {
+        setHistoryLoading(false); // Reset history loading state regardless of success or failure
+      }
   };
 
   const handleSearchChange = (e) => {
@@ -80,6 +92,7 @@ export default function MarineTrafficList() {
       {loading ? ( // Show loading indicator if data is loading
         <CircularProgress />
       ) : (
+     <>
         <TableContainer component={Paper}>
           <Table>
             <TableHead className="bg-gray-800 ">
@@ -107,7 +120,7 @@ export default function MarineTrafficList() {
               {filteredData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item, index) => (
                 <React.Fragment key={index}>
                  <TableRow >
-                  <StyledTableCell onClick={() => handleRowClick(index)} >
+                  <StyledTableCell onClick={() => handleRowClick(item.mmsi,index)} >
                    <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
                     {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                   </IconButton>
@@ -132,55 +145,62 @@ export default function MarineTrafficList() {
               
                     <StyledTableCell  style={{ paddingBottom: 0, paddingTop: 0 }}   colSpan={6}>
                       <Collapse in={expandedRow === index} timeout="auto" unmountOnExit>
-                          <Box  sx={{ height:"600px", width:"58%", overflow:"auto" }}>
-                            <h2 className="font-lato text-[1rem] font-bold py-4">History</h2>
-                            <Table>
-                                <TableHead>
-                                  <TableRow>
-                                    <StyledTableCell><b>Ship ID</b></StyledTableCell>
-                                    <StyledTableCell><b>Ship name</b></StyledTableCell>
-                                    <StyledTableCell><b>Ship Type</b></StyledTableCell>
-                                    <StyledTableCell><b>Ais Type Summary</b></StyledTableCell>
-                                    <StyledTableCell><b>Type Name</b></StyledTableCell>
-                                    <StyledTableCell><b>Callsign</b></StyledTableCell>
-                                    <StyledTableCell><b>Current Port</b></StyledTableCell>
-                                    <StyledTableCell><b>Destination</b></StyledTableCell>
-                                    <StyledTableCell><b>Speed</b></StyledTableCell>
-                                    <StyledTableCell><b>Draught</b></StyledTableCell>
-                                    <StyledTableCell><b>Course</b></StyledTableCell>
-                                    <StyledTableCell><b>IMO</b></StyledTableCell>
-                                    <StyledTableCell><b>DWT</b></StyledTableCell>
-                                    <StyledTableCell><b>MMSI</b></StyledTableCell>
-                                    <StyledTableCell><b>GRT</b></StyledTableCell>
-                                    <StyledTableCell><b>Year Built</b></StyledTableCell>
-                                  </TableRow>
-                                </TableHead>
-                              <TableBody>
-                                  {historyData.filter(historyItem => item.mmsi === historyItem.mmsi).slice(0,10).map((historyItem, historyIndex) => (
-                                    // Check if historyItem's MMSI matches the current item's MMSI
-                                    item.mmsi === historyItem.mmsi &&
-                                    <TableRow key={historyIndex}>
-                                      <StyledTableCell>{historyItem.ship_id ?? "--"}</StyledTableCell>
-                                      <StyledTableCell>{historyItem.shipname ?? "--"}</StyledTableCell>
-                                      <StyledTableCell>{historyItem.shiptype ?? "--"}</StyledTableCell>
-                                      <StyledTableCell>{historyItem.ais_type_summary ?? "--"}</StyledTableCell>
-                                      <StyledTableCell>{historyItem.type_name ?? "--"}</StyledTableCell>
-                                      <StyledTableCell>{historyItem.callsign ?? "--"}</StyledTableCell>
-                                      <StyledTableCell>{historyItem.current_port ?? "--"}</StyledTableCell>
-                                      <StyledTableCell>{historyItem.destination ?? "--"}</StyledTableCell>
-                                      <StyledTableCell>{historyItem.speed ?? "--"}</StyledTableCell>
-                                      <StyledTableCell>{historyItem.draught ?? "--"}</StyledTableCell>
-                                      <StyledTableCell>{historyItem.course ?? "--"}</StyledTableCell>
-                                      <StyledTableCell>{historyItem.imo ?? "--"}</StyledTableCell>
-                                      <StyledTableCell>{historyItem.dwt ?? "--"}</StyledTableCell>
-                                      <StyledTableCell>{historyItem.mmsi ?? "--"}</StyledTableCell>
-                                      <StyledTableCell>{historyItem.grt ?? "--"}</StyledTableCell>
-                                      <StyledTableCell>{historyItem.year_built ?? "--"}</StyledTableCell>
-                                    </TableRow>
-                                  ))}
-                              </TableBody>
-                          </Table>
-                          </Box>
+                      {historyLoading ? (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
+        <CircularProgress />
+      </Box>
+    ) :  historyData && historyData.length > 0 ?  (
+      <Box  sx={{ height:"600px", width:"58%", overflow:"auto" }}>
+      <h2 className="font-lato text-[1rem] font-bold py-4">History</h2>
+      <Table>
+          <TableHead>
+            <TableRow>
+              <StyledTableCell><b>Ship ID</b></StyledTableCell>
+              <StyledTableCell><b>Ship name</b></StyledTableCell>
+              <StyledTableCell><b>Ship Type</b></StyledTableCell>
+              <StyledTableCell><b>Ais Type Summary</b></StyledTableCell>
+              <StyledTableCell><b>Type Name</b></StyledTableCell>
+              <StyledTableCell><b>Callsign</b></StyledTableCell>
+              <StyledTableCell><b>Current Port</b></StyledTableCell>
+              <StyledTableCell><b>Destination</b></StyledTableCell>
+              <StyledTableCell><b>Speed</b></StyledTableCell>
+              <StyledTableCell><b>Draught</b></StyledTableCell>
+              <StyledTableCell><b>Course</b></StyledTableCell>
+              <StyledTableCell><b>IMO</b></StyledTableCell>
+              <StyledTableCell><b>DWT</b></StyledTableCell>
+              <StyledTableCell><b>MMSI</b></StyledTableCell>
+              <StyledTableCell><b>GRT</b></StyledTableCell>
+              <StyledTableCell><b>Year Built</b></StyledTableCell>
+            </TableRow>
+          </TableHead>
+        <TableBody>
+              {historyData.map((historyItem, index) => (
+                <TableRow key={index}>
+                <StyledTableCell>{historyItem.ship_id ?? "--"}</StyledTableCell>
+                <StyledTableCell>{historyItem.shipname ?? "--"}</StyledTableCell>
+                <StyledTableCell>{historyItem.shiptype ?? "--"}</StyledTableCell>
+                <StyledTableCell>{historyItem.ais_type_summary ?? "--"}</StyledTableCell>
+                <StyledTableCell>{historyItem.type_name ?? "--"}</StyledTableCell>
+                <StyledTableCell>{historyItem.callsign ?? "--"}</StyledTableCell>
+                <StyledTableCell>{historyItem.current_port ?? "--"}</StyledTableCell>
+                <StyledTableCell>{historyItem.destination ?? "--"}</StyledTableCell>
+                <StyledTableCell>{historyItem.speed ?? "--"}</StyledTableCell>
+                <StyledTableCell>{historyItem.draught ?? "--"}</StyledTableCell>
+                <StyledTableCell>{historyItem.course ?? "--"}</StyledTableCell>
+                <StyledTableCell>{historyItem.imo ?? "--"}</StyledTableCell>
+                <StyledTableCell>{historyItem.dwt ?? "--"}</StyledTableCell>
+                <StyledTableCell>{historyItem.mmsi ?? "--"}</StyledTableCell>
+                <StyledTableCell>{historyItem.grt ?? "--"}</StyledTableCell>
+                <StyledTableCell>{historyItem.year_built ?? "--"}</StyledTableCell>
+              </TableRow>
+              ))}
+        </TableBody>
+    </Table>
+    </Box>
+    ) : (
+      <div>No history to show.</div>
+    )}
+                         
                       </Collapse>
                     </StyledTableCell>
                 </React.Fragment>
@@ -188,16 +208,18 @@ export default function MarineTrafficList() {
             </TableBody>
           </Table>
         </TableContainer>
+         <TablePagination
+         rowsPerPageOptions={[10, 25, 50]}
+         component="div"
+         count={filteredData.length}
+         rowsPerPage={rowsPerPage}
+         page={page}
+         onPageChange={handleChangePage}
+         onRowsPerPageChange={handleChangeRowsPerPage}
+       />
+     </>
       )}
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 50]}
-        component="div"
-        count={filteredData.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
+     
     </div>
   );
 }

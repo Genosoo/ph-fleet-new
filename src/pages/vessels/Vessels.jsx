@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { 
@@ -16,10 +17,10 @@ import ArticleIcon from '@mui/icons-material/Article';
 import FormAdd from "./FormAdd";
 import Search from "./Search";
 import ButtonAddVessel from "./buttons/ButtonAddVessel";
-import { StyledButtonDelete, StyledButtonProfile, StyledButtonEdit } from "./StyledComponent";
+import {  StyledButtonProfile, StyledTableContainer } from "./StyledComponent";
 import SelectedVessel from "./SelectedVessel";
-import BorderColorIcon from '@mui/icons-material/BorderColor';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+// import BorderColorIcon from '@mui/icons-material/BorderColor';
+import { Link } from "react-router-dom";
 
 export default function Vessels() {
   const csrfToken = GetToken();
@@ -121,6 +122,13 @@ export default function Vessels() {
 
         // Update the rolesData state to exclude the deleted role
         setVesselsData(prevVesselsData => prevVesselsData.filter(vessel => vessel.id !== vesselToDelete));
+
+          // Toggle the expansion state for the deleted item
+          setExpandedActionButton(prevExpandedActionButton => {
+            const updatedState = { ...prevExpandedActionButton };
+            delete updatedState[vesselToDelete]; // Remove the deleted item's ID from the state
+            return updatedState;
+          });
       } catch (error) {
         console.log(error);
       } finally {
@@ -154,16 +162,18 @@ export default function Vessels() {
 
   return (
     <div className="tableContainer">
-      <h2 className="title">Vessels</h2>
-      <Search  handleSearchChange={handleSearchChange}  searchQuery={searchQuery}/>
+       <div className="flex items-center justify-center gap-5 ">
+       <Search  handleSearchChange={handleSearchChange}  searchQuery={searchQuery}/>
       <ButtonAddVessel handleOpenDialog={handleOpenDialog} />
+       </div>
       {loading ? ( // Show loading indicator if data is loading
         <CircularProgress />
       ) : (
-        <TableContainer component={Paper}>
+        <StyledTableContainer >
         <Table>
-          <TableHead className="bg-gray-800 ">
+          <TableHead className="bg-[#404958] sticky top-0 z-50">
             <TableRow>
+              <StyledTableCell><b className="text-white">Hull Number</b></StyledTableCell>
               <StyledTableCell><b className="text-white">Name</b></StyledTableCell>
               <StyledTableCell><b className="text-white">Class Name</b></StyledTableCell>
               <StyledTableCell><b className="text-white">Type</b></StyledTableCell>
@@ -176,35 +186,31 @@ export default function Vessels() {
           <TableBody>
             {filteredData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item, index) => (
               <TableRow key={index}>
+                <StyledTableCell>{item.hull_number ?? "--"}</StyledTableCell>
                 <StyledTableCell>{item.vessel_name ?? "--"}</StyledTableCell>
                 <StyledTableCell>{item.vessel_class_details?.class_name ?? "--"}</StyledTableCell>
                 <StyledTableCell>{item.vessel_type_details?.type_name ?? "--"}</StyledTableCell>
                 <StyledTableCell>{item.unit_details?.unit_name ?? "--"}</StyledTableCell>
                 <StyledTableCell>{item.origin ?? "--"}</StyledTableCell>
                 <StyledTableCell>{item.capacity ?? "--"}</StyledTableCell>
-                <StyledTableCell sx={{ display:'flex', gap:"5px", flexDirection:"column", position:"relative" }}>
-                {expandedActionButton[item.id] && (
-                        <div className="actionBox">
-                            <StyledButtonProfile  variant="contained" onClick={() => handleOpenVesselProfileDialog(item.id)} startIcon={<ArticleIcon />}>
-                            Profile
+                <StyledTableCell sx={{display:"flex", alignItems:"center", gap:2 }}>
+                    <StyledButtonProfile  variant="contained"  onClick={() => handleOpenVesselProfileDialog(item.id)}>
+                            View Profile
                           </StyledButtonProfile>
-                          <StyledButtonEdit  variant="contained" startIcon={<BorderColorIcon />}>
+                          {/* <StyledButtonEdit  variant="contained" startIcon={<BorderColorIcon />}>
                             Edit
-                          </StyledButtonEdit>
-                          <StyledButtonDelete  variant="contained" onClick={() => handleDeleteVessel(item.id)} startIcon={<DeleteIcon />}>
-                            Delete
-                          </StyledButtonDelete>
-                        </div>
-                    )}
-                  <button className="actionButton" onClick={() => toggleExpansion(item.id)}>
-                   <MoreHorizIcon/>
-                  </button>
+                          </StyledButtonEdit> */}
+
+                      <button className="bg-[#EB5454] text-white w-[35px] h-[35px]  rounded-full hover:bg-black duration-200" onClick={() => handleDeleteVessel(item.id)}>
+                      <DeleteIcon />
+                        </button>    
+                  
                 </StyledTableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
-      </TableContainer>
+      </StyledTableContainer>
       )}
 
       <TablePagination
@@ -223,11 +229,10 @@ export default function Vessels() {
       </Dialog>
 
       
-      <Dialog maxWidth="xl" open={openVesselProfileDialog} onClose={handleCloseVesselProfileDialog}>
+      <Dialog   maxWidth="xl"   open={openVesselProfileDialog} onClose={handleCloseVesselProfileDialog}>
        <DialogActions>
           <Button variant="contained"  onClick={handleCloseVesselProfileDialog}>Close</Button>
        </DialogActions>
-        <DialogTitle>Vessel Profile</DialogTitle>
         <DialogContent>
            <SelectedVessel selectedVessel={selectedVessel} />
         </DialogContent>

@@ -75,6 +75,7 @@ export default function Cards({
 
 
       }, [marineTrafficData, trakSatData, spiderTrakData, personnelData, checkInData, officesData, vehiclesData]);
+      
     return (
         <div className="cards_container">
             <div className="cards_wrapper">

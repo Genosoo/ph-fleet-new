@@ -17,8 +17,9 @@ import {
   DialogTitle,
 } from "@mui/material";
 import RoleForm from "./RolesForm"; // Assuming RoleForm is in the same directory
-
-
+import './Styles.css'
+import { StyledButtonAdd } from "../vessels/StyledComponent";
+import GroupsIcon from '@mui/icons-material/Groups';
 
 export default function Roles() {
   const [rolesData, setRolesData] = useState([]);
@@ -143,14 +144,14 @@ export default function Roles() {
   };
 
   return (
-    <div className="flex flex-col items-start gap-5 pr-20">
-      <Button size="small" variant="contained" color="success" onClick={() => setOpenDialog(true)}>
-        Create Role
-      </Button>
+    <div className="rolesContainer">
+      <StyledButtonAdd variant="contained"  startIcon={ <GroupsIcon /> } onClick={() => setOpenDialog(true)}>
+        Add Role
+      </StyledButtonAdd>
 
       <TableContainer component={Paper}>
         <Table>
-          <TableHead className="bg-gray-800 ">
+          <TableHead className="bg-gray-800">
             <TableRow>
               <TableCell><b className="text-white">Role Name</b></TableCell>
               <TableCell><b className="text-white">Action</b></TableCell>
@@ -161,13 +162,13 @@ export default function Roles() {
               <TableRow key={index}>
                 <TableCell>{item.name}</TableCell>
                 <TableCell>
-                  <span className="flex gap-4">
-                    <div onClick={() => handleDeleteRole(item.id)} className="p-2 bg-red-400 text-white rounded-full hover:bg-slate-500 duration-200">
+                  <span className="rolesBtnBox">
+                    <button onClick={() => handleDeleteRole(item.id)} className="rolesDeleteBtn">
                       <FaTrash  />
-                    </div>
-                    <div onClick={() => handleEditRole(item)} className="p-2 bg-green-400 text-white rounded-full hover:bg-slate-500 duration-200">
+                    </button>
+                    <button onClick={() => handleEditRole(item)} className="rolesEditBtn">
                     <FaEdit  />
-                    </div>
+                    </button>
                    
                   </span>
                 </TableCell>

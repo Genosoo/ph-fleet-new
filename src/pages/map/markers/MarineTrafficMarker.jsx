@@ -1,9 +1,10 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/prop-types */
-import { useState } from 'react';
-import { Marker, Popup, Polyline, CircleMarker, useMapEvent } from 'react-leaflet';
+import { useState, useRef } from 'react';
+import { Marker, Popup, Polyline, CircleMarker, useMapEvent, useMap } from 'react-leaflet';
 import L from 'leaflet';
-import { CgCloseO } from "react-icons/cg";
+import Draggable from 'react-draggable';
+import { IoCloseSharp } from "react-icons/io5";
 
 const calculateDistance = (lat1, lon1, lat2, lon2) => {
   if (lat1 == null || lon1 == null || lat2 == null || lon2 == null) {
@@ -25,23 +26,37 @@ const calculateDistance = (lat1, lon1, lat2, lon2) => {
 };
 
 const MarineTrafficMarker = ({ item, index, selectedMarineTraffic, handleMarineTrafficMarkerClick }) => {
+
   const [endPosition, setEndPosition] = useState([0, 0]); // Default values or any valid initial coordinates
   const [showDistance, setShowDistance] = useState(false);
-// Add a state variable to manage the visibility of the selected information
-const [showSelectedInfo, setShowSelectedInfo] = useState(true);
+  const [showSelectedInfo, setShowSelectedInfo] = useState(true);
+  const map = useMap();
+  const prevZoomRef = useRef(9);
 
 const handleCloseButtonClick = () => {
   handleMarineTrafficMarkerClick(null);
   setShowSelectedInfo(false);
   setShowDistance(false)
+  map.flyTo([item.glatitude, item.glongitude], prevZoomRef.current);
 };
+
+
+const handleMarkerClick = () => {
+  setShowSelectedInfo(true);
+  prevZoomRef.current = map.getZoom();
+  map.flyTo(startPosition, 10);
+  handleMarineTrafficMarkerClick(item);
+
+};
+
+
+console.log("test:", selectedMarineTraffic)
 
 
   const startPosition = [item.glatitude, item.glongitude];
 
   useMapEvent({
     click: (e) => {
-      // Set the endPosition to the clicked coordinates
       setEndPosition([e.latlng.lat, e.latlng.lng]);
     },
   });
@@ -52,6 +67,11 @@ const handleCloseButtonClick = () => {
     endPosition[0],
     endPosition[1]
   );
+
+  const handleDrag = (e) => {
+    // Prevent event propagation to the map
+    e.stopPropagation();
+  };
 
   return (
     <>
@@ -67,60 +87,34 @@ const handleCloseButtonClick = () => {
           })
         }
         eventHandlers={{
-          click: () => {
-            handleMarineTrafficMarkerClick(item);
-          },
+          click: 
+            handleMarkerClick
+        
         }}
       >
-        {/* <Popup>
-          {selectedMarineTraffic && selectedMarineTraffic.ship_id === item.ship_id && (
-            <div className="">
-        <h2>MarineTraffic</h2>
-        <p >Ship Name: <span>{selectedMarineTraffic.shipname}</span></p>
-        <p>Ship Name: <span>{selectedMarineTraffic.shiptype}</span></p>
-        <p>Ship ID: <span>{selectedMarineTraffic.ship_id}</span> </p>
-        <p>MMSI: <span>{selectedMarineTraffic.mmsi}</span></p>
-        <p>IMO: <span>{selectedMarineTraffic.imo}</span></p>
-        <p>Speed: <span>{selectedMarineTraffic.speed}</span></p>
-        <p>Heading: <span>{selectedMarineTraffic.heading}</span></p>
-        <p>Course: <span>{selectedMarineTraffic.course}</span></p>
-        <p>Status: <span>{selectedMarineTraffic.status}</span></p>
-        <p>Flag: <span>{selectedMarineTraffic.flag}</span></p>
-        <p>Coordinates: <span>{selectedMarineTraffic.latitude}, {selectedMarineTraffic.longitude}</span></p>
-
-        <div className='flex flex-col'>
-        <button className={`text-sm p-3 rounded-[10px] text-white ${showDistance ? 'bg-red-600' : 'bg-yellow-600'}`} onClick={() => setShowDistance(!showDistance)}>
-                {showDistance ? 'Stop Measurement' : 'Start Measurement'}
-              </button>
-              {showDistance && (
-                <p className='text-center'>
-                  Please <b>Point</b> on the map! <br />
-                  double <b>click </b>the point to show the distance
-                  Distance: {distance != null ? distance.toFixed(2) + ' nautical miles' : 'N/A'}
-                </p>
-              )}
-        </div>
-            </div>
-          )}
-        </Popup> */}
+        
       </Marker>
 
 
+      
+
+
       { showSelectedInfo && selectedMarineTraffic && selectedMarineTraffic.ship_id === item.ship_id && (
-        <div className="mt_card_container">
+      <Draggable onDrag={handleDrag}>
+          <div className="mt_card_container" >
            <div className="mt_card_header">
            <div className='mt_box_flag'>
             {selectedMarineTraffic.flag && (
               <img src={`https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.3.0/flags/4x3/${selectedMarineTraffic.flag.toLowerCase()}.svg`} alt="" />
             )}
                 <p className="">
-                  <span>{selectedMarineTraffic.ais_type_summary} Vessel</span>
-                <small>{selectedMarineTraffic.type_name}</small>
+                  <span>{selectedMarineTraffic?.ais_type_summary || "No Data"} Vessel</span>
+                <small>{selectedMarineTraffic?.type_name || "No Data"}</small>
                 </p>
             </div>
 
-            <div className="icon">
-              <CgCloseO onClick={() => handleCloseButtonClick()}/>
+            <div className="bg-white text-[1.8rem] rounded-full text-black hover:bg-black hover:text-white duration-200">
+              <IoCloseSharp onClick={() => handleCloseButtonClick()}/>
             </div>
            </div>
            <div className='mt_ship_img'>
@@ -129,50 +123,50 @@ const handleCloseButtonClick = () => {
              {/* <img src={`https://photos.marinetraffic.com/ais/showphoto.aspx?shipid=${selectedMarineTraffic.ship_id}&size=thumb300`} alt="ship image" /> */}
            </div>
             <div className='flex justify-between p-2 bg-white'>
-              <h4><b>ATD:</b> {selectedMarineTraffic.timestamp}</h4>
-              <h4><b>ETA:</b> {selectedMarineTraffic.eta}</h4>
+              <h4><b>ATD:</b> {selectedMarineTraffic?.timestamp || "No Data"}</h4>
+              <h4><b>ETA:</b> {selectedMarineTraffic?.eta || "No Data"}</h4>
             </div>
             <div className="mt_card_details">
                   <div className="card_p">
                       <p>
                         <span className="title">Ship Name</span> 
-                        <span className='detail'>{selectedMarineTraffic.shipname}</span>
+                        <span className='detail'>{selectedMarineTraffic?.shipname || "No Data"}</span>
                       </p>
                       <p>
                         <span className="title">Vessels Type</span> 
-                        <span className='detail'>{selectedMarineTraffic.type_name}</span>
+                        <span className='detail'>{selectedMarineTraffic?.type_name || "No Data"}</span>
                       </p>
                       <p>
                         <span className="title">Destination</span>
-                        <span className='detail' >{selectedMarineTraffic.destination}</span>
+                        <span className='detail' >{selectedMarineTraffic?.destination || "No Data"}</span>
                       </p>
                       <p>
                         <span className="title">Call Sign </span>
-                        <span className='detail'>{selectedMarineTraffic.callsign}</span>
+                        <span className='detail'>{selectedMarineTraffic?.callsign || "No Data"}</span>
                       </p>
                       <p>
                         <span className="title">MMSI</span>
-                        <span className='detail'>{selectedMarineTraffic.mmsi}</span>
+                        <span className='detail'>{selectedMarineTraffic?.mmsi || "No Data"}</span>
                       </p>
                       <p>
                         <span className="title">IMO</span>
-                        <span className='detail'>{selectedMarineTraffic.imo}</span>
+                        <span className='detail'>{selectedMarineTraffic?.imo || "No Data"}</span>
                       </p>
                       <p>
                          <span className="title">Speed / Course </span>
-                         <span className='detail'>{selectedMarineTraffic.speed} / {selectedMarineTraffic.course}</span>
+                         <span className='detail'>{selectedMarineTraffic?.speed || "No Data"} / {selectedMarineTraffic.course}</span>
                       </p>
                       <p>
                         <span className="title">Heading</span> 
-                        <span className='detail'>{selectedMarineTraffic.heading}</span>
+                        <span className='detail'>{selectedMarineTraffic?.heading || "No Data"}</span>
                       </p>
                       <p>
                         <span className="title">Status </span>
-                        <span className='detail'>{selectedMarineTraffic.status}</span>
+                        <span className='detail'>{selectedMarineTraffic?.status || "No Data"}</span>
                       </p>
                       <p>
                         <span className="title">Year Built</span>
-                        <span className='detail'>{selectedMarineTraffic.year_built}</span>
+                        <span className='detail'>{selectedMarineTraffic?.year_built || "No Data"}</span>
                       </p>
                      
                   </div>
@@ -190,6 +184,7 @@ const handleCloseButtonClick = () => {
               )}
         </div>
   </div>
+      </Draggable>
 )}
 
       {showDistance && endPosition && (

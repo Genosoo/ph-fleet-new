@@ -79,7 +79,8 @@
     }
 
     .selectedVesselWrapper{
-        @apply flex   w-full items-start gap-4
+        @apply flex flex-col  items-start gap-4 font-manrope p-5 -mt-12
+
     }
 
     .selectedDetailWrapper{
@@ -108,6 +109,61 @@
     }
 
     .actionBox{
-        @apply absolute bg-white  flex flex-col gap-3 p-2 items-center shadow border z-10 -left-32
+        @apply  bg-white  flex flex-col  gap-3 p-2 items-center shadow border absolute
     }
+
+    .selectedVesselBox1{
+        @apply flex  bg-[#F9F9F9] items-center p-10 rounded-md shadow-md
+    }
+
+    .selectedBoxDetails{
+        @apply flex flex-wrap w-[90%]  h-full items-center px-10 gap-5
+    }
+
+    .selectedBoxDetails span{
+        @apply w-[250px] 
+    }
+
+    .selectedBoxDetails span p{
+        @apply text-[#8E8E8E] text-sm
+    }
+
+    .selectedBoxDetails span h3{
+        @apply text-[#404958] text-lg font-semibold
+    }
+
+    .vesselMainImage{
+        @apply w-[250px] h-[250px] border-2 border-[#404958] rounded-full object-cover p-2
+    }
+
+    .selectedBox1{
+        @apply flex  gap-4  w-[500px] items-center justify-center
+    }
+
+    .selectedVesselTitle{
+        @apply text-black text-lg font-bold
+    }
+
+    .imagesVesselBox{
+        @apply flex-wrap flex w-[600px] gap-5 bg-[#F9F9F9] items-center
+        justify-center p-4 rounded-md shadow-md
+    } 
+
+    .imgBox{
+        @apply w-[270px] h-[160px] object-cover relative flex items-end
+         justify-center border rounded-md overflow-hidden
+    }
+    .imgBox h2{
+        @apply absolute text-white border w-[90%] text-center 
+        p-1 mb-2 bg-[#0b0b0ba2] rounded-md text-sm 
+    }
+
+    .selectedVesselBox3{
+        @apply w-full h-full
+    }
+
+    .selectedVesselBox3 .mapBox{
+        @apply bg-[#F9F9F9] w-full  rounded-md  h-[370px] overflow-hidden
+    } 
+
 }

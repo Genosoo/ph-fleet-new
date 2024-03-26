@@ -13,9 +13,15 @@ import {
   FormControl,
   Select,
   Button,
+  TableContainer,
 } from "@mui/material";
 
 import styled from "styled-components";
+
+export const StyledTableContainer = styled(TableContainer)`
+  border-radius: 10px;
+  background-color: #fff;
+`;
 
 export const StyledFormControl = styled(FormControl)`
   border: 1px solid #2d4263;
@@ -33,15 +39,16 @@ export const StyledTableCell = styled(TableCell)`
 
 // STYLED BUTTON ADD
 export const StyledButtonAdd = styled(Button)`
-  background-color: #205295;
+  background-color: #86705e;
   color: #eef5ff;
   padding: 10px;
-  width: 120px;
+  height: 55px;
+  width: 130px;
   font-size: 12px;
   font-family: "Lato", "san-serif";
 
   &:hover {
-    background-color: #2c74b3;
+    background-color: #000;
     color: #ffffff;
   }
 `;
@@ -50,8 +57,8 @@ export const StyledButtonAdd = styled(Button)`
 export const StyledButtonDelete = styled(Button)`
   background-color: #be3144;
   color: #eef5ff;
-  padding: 10px;
-  width: 120px;
+  padding: 5px;
+  width: 100px;
   font-size: 12px;
   font-family: "Lato", "san-serif";
   font-weight: 600;
@@ -66,8 +73,8 @@ export const StyledButtonDelete = styled(Button)`
 export const StyledButtonEdit = styled(Button)`
   background-color: #46466e;
   color: #eef5ff;
-  padding: 10px;
-  width: 120px;
+  padding: 5px;
+  width: 100px;
   font-size: 12px;
   font-family: "Lato", "san-serif";
   font-weight: 600;
@@ -80,16 +87,17 @@ export const StyledButtonEdit = styled(Button)`
 
 // STYLED BUTTON PROFILE TO VIEW
 export const StyledButtonProfile = styled(Button)`
-  background-color: #78a083;
-  color: #eef5ff;
-  padding: 10px;
-  width: 120px;
-  font-size: 12px;
+  background-color: #fff;
+  color: #000;
+  padding: 1px;
+  width: 70px;
+  font-size: 10px;
   font-family: "Lato", "san-serif";
   font-weight: 600;
+  border: 1px solid #000;
 
   &:hover {
-    background-color: #90bb71; /* Change the background color on hover */
+    background-color: #000; /* Change the background color on hover */
     color: #ffffff; /* Change the text color on hover */
   }
 `;

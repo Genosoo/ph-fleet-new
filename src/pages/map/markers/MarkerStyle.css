@@ -1,0 +1,166 @@
+@tailwind components;
+
+@layer components{
+    .traksatCardContainer{
+        @apply z-[2000] cursor-pointer absolute top-32 left-10 bg-[#ffffffe7] overflow-hidden rounded-md font-lato shadow-xl
+    }
+
+    .traksatCardHeader{
+        @apply flex justify-between  text-white bg-gray-800 items-center p-2 border-b  shadow-md
+    }
+
+    .traksatTitle{
+        @apply text-base 
+    }
+
+    .traksatCardDetail{
+        @apply px-6 mt-5 flex flex-col gap-5
+    }
+
+    .traksatCardDetail p{
+        @apply text-sm border-b border-gray-300 text-gray-600 font-semibold
+    }
+
+    .traksatCardDetail p span{
+        @apply font-bold ml-2 text-gray-800
+    }
+
+    .traksatCardFooter{
+        @apply p-5 w-full flex justify-center flex-col  bg-gray-800  mt-10
+    }
+
+    .traksatCardFooter button{
+        @apply text-sm p-1 rounded-[5px] text-white w-full
+    }
+
+    .traksatClose{
+        @apply bg-white text-[1.5rem] rounded-full text-black hover:bg-black hover:text-white duration-200
+    }
+
+    .mt_card_container{
+        cursor: move;
+         @apply  absolute cursor-pointer    w-[350px] z-[2000] top-32 left-5 bg-[#ffffff78] rounded-[6px] overflow-hidden
+       }
+    
+       .mt_card_header{
+        @apply flex bg-gray-100 p-2 items-center justify-between
+       }
+    
+       .mt_card_header .icon {
+        @apply text-[20px]  font-bold rounded-full text-gray-800
+       }
+    
+    
+    
+       .mt_box_flag{
+        @apply flex gap-2
+       }
+    
+       .mt_box_flag img{
+        @apply w-[50px]
+       }
+    
+       .mt_box_flag p{
+        @apply flex flex-col
+       }
+    
+       .mt_box_flag p span{
+        @apply text-base font-semibold text-gray-800
+       }
+    
+       .mt_ship_img img{
+        @apply h-[200px] w-full
+       }
+    
+       .mt_card_header h2 img{
+        @apply w-[40px]
+       }
+    
+       .mt_card_details{
+        @apply flex  h-[200px] w-[350px]  overflow-y-auto bg-stone-100
+       }
+       
+       .mt_card_details .card_p{
+        @apply flex flex-col gap-3 p-2 
+       }
+    
+       .mt_card_details .card_p p{
+        @apply flex gap-3 items-center 
+       }
+       .mt_card_details .card_p p .title{
+        @apply w-[100px]  
+       }
+       
+    
+       .mt_btn_box{
+        @apply flex flex-col p-5 mt-2 bg-white
+       }
+
+       .stCardContainer{
+        @apply z-[2000] w-[300px] cursor-pointer absolute top-20 left-10 bg-[#ffffffe7] overflow-hidden rounded-md font-lato shadow-xl
+         
+       }
+
+       .stCardHeader{
+        @apply flex justify-between  text-white bg-blue-900 items-center p-2 border-b  shadow-md
+
+       }
+
+       .stCardTitle{
+        @apply text-base 
+
+       }
+
+       .stClose{
+        @apply bg-white text-[1.5rem] rounded-full text-black hover:bg-black hover:text-white duration-200
+        }
+
+        .stCardDetail{
+            @apply p-5 flex flex-col gap-3
+        }
+
+        .stCardDetail p{
+            @apply font-bold text-sm text-gray-700 border border-gray-300 p-2
+        }
+
+        .stCardDetail p span{
+            @apply text-blue-900 font-extrabold ml-2
+        }
+    
+
+    
+    
+}
+
+.spidertrak-marker{
+    font-size:20px;
+    width:25px !important;
+    border-radius:50%;
+    height:25px !important;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+       }
+
+
+       @keyframes pulseSpider{
+        0%{
+          box-shadow:#1a98ff 0 0 0 0;
+        }
+        50%{
+          box-shadow: 0 0 0 16px rgba(2, 145, 255, 0.757);
+        }
+      
+        50%{
+         box-shadow: 0 0 0 20px rgba(6, 164, 255, 0.764);
+      
+        }
+      }
+
+
+      .selected-spidertrak{
+        border:2px solid rgb(45, 171, 255);
+        animation:pulseSpider 1500ms infinite;
+      
+      }

@@ -25,6 +25,9 @@ import {
   MenuItem,
 } from "@mui/material";
 import { apiUsers, apiRoles, getCsrfToken } from "../../api/api_urls";
+import "./Styles.css"
+import { StyledButtonAdd } from "../vessels/StyledComponent";
+import GroupsIcon from '@mui/icons-material/Groups';
 
 const Users = () => {
   const [usersData, setUsersData] = useState([]);
@@ -64,7 +67,7 @@ const Users = () => {
   const handleUpdateUser = (id) => {
     const userToUpdate = usersData.find((user) => user.id === id);
     setUpdateUserId(id);
-    setUsername(userToUpdate.username);
+    setUsername(userToUpdate.username); 
     setFirstName(userToUpdate.first_name);
     setLastName(userToUpdate.last_name);
     setEmail(userToUpdate.email);
@@ -227,11 +230,11 @@ const Users = () => {
 
 
   return (
-    <div className="pr-20">
+    <div className="userContainer">
       <div className="mb-3">
-        <Button size="small"  variant="contained" color="success" onClick={handleOpen}>
-          Create User
-        </Button>
+        <StyledButtonAdd onClick={handleOpen} startIcon={<GroupsIcon />}>
+          Add User
+        </StyledButtonAdd>
       </div>
 
 {/* Update dialog */}
@@ -411,11 +414,11 @@ const Users = () => {
                   <TableCell>{item.username}</TableCell>
                   <TableCell>{item.groups && item.groups.length > 0 ? item.groups[0].name : ''}</TableCell>
                   <TableCell>
-                    <span className="flex gap-4">
-                      <button onClick={() => handleDeleteUser(item.id)}  className="p-2 bg-red-400 text-white rounded-full hover:bg-slate-500 duration-200">
+                    <span className="userBtnBox">
+                      <button onClick={() => handleDeleteUser(item.id)}  className="userBtnDelete">
                       <FaTrash  />
                     </button>
-                    <button   onClick={() => handleUpdateUser(item.id)} className="p-2 bg-green-400 text-white rounded-full hover:bg-slate-500 duration-200">
+                    <button   onClick={() => handleUpdateUser(item.id)} className="userBtnEdit">
                       <FaEdit />
                     </button>
                     </span>

@@ -5,6 +5,7 @@ export default {
     extend: {
       fontFamily: {
         lato: ["Lato", "sans-serif"],
+        manrope: ["Manrope", "sans-serif"],
       },
     },
   },

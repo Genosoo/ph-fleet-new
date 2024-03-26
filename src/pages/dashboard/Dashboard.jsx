@@ -33,7 +33,6 @@ export default function Dashboard() {
   useEffect(() => {
   const fetchData = async () => {
     try {
-      setLoading(true);
 
       const marineTrafficResponse = await axios.get(apiMarineTrafficData);
       const trackSatResponse = await axios.get(apiTrakSatData);
@@ -75,9 +74,10 @@ export default function Dashboard() {
   return (
     <div className="dashboard_container">
       {loading ? (
-        <div className="loader-container">
-          <div className="loader"></div>
-          <p>Fetching Data...</p>
+          <div className="loaderContainer">
+          <div className="loader">
+           <span></span>
+         </div>
         </div>
       ) : (
         <>

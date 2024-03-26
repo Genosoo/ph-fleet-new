@@ -20,7 +20,7 @@ export default function SpiderTrakList() {
   const [expandedRow, setExpandedRow] = useState(null); 
   const [open, setOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("")
-  const [spiderTrakHistory, setSpiderTrakHistory] = useState([]);
+  const [historyData, setHistoryData] = useState([])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,7 +38,6 @@ export default function SpiderTrakList() {
     const getSpiderTrakHistory = async () => {
       try {
           const spiderTrakHistoryResponse = await axios.get(apiSpiderTrakHistory);
-          setSpiderTrakHistory(spiderTrakHistoryResponse.data.success);
           setLoadingHistory(false); // Set loading to false once data is fetched
           console.log('Spider Trak History', spiderTrakHistoryResponse.data);
       } catch (error) {
@@ -60,8 +59,20 @@ export default function SpiderTrakList() {
     setFilteredData(filteredResult)
   },[searchQuery, spideTrakData])
 
-  const handleRowClick = (index) => {
+
+  const handleRowClick =  async(unit_id,index) => {
     setExpandedRow(expandedRow === index ? null : index);
+      try {
+        setLoadingHistory(true);
+        // Fetch historical data based on unit_id
+        const response = await axios.get(`${apiSpiderTrakHistory}?unit_id=${unit_id}`);
+        const limitedData = response.data.success.slice(0, 50);
+        setHistoryData(limitedData);
+      } catch (error) {
+        console.error('Error fetching historical data:', error);
+      } finally {
+        setLoadingHistory(false); // Reset history loading state regardless of success or failure
+      }
   };
 
   const handleChangePage = (event, newPage) => {
@@ -113,7 +124,7 @@ export default function SpiderTrakList() {
         {filteredData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item, index) => (
         <React.Fragment key={index}>
           <TableRow key={index}>
-            <StyledTableCell onClick={() => handleRowClick(index)} >
+            <StyledTableCell onClick={() => handleRowClick(item.unit_id, index)} >
               <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
                   {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                 </IconButton>
@@ -130,53 +141,46 @@ export default function SpiderTrakList() {
           </TableRow>
           <StyledTableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
     <Collapse in={expandedRow === index} timeout="auto" unmountOnExit>
-        <Box sx={{ width: "100%", overflow: "auto" }}>
-            <h2 className="font-lato text-[1rem] font-bold py-4">History</h2>
-            {loadingHistory ? (
-                <div className="flex items-center font-lato text-[1rem]">
-                    Please wait it takes a while to fetch data...<CircularProgress />
-                </div>
-            ) : (
-                <React.Fragment>
-                    {!spiderTrakHistory.some(historyItem => historyItem.unit_id === item.unit_id) ?  (
-                        <div className="text-sm">No history to show</div>
-                    ) : (
-                        <Table>
-                            <TableHead>
-                                <TableRow>
-                                    <StyledTableCell><b>Unit ID</b></StyledTableCell>
-                                    <StyledTableCell><b>Track ID</b></StyledTableCell>
-                                    <StyledTableCell><b>SRC</b></StyledTableCell>
-                                    <StyledTableCell><b>ESN</b></StyledTableCell>
-                                    <StyledTableCell><b>Altitude</b></StyledTableCell>
-                                    <StyledTableCell><b>Speed</b></StyledTableCell>
-                                    <StyledTableCell><b>Fix</b></StyledTableCell>
-                                    <StyledTableCell><b>Cog</b></StyledTableCell>
-                                    <StyledTableCell><b>Hdop</b></StyledTableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {spiderTrakHistory.filter(historyItem => item.unit_id === historyItem.unit_id).slice(0,10).map((historyItem, historyIndex) => (
-                                    item.unit_id === historyItem.unit_id && (
-                                        <TableRow key={historyIndex}>
-                                            <StyledTableCell>{historyItem.unit_id ?? "--"}</StyledTableCell>
-                                            <StyledTableCell>{historyItem.track_id ?? "--"}</StyledTableCell>
-                                            <StyledTableCell>{historyItem.src ?? "--"}</StyledTableCell>
-                                            <StyledTableCell>{historyItem.esn ?? "--"}</StyledTableCell>
-                                            <StyledTableCell>{historyItem.altitude ?? "--"}</StyledTableCell>
-                                            <StyledTableCell>{historyItem.spd ?? "--"}</StyledTableCell>
-                                            <StyledTableCell>{historyItem.fix ?? "--"}</StyledTableCell>
-                                            <StyledTableCell>{historyItem.cog ?? "--"}</StyledTableCell>
-                                            <StyledTableCell>{historyItem.hdop ?? "--"}</StyledTableCell>
-                                        </TableRow>
-                                    )
-                                ))}
-                            </TableBody>
-                        </Table>
-                    )}
-                </React.Fragment>
-            )}
-        </Box>
+    {loadingHistory ? (
+    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
+      <CircularProgress />
+    </Box>
+  ) : (
+    historyData && historyData.length > 0 ? (
+      <Table>
+        <TableHead>
+          <TableRow>
+            <StyledTableCell><b>Unit ID</b></StyledTableCell>
+            <StyledTableCell><b>Track ID</b></StyledTableCell>
+            <StyledTableCell><b>SRC</b></StyledTableCell>
+            <StyledTableCell><b>ESN</b></StyledTableCell>
+            <StyledTableCell><b>Altitude</b></StyledTableCell>
+            <StyledTableCell><b>Speed</b></StyledTableCell>
+            <StyledTableCell><b>Fix</b></StyledTableCell>
+            <StyledTableCell><b>Cog</b></StyledTableCell>
+            <StyledTableCell><b>Hdop</b></StyledTableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {historyData.map((historyItem, index) => (
+            <TableRow key={index}>
+              <StyledTableCell>{historyItem.unit_id ?? "--"}</StyledTableCell>
+              <StyledTableCell>{historyItem.track_id ?? "--"}</StyledTableCell>
+              <StyledTableCell>{historyItem.src ?? "--"}</StyledTableCell>
+              <StyledTableCell>{historyItem.esn ?? "--"}</StyledTableCell>
+              <StyledTableCell>{historyItem.altitude ?? "--"}</StyledTableCell>
+              <StyledTableCell>{historyItem.spd ?? "--"}</StyledTableCell>
+              <StyledTableCell>{historyItem.fix ?? "--"}</StyledTableCell>
+              <StyledTableCell>{historyItem.cog ?? "--"}</StyledTableCell>
+              <StyledTableCell>{historyItem.hdop ?? "--"}</StyledTableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    ) : (
+      <div>No history to show.</div>
+    )
+  )}
     </Collapse>
 </StyledTableCell>
         </React.Fragment>

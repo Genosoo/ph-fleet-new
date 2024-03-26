@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import MapContent from "./MapContent";
 import RefreshData from "./refreshData/RefreshData";
@@ -13,78 +12,77 @@ import {
   apiVehiclesData,
   apiIncident,
   apiCarTrack
-
- } from "../../api/api_urls";
+} from "../../api/api_urls";
 
 export default function MainApp() {
-  const [marineTrafficData, setMarineTrafficData] = useState([]);
-  const [tracksatData, setTracksatData] = useState([]);
-  const [spiderTrakData, setSpiderTrakData] = useState([]);
-  const [personnelData, setPersonnelData] = useState([]);
-  const [videoStreamData, setVideoStreamData] = useState([]);
-  const [officeData, setOfficeData] = useState([]);
-  const [vehiclesData, setVehiclesData] = useState([]);
-  const [incidentData, setIncidentData] = useState([]);
-  const [carData, setCarData] = useState([]);
+  const [initialDataLoaded, setInitialDataLoaded] = useState(false); // State to track if initial data is loaded
+  const [cachedData, setCachedData] = useState({}); // State to store cached data
+  console.log("cachedDAta:", cachedData)
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const marineTrafficResponse = await axios.get(apiMarineTrafficData);
-        const tracksatResponse = await axios.get(apiTrakSatData);
-        const spiderTrakResponse = await axios.get(apiSpiderTrakData);
-        const personnelResponse = await axios.get(apiPersonnelData);
-        const videoStreamResponse = await axios.get(apiVideoStream);
-        const officeResponse = await axios.get(apiOfficesData);
-        const vehiclesResponse = await axios.get(apiVehiclesData);
-        const incidentResponse = await axios.get(apiIncident);
-        const carResponse = await axios.get(apiCarTrack);
+  // Function to fetch data
+  const fetchData = async () => {
+    try {
+      const marineTrafficResponse = await axios.get(apiMarineTrafficData);
+      const tracksatResponse = await axios.get(apiTrakSatData);
+      const spiderTrakResponse = await axios.get(apiSpiderTrakData);
+      const personnelResponse = await axios.get(apiPersonnelData);
+      const videoStreamResponse = await axios.get(apiVideoStream);
+      const officeResponse = await axios.get(apiOfficesData);
+      const vehiclesResponse = await axios.get(apiVehiclesData);
+      const incidentResponse = await axios.get(apiIncident);
+      const carResponse = await axios.get(apiCarTrack);
 
-        setMarineTrafficData(marineTrafficResponse.data.success);
-        setTracksatData(tracksatResponse.data.success);
-        setSpiderTrakData(spiderTrakResponse.data.success);
-        setPersonnelData(personnelResponse.data.success);
-        setVideoStreamData(videoStreamResponse.data.success);
-        setOfficeData(officeResponse.data.success);
-        setVehiclesData(vehiclesResponse.data.success);
-        setIncidentData(incidentResponse.data.success);
-        setCarData(carResponse.data.data);
 
-        console.log("Marine Traffic", marineTrafficResponse.data);
-        console.log("Tracksat", tracksatResponse.data);
-        console.log("Spider Track", spiderTrakResponse.data);
-        console.log("Personnel", personnelResponse.data);
-        console.log("video Stream", videoStreamResponse.data);
-        console.log("Office", officeResponse.data);
-        console.log("Vehicles", vehiclesResponse.data);
-        console.log("Incident", incidentResponse.data);
-        console.log("Car", carResponse.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+      // Store fetched data in cache
+      setCachedData({
+        marineTrafficData: marineTrafficResponse.data.success,
+        tracksatData: tracksatResponse.data.success,
+        spiderTrakData: spiderTrakResponse.data.success,
+        personnelData: personnelResponse.data.success,
+        videoStreamData: videoStreamResponse.data.success,
+        officeData: officeResponse.data.success,
+        vehiclesData: vehiclesResponse.data.success,
+        incidentData: incidentResponse.data.success,
+        carData: carResponse.data.data
+      });
 
-    fetchData(); // Initial fetch
 
-    const intervalId = setInterval(fetchData, 60000); // Fetch data every 1 minute
 
-    return () => clearInterval(intervalId); // Cleanup interval on component unmount
-  }, []); // Include csrfToken as a dependency
+      // Indicate that initial data is loaded
+      setInitialDataLoaded(true);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // Call fetchData only once when the component mounts
+  useState(() => {
+    fetchData();
+  }, []);
 
   return (
     <div>
       <RefreshData />
-      <MapContent
-        marineTrafficData={marineTrafficData}
-        tracksatData={tracksatData}
-        spiderTrakData={spiderTrakData}
-        personnelData={personnelData}
-        videoStreamData={videoStreamData}
-        officeData={officeData}
-        vehiclesData={vehiclesData}
-        incidentData={incidentData}
-        carData={carData}
-      />
+      {initialDataLoaded ? ( // Render MapContent only if initial data is loaded
+        <MapContent
+          marineTrafficData={cachedData.marineTrafficData}
+          tracksatData={cachedData.tracksatData}
+          spiderTrakData={cachedData.spiderTrakData}
+          personnelData={cachedData.personnelData}
+          videoStreamData={cachedData.videoStreamData}
+          officeData={cachedData.officeData}
+          vehiclesData={cachedData.vehiclesData}
+          incidentData={cachedData.incidentData}
+          carData={cachedData.carData}
+        />
+      ) : (
+       <div className="loaderContainer">
+         <div className="loader">
+          <span></span>
+        </div>
+       </div>
+
+      )}
     </div>
   );
 }

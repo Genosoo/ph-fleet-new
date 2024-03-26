@@ -6,14 +6,12 @@ import { apiMarineTrafficData, apiTrakSatData, apiSpiderTrakData } from "../../.
 
 
 export default function Charts() {
-  const [loading, setLoading] = useState(false);
   const [marineTrafficData, setMarineTrafficData] = useState([]);
   const [trakSatData, setTrakSatData] = useState([]);
   const [spiderTrakData, setSpiderTrakData] = useState([]);
 
   const fetchData = async () => {
     try {
-      setLoading(true);
 
       const marineTrafficResponse = await axios.get(apiMarineTrafficData);
       const trackSatResponse = await axios.get(apiTrakSatData);
@@ -32,8 +30,6 @@ export default function Charts() {
       // console.log("video Stream", videoStreamResponse.data);
     } catch (error) {
       console.log(error);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -45,21 +41,12 @@ export default function Charts() {
     <div className="chart_container">
       <h2 className="chart_title">Graphs</h2>
       <div className="chart_wrapper">
-        {loading ? (
-          <div className="loader-container">
-          <div className="loader"></div>
-          <p>Fetching Data...</p>
-        </div>
-        ) : (
-          <>
             <div className="chart_box p-10">
               <BarChart spiderTrakData={spiderTrakData} trakSatData={trakSatData} marineTrafficData={marineTrafficData} />
             </div>
             <div className="chart_box">
               <DoughnutChart spiderTrakData={spiderTrakData}  trakSatData={trakSatData} marineTrafficData={marineTrafficData} />
             </div>
-          </>
-        )}
       </div>
     </div>
   );

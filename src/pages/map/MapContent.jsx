@@ -356,7 +356,7 @@ export default function MapComponent({
   return (
     <>
   <div className='map_container' >
-     <MapContainer ref={mapRef} center={[12.8797, 121.7740]} zoom={3} style={{ height: '100%', width: '100%' }}>
+     <MapContainer ref={mapRef} center={[12.8797, 121.7740]} zoom={6} style={{ height: '100%', width: '100%' }}>
       
       
      {mapLayer === 'osm' ? (
@@ -677,7 +677,7 @@ export default function MapComponent({
 
         {mapLayer !== 'windy' && !withCluster ? 
         <MarkerClusterGroup chunkedLoading iconCreateFunction={trakSatClusterCustomIcon}>
-        {mapLayer !== 'windy' &&   showTrakSat && tracksatData && tracksatData.map((item, index) => (
+        {mapLayer !== 'windy' &&  showTrakSat && tracksatData && tracksatData.map((item, index) => (
               <TrakSatMarker
                 key={`trakcsat-craft-${index}`}
                 item={item}

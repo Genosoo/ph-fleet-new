@@ -14,7 +14,9 @@ export const apiUsers = `${baseUrl}/api/users/`;
 
 export const apiCheckInToday = `${baseUrl}/api/checked_in_users/`;
 
-export const apiPersonnelData = `${baseUrl}/api/personnel_latest`;
+export const apiPersonnelData = `${baseUrl}/api/personnel_latest/`;
+export const apiPersonnelStatus = `${baseUrl}/api/personnel_status/`
+export const apiPersonnelRank = `${baseUrl}/api/rank/`
 
 export const apiOfficesData = `${baseUrl}/api/office/`;
 
@@ -39,6 +41,8 @@ export const apiLatestTraksat = `${baseUrl}/api/get_traksat_latest/`;
 export const apiLatestSpiderTrak = `${baseUrl}/api/get_spidertracks_latest/`;
 
 export const apiAircraftData = `${baseUrl}/api/internal_aircraft/`;
+export const apiAircraftType = `${baseUrl}/api/aircraft_type/`
+
 
 export const apiVesselsData = `${baseUrl}/api/internal_vessel/`;
 export const apiVesselClassType = `${baseUrl}/api/vessel_class_types/`;

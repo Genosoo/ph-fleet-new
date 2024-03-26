@@ -19,13 +19,13 @@ export default function TraksatList() {
   const [expandedRow, setExpandedRow] = useState(null); 
   const [open, setOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("")
-  const [traksatHistory, setTraksatHistory] = useState([]);
+  const [historyData, setHistoryData] = useState([])
+  const [historyLoading, setHistoryLoading] = useState(false); // State for loading historical data
 
   useEffect(() => {
     const getTraksatHistory = async () => {
         try {
             const traksatHistoryResponse = await axios.get(apiTrakSatHistory);
-            setTraksatHistory(traksatHistoryResponse.data.success);
             setLoadingHistory(false); // Set loading to false once data is fetched
             console.log('Traksat History', traksatHistoryResponse.data);
         } catch (error) {
@@ -61,8 +61,20 @@ export default function TraksatList() {
     setFilteredData(filteredResult)
   },[searchQuery, vesselsData])
 
-  const handleRowClick = (index) => {
+
+  const handleRowClick =  async(asset_id,index) => {
     setExpandedRow(expandedRow === index ? null : index);
+      try {
+        setHistoryLoading(true);
+        // Fetch historical data based on asset_id
+        const response = await axios.get(`${apiTrakSatHistory}?asset_id=${asset_id}`);
+        const limitedData = response.data.success.slice(0, 50);
+        setHistoryData(limitedData);
+      } catch (error) {
+        console.error('Error fetching historical data:', error);
+      } finally {
+        setHistoryLoading(false); // Reset history loading state regardless of success or failure
+      }
   };
 
   const handleChangePage = (event, newPage) => {
@@ -121,7 +133,7 @@ export default function TraksatList() {
    <React.Fragment key={index}>
       
      <TableRow >
-       <StyledTableCell onClick={() => handleRowClick(index)} >
+       <StyledTableCell onClick={() => handleRowClick(item.asset_id, index)} >
           <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
@@ -145,69 +157,69 @@ export default function TraksatList() {
     </TableRow>
     <StyledTableCell  style={{ paddingBottom: 0, paddingTop: 0 }}   colSpan={6}>
                       <Collapse in={expandedRow === index} timeout="auto" unmountOnExit>
-                          <Box  sx={{ height:"600px", width:"58%", overflow:"auto" }}>
-                            <h2 className="font-lato text-[1rem] font-bold py-4">History</h2>
-                            {loadingHistory ? ( // Show loader if historyData is still loading
-                        <div className="flex items-center  font-lato text-[1rem]">
-                          Please wait it takes a while to fetch data...<CircularProgress />
-                        </div>
-                    ) : ( 
+      {historyLoading ? (
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
+          <CircularProgress />
+        </Box>
+    ) :  ( 
+      <Box  sx={{ height:"600px", width:"58%", overflow:"auto" }}>
+      <h2 className="font-lato text-[1rem] font-bold py-4">History</h2>
+      {loadingHistory ? ( // Show loader if historyData is still loading
+  <div className="flex items-center  font-lato text-[1rem]">
+    Please wait it takes a while to fetch data...<CircularProgress />
+  </div>
+) : historyData && historyData.length > 0 ?  ( 
 
-                     <React.Fragment>
-  {!traksatHistory.some(historyItem => historyItem.unit_id === item.unit_id) ?  (
-                        <div className="text-sm">No history to show</div>
-                    ) : (
-                      <Table>
-                      <TableHead>
-                        <TableRow>
-                        <StyledTableCell><b>Asset ID</b></StyledTableCell>
-                          <StyledTableCell><b>Description</b></StyledTableCell>
-                          <StyledTableCell><b>Group</b></StyledTableCell>
-                          <StyledTableCell><b>GPS State</b></StyledTableCell>
-                          <StyledTableCell><b>Heading</b></StyledTableCell>
-                          <StyledTableCell><b>Last GPS GMT</b></StyledTableCell>
-                          <StyledTableCell><b>Last Report GMT</b></StyledTableCell>
-                          <StyledTableCell><b>Last Sat</b></StyledTableCell>
-                          <StyledTableCell><b>Last SMS</b></StyledTableCell>
-                          <StyledTableCell><b>Last Total</b></StyledTableCell>
-                          <StyledTableCell><b>This Sat</b></StyledTableCell>
-                          <StyledTableCell><b>This SMS</b></StyledTableCell>
-                          <StyledTableCell><b>This Total</b></StyledTableCell>
-                          <StyledTableCell><b>Network</b></StyledTableCell>
-                          <StyledTableCell><b>ODO</b></StyledTableCell>
-                          <StyledTableCell><b>Speed Kph</b></StyledTableCell>
-                        </TableRow>
-                      </TableHead>
-                    <TableBody>
-                        {traksatHistory.filter(historyItem => item.asset_id === historyItem.asset_id).slice(0,10).map((historyItem, historyIndex) => (
-                          // Check if historyItem's MMSI matches the current item's MMSI
-                          item.asset_id === historyItem.asset_id &&
-                          <TableRow key={historyIndex}>
-                            <StyledTableCell>{item.asset_id ?? "--"}</StyledTableCell>
-                            <StyledTableCell>{item.description ?? "--"}</StyledTableCell>
-                            <StyledTableCell>{item.group ?? "--"}</StyledTableCell>
-                            <StyledTableCell>{item.gps_state ?? "--"}</StyledTableCell>
-                            <StyledTableCell>{item.heading ?? "--"}</StyledTableCell>
-                            <StyledTableCell>{item.last_gps_gmt ?? "--"}</StyledTableCell>
-                            <StyledTableCell>{item.last_report_gmt ?? "--"}</StyledTableCell>
-                            <StyledTableCell>{item.last_sat ?? "--"}</StyledTableCell>
-                            <StyledTableCell>{item.last_sms ?? "--"}</StyledTableCell>
-                            <StyledTableCell>{item.last_total ?? "--"}</StyledTableCell>
-                            <StyledTableCell>{item.this_sat ?? "--"}</StyledTableCell>
-                            <StyledTableCell>{item.this_sms ?? "--"}</StyledTableCell>
-                            <StyledTableCell>{item.this_total ?? "--"}</StyledTableCell>
-                            <StyledTableCell>{item.network ?? "--"}</StyledTableCell>
-                            <StyledTableCell>{item.odo ?? "--"}</StyledTableCell>
-                            <StyledTableCell>{item.speed_kph ?? "--"}</StyledTableCell>
-                          </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-                    )}
-
-                     </React.Fragment>
-                   )}  
-                          </Box>
+<Table>
+<TableHead>
+  <TableRow>
+  <StyledTableCell><b>Asset ID</b></StyledTableCell>
+    <StyledTableCell><b>Description</b></StyledTableCell>
+    <StyledTableCell><b>Group</b></StyledTableCell>
+    <StyledTableCell><b>GPS State</b></StyledTableCell>
+    <StyledTableCell><b>Heading</b></StyledTableCell>
+    <StyledTableCell><b>Last GPS GMT</b></StyledTableCell>
+    <StyledTableCell><b>Last Report GMT</b></StyledTableCell>
+    <StyledTableCell><b>Last Sat</b></StyledTableCell>
+    <StyledTableCell><b>Last SMS</b></StyledTableCell>
+    <StyledTableCell><b>Last Total</b></StyledTableCell>
+    <StyledTableCell><b>This Sat</b></StyledTableCell>
+    <StyledTableCell><b>This SMS</b></StyledTableCell>
+    <StyledTableCell><b>This Total</b></StyledTableCell>
+    <StyledTableCell><b>Network</b></StyledTableCell>
+    <StyledTableCell><b>ODO</b></StyledTableCell>
+    <StyledTableCell><b>Speed Kph</b></StyledTableCell>
+  </TableRow>
+</TableHead>
+<TableBody>
+{historyData.map((item, index) => (
+    <TableRow key={index}>
+      <StyledTableCell>{item.asset_id ?? "--"}</StyledTableCell>
+      <StyledTableCell>{item.description ?? "--"}</StyledTableCell>
+      <StyledTableCell>{item.group ?? "--"}</StyledTableCell>
+      <StyledTableCell>{item.gps_state ?? "--"}</StyledTableCell>
+      <StyledTableCell>{item.heading ?? "--"}</StyledTableCell>
+      <StyledTableCell>{item.last_gps_gmt ?? "--"}</StyledTableCell>
+      <StyledTableCell>{item.last_report_gmt ?? "--"}</StyledTableCell>
+      <StyledTableCell>{item.last_sat ?? "--"}</StyledTableCell>
+      <StyledTableCell>{item.last_sms ?? "--"}</StyledTableCell>
+      <StyledTableCell>{item.last_total ?? "--"}</StyledTableCell>
+      <StyledTableCell>{item.this_sat ?? "--"}</StyledTableCell>
+      <StyledTableCell>{item.this_sms ?? "--"}</StyledTableCell>
+      <StyledTableCell>{item.this_total ?? "--"}</StyledTableCell>
+      <StyledTableCell>{item.network ?? "--"}</StyledTableCell>
+      <StyledTableCell>{item.odo ?? "--"}</StyledTableCell>
+      <StyledTableCell>{item.speed_kph ?? "--"}</StyledTableCell>
+    </TableRow>
+   ))}
+</TableBody>
+</Table>
+) : (
+  <div>No history to show.</div>
+)}
+    </Box>
+    )}           
+                       
                       </Collapse>
                     </StyledTableCell>
     

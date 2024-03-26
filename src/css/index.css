@@ -15,65 +15,7 @@
 
 @layer components {
 
-   .mt_card_container{
-     @apply  absolute cursor-pointer    w-[350px] z-[2000] top-40 left-[50%] bg-[#ffffff78] rounded-[6px] overflow-hidden
-   }
-
-   .mt_card_header{
-    @apply flex bg-gray-100 p-2 items-center justify-between
-   }
-
-   .mt_card_header .icon {
-    @apply text-[20px]  font-bold rounded-full text-gray-800
-   }
-
-
-
-   .mt_box_flag{
-    @apply flex gap-2
-   }
-
-   .mt_box_flag img{
-    @apply w-[50px]
-   }
-
-   .mt_box_flag p{
-    @apply flex flex-col
-   }
-
-   .mt_box_flag p span{
-    @apply text-base font-semibold text-gray-800
-   }
-
-   .mt_ship_img img{
-    @apply h-[200px] w-full
-   }
-
-   .mt_card_header h2 img{
-    @apply w-[40px]
-   }
-
-   .mt_card_details{
-    @apply flex  h-[200px] w-[350px]  overflow-y-auto bg-stone-100
-   }
-   
-   .mt_card_details .card_p{
-    @apply flex flex-col gap-3 p-2 
-   }
-
-   .mt_card_details .card_p p{
-    @apply flex gap-3 items-center 
-   }
-   .mt_card_details .card_p p .title{
-    @apply w-[100px]  
-   }
-   
-
-   .mt_btn_box{
-    @apply flex flex-col p-5 mt-2 bg-white
-   }
-
-
+  
 
   .main_container{
     @apply flex  md:flex-row bg-gray-100 h-[100vh] overflow-auto 
@@ -103,7 +45,7 @@
 
   .navbar_container{
     @apply flex items-center bg-gray-100 py-3 h-[6vh]
-    justify-between px-5  sticky top-0 z-50
+    justify-between px-5  sticky top-0 z-[1000]
   }
 
   .navbar_menu_wrapper{
@@ -760,7 +702,7 @@
 }
 
 
-
+/* 
 
 .loader-container {
   display: flex;
@@ -784,7 +726,7 @@
   100% { transform: rotate(360deg); }
 }
 
-
+ */
 
 
 
@@ -808,4 +750,79 @@
   height:0;
   font-size:12px;
   position:absolute;
+}
+
+.loaderContainer{
+  @apply  flex items-center justify-center h-[90vh]
+}
+
+.loader {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  background: transparent;
+  border-radius: 50%;
+  box-shadow: 25px 25px 75px rgba(0, 0, 0, 0.55);
+  border: 1px solid #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.loader::before {
+  content: "";
+  position: absolute;
+  inset: 20px;
+  background: transparent;
+  border: 1px dashed #444;
+  border-radius: 50%;
+  box-shadow: inset -5px -5px 25px rgba(0, 0, 0, 0.25),
+      inset 5px 5px 35px rgba(0, 0, 0, 0.25);
+}
+
+.loader::after {
+  content: "";
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px dashed #444;
+  box-shadow: inset -5px -5px 25px rgba(0, 0, 0, 0.25),
+      inset 5px 5px 35px rgba(0, 0, 0, 0.25);
+}
+
+.loader span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  background: transparent;
+  transform-origin: top left;
+  animation: radar81 2s linear infinite;
+  border-top: 1px dashed #e8a87c;
+}
+
+.loader span::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #1a1b1b;
+  transform-origin: top left;
+  transform: rotate(-55deg);
+  filter: blur(30px) drop-shadow(20px 20px 20px #1b1b1c);
+}
+
+@keyframes radar81 {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }

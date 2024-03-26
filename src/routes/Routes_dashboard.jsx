@@ -24,6 +24,7 @@ import MarineTrafficList from '../pages/dashboard/listPage/MarineTrafficList';
 import TracksatList from '../pages/dashboard/listPage/TracksatList';
 import SpiderTrakList from '../pages/dashboard/listPage/SpiderTrakList';
 import CheckCookie from '../components/checkCookie/CheckCookie';
+import Profile from '../pages/vessels/profile/Profile';
 
 export default function Routes_dashboard() {
   const [accountData, setAccountData] = useState({});
@@ -47,7 +48,7 @@ export default function Routes_dashboard() {
   const isAdministrator = accountData.roles && accountData.roles[0] === 'Administrator';
   
   return (
-    <AutoLogout>
+      <AutoLogout>
       <CheckCookie />
       <Routes>
         {isAdministrator ? (
@@ -65,6 +66,7 @@ export default function Routes_dashboard() {
             <Route path='users' element={<Users />} />
             <Route path='personnel' element={<Personnel />} />
             <Route path='vessels' element={<Vessels />} />
+            <Route path='/vessels/vessels-profile' element={<Profile />} />
             <Route path='aircrafts' element={<Aircrafts />} />
             <Route path='commercial-vessels' element={<VesselsCommercial />} />
             <Route path='commercial-aircrafts' element={<AircraftsCommercial />} />
@@ -79,16 +81,12 @@ export default function Routes_dashboard() {
         ) : (
           // Your existing routes for non-authorized users
           <>
-            <Route index element={<Map />} />
             <Route path='map' element={<Map />} />
           </>
         )}
 
-        {/* Common route for both authorized and non-authorized users */}
         <Route path='account' element={<Account />} />
 
-        {/* Fallback route for unknown paths */}
-        <Route path='*' element={<h1>No Permission</h1>} />
       </Routes>
     </AutoLogout>
   );
