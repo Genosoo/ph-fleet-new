@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import {  useState, useEffect } from "react";
+import {  useState, useEffect, useCallback } from "react";
 import {
   FormControl,
   InputLabel,
@@ -11,13 +11,17 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import {
-  apiPersonnelData,
+  apiUsers,
   apiPersonnelStatus,
   apiPersonnelRank
 } from "../../api/api_urls";
 import { StyledButtonAdd } from "./StyledComponent"; 
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import { FaPerson } from "react-icons/fa6";
+import { useDropzone } from 'react-dropzone';
+import { BiImageAdd } from "react-icons/bi";
+
+
 export default function FormAdd({ csrfToken }) {
   const [personnelFormData, setPersonnelFormData] = useState({});
   const [successMessage, setSuccessMessage] = useState("");
@@ -26,6 +30,32 @@ export default function FormAdd({ csrfToken }) {
   const [openErrorMessage, setOpenErrorMessage] = useState(false);
   const [status, setStatus ] = useState([])
   const [rank, setRank ] = useState([])
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const onDrop = useCallback((acceptedFiles) => {
+    const image = acceptedFiles[0];
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      const image1 = reader.result.split(',')[1];
+
+      setSelectedImage(URL.createObjectURL(image));
+
+      setPersonnelFormData((prevData) => ({
+        ...prevData,
+        personal_details: {
+          ...prevData.personal_details,
+          image: image1,
+        },
+      }));
+
+      console.log(image1);
+    };
+
+    reader.readAsDataURL(image);
+  }, [setPersonnelFormData]);
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
 
   useEffect(() => {
@@ -110,7 +140,7 @@ export default function FormAdd({ csrfToken }) {
     }
 
     try {
-      const response = await axios.post(apiPersonnelData, personnelFormData, {
+      const response = await axios.post(apiUsers, personnelFormData, {
         headers: {
           "X-CSRFToken": csrfToken // Add CSRF token to request headers
         }
@@ -119,9 +149,7 @@ export default function FormAdd({ csrfToken }) {
       setPersonnelFormData({});
       setSuccessMessage("Personnel created successfully");
       setOpenSuccessMessage(true);
-      setTimeout(() => {
-         window.location.reload()
-      },2000)
+     
     } catch (error) {
       console.error("Error submitting report:", error);
     }
@@ -164,8 +192,7 @@ export default function FormAdd({ csrfToken }) {
         <FaPerson /> Add Personnel</h2>
 
       <form className="formBox" onSubmit={handleCreatePersonnel}>
-    
-          
+
           <TextField
             name="username"
             label="Username"
@@ -197,6 +224,7 @@ export default function FormAdd({ csrfToken }) {
             onChange={handleInputChange}
             fullWidth
           />
+
 
           <TextField
             name="mobile_number"
@@ -265,7 +293,27 @@ export default function FormAdd({ csrfToken }) {
           />
        
        
-
+       <div {...getRootProps()} className={isDragActive ? 'dropzone-active' : 'dropzone'}>
+          <input {...getInputProps()} id="file-input" />
+          {selectedImage ? (
+            <div>
+              <img src={selectedImage} alt="Selected" className="selected-image" />
+            </div>
+            ) : (
+              <div className="text-[30px] text-gray-500">
+                <BiImageAdd />
+              </div>
+            )}
+            {
+              isDragActive ?
+                <p className='text-xl text-gray-700 font-light'>Drop the logo here...</p> :
+                <p className='text-xl text-gray-400 font-light'>Drag and drop an logo here or</p>
+            }
+            
+            <div  className="choose-image-button">
+              Choose Logo
+            </div>
+          </div>
 {/* 
           {["image_main", "image_left", "image_right", "image_front", "image_back"].map((fieldName, index) => (
             <label htmlFor={fieldName} className="imageBox" key={index}>

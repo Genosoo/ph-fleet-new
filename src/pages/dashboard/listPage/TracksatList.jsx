@@ -3,69 +3,52 @@ import axios from "axios";
 import { Table, TableBody, TableContainer, TableHead, 
   TableRow, Paper, TablePagination, CircularProgress, 
   Collapse, TextField, Box } from "@mui/material"
-import { apiTrakSatData, apiTrakSatHistory } from "../../../api/api_urls";
+import {  apiTrakSatHistory } from "../../../api/api_urls";
 import { StyledTableCell } from "./StyledComponent"; 
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import IconButton from '@mui/material/IconButton';
+import { useFetchData } from "../../../context/FetchData";
+
 
 export default function TraksatList() {
-  const [vesselsData, setVesselsData] = useState([]);
   const [filteredData, setFilteredData] = useState([])
   const [loading, setLoading] = useState(true);
   const [loadingHistory, setLoadingHistory] = useState(true);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [expandedRow, setExpandedRow] = useState(null); 
-  const [open, setOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("")
   const [historyData, setHistoryData] = useState([])
-  const [historyLoading, setHistoryLoading] = useState(false); // State for loading historical data
+
+
+  const fetchedData = useFetchData();
+  
+  const trakSatData = fetchedData.tracksatData
 
   useEffect(() => {
-    const getTraksatHistory = async () => {
-        try {
-            const traksatHistoryResponse = await axios.get(apiTrakSatHistory);
-            setLoadingHistory(false); // Set loading to false once data is fetched
-            console.log('Traksat History', traksatHistoryResponse.data);
-        } catch (error) {
-            console.log(error);
-            setLoadingHistory(false); // Make sure to set loading to false even if an error occurs
-        }
-    };
+    if (fetchedData !== null) {
+      setLoading(false); 
+    }
+  }, [fetchedData]);
 
-    getTraksatHistory();
-}, []);
+
+
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const vesselsResponse = await axios.get(apiTrakSatData);
-        setVesselsData(vesselsResponse.data.success);
-        console.log("apiTrakSatData", vesselsResponse.data.success);
-        setLoading(false); 
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    const filteredResult = vesselsData.filter(item =>
+    const filteredResult = trakSatData.filter(item =>
        item.asset_id.toLowerCase().includes(searchQuery.toLowerCase())  ||
        item.group.toLowerCase().includes(searchQuery.toLowerCase()) ||
        item.description.toLowerCase().includes(searchQuery.toLowerCase()) 
     );
     setFilteredData(filteredResult)
-  },[searchQuery, vesselsData])
+  },[searchQuery, trakSatData])
 
 
   const handleRowClick =  async(asset_id,index) => {
     setExpandedRow(expandedRow === index ? null : index);
       try {
-        setHistoryLoading(true);
+        setLoadingHistory(true);
         // Fetch historical data based on asset_id
         const response = await axios.get(`${apiTrakSatHistory}?asset_id=${asset_id}`);
         const limitedData = response.data.success.slice(0, 50);
@@ -73,7 +56,7 @@ export default function TraksatList() {
       } catch (error) {
         console.error('Error fetching historical data:', error);
       } finally {
-        setHistoryLoading(false); // Reset history loading state regardless of success or failure
+        setLoadingHistory(false); // Reset history loading state regardless of success or failure
       }
   };
 
@@ -134,9 +117,9 @@ export default function TraksatList() {
       
      <TableRow >
        <StyledTableCell onClick={() => handleRowClick(item.asset_id, index)} >
-          <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
-             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
+       <IconButton aria-label="expand row" size="small">
+                  {expandedRow === index ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                </IconButton>
       </StyledTableCell>          
       <StyledTableCell>{item.asset_id ?? "--"}</StyledTableCell>
       <StyledTableCell>{item.description ?? "--"}</StyledTableCell>
@@ -157,7 +140,7 @@ export default function TraksatList() {
     </TableRow>
     <StyledTableCell  style={{ paddingBottom: 0, paddingTop: 0 }}   colSpan={6}>
                       <Collapse in={expandedRow === index} timeout="auto" unmountOnExit>
-      {historyLoading ? (
+      {loadingHistory ? (
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
           <CircularProgress />
         </Box>

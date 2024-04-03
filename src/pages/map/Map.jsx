@@ -1,88 +1,38 @@
-import { useState } from "react";
-import axios from "axios";
+import { useState, useEffect } from "react";
 import MapContent from "./MapContent";
-import RefreshData from "./refreshData/RefreshData";
-import { 
-  apiMarineTrafficData,
-  apiTrakSatData,
-  apiSpiderTrakData,
-  apiPersonnelData,
-  apiVideoStream,
-  apiOfficesData,
-  apiVehiclesData,
-  apiIncident,
-  apiCarTrack
-} from "../../api/api_urls";
+import { useFetchData } from "../../context/FetchData";
+import Loader from "../../Loader";
 
 export default function MainApp() {
-  const [initialDataLoaded, setInitialDataLoaded] = useState(false); // State to track if initial data is loaded
-  const [cachedData, setCachedData] = useState({}); // State to store cached data
-  console.log("cachedDAta:", cachedData)
+  const [loading, setLoading] = useState(true); // State to track loading status
+  const fetchedData = useFetchData();
 
-  // Function to fetch data
-  const fetchData = async () => {
-    try {
-      const marineTrafficResponse = await axios.get(apiMarineTrafficData);
-      const tracksatResponse = await axios.get(apiTrakSatData);
-      const spiderTrakResponse = await axios.get(apiSpiderTrakData);
-      const personnelResponse = await axios.get(apiPersonnelData);
-      const videoStreamResponse = await axios.get(apiVideoStream);
-      const officeResponse = await axios.get(apiOfficesData);
-      const vehiclesResponse = await axios.get(apiVehiclesData);
-      const incidentResponse = await axios.get(apiIncident);
-      const carResponse = await axios.get(apiCarTrack);
-
-
-      // Store fetched data in cache
-      setCachedData({
-        marineTrafficData: marineTrafficResponse.data.success,
-        tracksatData: tracksatResponse.data.success,
-        spiderTrakData: spiderTrakResponse.data.success,
-        personnelData: personnelResponse.data.success,
-        videoStreamData: videoStreamResponse.data.success,
-        officeData: officeResponse.data.success,
-        vehiclesData: vehiclesResponse.data.success,
-        incidentData: incidentResponse.data.success,
-        carData: carResponse.data.data
-      });
-
-
-
-      // Indicate that initial data is loaded
-      setInitialDataLoaded(true);
-    } catch (error) {
-      console.log(error);
+  useEffect(() => {
+    // Check if fetchedData is not null, indicating that data has been fetched
+    if (fetchedData !== null) {
+      setLoading(false); // Set loading to false when data is fetched
     }
-  };
+  }, [fetchedData]); // Dependency on fetchedData
 
-  // Call fetchData only once when the component mounts
-  useState(() => {
-    fetchData();
-  }, []);
+  // Display loading indicator if data is still being fetched
+  if (loading) {
+    return <Loader />
+  }
 
+  // Render MapContent component with fetched data when loading is complete
   return (
     <div>
-      <RefreshData />
-      {initialDataLoaded ? ( // Render MapContent only if initial data is loaded
-        <MapContent
-          marineTrafficData={cachedData.marineTrafficData}
-          tracksatData={cachedData.tracksatData}
-          spiderTrakData={cachedData.spiderTrakData}
-          personnelData={cachedData.personnelData}
-          videoStreamData={cachedData.videoStreamData}
-          officeData={cachedData.officeData}
-          vehiclesData={cachedData.vehiclesData}
-          incidentData={cachedData.incidentData}
-          carData={cachedData.carData}
-        />
-      ) : (
-       <div className="loaderContainer">
-         <div className="loader">
-          <span></span>
-        </div>
-       </div>
-
-      )}
+      <MapContent
+        marineTrafficData={fetchedData.marineTrafficData}
+        tracksatData={fetchedData.tracksatData}
+        spiderTrakData={fetchedData.spiderTrakData}
+        personnelData={fetchedData.personnelData}
+        videoStreamData={fetchedData.videoStreamData}
+        officeData={fetchedData.officeData}
+        vehiclesData={fetchedData.vehiclesData}
+        incidentData={fetchedData.incidentData}
+        carData={fetchedData.carData}
+      />
     </div>
   );
 }

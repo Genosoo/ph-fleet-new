@@ -29,10 +29,10 @@ import VehiclesMarker from './markers/VehiclesMarker'
 import IncidentsMarker from './markers/IncidentsMarker'
 import CarTrackMarker from './markers/CarMarker';
 
-import ButtonToggleDrawer from './buttons/btnToggleDrawer';
 import ButtonMapChange from './buttons/btnChangeMap';
 import ButtonFullScreenMap from './buttons/btnFullScreenMap'
 import ButtonToggleCluster from './buttons/btnToggleCluster'
+import ButtonZoom from './buttons/buttonZoom'
 
 import axios from "axios";
 import CityData from '../../city.list.json'
@@ -54,6 +54,8 @@ export default function MapComponent({
   
 }) {
   const mapRef = useRef(null);
+  const [showAll, setShowAll] = useState(false)
+  const [unShowAll, setUnShowAll] = useState(false)
   const [showMarineTraffic, setShowMarineTraffic] = useState(false);
   const [showTrakSat, setShowTrakSat] = useState(false);
   const [showIncident, setShowIncident] = useState(false)
@@ -68,12 +70,18 @@ export default function MapComponent({
   const [showTrakSatLabel, setShowTrakSatLabel] = useState(false);
   const [showSpiderTrakLabel, setShowSpiderTrakLabel] = useState(false);
 
+
+
   const [showPersonnel, setShowPersonnel] = useState(false)
   const [showOnDuty, setShowOnDuty] = useState(false);
   const [showOnLeave, setShowOnLeave] = useState(false);
   const [showRnr, setShowRnr] = useState(false);
   const [showNonUniform, setShowNonUniform] = useState(false);
   const [showAllUsernames, setShowAllUsernames] = useState(false);
+
+  const [showAllVessels, setShowAllVessels] = useState(false)
+  const [showAllAircrafts, setShowAllAircrafts] = useState(false)
+
 
   const [selectedMarineTraffic, setSelectedMarineTraffic] = useState(null);
   const [selectedTrakSat, setSelectedTrakSat] = useState(null);
@@ -91,7 +99,6 @@ export default function MapComponent({
 
   const [mapLayer, setMapLayer] = useState('osm');
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   useEffect(() => {
@@ -143,6 +150,9 @@ export default function MapComponent({
     setShowVehicles(getCheckboxState('showVehicles', false));
     setShowIncident(getCheckboxState('showIncident', false));
     setShowCarTrack(getCheckboxState('showCarTrack', false));
+    setShowAll(getCheckboxState('showAll', false));
+    setShowAllVessels(getCheckboxState('showAllVessels', false));
+    setShowAllAircrafts(getCheckboxState('showAircrafts', false));
   }, []);
 
    // Update local storage based on state changes
@@ -156,6 +166,9 @@ export default function MapComponent({
     updateLocalStorage('showVehicles', showVehicles);
     updateLocalStorage('showIncident', showIncident);
     updateLocalStorage('showCarTrack', showCarTrack);
+    updateLocalStorage('showAll', showAll);
+    updateLocalStorage('showAllVessels', showAllVessels);
+    updateLocalStorage('showAllAircrafts', showAllAircrafts);
   }, [
     showMarineTraffic,
     showTrakSat,
@@ -165,9 +178,61 @@ export default function MapComponent({
     showWeather,
     showVehicles,
     showIncident,
-    showCarTrack
+    showCarTrack,
+    showAll,
+    showAllVessels,
+    showAllAircrafts
   ]);
 
+
+  const handleShowAllVessels = () => {
+    setShowAllVessels(!showAllVessels)
+    setShowMarineTraffic(!showMarineTraffic)
+    setShowTrakSat(!showTrakSat)
+
+  }
+
+  const handleShowAllAircrafts = () => {
+    setShowAllAircrafts(!showAllAircrafts)
+    setShowSpiderTrak(!showSpiderTrak)
+  }
+
+
+  const handleShowAll = () => {
+    setUnShowAll(false)
+    setShowAll(!showAll)
+    setShowMarineTraffic(true)
+    setShowTrakSat(true)
+    setShowSpiderTrak(true)
+    setShowWeather(true)
+    setShowPersonnel(true)
+    setShowIncident(true)
+    setShowOffice(true)
+    setShowVehicles(true)
+    setShowCarTrack(true)
+    setShowVideoStream(true)
+    setShowAllVessels(true)
+    setShowAllAircrafts(true)
+
+  }
+
+  const handleUnShowAll = () => {
+    setShowAll(false)
+    setUnShowAll(!unShowAll)
+    setShowMarineTraffic(false)
+    setShowTrakSat(false)
+    setShowSpiderTrak(false)
+    setShowWeather(false)
+    setShowPersonnel(false)
+    setShowIncident(false)
+    setShowOffice(false)
+    setShowVehicles(false)
+    setShowCarTrack(false)
+    setShowVideoStream(false)
+    setShowAllVessels(false)
+    setShowAllAircrafts(false)
+
+  }
 
   const handleToggleOnDuty = () => {
     setShowOnDuty(!showOnDuty);
@@ -203,27 +268,39 @@ export default function MapComponent({
 
   const handlePersonnel = () => {
     setShowPersonnel(!showPersonnel)
+    setShowAll(false)
+    setUnShowAll(false)
   }
 
   const handleVehicles = () => {
     setShowVehicles(!showVehicles)
+    setShowAll(false)
+    setUnShowAll(false)
   }
 
   const handleCarTrack = () => {
     setShowCarTrack(!showCarTrack)
+    setShowAll(false)
+    setUnShowAll(false)
   }
 
   const handleIncident = () => {
     setShowIncident(!showIncident)
+    setShowAll(false)
+    setUnShowAll(false)
   }
 
   const handleVideoStream = () => {
     setShowVideoStream(!showVideoStream)
+    setShowAll(false)
+    setUnShowAll(false)
   }
 
 
   const handleMarineTraffic = () => {
     setShowMarineTraffic(!showMarineTraffic)
+    setShowAll(false)
+    setUnShowAll(false)
 
   }
   
@@ -231,11 +308,15 @@ export default function MapComponent({
   const handleTrakSat = () => {
     setShowTrakSat(!showTrakSat)
     setShowTrakSatLabel(!showTrakSatLabel)
+    setShowAll(false)
+    setUnShowAll(false)
   }
 
   const handleSpiderTrak = () => {
     setShowSpiderTrak(!showSpiderTrak)
     setShowSpiderTrakLabel(!showSpiderTrakLabel)
+    setShowAll(false)
+    setUnShowAll(false)
 
   };
 
@@ -290,10 +371,14 @@ export default function MapComponent({
 
    const handleOffice = () => {
     setShowOffice(!showOffice)
+    setShowAll(false)
+    setUnShowAll(false)
   }
 
   const toggleWeather = () => {
     setShowWeather(!showWeather); // Toggle the state to show/hide weather
+    setShowAll(false)
+    setUnShowAll(false)
   };
 
 
@@ -356,30 +441,20 @@ export default function MapComponent({
   return (
     <>
   <div className='map_container' >
-     <MapContainer ref={mapRef} center={[12.8797, 121.7740]} zoom={6} style={{ height: '100%', width: '100%' }}>
+
+
+  {mapLayer !== 'windy' &&  <FilterDrawer
+      handleShowAllAircrafts={handleShowAllAircrafts}
+      showAllAircrafts={showAllAircrafts}
+
+      handleShowAllVessels={handleShowAllVessels}
+      showAllVessels={showAllVessels}
+
+      handleUnShowAll={handleUnShowAll}
+      unShowAll={unShowAll}
       
-      
-     {mapLayer === 'osm' ? (
-        <TileLayer
-          url="https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}&hl=en"
-          subdomains={['mt0', 'mt1', 'mt2', 'mt3']}
-        />
-      ) : mapLayer === 'windy' ? (
-        <WindyMap /> 
-      ) : (
-        <TileLayer
-          url="http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&hl=en"
-          subdomains={['mt0', 'mt1', 'mt2', 'mt3']}
-        />
-      )}
-   
-
-
-<FilterDrawer
-
-      isDrawerOpen={isDrawerOpen}
-      toggleDrawer={toggleDrawer}
-
+      handleShowAll={handleShowAll}
+      showAll={showAll}
 
       showOnDuty={showOnDuty}
       handleToggleOnDuty={handleToggleOnDuty}
@@ -431,25 +506,37 @@ export default function MapComponent({
 
       showCarTrack={showCarTrack}
       handleCarTrack={handleCarTrack}
-    
-    />
+    /> }
 
-   <div className='button_map_wrapper'>
-          <ButtonFullScreenMap isFullscreen={isFullscreen} toggleFullscreen={toggleFullscreen} />
-         <ButtonMapChange setMapLayer={setMapLayer} mapLayer={mapLayer} />
-        {/* <ButtonToggleDrawer  toggleDrawer={toggleDrawer} /> */}
-        {mapLayer !== 'windy' && <ButtonToggleDrawer toggleDrawer={toggleDrawer} />}
-        {mapLayer !== 'windy' &&  <ButtonToggleCluster handleToggleCluster={handleToggleCluster}  withCluster={withCluster}/> }
+     <MapContainer  zoomControl={false} ref={mapRef} center={[12.8797, 121.7740]} zoom={6} style={{ height: '100%', width: '100%' }}>
       
+      
+     {mapLayer === 'osm' ? (
+        <TileLayer url="https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}&hl=en" subdomains={['mt0', 'mt1', 'mt2', 'mt3']} />
+      ) : mapLayer === 'windy' ? (
+        <WindyMap /> 
+      ) : (
+        <TileLayer url="http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&hl=en" subdomains={['mt0', 'mt1', 'mt2', 'mt3']} />
+      )}
+   
+
+
+   <ButtonMapChange setMapLayer={setMapLayer} mapLayer={mapLayer} />
+    <div className="btnBottomSide">
+        {mapLayer !== 'windy' &&  <ButtonToggleCluster handleToggleCluster={handleToggleCluster}  withCluster={withCluster}/> }
+        {mapLayer !== 'windy' && <ButtonZoom /> }
+        <ButtonFullScreenMap isFullscreen={isFullscreen} toggleFullscreen={toggleFullscreen} />
     </div>
 
+  
 
-{mapLayer !== 'windy' &&  showWeather &&
-    weatherData.map((location) => (
-      <WeatherMarker key={`weather-${location.id}`} location={location} isCelsius={isCelsius} />
-    ))}
 
-{mapLayer !== 'windy' &&  showOffice && officeData && officeData.map((item, index) => (
+    {mapLayer !== 'windy' &&  showWeather &&
+      weatherData.map((location) => (
+        <WeatherMarker key={`weather-${location.id}`} location={location} isCelsius={isCelsius} />
+      ))}
+
+      {mapLayer !== 'windy' &&  showOffice && officeData && officeData.map((item, index) => (
             item && item.latitude && item.longitude && (
              <OfficeMarker
              key={`cargo-${index}`}
@@ -460,7 +547,7 @@ export default function MapComponent({
              />
             )
             
-          ))}
+      ))}
 
           {mapLayer !== 'windy' &&  showVideoStream && videoStreamData && videoStreamData.map((item, index) => (
             item && item.glatitude && item.glongitude && (
@@ -622,11 +709,11 @@ export default function MapComponent({
       {showCarTrack &&  carData &&  carData.map((item, index) => (
           item && item.location.latitude && item.location.longitude && (
             <CarTrackMarker 
-            key={`car-${index}`}
-            item={item}
-            index={index}
-            selectedCarTrack={selectedCarTrack}
-            handleCarTrackMarker={handleCarTrackMarker}
+              key={`car-${index}`}
+              item={item}
+              index={index}
+              selectedCarTrack={selectedCarTrack}
+              handleCarTrackMarker={handleCarTrackMarker}
             />
           )
       ))}

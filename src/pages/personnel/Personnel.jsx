@@ -7,7 +7,7 @@ import {
   DialogContent,  CircularProgress, DialogActions
 } from "@mui/material";
 
-import { StyledTableCell } from "./StyledComponent"; 
+import { StyledTableCell, CustomTableContainer } from "./StyledComponent"; 
 import {  apiPersonnelData  } from "../../api/api_urls";
 import GetToken from '../../components/token/GetToken'
 
@@ -17,7 +17,7 @@ import FormAdd from "./FormAdd";
 import Search from "./Search";
 import { StyledButtonDelete, StyledButtonProfile, StyledButtonEdit } from "./StyledComponent";
 import SelectedPersonnel from "./SelectedPersonnel";
-// import ButtonAddPersonnel from "./buttons/ButtonAddPersonnel";
+import ButtonAddPersonnel from "./buttons/ButtonAddPersonnel";
 // import BorderColorIcon from '@mui/icons-material/BorderColor';
 // import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 // import FormUpdate from './FormUpdate'
@@ -197,12 +197,14 @@ export default function Personnel() {
 
   return (
     <div className="tableContainer">
-      <Search  handleSearchChange={handleSearchChange}  searchQuery={searchQuery}/>
-      {/* <ButtonAddPersonnel handleOpenDialog={handleOpenDialog}  /> */}
+        <div className="flex items-center justify-center gap-5 ">
+        <Search  handleSearchChange={handleSearchChange}  searchQuery={searchQuery}/>
+        <ButtonAddPersonnel handleOpenDialog={handleOpenDialog}  />
+      </div>
       {loading ? ( // Show loading indicator if data is loading
         <CircularProgress />
       ) : (
-        <TableContainer component={Paper}>
+        <CustomTableContainer  component={Paper}>
         <Table>
           <TableHead className="bg-gray-800 sticky top-0 z-50">
             <TableRow>
@@ -254,7 +256,7 @@ export default function Personnel() {
             ))}
           </TableBody>
         </Table>
-      </TableContainer>
+      </CustomTableContainer >
       )}
 
       <TablePagination

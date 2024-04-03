@@ -2,53 +2,85 @@
 export const baseUrl = import.meta.env.VITE_URL;
 export const videoStreamUrl = import.meta.env.VITE_VIDEOSTREAM_URL;
 
+// CSRFTOKEN
 export const getCsrfToken = `${baseUrl}/api/csrf_cookie/`;
 
+
+// LOGIN
 export const apilogin = `${baseUrl}/api/login/`;
 
+
+// LOGOUT
 export const apilogout = `${baseUrl}/api/logout/`;
 
+
+// ACCOUNT
 export const apiAccount = `${baseUrl}/api/myaccount/`;
 
+
+// USERS
 export const apiUsers = `${baseUrl}/api/users/`;
 
+
+// CHECK IN
 export const apiCheckInToday = `${baseUrl}/api/checked_in_users/`;
 
-export const apiPersonnelData = `${baseUrl}/api/personnel_latest/`;
+
+// PERSONNEL
+export const apiPersonnelData = `${baseUrl}/api/checked_in_users/`;
 export const apiPersonnelStatus = `${baseUrl}/api/personnel_status/`
 export const apiPersonnelRank = `${baseUrl}/api/rank/`
 
+
+// OFFICE
 export const apiOfficesData = `${baseUrl}/api/office/`;
 
+
+// VEHICLE
 export const apiVehiclesData = `${baseUrl}/api/vehicle/`;
 
+
+// UNIT
 export const apiUnit = `${baseUrl}/api/unit/`
 
+
+// MARINETRAFFIC
 export const apiMarineTrafficData = `${baseUrl}/api/marine_traffic_latest/`;
 export const apiMarineTrafficHistory = `${baseUrl}/api/marine_traffic_history/`
+export const apiLatestMarineTraffic = `${baseUrl}/api/get_latest_marine_traffic/`;
+export const apiMarineTrafficSetting = `${baseUrl}/api/marine_traffic_settings/`
 
+
+// TRAKSAT
 export const apiTrakSatData = `${baseUrl}/api/traksat_latest/`;
 export const apiTrakSatHistory = `${baseUrl}/api/traksat_history/`
+export const apiLatestTraksat = `${baseUrl}/api/get_traksat_latest/`;
+export const apiTraksatSetting = `${baseUrl}/api/traksat_settings/`
 
 
+// SPIDERTRACKS
 export const apiSpiderTrakData = `${baseUrl}/api/spidertracks_latest/`;
 export const apiSpiderTrakHistory = `${baseUrl}/api/spidertracks_history/`
-
-export const apiLatestMarineTraffic = `${baseUrl}/api/get_latest_marine_traffic/`;
-
-export const apiLatestTraksat = `${baseUrl}/api/get_traksat_latest/`;
-
 export const apiLatestSpiderTrak = `${baseUrl}/api/get_spidertracks_latest/`;
+export const apiSpiderTrakSetting = `${baseUrl}/api/spidertracks_settings/`
 
+
+
+// AIRCRAFT
 export const apiAircraftData = `${baseUrl}/api/internal_aircraft/`;
 export const apiAircraftType = `${baseUrl}/api/aircraft_type/`
 
-
+// VESSELS
 export const apiVesselsData = `${baseUrl}/api/internal_vessel/`;
 export const apiVesselClassType = `${baseUrl}/api/vessel_class_types/`;
 export const apiVesselClass = `${baseUrl}/api/vessel_class/`
 export const apiVesselType = `${baseUrl}/api/vessel_type/`
 export const apiVesselStatus = `${baseUrl}/api/vessel_status/`
+
+
+// CARTRACK
+export const apiCarTrack = `${baseUrl}/api/cartrack/vehicles/status/`
+export const apiCarTrackSettings = `${baseUrl}/api/cartrack_settings/`
 
 // ---MANAGE VESSEL CLASS TYPES---
 // URL: [BASE_URL]/api/vessel_class_types/
@@ -70,18 +102,22 @@ export const apiVesselStatus = `${baseUrl}/api/vessel_status/`
 // URL: [BASE_URL]/api/internal_vessel/
 // Methods Allowed: GET, POST, PUT, DELETE
 
+
+// INCIDENT
 export const apiIncident = `${baseUrl}/api/incident/`;
 
+
+// VIDEOSTREAM
 export const apiVideoStream = `${baseUrl}/api/video_stream_latest`;
 
+
+// ROLES
 export const apiRoles = `${baseUrl}/api/groups/`;
 
-export const apiMarineTrafficSetting = `${baseUrl}/api/marine_traffic_settings/`
 
-export const apiTraksatSetting = `${baseUrl}/api/traksat_settings/`
 
-export const apiSpiderTrakSetting = `${baseUrl}/api/spidertracks_settings/`
 
-export const apiCarTrack = `${baseUrl}/api/cartrack/vehicles/status/`
-export const apiCarTrackSettings = `${baseUrl}/api/cartrack_settings/`
+
+
+
 

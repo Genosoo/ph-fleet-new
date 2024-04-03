@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { apiSpiderTrakData, apiSpiderTrakHistory } from "../../../api/api_urls";
+import { apiSpiderTrakHistory } from "../../../api/api_urls";
 import { Table, TableBody, TableContainer, TableHead, 
   TableRow, Paper, TablePagination, CircularProgress, 
   Collapse, TextField, Box } from "@mui/material"
@@ -8,56 +8,39 @@ import { StyledTableCell } from "./StyledComponent";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import IconButton from '@mui/material/IconButton';
+import { useFetchData } from "../../../context/FetchData";
 
 
 export default function SpiderTrakList() {
-  const [spideTrakData, setSpiderTrakData] = useState([]);
   const [filteredData, setFilteredData] = useState([])
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [loading, setLoading] = useState(true);
   const [loadingHistory, setLoadingHistory] = useState(true);
   const [expandedRow, setExpandedRow] = useState(null); 
-  const [open, setOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("")
   const [historyData, setHistoryData] = useState([])
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const spiderTrakResponse = await axios.get(apiSpiderTrakData);
 
-        setSpiderTrakData(spiderTrakResponse.data.success);
-        console.log("apiSpiderTrakData", spiderTrakResponse.data);
-        setLoading(false); 
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    const getSpiderTrakHistory = async () => {
-      try {
-          const spiderTrakHistoryResponse = await axios.get(apiSpiderTrakHistory);
-          setLoadingHistory(false); // Set loading to false once data is fetched
-          console.log('Spider Trak History', spiderTrakHistoryResponse.data);
-      } catch (error) {
-          console.log(error);
-          setLoadingHistory(false); // Make sure to set loading to false even if an error occurs
-      }
-  };
-
-    getSpiderTrakHistory();
-    fetchData();
-  }, []);
+  const fetchedData = useFetchData();
+  
+  const spiderTrakData = fetchedData.spiderTrakData
 
   useEffect(() => {
-    const filteredResult = spideTrakData.filter(item =>
+    if (fetchedData !== null) {
+      setLoading(false); 
+    }
+  }, [fetchedData]);
+
+
+  useEffect(() => {
+    const filteredResult = spiderTrakData.filter(item =>
        item.unit_id.toLowerCase().includes(searchQuery.toLowerCase())  ||
        item.track_id.toLowerCase().includes(searchQuery.toLowerCase()) ||
        item.esn.toLowerCase().includes(searchQuery.toLowerCase()) 
     );
     setFilteredData(filteredResult)
-  },[searchQuery, spideTrakData])
+  },[searchQuery, spiderTrakData])
 
 
   const handleRowClick =  async(unit_id,index) => {
@@ -125,8 +108,8 @@ export default function SpiderTrakList() {
         <React.Fragment key={index}>
           <TableRow key={index}>
             <StyledTableCell onClick={() => handleRowClick(item.unit_id, index)} >
-              <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
-                  {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                <IconButton aria-label="expand row" size="small">
+                  {expandedRow === index ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                 </IconButton>
             </StyledTableCell>   
             <StyledTableCell>{item.unit_id ?? "--"}</StyledTableCell>

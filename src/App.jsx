@@ -8,16 +8,17 @@ import MarineTrafficList from './pages/dashboard/listPage/MarineTrafficList';
 
 
 export default function App() {
+
   return (
+   <>
     <Routes>
       <Route path='/login' element={<Login />} />
       <Route path='' element={<Login />} />
-    
 
       <Route element={<Layout />} >
          <Route path='/fleet/*' element={
           <PrivateRoute>
-              <RoutesDashboard/>
+                <RoutesDashboard/>
           </PrivateRoute>
          } />
       </Route>
@@ -31,5 +32,6 @@ export default function App() {
       <Route path='/other-aircrafts' element={<UnderConstruction />} />
       <Route path='/other-vehicles' element={<UnderConstruction />} />
     </Routes>
+   </>
   )
 }

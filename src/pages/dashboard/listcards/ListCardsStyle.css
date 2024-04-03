@@ -1,0 +1,56 @@
+@tailwind components;
+
+@layer components{
+
+    .listCardContainer{
+        @apply flex flex-col font-manrope
+    }
+
+    .listCardTitle{
+        @apply text-lg font-bold mt-10 mb-5
+    }
+
+
+    .listCardContent1{
+        @apply flex gap-5 pb-10
+    }
+
+    .listCardHeader{
+        @apply bg-[#404958] text-white flex justify-between items-center
+        px-4 py-3 
+    }
+
+    .listCardHeader span{
+        @apply flex items-center text-sm
+    }
+
+    .listCardBox{
+        @apply rounded-[10px] overflow-hidden w-[50%]   shadow-md  bg-white
+    }
+
+   
+
+    .listCardTable th{
+        @apply w-[300px] text-start pl-4 bg-[#F3F3F3] text-[#404958]
+        font-medium pt-2 border-b py-4
+    }
+
+    .listCardTable td{
+        @apply  text-start pl-4 bg-[#fff] text-[#404958]
+        font-medium  border-b  text-sm  py-5 
+    }
+
+    .listCardBoxPersonnel{
+        @apply rounded-[10px] overflow-hidden w-full  shadow-md  bg-white
+    }
+
+    .listCardBoxPersonnel .listCardTable th{
+        @apply w-[400px] text-start pl-4 bg-[#F3F3F3] text-[#404958]
+        font-medium pt-2 border-b py-4
+    }
+
+    .listCardBoxPersonnel .listCardTable td{
+        @apply  text-start pl-4 bg-[#fff] text-[#404958]
+        font-medium  border-b  text-sm  py-5 
+    }
+}

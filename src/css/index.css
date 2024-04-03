@@ -148,49 +148,20 @@
     @apply p-2 rounded-[5px] text-lg
   }
  
-  .button_change_map{
-    @apply rounded  text-white  bg-slate-800 p-2 hover:bg-slate-800 hover:text-[#29ADB2] 
-  }
-
   
-
-  .btn_fullscreen{
-    @apply rounded border shadow  bg-[#ffffffdb] text-black  text-[20px] p-2  hover:text-[#29ADB2] duration-300
-
+  .btnBottomSide{
+    @apply absolute z-[2000] bottom-16 left-2 flex flex-col items-center gap-3
   }
 
-  .btn_fullscreen_exit{
-    @apply rounded  border shadow   bg-[#ffffffdb] text-black   text-[20px] p-2  hover:text-[#29ADB2] duration-300
 
-  }
-
-  .drawer_wrapper{
-    @apply absolute z-[3500] right-5 flex  
-  }
-
-  .drawer_list_box{
-    @apply h-[700px] overflow-y-auto p-4
-  }
-  
   /* Track */
-  .drawer_list_box::-webkit-scrollbar {
+  ::-webkit-scrollbar {
     width:7px;
   }
   
-  /* Handle */
-  .drawer_list_box::-webkit-scrollbar-thumb {
-    background-color: #6c9cee;
-  }
-  
-  /* Handle on hover */
-  .drawer_list_box::-webkit-scrollbar-thumb:hover {
-    background-color: #ffffff;
-  }
+
   
 
-  .btn_close_drawer{
-    @apply bg-gray-50 text-[25px] rounded-full  
-  }
 
 
   .dashboard_container{
@@ -225,21 +196,6 @@
     @apply bg-[#404958] 
   }
 
-  .chart_container{
-    @apply mt-5
-  }
-
-  .chart_title{
-    @apply font-bold text-lg text-gray-800 py-3
-  }
-
-  .chart_wrapper{
-    @apply flex gap-5 flex-wrap xl:flex-nowrap
-  }
-
-  .chart_box{
-    @apply  bg-white w-[100%] xl:w-[50%] h-[450px] overflow-hidden flex items-center justify-center rounded-[10px] shadow-md
-  }
 
   .settings_wrapper{
     @apply flex flex-col gap-5
@@ -253,45 +209,7 @@
     @apply text-xl 
   }
 
-  .doughnut_chart_box{
-    @apply flex flex-col h-full w-full justify-between  items-center p-5 relative 
-  }
-
-  .bar_chart_box{
-    @apply flex flex-col h-full  w-full justify-center p-5 relative items-center
-  }
-
-  .list_container{
-    @apply py-10
-  }
-
-  .list_container h2{
-    @apply text-xl font-bold text-gray-800 py-3
-  }
-
-  .list_card_wrapper{
-    @apply flex gap-5 flex-wrap w-full p-5
-  }
-
-  .list_card{
-    @apply w-[360px] shadow-xl bg-white flex flex-col items-center p-5 rounded-[10px] gap-3
-  }
-
-  .list_card .title{
-    @apply text-[#86705E] font-bold text-lg
-  }
-
-  .list_card p{
-    @apply font-bold text-gray-700
-  }
-
-  .list_box{
-    @apply w-full border bg-neutral-300 p-2 text-center rounded-[10px]
-  }
-
-  .list_box span{
-    @apply text-sm font-semibold
-  }
+  
 
   .popup_card h2{
     @apply text-xl
@@ -345,37 +263,21 @@
 
 
 
-.MuiDrawer-paper{
-  background: #232c3b !important;
-  margin-top:80px;
-  height:79% !important;
-  border:0 !important;
-  padding:10px !important;
-  border-radius:5px !important;
-  margin-right:80px;
-  overflow-y: hidden !important;
-}
 
-
-.MuiListItem-root{
-  background-color: #eae7e749; 
-  margin-top:10px;
-  color: #fff ;
-  border-radius:10px !important;
-  
-}
-
-.marine-marker {
-  font-size:20px;
-  width:25px !important;
+.marinetraffic-marker {
+  width:30px !important;
   border-radius:50%;
-  height:25px !important;
-  color: rgb(251, 255, 23);
-  background-color: rgba(242, 227, 16, 0.187); /* Set the color of the glow effect */
+  height:30px !important;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding:2px;
+}
+
+
+.marinetraffic-icon{
+   width:40px;
 }
 
 .traksat-marker {
@@ -383,8 +285,6 @@
   width:25px !important;
   border-radius:50%;
   height:25px !important;
-  color: rgb(23, 131, 255);
-  background-color: #e6effe;
   text-align: center;
   display: flex;
   align-items: center;
@@ -412,6 +312,60 @@
   margin-top:7px;
 }
 
+
+.office-marker {
+  font-size:20px;
+  width:25px !important;
+  border-radius:50%;
+  height:25px !important;
+  color: rgb(255, 255, 255);
+  background-color: rgb(255, 255, 255); /* Set the color of the glow effect */
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vehicle-marker {
+  font-size:20px;
+  width:25px !important;
+  border-radius:50%;
+  height:25px !important;
+  color: rgb(255, 255, 255);
+  background-color: rgb(255, 255, 255); /* Set the color of the glow effect */
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.car-marker {
+  font-size:20px;
+  width:25px !important;
+  border-radius:50%;
+  height:25px !important;
+  color: rgb(255, 255, 255);
+  background-color: rgb(255, 255, 255); /* Set the color of the glow effect */
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.personnel-marker {
+  font-size:20px;
+  width:25px !important;
+  border-radius:50%;
+  height:25px !important;
+  color: rgb(254, 254, 254);
+  background-color: rgb(255, 255, 255); /* Set the color of the glow effect */
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* .live{
   height:24px;
   width:24px;
@@ -432,14 +386,14 @@
 
 @keyframes pulse{
   0%{
-    box-shadow:#f9f9f9 0 0 0 0;
+    box-shadow:#faea0f 0 0 0 0;
   }
   50%{
-    box-shadow: 0 0 0 16px rgb(255, 255, 255);
+    box-shadow: 0 0 0 16px rgba(253, 253, 4, 0.28);
   }
 
   50%{
-   box-shadow: 0 0 0 20px rgba(255, 255, 255, 0.166);
+   box-shadow: 0 0 0 20px rgba(255, 234, 2, 0.402);
 
   }
 }
@@ -457,6 +411,32 @@
 
   }
 }
+
+
+
+@keyframes pulseitem{
+  0%{
+    box-shadow:#D1E7D0;
+  }
+  50%{
+    box-shadow: 0 0 0 16px #e1e1e1;
+  }
+
+  50%{
+   box-shadow: 0 0 0 20px #f8f8f8f5;
+
+  }
+}
+
+
+
+
+.selected-item{
+  border:2px solid #ffffff;
+  animation:pulseitem 1500ms infinite;
+
+}
+
 .selected-marker{
   border:2px solid white;
   animation:pulse 1500ms infinite;
@@ -753,9 +733,9 @@
 }
 
 .loaderContainer{
-  @apply  flex items-center justify-center h-[90vh]
+  @apply  flex items-center justify-center h-[90vh] 
 }
-
+/* 
 .loader {
   position: relative;
   width: 150px;
@@ -824,5 +804,58 @@
 
   100% {
     transform: rotate(360deg);
+  }
+} */
+
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  gap: 0.625em;
+  transform: translate(-50%, -50%);
+}
+
+.loader span {
+  border-radius: 50%;
+  height: 1.5em;
+  width: 1.5em;
+}
+
+.loader span::before {
+  content: "";
+  display: block;
+  border-radius: inherit;
+  height: inherit;
+  width: inherit;
+  background-color: inherit;
+  animation: ripple 1.8s ease-out infinite;
+  animation-delay: inherit;
+  z-index: -1;
+}
+
+.loader span:nth-of-type(1) {
+  background-color: #dfca63;
+}
+
+.loader span:nth-of-type(2) {
+  background-color: #8ce86d;
+  animation-delay: 0.2s;
+}
+
+.loader span:nth-of-type(3) {
+  background-color: #5a99ec;
+  animation-delay: 0.4s;
+}
+
+@keyframes ripple {
+  from {
+    opacity: 1;
+    transform: scale(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(3);
   }
 }

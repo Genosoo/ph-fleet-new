@@ -1,14 +1,13 @@
 /* eslint-disable react/prop-types */
 import { StyledButtonAdd } from "../StyledComponent"
-import { FaPerson } from "react-icons/fa6";
+import AddIcon from '@mui/icons-material/Add';
 
 export default function ButtonAddOffice({ handleOpenDialog }) {
   return (
     <StyledButtonAdd 
-        sx={{marginBottom:"10px"}} 
         variant="contained" 
         onClick={handleOpenDialog}
-        startIcon={<FaPerson />}
+        startIcon={<AddIcon />}
     >
       Add Personnel
       </StyledButtonAdd>

@@ -1,0 +1,42 @@
+@tailwind components;
+
+
+@layer components{
+    .btnMapContainer{
+        @apply absolute z-[2000] top-10 left-1/2 transform -translate-x-1/2 -translate-y-1/2
+    }
+
+
+    .btnFullscreen{
+        @apply rounded-full border shadow  bg-[#ffffff] text-black  text-[20px] p-2  
+        hover:bg-[#86705E] hover:text-white duration-150
+    }
+
+    .btnFullscreenExit{
+        @apply rounded-full  border shadow   bg-[#ffffff] text-black   text-[20px] p-2  
+        hover:bg-[#86705E] hover:text-white duration-150
+    }
+
+    .buttonZoomContainer{
+        @apply flex flex-col bg-[#ffffff8d] p-[5px] rounded-[25px] gap-2
+    }
+
+    .btnZoomIn{
+        @apply bg-white w-[35px] h-[35px] rounded-full text-[1.5rem]
+        flex items-center justify-center hover:bg-[#86705E] hover:text-white duration-150
+    }
+    .btnCluster{
+        @apply bg-white w-[40px] h-[40px] rounded-full text-[1.5rem]
+        flex items-center justify-center hover:bg-[#86705E] hover:text-white duration-150
+    }
+
+    .btnToggleDrawer{
+        @apply bg-white w-[40px] h-[40px] rounded-full text-[1.2rem]
+        flex items-center justify-center hover:bg-[#86705E] hover:text-white duration-150
+    }
+
+    .btnZoomOut{
+        @apply bg-white w-[35px] h-[35px] rounded-full text-[1.5rem]
+        flex items-center justify-center hover:bg-[#86705E] hover:text-white duration-150
+    }
+}

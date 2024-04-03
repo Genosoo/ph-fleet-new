@@ -6,6 +6,10 @@ import { useState, useRef} from 'react';
 import Draggable from 'react-draggable';
 import { IoCloseSharp } from "react-icons/io5";
 
+import traksat1Icon from '../../../assets/icon/traksat_1.svg'
+import traksat2Icon from '../../../assets/icon/traksat_2.svg'
+
+
 import './MarkerStyle.css'
 
 const calculateDistance = (lat1, lon1, lat2, lon2) => {
@@ -40,14 +44,12 @@ const TrakSatMarker = ({ item, selectedTrakSat, showDescription, handleTrakSatMa
     setShowSelectedInfo(false);
     handleTrakSatMarkerClick(null);
     setShowDistance(false)
-  map.flyTo([item.glatitude, item.glongitude], prevZoomRef.current);
-
+  map.setView([item.glatitude, item.glongitude], prevZoomRef.current);
   };
 
 
 
 
-  console.log("selected :", selectedTrakSat)
 
   useMapEvent({
     click: (e) => {
@@ -57,10 +59,10 @@ const TrakSatMarker = ({ item, selectedTrakSat, showDescription, handleTrakSatMa
   });
 
   const distance = calculateDistance(
-    startPosition[0],
-    startPosition[1],
-    endPosition[0],
-    endPosition[1]
+    startPosition?.[0],
+    startPosition?.[1],
+    endPosition?.[0],
+    endPosition?.[1]
   );
   
 
@@ -71,8 +73,11 @@ const TrakSatMarker = ({ item, selectedTrakSat, showDescription, handleTrakSatMa
 
   const handleMarkerClick = () => {
     setShowSelectedInfo(true);
-  prevZoomRef.current = map.getZoom();
-    map.flyTo(startPosition, 10);
+     prevZoomRef.current = map.getZoom();
+     map.flyTo(startPosition, 12, {
+      duration: 2, // Adjust duration as needed (in seconds)
+      easeLinearity: 0.25 // Adjust ease linearity as needed
+    });
     handleTrakSatMarkerClick(item);
   };
  
@@ -82,9 +87,9 @@ const TrakSatMarker = ({ item, selectedTrakSat, showDescription, handleTrakSatMa
     let iconHtml;
 
     if (item.heading_deg !== null) {
-      iconHtml = `<div style="transform: rotate(${item.heading_deg}deg);"><img src='https://traksat.net/i/arrow1.png' alt="" /></div>`;
+      iconHtml = `<img src="${traksat1Icon}" style="transform: rotate(${item.course}deg); width:20px; " />`;
     } else {
-      iconHtml = '<div class="circle-marker"></div>';
+      iconHtml = `<img src="${traksat2Icon}" style="transform: rotate(${item.course}deg); width:20px;" />`;
     }
 
     return (
@@ -93,9 +98,7 @@ const TrakSatMarker = ({ item, selectedTrakSat, showDescription, handleTrakSatMa
       position={startPosition}
         icon={L.divIcon({
           className: `traksat-marker ${selectedTrakSat && selectedTrakSat.id === item.id  ? 'selected-marker-traksat' : ''}`, 
-          html: `
-            ${iconHtml}
-            ${showDescription ? `<div class="text-[9px] left-7 text-white font-bold px-2 rounded-[10px] bg-green-600  p-1 absolute">
+          html: `${iconHtml}${showDescription ? `<div class="text-[9px] left-7 text-white font-bold px-2 rounded-[10px] bg-green-600  p-1 absolute">
               ${item.description}
             </div>` : `<div></div>` }
           `,
@@ -111,27 +114,44 @@ const TrakSatMarker = ({ item, selectedTrakSat, showDescription, handleTrakSatMa
             <Draggable onDrag={handleDrag}>
               <div className="traksatCardContainer">
               <div className='traksatCardHeader'>
-                <h3 className='traksatTitle'>TrakSat</h3>
+                     <img src={traksat1Icon} alt="icon" />
+                     <img src={traksat2Icon} alt="icon" />
+                 <h3 className='traksatTitle'>Traksat</h3>
                  <div className='traksatClose'>
                    <IoCloseSharp onClick={() => handleCloseButtonClick()}/>
                  </div>
               </div>
 
               <div className='traksatCardDetail'>
-              <p >Description: <span>{selectedTrakSat.description}</span></p>
-              <p>Group: <span>{selectedTrakSat.group}</span></p>
-              <p>Last gps: <span>{selectedTrakSat.last_gps_gmt}</span></p>
-              <p>Lat: <span>{selectedTrakSat.latitude}</span></p>
-              <p>Lon: <span>{selectedTrakSat.longitude}</span></p>
-              <p>Speed kph: <span>{selectedTrakSat.speed_kph}</span></p>
-              <p>Heading: <span>{selectedTrakSat.heading}</span></p>
-              <p>Heading deg: <span>{selectedTrakSat.heading_deg}&#xb0;</span></p>
+                <span className='span1'>
+                   <p>Description</p>
+                   <p>Group</p>
+                   <p>Last gps</p>
+                   <p>Lat</p>
+                   <p>Lon</p>
+                   <p>Speed kph</p>
+                   <p>Heading</p>
+                   <p>Heading deg</p>
+                </span>
+
+                <span>
+                  <p>{selectedTrakSat?.description || "N/A"}</p>
+                  <p>{selectedTrakSat?.group || "N/A"}</p>
+                  <p>{selectedTrakSat?.last_gps_gmt || "N/A"}</p>
+                  <p>{selectedTrakSat?.latitude || "N/A"}</p>
+                  <p>{selectedTrakSat?.longitude || "N/A"}</p>
+                  <p>{selectedTrakSat?.speed_kph || "N/A"}</p>
+                  <p>{selectedTrakSat?.heading || "N/A"}</p>
+                  <p>{selectedTrakSat?.heading_deg || "N/A"}&#xb0;</p>
+                </span>
+             
+             
               </div>
            
              <div className='traksatCardFooter'>
-             <button className={` ${showDistance ? 'bg-red-600' : 'bg-green-600'}`} onClick={() => setShowDistance(!showDistance)}>
-                {showDistance ? 'Stop Measurement' : 'Measurement'}
-              </button>
+              <button className={` ${showDistance ? 'bg-[#EB5454]' : 'bg-[#0DB0E6]'}`} onClick={() => setShowDistance(!showDistance)}>
+                  {showDistance ? 'Stop Measurement' : 'Start Measurement'}
+                </button>
               {showDistance && (
                 <p className='text-center'>
                   Please <b>Point</b> on the map! <br />

@@ -3,41 +3,36 @@ import axios from "axios";
 import { Table, TableBody, TableContainer, TableHead, 
          TableRow, Paper, TablePagination, CircularProgress, 
          Collapse, TextField, Box } from "@mui/material";
-import { apiMarineTrafficData, apiMarineTrafficHistory } from "../../../api/api_urls";
+import {  apiMarineTrafficHistory } from "../../../api/api_urls";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import IconButton from '@mui/material/IconButton';
 import { StyledTableCell } from "./StyledComponent";
+import { useFetchData } from "../../../context/FetchData";
 
 
 export default function MarineTrafficList() {
-  const [vesselsData, setVesselsData] = useState([]);
   const [filteredData, setFilteredData] = useState([])
   const [loading, setLoading] = useState(true); // State for loading indicator
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [expandedRow, setExpandedRow] = useState(null); // State to manage expanded row
-  const [open, setOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("")
   const [historyData, setHistoryData] = useState([])
   const [historyLoading, setHistoryLoading] = useState(false); // State for loading historical data
+  const fetchedData = useFetchData();
+  
+  const vesselsData = fetchedData.marineTrafficData
 
-
-  console.log('MarineTraffic History Data', historyData)
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const vesselsResponse = await axios.get(apiMarineTrafficData);
-        setVesselsData(vesselsResponse.data.success);
-        setLoading(false); // Set loading to false when data is fetched
-      } catch (error) {
-        console.log(error);
-      }
-    };
+    if (fetchedData !== null) {
+      setLoading(false); 
+    }
+  }, [fetchedData]);
 
-    fetchData();
-  }, []);
+
+ 
 
 
   useEffect(() => {
@@ -121,9 +116,11 @@ export default function MarineTrafficList() {
                 <React.Fragment key={index}>
                  <TableRow >
                   <StyledTableCell onClick={() => handleRowClick(item.mmsi,index)} >
-                   <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
-                    {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                  </IconButton>
+                 
+                  <IconButton aria-label="expand row" size="small">
+                          {expandedRow === index ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                        </IconButton>
+
                   </StyledTableCell>
                   <StyledTableCell colSpan={2}>{item.ship_id ?? "--"}</StyledTableCell>
                   <StyledTableCell colSpan={2}>{item.shipname ?? "--"}</StyledTableCell>

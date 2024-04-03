@@ -136,6 +136,6 @@
     }
 
     .personbox2{
-        @apply w-[300px]
+        @apply w-full 
     }
 }

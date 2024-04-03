@@ -29,7 +29,7 @@ const MarineTrafficMarker = ({ selectedVessel }) => {
         position={startPosition}
         icon={
           L.divIcon({
-            className: `marine-marker selected-marker`,
+            className: `marine-marker selected-marker text-yellow-200`,
             html: `<div class="glow-marker" style="transform: rotate(${course}deg);">🢙</div>`,
           })
         }

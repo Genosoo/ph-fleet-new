@@ -2,133 +2,535 @@
 
 @layer components{
     .traksatCardContainer{
-        @apply z-[2000] cursor-pointer absolute top-32 left-10 bg-[#ffffffe7] overflow-hidden rounded-md font-lato shadow-xl
+        @apply z-[2000]  font-manrope cursor-pointer absolute top-10 left-16 
+        overflow-hidden rounded-[15px]  shadow-xl bg-white
     }
 
     .traksatCardHeader{
-        @apply flex justify-between  text-white bg-gray-800 items-center p-2 border-b  shadow-md
+        @apply flex relative gap-3  text-black bg-white items-center
+         p-2 border-b-2
     }
 
+    .traksatCardHeader img{
+        @apply w-[20px]
+    }
+
+
+    .traksatCardHeader h3{
+        @apply font-bold text-base
+    }
+  
     .traksatTitle{
         @apply text-base 
     }
 
     .traksatCardDetail{
-        @apply px-6 mt-5 flex flex-col gap-5
+        @apply  flex  
     }
 
-    .traksatCardDetail p{
-        @apply text-sm border-b border-gray-300 text-gray-600 font-semibold
+    .traksatCardDetail span p{
+        @apply text-start p-3 px-5 text-black text-sm
     }
 
-    .traksatCardDetail p span{
-        @apply font-bold ml-2 text-gray-800
+    .traksatCardDetail .span1 p{
+        @apply font-bold
     }
+
+    .traksatCardDetail span p:nth-of-type(1),
+    .traksatCardDetail span p:nth-of-type(3),
+    .traksatCardDetail span p:nth-of-type(5),
+    .traksatCardDetail span p:nth-of-type(7), 
+    .traksatCardDetail span p:nth-of-type(9) { 
+
+        background-color:#F9F9F9;
+    }
+    .traksatCardDetail span p:nth-of-type(2),
+    .traksatCardDetail span p:nth-of-type(4),
+    .traksatCardDetail span p:nth-of-type(6),
+    .traksatCardDetail span p:nth-of-type(8) {
+        background-color: white;
+    }
+    
+
 
     .traksatCardFooter{
-        @apply p-5 w-full flex justify-center flex-col  bg-gray-800  mt-10
+        @apply p-5 w-full flex justify-center flex-col bg-white 
     }
 
     .traksatCardFooter button{
-        @apply text-sm p-1 rounded-[5px] text-white w-full
+        @apply text-sm p-2 rounded-[5px] text-white w-full
     }
 
     .traksatClose{
-        @apply bg-white text-[1.5rem] rounded-full text-black hover:bg-black hover:text-white duration-200
+        @apply bg-white absolute right-2 text-[1.5rem] rounded-full text-black hover:bg-black hover:text-white duration-200
     }
 
-    .mt_card_container{
+    .mtCardContainer{
         cursor: move;
-         @apply  absolute cursor-pointer    w-[350px] z-[2000] top-32 left-5 bg-[#ffffff78] rounded-[6px] overflow-hidden
-       }
+        @apply  absolute cursor-pointer z-[2000] top-10  w-[350px]
+        left-16  rounded-[15px] overflow-hidden bg-white font-manrope
+    }
     
-       .mt_card_header{
-        @apply flex bg-gray-100 p-2 items-center justify-between
-       }
+   
+    .mtCardHeader{
+        @apply  flex flex-col 
+    }
+
+    .mtCardHeader img{
+        @apply w-[22px]
+    }
+
+    .mtCardTop{
+        @apply flex items-center gap-3 p-3 border-b-2
+    }
+
+    .mtCardTop h3{
+        @apply text-base font-bold
+    }
+
+    .mtClose{
+        @apply bg-white text-[25px] rounded-full text-black hover:bg-black
+         hover:text-white duration-200  absolute right-2
+    }
     
-       .mt_card_header .icon {
-        @apply text-[20px]  font-bold rounded-full text-gray-800
-       }
+    .mtBoxFlag{
+        @apply flex gap-2 p-2
+    }
     
+    .mtBoxFlag img{
+    @apply w-[35px]
+    }
+
+    .mtBoxFlag span{
+    @apply flex flex-col
+    }
+
+    .mtBoxFlag span h4{
+        @apply font-bold text-sm
+    }
+
+    .mtBoxFlag span p{
+        @apply text-xs font-medium
+    }
+
+
+    .mt_ship_img img{
+    @apply h-[200px] w-full 
+    }
+
+    .mtCardHeader h2 img{
+    @apply w-[40px]
+    }
+
+    .mtCardTime{
+        @apply flex justify-between p-2 bg-white py-3
+    }
+
+    .mtCardTime h4{
+        @apply text-xs
+    }
     
+    .mtCardDetails{
+        @apply flex  h-[200px] overflow-y-scroll bg-stone-100
+    }
+
+    .mtCardDetails::-webkit-scrollbar {
+        width:10px; /* Width of the scrollbar */
+    }
+    .mtCardDetails::-webkit-scrollbar-track {
+        background: #f1f1f1; /* Color of the scrollbar track */
+    }
+    .mtCardDetails::-webkit-scrollbar-thumb {
+        background: rgb(70, 70, 70); /* Color of the scrollbar handle */
+    }
+    .mtCardDetails::-webkit-scrollbar-thumb:hover {
+        background: #555; /* Color of the scrollbar handle on hover */
+    }
     
-       .mt_box_flag{
-        @apply flex gap-2
-       }
+    .mtCardDetails  span{
+    @apply flex flex-col  w-full
+    }
+
+    .mtCardDetails  .span1 p{
+        @apply font-bold
+    }
+
     
-       .mt_box_flag img{
-        @apply w-[50px]
-       }
+    .mtCardDetails  span p{
+        @apply p-3  text-xs font-medium
+    }
+
+    .mtCardDetails span p:nth-child(1),
+    .mtCardDetails span p:nth-child(3),
+    .mtCardDetails span p:nth-child(5),
+    .mtCardDetails span p:nth-child(7),
+    .mtCardDetails span p:nth-child(9),
+    .mtCardDetails span p:nth-child(11) {
+        @apply bg-[#F9F9F9] 
+    }
+
+    .mtCardDetails span p:nth-child(2),
+    .mtCardDetails span p:nth-child(4),
+    .mtCardDetails span p:nth-child(6),
+    .mtCardDetails span p:nth-child(8),
+    .mtCardDetails span p:nth-child(10) {
+        @apply bg-[#ffffff] 
+    }
     
-       .mt_box_flag p{
-        @apply flex flex-col
-       }
-    
-       .mt_box_flag p span{
-        @apply text-base font-semibold text-gray-800
-       }
-    
-       .mt_ship_img img{
-        @apply h-[200px] w-full
-       }
-    
-       .mt_card_header h2 img{
-        @apply w-[40px]
-       }
-    
-       .mt_card_details{
-        @apply flex  h-[200px] w-[350px]  overflow-y-auto bg-stone-100
-       }
-       
-       .mt_card_details .card_p{
-        @apply flex flex-col gap-3 p-2 
-       }
-    
-       .mt_card_details .card_p p{
-        @apply flex gap-3 items-center 
-       }
-       .mt_card_details .card_p p .title{
-        @apply w-[100px]  
-       }
-       
-    
-       .mt_btn_box{
+
+    .mtBtnBox{
         @apply flex flex-col p-5 mt-2 bg-white
-       }
+    }
 
-       .stCardContainer{
-        @apply z-[2000] w-[300px] cursor-pointer absolute top-20 left-10 bg-[#ffffffe7] overflow-hidden rounded-md font-lato shadow-xl
-         
-       }
+    .mtBtnBox button{
+        @apply text-sm p-2 rounded-[5px] text-white 
+    }
 
-       .stCardHeader{
-        @apply flex justify-between  text-white bg-blue-900 items-center p-2 border-b  shadow-md
+    .stCardContainer{
+    @apply z-[2000] w-[400px] cursor-pointer absolute top-10 left-16 
+     overflow-hidden rounded-[15px] font-manrope shadow-xl bg-white
+        
+    }
 
-       }
+    .stCardHeader{
+    @apply flex   text-black bg-white 
+    items-center p-2 border-b-2
 
-       .stCardTitle{
-        @apply text-base 
+    }
 
-       }
+    .stCardHeader img{
+        @apply w-[33px]
+    }
+    
+    .stCardHeader h3{
+        @apply text-base font-bold
+    }
 
-       .stClose{
-        @apply bg-white text-[1.5rem] rounded-full text-black hover:bg-black hover:text-white duration-200
-        }
 
-        .stCardDetail{
-            @apply p-5 flex flex-col gap-3
-        }
+    .stClose{
+    @apply bg-white text-[1.5rem] rounded-full
+     text-black hover:bg-black hover:text-white duration-200
+     absolute right-3
+    }
 
-        .stCardDetail p{
-            @apply font-bold text-sm text-gray-700 border border-gray-300 p-2
-        }
+    .stCardDetail{
+        @apply flex  
+    }
 
-        .stCardDetail p span{
-            @apply text-blue-900 font-extrabold ml-2
-        }
+    .stCardDetail span{
+        @apply flex flex-col w-full
+    }
+
+    .stCardDetail .span1 p{
+        @apply font-bold
+    }
+
+
+    .stCardDetail span p{
+        @apply text-sm w-full p-3 px-5 font-medium
+    }
+
+
+    .stCardDetail span p:nth-child(1),
+    .stCardDetail span p:nth-child(3),
+    .stCardDetail span p:nth-child(5),
+    .stCardDetail span p:nth-child(7),
+    .stCardDetail span p:nth-child(9),
+    .stCardDetail span p:nth-child(11) {
+        @apply bg-[#F9F9F9] 
+    }
+
+    .stCardDetail span p:nth-child(2),
+    .stCardDetail span p:nth-child(4),
+    .stCardDetail span p:nth-child(6),
+    .stCardDetail span p:nth-child(8),
+    .stCardDetail span p:nth-child(10) {
+        @apply bg-[#ffffff] 
+    }
+
+    .incidentCardContainer{
+        @apply z-[2000]  font-manrope cursor-pointer absolute top-10 left-16 
+        overflow-hidden rounded-[15px]   bg-white w-[500px]
+    }
+
+    .incidentCardHeader{
+        @apply flex gap-3 items-center p-3 border-b-2
+    }
+
+    .incidentCardHeader img{
+        @apply w-[30px]
+    }
     
 
+    .incidentCardHeader h3{
+        @apply text-base font-bold
+    }
+   
+    .incidentClose{
+        @apply bg-white text-[25px] rounded-full text-black hover:bg-black
+         hover:text-white duration-200  absolute right-2
+    }
+
+    .incidentCardDetail{
+        @apply flex text-sm 
+    }
+
+    .incidentCardDetail span{
+        @apply w-full flex flex-col 
+    }
+
+    .incidentCardDetail .span1 p{
+        @apply font-bold 
+    }
     
+    .incidentCardDetail span p{
+        @apply p-3
+    }
+
+    .incidentCardDetail span p:nth-child(1),
+    .incidentCardDetail span p:nth-child(3),
+    .incidentCardDetail span p:nth-child(5),
+    .incidentCardDetail span p:nth-child(7),
+    .incidentCardDetail span p:nth-child(9),
+    .incidentCardDetail span p:nth-child(11) {
+        @apply bg-[#F9F9F9] 
+    }
+
+    .incidentCardDetail span p:nth-child(2),
+    .incidentCardDetail span p:nth-child(4),
+    .incidentCardDetail span p:nth-child(6),
+    .incidentCardDetail span p:nth-child(8),
+    .incidentCardDetail span p:nth-child(10) {
+        @apply bg-[#ffffff] 
+    }
+
+    .incidentLocation{
+        @apply flex flex-col  gap-2 p-2 text-sm
+    }
+
+    .incidentLocation h3{
+        @apply font-bold leading-4
+    }
+
+    .incidentLocation p{
+        @apply bg-slate-50 p-2 rounded-md border
+    }
+
+    .personnelCardContainer{
+        @apply z-[2000]  font-manrope cursor-pointer absolute top-10 left-16 
+        overflow-hidden rounded-[15px]   bg-white w-[350px]
+    }
+
+    .personnelCardHeader{
+        @apply flex gap-3 items-center p-3 border-b-2
+    }
+
+    .personnelCardHeader img{
+        @apply w-[30px]
+    }
+
+    .personnelCardHeader h3{
+        @apply text-base font-bold
+    }
+   
+    .personnelClose{
+        @apply bg-white text-[25px] rounded-full text-black hover:bg-black
+         hover:text-white duration-200  absolute right-2
+    }
+
+    
+
+    .personnelImgBox{
+        @apply flex items-center justify-center p-5 bg-[#EAEAEC]
+    }
+
+    .personnelImgBox img{
+        @apply w-[120px]
+    }
+    .personnelCardDetail{
+        @apply flex 
+    }
+    .personnelCardDetail span{
+        @apply w-full
+    }
+
+    .personnelCardDetail .span1 p{
+        @apply font-bold
+    }
+
+    .personnelCardDetail span p{
+        @apply text-sm p-3
+    }
+   
+    .personnelCardDetail span p:nth-child(1),
+    .personnelCardDetail span p:nth-child(3),
+    .personnelCardDetail span p:nth-child(5),
+    .personnelCardDetail span p:nth-child(7),
+    .personnelCardDetail span p:nth-child(9),
+    .personnelCardDetail span p:nth-child(11) {
+        @apply bg-[#F9F9F9] 
+    }
+
+    .personnelCardDetail span p:nth-child(2),
+    .personnelCardDetail span p:nth-child(4),
+    .personnelCardDetail span p:nth-child(6),
+    .personnelCardDetail span p:nth-child(8),
+    .personnelCardDetail span p:nth-child(10) {
+        @apply bg-[#ffffff] 
+    }
+
+
+
+    .officeCardContainer{
+        @apply z-[2000]  font-manrope cursor-pointer absolute top-10 left-16 
+        overflow-hidden rounded-[15px]   bg-white w-[350px]
+    }
+
+    .officeCardHeader{
+        @apply flex gap-3 items-center p-3 border-b-2
+    }
+
+    .officeCardHeader img{
+        @apply w-[30px]
+    }
+
+    .officeCardHeader h3{
+        @apply text-base font-bold
+    }
+   
+    .officeClose{
+        @apply bg-white text-[25px] rounded-full text-black hover:bg-black
+         hover:text-white duration-200  absolute right-2
+    }
+
+    .officeCardDetail{
+        @apply flex 
+    }
+ 
+
+    .officeCardDetail .span1 p{
+        @apply font-bold 
+    }
+
+    .officeCardDetail span p{
+        @apply text-sm p-3
+    }
+   
+    .officeCardDetail span p:nth-child(1) {
+        @apply bg-[#F9F9F9] 
+    }
+
+    .officeCardDetail span p:nth-child(2){
+       @apply bg-[#ffffff] 
+    }
+
+    .vehicleCardContainer{
+        @apply z-[2000]  font-manrope cursor-pointer absolute top-10 left-16 
+        overflow-hidden rounded-[15px]   bg-white 
+    }
+
+    .vehicleCardHeader{
+        @apply flex gap-3 items-center p-3 border-b-2
+    }
+
+    .vehicleCardHeader img{
+        @apply w-[30px]
+    }
+
+    .vehicleCardHeader h3{
+        @apply text-base font-bold
+    }
+
+    .vehicleClose{
+        @apply bg-white text-[25px] rounded-full text-black hover:bg-black
+         hover:text-white duration-200  absolute right-2
+    }
+
+    .vehicleCardDetail{
+        @apply flex pt-4
+    }
+ 
+    .vehicleCardDetail span{
+        @apply w-full
+    }
+    .vehicleCardDetail .span1 p{
+        @apply font-bold  px-5
+    }
+
+    .vehicleCardDetail span p{
+        @apply text-sm  h-[50px] flex items-center
+    }
+
+    .vehicleCardDetail span p:nth-child(1),
+    .vehicleCardDetail span p:nth-child(3),
+    .vehicleCardDetail span p:nth-child(5),
+    .vehicleCardDetail span p:nth-child(7),
+    .vehicleCardDetail span p:nth-child(9),
+    .vehicleCardDetail span p:nth-child(11) {
+        @apply bg-[#F9F9F9] 
+    }
+
+    .vehicleCardDetail span p:nth-child(2),
+    .vehicleCardDetail span p:nth-child(4),
+    .vehicleCardDetail span p:nth-child(6),
+    .vehicleCardDetail span p:nth-child(8),
+    .vehicleCardDetail span p:nth-child(10) {
+        @apply bg-[#ffffff] 
+    }
+
+    .carCardContainer{
+        @apply z-[2000]  font-manrope cursor-pointer absolute top-10 left-16 
+        overflow-hidden rounded-[15px]   bg-white 
+    }
+
+    .carCardHeader{
+        @apply flex gap-3 items-center p-3 border-b-2
+    }
+
+    .carCardHeader img{
+        @apply w-[30px]
+    }
+
+    .carCardHeader h3{
+        @apply text-base font-bold
+    }
+
+    .carClose{
+        @apply bg-white text-[25px] rounded-full text-black hover:bg-black
+         hover:text-white duration-200  absolute right-2
+    }
+
+    .carCardDetail{
+        @apply flex pt-4
+    }
+
+    .carCardDetail span{
+        @apply w-full
+    }
+    .carCardDetail .span1 p{
+        @apply font-bold  px-5
+    }
+
+    .carCardDetail span p{
+        @apply text-sm  h-[50px] flex items-center
+    }
+
+    .carCardDetail span p:nth-child(1),
+    .carCardDetail span p:nth-child(3),
+    .carCardDetail span p:nth-child(5),
+    .carCardDetail span p:nth-child(7),
+    .carCardDetail span p:nth-child(9),
+    .carCardDetail span p:nth-child(11) {
+        @apply bg-[#F9F9F9] 
+    }
+
+    .carCardDetail span p:nth-child(2),
+    .carCardDetail span p:nth-child(4),
+    .carCardDetail span p:nth-child(6),
+    .carCardDetail span p:nth-child(8),
+    .carCardDetail span p:nth-child(10) {
+        @apply bg-[#ffffff] 
+    }
     
 }
 

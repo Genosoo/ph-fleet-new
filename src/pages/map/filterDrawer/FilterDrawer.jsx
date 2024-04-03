@@ -1,390 +1,333 @@
 /* eslint-disable react/prop-types */
-import {
-    Drawer,
-    ListItem,
-    ListItemIcon,
-    ListItemText,
-    Checkbox,
-  } from '@mui/material';
-  import { IoClose } from "react-icons/io5";
-  import cameramanImg from '../../../assets/cameraman.png'
-  import personnelImg from '../../../assets/personnel.svg'
+import './FilterStyle.css'
+import { Drawer, Checkbox, Button } from '@mui/material';
 
-  import helicopterImg from '../../../assets/helicopter.svg'
-  import airplaneImg from '../../../assets/airplane.svg'
-  import weatherImg from '../../../assets/weather.svg'
-  import campImg from '../../../assets/camp.svg'
-  import vehiclesImg from '../../../assets/vehicle.svg'
-  import carImg from '../../../assets/car.svg'
-  import incidentImg from '../../../assets/incident.svg'
-  import dutyImg from '../../../assets/duty.svg'
-  import leaveImg from '../../../assets/leave.svg'
-  import rnrImg from '../../../assets/rnr.svg'
-  import nonUniformImg from '../../../assets/non-uniform.svg'
 
-  const iconStyle = {
-    color: '#19f6be',
-    '&.Mui-checked': {
-      color: '#19f6be',
-    },
-  };
-  const iconStyle2 = {
-    color: '#19f6be',
-    '&.Mui-checked': {
-      color: '#a4ffe8',
-    },
-  };
-  
+import videostreamsIcon from '../../../assets/icon/video_streams.svg'
+import cartrackIcon from '../../../assets/icon/cartrack.svg'
+import vehiclesIcon from '../../../assets/icon/vehicles.svg'
+import officeIcon from '../../../assets/icon/offices.svg'
+import incidentsIcon from '../../../assets/icon/incidents.svg'
+import rnrPersonnelIcon from '../../../assets/icon/personnel_rnr.svg'
+import onLeavePersonnelIcon from '../../../assets/icon/personnel_on_leave.svg'
+import onDutyPersonnelIcon from '../../../assets/icon/personnel_on_duty.svg'
+import nonUniformPersonnelIcon from '../../../assets/icon/personnel_non_uniform.svg'
+import personnelIcon from '../../../assets/icon/personnel.svg'
+import weatherIcon from '../../../assets/icon/weather.svg'
+import spidertracksIcon1 from '../../../assets/icon/airplane.svg'
+import spidertracksIcon2 from '../../../assets/icon/helicopter.svg'
+import flightradarIcon from '../../../assets/icon/flightradar.svg'
+import marineTrafficIcon from '../../../assets/icon/marinetraffic.svg'
+import traksatIcon1 from '../../../assets/icon/traksat_1.svg'
+import traksatIcon2 from '../../../assets/icon/traksat_2.svg'
+import nameIcon from '../../../assets/icon/show_name.svg'
 
-  
+// import CheckBoxIcon from '@mui/icons-material/CheckBox';
+// import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+const iconStyle = {
+  color: '#0DB0E6',
+  '&.Mui-checked': {
+    color: '#0DB0E6',
+  },
+};
+const iconStyle2 = {
+  color: '#0DB0E6',
+  '&.Mui-checked': {
+    color: '#0DB0E6',
+  },
+};
+
+
+
 export default function FilterDrawer({
 
-    isDrawerOpen,
-    toggleDrawer,
+  handleShowAllAircrafts,
+  showAllAircrafts,
 
-    showMarineTraffic,
-    handleMarineTraffic,
-    
-    showTrakSat,
-    handleTrakSat,
-    showDescription,
-    setShowDescription,
+  handleShowAllVessels,
+  showAllVessels,
 
-    showSpiderTrak,
-    handleSpiderTrak,
-    showSpiderTrakDesc,
-    setShowSpiderTrakDesc,
+  handleUnShowAll,
 
-    showPersonnel,
-    handlePersonnel,
+  handleShowAll,
+  showAll,
 
-    showVideoStream,
-    handleVideoStream,
-
-    showWeather,
-    toggleWeather,
-
-    handleOffice,
-    showOffice,
-
-    showVehicles,
-    handleVehicles,
-
-    showIncident,
-    handleIncident,
-
-    showOnDuty,
-    handleToggleOnDuty,
-    showOnLeave,
-    handleToggleOnLeave,
-    showRnr,
-    handleToggleRnr,
-
-    showNonUniform,
-    handleToggleNonUniform,
-
-    showAllUsernames,
-    handleToggleShowAllUsernames,
-
-    showCarTrack,
-    handleCarTrack
-    
-  }) {
-
-
-    
-  return (
-    <div className="drawer_wrapper">
-      <Drawer
-    anchor="right"
-    variant="persistent"
-    open={isDrawerOpen}
-    hideBackdrop={true}
+  showMarineTraffic,
+  handleMarineTraffic,
   
-  >
+  showTrakSat,
+  handleTrakSat,
+  showDescription,
+  setShowDescription,
 
-    <div className='drawer_list_wrapper'>
-    <button className='btn_close_drawer' onClick={toggleDrawer}>
-        <IoClose />
-      </button>
-    <div className="drawer_list_box">
-    
-   
- 
-    <ListItem>
-        <ListItemIcon>
-          <span className="ml-3 text-[30px] text-[yellow]">🢙</span>
-        </ListItemIcon>
-        <ListItemText primary="Marine Traffic" />
-        <Checkbox
-           sx={iconStyle}  checked={showMarineTraffic}  onChange={handleMarineTraffic} />
-      </ListItem>
+  showSpiderTrak,
+  handleSpiderTrak,
+  showSpiderTrakDesc,
+  setShowSpiderTrakDesc,
 
-      <div className="border p-2 rounded-[10px] mt-2">
-      <ListItem >
-        <ListItemIcon>
-          <div className="flex gap-2 ">
-            <span className="ml-3 bg-white p-1 rounded-full">
-              <img src="https://traksat.net/i/arrow1.png" alt="" />
-            </span>
-            <span className="bg-white p-1 rounded-full">
-              <div className="circle-marker"></div>
-            </span>
+  showPersonnel,
+  handlePersonnel,
+
+  showVideoStream,
+  handleVideoStream,
+
+  showWeather,
+  toggleWeather,
+
+  handleOffice,
+  showOffice,
+
+  showVehicles,
+  handleVehicles,
+
+  showIncident,
+  handleIncident,
+
+  showOnDuty,
+  handleToggleOnDuty,
+  showOnLeave,
+  handleToggleOnLeave,
+  showRnr,
+  handleToggleRnr,
+
+  showNonUniform,
+  handleToggleNonUniform,
+
+  showAllUsernames,
+  handleToggleShowAllUsernames,
+
+  showCarTrack,
+  handleCarTrack
+  
+}) {
+
+
+  
+return (
+  <div className="drawerWrapper">
+    <Drawer anchor="right" variant="persistent" open={true}>
+      <div className='drawerListWrapper'>
+        <div className="drawerListBox">
+
+            <div className=" mb-3 flex">
+            {!showAll ? (
+              <Button  size='large' sx={{width:'100%', textTransform:"capitalize", backgroundColor:"#0DB0E6",  '&:hover': { backgroundColor: "#1096c3", },}} variant='contained' onClick={handleShowAll} >Select All</Button>
+            ): (
+              <Button  size='large' sx={{width:'100%', textTransform:"capitalize",  backgroundColor:"#363839",  '&:hover': { backgroundColor: "#1096c3", },}} variant='contained'  onClick={handleUnShowAll} >Unselect All</Button>
+            )}
+
+                
+            </div>
+
+            <hr className='horizonLine'/>
+
+            <div className="inputBoxBorder">
+              <div className="inputFlexBox">
+                <p>Vessels</p>
+                <Checkbox sx={iconStyle}  checked={showAllVessels}  onChange={handleShowAllVessels}   />
+              </div>
+            </div>
+
+            <div className="inputBoxBorder ">
+              <div className="inputFlexBox">
+                <div className='inputIconAndName'>
+                  <img src={marineTrafficIcon} alt="show name icon" />
+                  <span>MarineTraffic</span>
+                </div>
+                  <Checkbox sx={iconStyle}  checked={showMarineTraffic}  onChange={handleMarineTraffic}   />
+              </div>
+            </div>
+
+            <div className="inputBoxBorder mb-3">
+              <div className="inputFlexBox">
+                <div className="inputIconAndName">
+                  <img src={traksatIcon1} alt="show name icon" />
+                  <img src={traksatIcon2} alt="show name icon" />
+                  <span>Traksat</span>
+                </div>
+                <Checkbox sx={iconStyle}  checked={showTrakSat} onChange={handleTrakSat}  />
+              </div>
+            {showTrakSat && (
+               <div className='inputShowName'>
+               <div className='box'>
+                 <img src={nameIcon} alt="show name icon" />
+                 <span >Show Vessel Name</span>
+               </div>
+               <Checkbox sx={iconStyle2}  checked={showDescription} onChange={() => setShowDescription(!showDescription)} />
+             </div>
+
+            )}
+            </div>
+
+            <hr className='horizonLine'/>
+        
+          <div className="inputBoxBorder mt-5">
+            <div className="inputFlexBox">
+                  <p>Aircrafts</p>
+                 <Checkbox sx={iconStyle}  checked={showAllAircrafts}  onChange={handleShowAllAircrafts}   />
+                </div>
+            </div>
+        
+          
+        <div className="inputBoxBorder ">
+        <div className="inputFlexBox">
+                <div className='inputIconAndName'>
+                  <img src={flightradarIcon} alt="show name icon" />
+                  <span>FlightRadar</span>
+                </div>
+                  <Checkbox sx={iconStyle}   disabled={true}  />
+              </div>
           </div>
-        </ListItemIcon>
-        <ListItemText primary="TrakSat" />
-        <Checkbox
-         sx={iconStyle}  checked={showTrakSat} onChange={handleTrakSat} />
-      </ListItem>
 
-      {showTrakSat && (
-<div className=''>
-        <ListItem >
-          <ListItemText primary="Vessels Name" />
-          <Checkbox
-             sx={iconStyle2} 
-            checked={showDescription}
-            onChange={() => setShowDescription(!showDescription)}
-          />
-        </ListItem>
+          
+          <div className="inputBoxBorder mb-5">
+          <div className="inputFlexBox">
+              <div className="inputIconAndName">
+                <img src={spidertracksIcon1} className='spidertracksIcon'  alt="show name icon" />
+                <img src={spidertracksIcon2}  className='spidertracksIcon' alt="show name icon" />
+                <span>Spidertracks</span>
+              </div>
+              <Checkbox sx={iconStyle}  checked={showSpiderTrak}  onChange={handleSpiderTrak}  />
+            </div>
+          {showSpiderTrak && (
+            <div className='inputShowName'>
+              <div className='box'>
+                <img src={nameIcon} alt="show name icon" />
+                <span className='text-sm font-semibold'>Show Aircraft Name</span>
+              </div>
+              <Checkbox sx={iconStyle2}  checked={showSpiderTrakDesc} onChange={() => setShowSpiderTrakDesc(!showSpiderTrakDesc)}/>
+            </div>
+          )}
+
+          </div>
+        
+
+          <hr className='horizonLine'/>
+          <div className="inputBoxBorder mt-5">
+            <div className="inputFlexBox">
+              <div className='inputIconAndName'>
+                <img src={weatherIcon} alt="show name icon" />
+                <span>Weather</span>
+              </div>
+               <Checkbox sx={iconStyle}  checked={showWeather}   onChange={toggleWeather}    />
+            </div>
+          </div>
+
+          <div className="inputBoxBorder">
+          <div className="inputFlexBox">
+              <div className='inputIconAndName'>
+                <img src={personnelIcon} alt="show name icon" />
+                <span>Personnel</span>
+              </div>
+              <Checkbox sx={iconStyle}  checked={showPersonnel} onChange={handlePersonnel}    />
+            </div>
+            {showPersonnel && (
+               <div>
+                 <div className='inputShowName'>
+                <div className='box'>
+                  <img src={nameIcon} alt="show name icon" />
+                  <span >Show Personnel Name</span>
+                </div>
+                <Checkbox sx={iconStyle2} checked={showAllUsernames} onChange={handleToggleShowAllUsernames} />
+              </div>
+
+              <div className="inputFlexBox">
+                <div className='inputIconAndName'>
+                  <img src={nonUniformPersonnelIcon} alt="show name icon" />
+                  <span>Non-Uniform</span>
+                </div>
+                <Checkbox sx={iconStyle2} checked={showNonUniform}  onChange={handleToggleNonUniform} disabled={showOnLeave || showRnr || showOnDuty }  />
+              </div>
+
+              
+              <div className="inputFlexBox">
+                <div className='inputIconAndName'>
+                  <img src={onDutyPersonnelIcon} alt="show name icon" />
+                  <span>On Duty</span>
+                </div>
+                <Checkbox sx={iconStyle2}  checked={showOnDuty} onChange={handleToggleOnDuty} disabled={showOnLeave || showRnr || showNonUniform  } />
+              </div>
+       
+
+          
+              <div className="inputFlexBox">
+                <div className='inputIconAndName'>
+                  <img src={onLeavePersonnelIcon} alt="show name icon" />
+                  <span>On Leave</span>
+                </div>
+                <Checkbox  sx={iconStyle2} checked={showOnLeave}  onChange={handleToggleOnLeave}  disabled={showOnDuty || showRnr || showNonUniform}  />
+              </div>
+
+              
+              <div className="inputFlexBox">
+                <div className='inputIconAndName'>
+                  <img src={rnrPersonnelIcon} alt="show name icon" />
+                  <span>RnR</span>
+                </div>
+                <Checkbox  sx={iconStyle2} checked={showRnr}  onChange={handleToggleRnr} disabled={showOnDuty || showOnLeave || showNonUniform}  />
+              </div>
+              </div>
+            )}
+          </div>
+
+
+      
+       <div className="inputBoxBorder">
+          <div className="inputFlexBox">
+              <div className='inputIconAndName'>
+                <img src={incidentsIcon} alt="show name icon" />
+                <span>Incidents</span>
+              </div>
+              <Checkbox  sx={iconStyle}  checked={showIncident} onChange={handleIncident}    />
+            </div>
         </div>
-      )}
-      </div>
 
 
-      <div className="border p-2 rounded-[10px] mt-2">
-      <ListItem>
-        <ListItemIcon>
-        <span className="ml-3 p-1  w-[30px] flex items-center justify-center h-[30px] rounded-full">
-              <img src={airplaneImg} alt="" />
-              <img src={helicopterImg} alt="" />
-            </span>
-        </ListItemIcon>
-        <ListItemText primary="SpiderTrak" />
-        <Checkbox
-          sx={iconStyle} 
-          checked={showSpiderTrak} 
-          onChange={handleSpiderTrak} />
-      </ListItem>
-
-      {showSpiderTrak && (
-         <div className=''>
-        <ListItem>
-          <ListItemText primary="Aircraft Name" />
-          <Checkbox
-             sx={iconStyle2} 
-            checked={showSpiderTrakDesc}
-            onChange={() => setShowSpiderTrakDesc(!showSpiderTrakDesc)}
-          />
-        </ListItem>
+        <div className="inputBoxBorder">
+          <div className="inputFlexBox">
+              <div className='inputIconAndName'>
+                <img src={officeIcon} alt="show name icon" />
+                <span>Office</span>
+              </div>
+               <Checkbox sx={iconStyle}   checked={showOffice} onChange={handleOffice}    />
+            </div>
         </div>
-      )}
 
-</div>
+        <div className="inputBoxBorder">
+          <div className="inputFlexBox">
+              <div className='inputIconAndName'>
+                <img src={vehiclesIcon} alt="show name icon" />
+                <span>Vehicles</span>
+              </div>
+              <Checkbox sx={iconStyle}  checked={showVehicles} onChange={handleVehicles}    />
+            </div>
+        </div>
 
-      <ListItem>
-        <ListItemIcon>
-          <div className="flex gap-2">
-            <span className="ml-3 bg-white w-[30px] flex items-center justify-center h-[30px] rounded-full">
-              📡
-            </span>
-          </div>
-        </ListItemIcon>
-        <ListItemText primary="Flight Radar" />
-        {/* Add your Checkbox and onChange here */}
-      </ListItem>
+        <div className="inputBoxBorder">
+          <div className="inputFlexBox">
+              <div className='inputIconAndName'>
+                <img src={cartrackIcon} alt="show name icon" />
+                <span>Cartrack</span>
+              </div>
+             <Checkbox sx={iconStyle}   checked={showCarTrack} onChange={handleCarTrack}    />
+            </div>
+        </div>
 
-      <ListItem>
-        <ListItemIcon>
-        <span className="ml-3 p-1  w-[30px] flex items-center justify-center h-[30px] rounded-full">
-              <img src={weatherImg} alt="" />
-            </span>
-        </ListItemIcon>
-        <ListItemText primary="Weather" />
-        <Checkbox
-      sx={iconStyle}  checked={showWeather}   onChange={toggleWeather} />
-      </ListItem>
 
-      <div className="border p-2 rounded-[10px] mt-2">
-  <ListItem>
-    <ListItemIcon>
-      <div className="flex gap-2">
-        <span className="ml-3  w-[30px] flex items-center justify-center h-[30px] rounded-full">
-          <img src={personnelImg} alt="" />
-        </span>
+        <div className="inputBoxBorder">
+          <div className="inputFlexBox">
+              <div className='inputIconAndName'>
+                <img src={videostreamsIcon} alt="show name icon" />
+                <span>Video Streams</span>
+              </div>
+            <Checkbox sx={iconStyle}  checked={showVideoStream} onChange={handleVideoStream}    />
+            </div>
+        </div>
+
+
+        </div>
       </div>
-    </ListItemIcon>
-    <ListItemText primary="Personnel" />
-    <Checkbox
-      sx={iconStyle}
-      checked={showPersonnel}
-      onChange={handlePersonnel}
-    />
-  </ListItem>
-
-  {showPersonnel && (
-    <div className=''>
-    <ListItem >
-        {/* <ListItemIcon>
-          <div className="flex gap-2">
-            <span className="ml-3  w-[30px] flex items-center justify-center h-[30px] rounded-full">
-              <img src={nonUniformImg} alt="" />
-            </span>
-          </div>
-        </ListItemIcon> */}
-        <ListItemText primary="Names" />
-        <Checkbox
-          sx={iconStyle2}
-          checked={showAllUsernames}
-          onChange={handleToggleShowAllUsernames}
-        />
-      </ListItem>
-
-      <ListItem >
-        <ListItemIcon>
-          <div className="flex gap-2">
-            <span className="ml-3  w-[30px] flex items-center justify-center h-[30px] rounded-full">
-              <img src={nonUniformImg} alt="" />
-            </span>
-          </div>
-        </ListItemIcon>
-        <ListItemText primary="Non-Uniform" />
-        <Checkbox
-          sx={iconStyle2}
-          checked={showNonUniform}
-          onChange={handleToggleNonUniform}
-          disabled={showOnLeave || showRnr || showOnDuty } 
-        />
-      </ListItem>
-
-      <ListItem >
-        <ListItemIcon>
-          <div className="flex gap-2">
-            <span className="ml-3  w-[30px] flex items-center justify-center h-[30px] rounded-full">
-              <img src={dutyImg} alt="" />
-            </span>
-          </div>
-        </ListItemIcon >
-        <ListItemText primary="On Duty" />
-        <Checkbox
-          sx={iconStyle2}
-          checked={showOnDuty}
-          onChange={handleToggleOnDuty}
-          disabled={showOnLeave || showRnr || showNonUniform  } 
-        />
-      </ListItem>
-
-      <ListItem >
-        <ListItemIcon>
-          <div className="flex gap-2">
-            <span className="ml-3  w-[30px] flex items-center justify-center h-[30px] rounded-full">
-              <img src={leaveImg} alt="" />
-            </span>
-          </div>
-        </ListItemIcon>
-        <ListItemText primary="On Leave" />
-        <Checkbox
-          sx={iconStyle2}
-          checked={showOnLeave}
-          onChange={handleToggleOnLeave}
-          disabled={showOnDuty || showRnr || showNonUniform} // Disable if On Duty or RnR is checked
-        />
-      </ListItem>
-
-      <ListItem >
-        <ListItemIcon>
-          <div className="flex gap-2">
-            <span className="ml-3  w-[30px] flex items-center justify-center h-[30px] rounded-full">
-              <img src={rnrImg} alt="" />
-            </span>
-          </div>
-        </ListItemIcon>
-        <ListItemText primary="RnR" />
-        <Checkbox
-          sx={iconStyle2}
-          checked={showRnr}
-          onChange={handleToggleRnr}
-          disabled={showOnDuty || showOnLeave || showNonUniform} // Disable if On Duty or On Leave is checked
-        />
-      </ListItem>
-    </div>
-  )}
-</div>
-
-   
-
-      <ListItem>
-        <ListItemIcon>
-          <div className="flex gap-2">
-            <span className="ml-3 p-1 bg-white w-[30px] flex items-center justify-center h-[30px] rounded-full">
-              <img src={incidentImg} alt="" />
-            </span>
-          </div>
-        </ListItemIcon>
-        <ListItemText primary="Incidents" />
-        <Checkbox 
-         sx={iconStyle} 
-        checked={showIncident} onChange={handleIncident} />
-      </ListItem>
-
-      <ListItem>
-        <ListItemIcon>
-          <div className="flex gap-2">
-            <span className="ml-3 p-1 bg-white w-[30px] flex items-center justify-center h-[30px] rounded-full">
-              <img src={campImg} alt="" />
-            </span>
-          </div>
-        </ListItemIcon>
-        <ListItemText primary="Office" />
-        <Checkbox
-       sx={iconStyle} 
-        checked={showOffice} onChange={handleOffice} />
-      </ListItem>
-
-
-      <ListItem>
-        <ListItemIcon>
-          <div className="flex gap-2">
-            <span className="ml-3 p-1 bg-white w-[30px] flex items-center justify-center h-[30px] rounded-full">
-              <img src={vehiclesImg} alt="" />
-            </span>
-          </div>
-        </ListItemIcon>
-        <ListItemText primary="Vehicles" />
-        <Checkbox
-         sx={iconStyle} 
-        checked={showVehicles} onChange={handleVehicles} />
-      </ListItem>
-
-      <ListItem>
-        <ListItemIcon>
-          <div className="flex gap-2">
-            <span className="ml-3 p-1 bg-white w-[30px] flex items-center justify-center h-[30px] rounded-full">
-              <img src={carImg} alt="" />
-            </span>
-          </div>
-        </ListItemIcon>
-        <ListItemText primary="CarTrack" />
-        <Checkbox
-         sx={iconStyle} 
-        checked={showCarTrack} onChange={handleCarTrack} />
-      </ListItem>
-
-      <ListItem>
-        <ListItemIcon>
-          <div className="flex gap-2">
-            <span className="ml-3 bg-white w-[30px] flex items-center justify-center h-[30px] rounded-full">
-              <img src={cameramanImg} alt="" />
-            </span>
-          </div>
-        </ListItemIcon>
-        <ListItemText primary="Video Streams" />
-        <Checkbox
-         sx={iconStyle}  checked={showVideoStream} onChange={handleVideoStream} />
-      </ListItem>
-    </div>
-    </div>
-  </Drawer>
-    </div>
-  )
+    </Drawer>
+  </div>
+)
 }

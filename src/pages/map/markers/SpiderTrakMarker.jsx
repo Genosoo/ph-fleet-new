@@ -7,9 +7,9 @@ import { IoCloseSharp } from "react-icons/io5";
 import './MarkerStyle.css'
 import Draggable from 'react-draggable';
 
-// Import the image files
-import helicopterIcon from '../../../assets/helicopter.svg';
-import airplaneIcon from '../../../assets/airplane.svg';
+import spidertrack1Icon from '../../../assets/icon/airplane.svg'
+import spidertrack2Icon from '../../../assets/icon/helicopter.svg'
+
 
 const SpiderTrakMarker = ({ item, selectedSpiderTrak, showSpiderTrakDesc, handleSpiderTrack }) => {
   const map = useMap();
@@ -21,7 +21,10 @@ const SpiderTrakMarker = ({ item, selectedSpiderTrak, showSpiderTrakDesc, handle
   const handleMarkerClick = () => {
   setShowSelectedInfo(true);
     prevZoomRef.current = map.getZoom();
-    map.flyTo(startPosition, 10);
+    map.flyTo(startPosition, 12, {
+      duration: 2, // Adjust duration as needed (in seconds)
+      easeLinearity: 0.25 // Adjust ease linearity as needed
+    });
     handleSpiderTrack(item);
   };
 
@@ -29,8 +32,7 @@ const SpiderTrakMarker = ({ item, selectedSpiderTrak, showSpiderTrakDesc, handle
   const handleCloseButtonClick = () => {
     setShowSelectedInfo(false);
     handleSpiderTrack(null);
-  map.flyTo([item.glatitude, item.glongitude], prevZoomRef.current);
-
+    map.setView([item.glatitude, item.glongitude], prevZoomRef.current);
   };
 
   const handleDrag = (e) => {
@@ -40,7 +42,7 @@ const SpiderTrakMarker = ({ item, selectedSpiderTrak, showSpiderTrakDesc, handle
   
   if (item.glatitude !== null && item.glongitude !== null) {
     // Check if the unit_id is "NH434" to set the helicopter icon
-    const iconUrl = item.unit_id === 'NH434' ? helicopterIcon : airplaneIcon;
+    const iconUrl = item.unit_id === 'NH434' ? spidertrack2Icon : spidertrack1Icon;
 
     return (
      <>
@@ -51,7 +53,7 @@ const SpiderTrakMarker = ({ item, selectedSpiderTrak, showSpiderTrakDesc, handle
             className: `spidertrak-marker ${ selectedSpiderTrak && selectedSpiderTrak.unit_id === item.unit_id ? 'selected-spidertrak' : ""  } `,
             html: `<div class="relative">
             ${showSpiderTrakDesc ? `<span class="text-[9px] top-2 w-[60px]  text-center left-8 text-black font-bold rounded-[10px] bg-lime-400   absolute">${item.unit_id}</span>` : `<div></div>` }
-            <div style="transform: rotate(${item.cog}deg);" class="spiderTrak-icon"><img src="${iconUrl}" alt="Icon" /></div>
+            <img src="${iconUrl}" style="transform: rotate(${item.cog}deg); width:50px; " />
             </div>
             `,
           })
@@ -65,19 +67,32 @@ const SpiderTrakMarker = ({ item, selectedSpiderTrak, showSpiderTrakDesc, handle
        <Draggable onDrag={handleDrag}>
       <div className="stCardContainer">
             <div className="stCardHeader">
-              <h3 className="stCardTitle">SpiderTrak</h3>
+               <img src={spidertrack1Icon} alt="" />
+               <img src={spidertrack2Icon} alt="" />
+              <h3 className="stCardTitle">Spidertracks</h3>
               <div className='stClose'>
                  <IoCloseSharp onClick={() => handleCloseButtonClick()} />
               </div>
             </div>
             <div className="stCardDetail">
-              <p >Aircraft: <span>{selectedSpiderTrak.unit_id}</span></p>
-              <p >Track ID: <span>{selectedSpiderTrak.track_id}</span></p>
-              <p >Altitude: <span>{selectedSpiderTrak.altitude}</span></p>
-              <p >Fix: <span>{selectedSpiderTrak.fix}</span></p>
-              <p >Source: <span>{selectedSpiderTrak.src}</span></p>
-              <p >Latitude: <span>{selectedSpiderTrak.glatitude}</span></p>
-              <p >Longitude: <span>{selectedSpiderTrak.glongitude}</span></p>
+              <span className='span1'>
+                 <p>Aircraft</p>
+                 <p>Track ID</p>
+                 <p>Altitude</p>
+                 <p>Fix</p>
+                 <p>Source</p>
+                 <p>Latitude</p>
+                 <p>Longitude</p>
+              </span>
+              <span>
+                 <p>{selectedSpiderTrak?.unit_id || 'N/A'}</p>
+                 <p>{selectedSpiderTrak?.track_id || 'N/A'}</p>
+                 <p>{selectedSpiderTrak?.altitude || 'N/A'}</p>
+                 <p>{selectedSpiderTrak?.fix || 'N/A'}</p>
+                 <p>{selectedSpiderTrak?.src || 'N/A'}</p>
+                 <p>{selectedSpiderTrak?.glatitude || 'N/A'}</p>
+                 <p>{selectedSpiderTrak?.glongitude || 'N/A'}</p>
+              </span>
             </div>
         </div>
         </Draggable>

@@ -1,15 +1,15 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useState } from 'react';
-import { AiOutlineFullscreen, AiOutlineFullscreenExit } from 'react-icons/ai';
 import Popover from '@mui/material/Popover';
+import './ButtonsStyle.css'
+import { CgArrowsExpandRight } from "react-icons/cg";
+import { CgArrowsExpandRightAlt } from "react-icons/cg";
 
 export default function BtnFullScreenMap({ isFullscreen, toggleFullscreen }) {
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const handlePopoverOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+
 
   const handlePopoverClose = () => {
     setAnchorEl(null);
@@ -18,16 +18,12 @@ export default function BtnFullScreenMap({ isFullscreen, toggleFullscreen }) {
   const open = Boolean(anchorEl);
 
   return (
-    <div className="btn_fullscreen_wrapper">
+    <div className="btnFullscreenContainer">
       <div
-        aria-owns={open ? 'mouse-over-popover' : undefined}
-        aria-haspopup="true"
-        onMouseEnter={handlePopoverOpen}
-        onMouseLeave={handlePopoverClose}
         onClick={toggleFullscreen}
-        className={isFullscreen ? 'btn_fullscreen_exit' : 'btn_fullscreen'}
+        className={isFullscreen ? 'btnFullscreenExit' : 'btnFullscreen'}
       >
-        {isFullscreen ? <AiOutlineFullscreenExit /> : <AiOutlineFullscreen />}
+        {isFullscreen ? <CgArrowsExpandRightAlt/> : <CgArrowsExpandRight />}
       </div>
 
       <Popover

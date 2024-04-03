@@ -1,24 +1,39 @@
 /* eslint-disable react/prop-types */
-import { Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import cameramanImg from '../../../assets/cameraman.png';
+import { useRef } from 'react';
+import { Marker, Popup, useMap } from 'react-leaflet';
 
-const VideoStreamMarker = ({ item, index, selectedVideoStream, handleVideoStreamMarkerClick, isVideoPlaying, handleToggleVideo, videoStreamUrl }) => (
-  <Marker
-    key={`cargo-${index}`}
-    position={[item.glatitude, item.glongitude]}
-    icon={
-      L.divIcon({
-        className: 'personnel-marker',
-        html: `<div class="personnel-icon" ><img src="${cameramanImg}" alt="" /></div>`,
-      })
+export default function VideoStreamMarker({ item, index, selectedVideoStream, handleVideoStreamMarkerClick, isVideoPlaying, handleToggleVideo, videoStreamUrl }){
+    
+  const map = useMap();
+  const prevZoomRef = useRef(9);
+  const startPosition = [item.glatitude, item.glongitude];
+
+  const handleMarkerClick = () => {
+    const isSameVideo = selectedVideoStream && selectedVideoStream.id === item.id;
+    if (!isSameVideo) {
+      prevZoomRef.current = map.getZoom();
+      map.flyTo(startPosition, 12, {
+        duration: 2, // Adjust duration as needed (in seconds)
+        easeLinearity: 0.25 // Adjust ease linearity as needed
+      });
     }
-    eventHandlers={{
-      click: () => {
-        handleVideoStreamMarkerClick(item);
-      },
-    }}
-  >
+    handleVideoStreamMarkerClick(isSameVideo ? null : item);
+  };return(
+        <Marker
+          key={`cargo-${index}`}
+          position={[item.glatitude, item.glongitude]}
+          icon={
+            L.divIcon({
+              className: 'personnel-marker',
+              html: `<div class="personnel-icon" ><img src="${cameramanImg}" alt="" /></div>`,
+            })
+          }
+          eventHandlers={{
+            click:handleMarkerClick
+          }}
+        >
     <Popup>
       {selectedVideoStream && selectedVideoStream.user === item.user && (
         <div className="popup_card">
@@ -35,7 +50,8 @@ const VideoStreamMarker = ({ item, index, selectedVideoStream, handleVideoStream
         </div>
       )}
     </Popup>
-  </Marker>
-);
+       </Marker>
+      )
+  }
+  
 
-export default VideoStreamMarker;

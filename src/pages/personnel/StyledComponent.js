@@ -2,7 +2,7 @@ import {
   //   Table,
   //   TableBody,
   TableCell,
-  //   TableContainer,
+  TableContainer,
   //   TableHead,
   //   TableRow,
   //   Paper,
@@ -16,6 +16,27 @@ import {
 } from "@mui/material";
 
 import styled from "styled-components";
+
+export const CustomTableContainer = styled(TableContainer)`
+  &::-webkit-scrollbar {
+    width: 2px;
+    height: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Track color */
+    border-radius: 5px; /* Border radius of the track */
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #404958; /* Thumb color */
+    border-radius: 5px; /* Border radius of the thumb */
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Thumb color on hover */
+  }
+`;
 
 export const StyledFormControl = styled(FormControl)`
   border: 1px solid #2d4263;
@@ -33,14 +54,16 @@ export const StyledTableCell = styled(TableCell)`
 
 // STYLED BUTTON ADD
 export const StyledButtonAdd = styled(Button)`
-  background-color: #205295;
+  background-color: #86705e;
   color: #eef5ff;
-  padding: 10px;
+  height: 52px;
+  width: 180px;
   font-size: 12px;
-  font-family: "Lato", "san-serif";
+  border-radius: 10px;
+  font-family: "Manrope", "sans-serif";
 
   &:hover {
-    background-color: #2c74b3;
+    background-color: #000;
     color: #ffffff;
   }
 `;
