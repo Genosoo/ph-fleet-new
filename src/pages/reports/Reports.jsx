@@ -7,6 +7,16 @@ import {
   apiAircraftData,
   apiVehiclesData
 } from "../../api/api_urls";
+import "./ReportStyles.css"
+
+import officeIcon from '../../assets/icon/offices.svg'
+import marinetrafficIcon from '../../assets/icon/marinetraffic.svg'
+import spidertracksIcon from '../../assets/icon/flightradar.svg'
+import vehiclesIcon from '../../assets/icon/vehicles.svg'
+import personnelIcon from '../../assets/icon/personnel.svg'
+import ondutyIcon from '../../assets/icon/personnel_on_duty.svg'
+import onleaveIcon from '../../assets/icon/personnel_on_leave.svg'
+import rnrIcon from '../../assets/icon/personnel_rnr.svg'
 
 
 export default function Reports() {
@@ -95,67 +105,89 @@ export default function Reports() {
 
 
   return (
-    <div className="flex flex-col justify-start items-starts gap-5">
-      <div className="flex flex-col gap-2 border-b-2 p-3">
-         <h1 className="font-bold text-[1.3rem]">Office</h1>
-         <div className="bg-gray-200 border shadow-md p-4 rounded-[10px] h-[100px] w-[250px]">
-          <h2 className="text-[2rem]">{officesCount}</h2>
-          <p className="font-semibold">No. Of Offices</p>
+    <div className="reportContainer">
+      <div className="reportBox1">
+         <h1 className="title">Office</h1>
+         <div className="reportCard">
+             <div className="reportCardFlex">
+              <h2 >{officesCount}</h2>
+               <img src={officeIcon} alt="" />
+             </div>
+          <p className="text1">Total No. of Offices</p>
          </div>
       </div>
 
       
       
-     <div className="flex flex-wrap">
-     <div className="flex flex-col  gap-2 border-b-2 p-3">
-      <h1 className="font-bold text-[1.3rem]">Vessels</h1>
-      <div className="bg-gray-200 border shadow-md p-4 rounded-[10px] h-[100px] w-[250px]">
-          <h2 className="text-[2rem]">{vesselsCount}</h2>
-          <p className="font-semibold">Total Vessels Count</p>
+     <div className="reportBox2">
+     <div className="reportCardWrapper">
+      <h1 className="title">Vessels</h1>
+      <div className="reportCard">
+          <div className="reportCardFlex">
+           <h2 >{vesselsCount}</h2>
+           <img src={marinetrafficIcon} alt="" />
+          </div>
+          <p className="text1">Total Vessels Count</p>
         </div>
       </div>
 
 
-
-      <div className="flex flex-col gap-2 border-b-2 p-3">
-      <h1 className="font-bold text-[1.3rem]">Aircrafts</h1>
-      <div className="bg-gray-200 p-4 rounded-[10px] h-[100px] w-[250px]">
-          <h2 className="text-[2rem]">{aircraftCount}</h2>
-          <p className="font-semibold">Total Aircrafts Count</p>
+        <div className="reportCardWrapper">
+            <h1 className="title">Aircrafts</h1>
+          <div className="reportCard">
+            <div className="reportCardFlex">
+                <h2 >{aircraftCount}</h2>
+                <img src={spidertracksIcon} alt="" />
+              </div>
+              <p className="text1">Total Aircrafts Count</p>
+            </div>
         </div>
-      </div>
 
-      <div className="flex flex-col gap-2 border-b-2 p-3">
-      <h1 className="font-bold text-[1.3rem]">Vehicles</h1>
-      <div className="bg-gray-200 p-4 rounded-[10px] h-[100px] w-[250px]">
-          <h2 className="text-[2rem]">{vehiclesCount}</h2>
-          <p className="font-semibold">Total Vehicles Count</p>
+        <div className="reportCardWrapper">
+        <h1 className="title">Vehicles</h1>
+          <div className="reportCard">
+          <div className="reportCardFlex">
+              <h2>{vehiclesCount}</h2>
+              <img src={vehiclesIcon} alt="" />
+          </div>
+              <p className="text1">Total Vehicles Count</p>
+            </div>
         </div>
-      </div>
      </div>
 
-     <div className="flex flex-col gap-2 border-b-2 p-3">
-        <h1 className="font-bold text-[1.3rem]">Personnel</h1>
+     <div className="reportBox3">
+         <h1 className="title">Personnel</h1>
+         <div className="reportCardWrapper">
+          <div className="reportCard">
+          <div className="reportCardFlex">
+              <h2 >{personnelCount}</h2>
+              <img src={personnelIcon} alt="" />
+            </div>
+            <p className="text1">Total Personnel Count</p>
+         </div>
 
-       <div className="flex gap-5 flex-wrap ">
-       <div className="bg-gray-200 border shadow-md p-4 rounded-[10px] h-[100px] w-[250px]">
-          <h2 className="text-[2rem]">{personnelCount}</h2>
-          <p className="font-semibold">Total Personnel Count</p>
+        <div className="reportCard">
+          <div className="reportCardFlex">
+            <h2 >{noOnDuty}</h2>
+            <img src={ondutyIcon} alt="" />
+          </div>
+          <p className="text1">On-Duty</p>
         </div>
 
-        <div className="bg-gray-200 border shadow-md p-4 rounded-[10px] h-[100px] w-[250px]">
-          <h2 className="text-[2rem]">{noOnDuty}</h2>
-          <p className="font-semibold">Total Personnel On-Duty</p>
+        <div className="reportCard">
+          <div className="reportCardFlex">
+            <h2 >{noOnLeave}</h2>
+            <img src={onleaveIcon} alt="" />
+          </div>
+          <p className="text1"> On-Leave</p>
         </div>
 
-        <div className="bg-gray-200 border shadow-md p-4 rounded-[10px] h-[100px] w-[250px]">
-          <h2 className="text-[2rem]">{noOnLeave}</h2>
-          <p className="font-semibold"> Total Personnel On-Leave</p>
-        </div>
-
-        <div className="bg-gray-200 border shadow-md p-4 rounded-[10px] h-[100px] w-[250px]">
-          <h2 className="text-[2rem]">{noRnR}</h2>
-          <p className="font-semibold">Total Personnel On-RnR</p>
+        <div className="reportCard">
+        <div className="reportCardFlex">
+          <h2 >{noRnR}</h2>
+          <img src={rnrIcon} alt="" />
+          </div>
+          <p className="text1">On-RnR</p>
         </div>
 
        </div>

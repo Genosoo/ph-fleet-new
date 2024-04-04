@@ -25,6 +25,7 @@ import TracksatList from '../pages/dashboard/listPage/TracksatList';
 import SpiderTrakList from '../pages/dashboard/listPage/SpiderTrakList';
 import CheckCookie from '../components/checkCookie/CheckCookie';
 import Profile from '../pages/vessels/profile/Profile';
+import UserProfile from '../pages/users/profile/Profile';
 
 export default function Routes_dashboard() {
   const [accountData, setAccountData] = useState({});
@@ -64,6 +65,8 @@ export default function Routes_dashboard() {
 
             <Route path='roles' element={<Roles />} />
             <Route path='users' element={<Users />} />
+            <Route path='/users/profile' element={<UserProfile />} />
+
             <Route path='personnel' element={<Personnel />} />
             <Route path='vessels' element={<Vessels />} />
             <Route path='/vessels/vessels-profile' element={<Profile />} />

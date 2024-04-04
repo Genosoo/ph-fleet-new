@@ -79,10 +79,10 @@ const Sidebar = () => {
                         <img 
                             src={Logo}
                             alt="logo"  
-                            style={{ width: isOpen ? '30%' : '80px', transition: 'width 0.3s ease'}} 
+                            style={{ width: isOpen ? '70%' : '80px', transition: 'width 0.3s ease'}} 
                         />
                     </div>
-                    <span>Navigate</span>
+                    <p >Navigate</p>
                 </div>
                
                {filteredLinkItems1.map((item, index) => (
@@ -203,7 +203,7 @@ const Sidebar = () => {
               
            </div>
 
-           <div style={{marginLeft: isOpen ? "20px" : "10px"}} className="bars">
+           <div style={{marginLeft: isOpen ? "0" : "10px"}} className="bars">
                        <BiAlignLeft onClick={toggle}/>
             </div>
         </div>

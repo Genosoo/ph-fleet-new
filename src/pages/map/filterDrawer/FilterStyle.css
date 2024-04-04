@@ -4,7 +4,7 @@
 
 @layer components{
     .drawerWrapper{
-        @apply absolute z-[3500] right-5 flex   
+        @apply absolute z-[3500] right-5 flex top-5  bg-white  rounded-[10px] h-[95%]
    }
 
     .drawerListBox::-webkit-scrollbar-thumb {
@@ -16,7 +16,7 @@
     }
     
     .drawerListBox{
-      @apply h-[780px] overflow-y-auto p-4 w-[300px]
+      @apply h-[100%] overflow-y-auto p-4 w-[300px]
     }
 
     .horizonLine{

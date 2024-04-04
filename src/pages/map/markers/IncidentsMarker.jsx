@@ -46,8 +46,8 @@ export default function IncidentMarker ({ item, index, selectedIncident, handleI
     <Marker  key={`incidents-${index}`}  position={[item.glatitude_incident, item.glongitude_incident]}
           icon={
               L.divIcon({
-                className: `office-marker`,
-                html: `<img src="${incidentImg}" alt="" />`,
+                className: `bg-transparent`,
+                html: `<div class="bgwhite-marker"><img src="${incidentImg}" alt="" /></div>`,
               })
             }
 

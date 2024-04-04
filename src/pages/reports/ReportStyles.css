@@ -1,0 +1,54 @@
+@tailwind components;
+
+
+
+@layer components{
+    .reportContainer{
+        @apply flex flex-col justify-start items-start gap-5 font-manrope
+    }
+
+    .reportBox1{
+        @apply flex flex-col gap-2 border-b-2 p-3 
+    }
+
+    .title{
+        @apply font-bold text-[1.3rem] py-3
+    }
+
+    .reportCard{
+        @apply bg-white shadow-md p-5 rounded-[10px] 
+        h-[150px] w-[350px] flex flex-col justify-between
+    }
+
+    .reportCardFlex{
+        @apply flex justify-between text-[#404958] font-bold 
+    }
+
+    .reportCardFlex h2{
+        @apply text-[3rem]
+    }
+
+    .reportCard .text1{
+        @apply text-base pt-3
+    }
+
+    .reportCardFlex img{
+        @apply w-[40px]
+    }
+
+    .reportBox2{
+        @apply flex  gap-2 border-b-2   flex-wrap
+    }
+
+    .reportCardWrapper{
+        @apply flex flex-col  gap-2 border-b-2 p-3
+    }
+
+    .reportBox3{
+        @apply flex flex-col  gap-2 border-b-2 p-3 
+    }
+
+    .reportBox3 .reportCardWrapper{
+        @apply flex flex-wrap w-full flex-row
+    }
+}

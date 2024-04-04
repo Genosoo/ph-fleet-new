@@ -42,8 +42,8 @@ export default function VehiclesMarker ({ item, index, selectedVehicles, handleV
         position={[item.latitude, item.longitude]}
         icon={
             L.divIcon({
-              className: `vehicle-marker`,
-              html: `<div class="vehicle-icon" >
+              className: ``,
+              html: `<div class="bgwhite-marker">
               <img src="${vehiclesImg}" alt="" />
               </div>`,
             })

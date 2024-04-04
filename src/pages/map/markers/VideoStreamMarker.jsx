@@ -26,8 +26,8 @@ export default function VideoStreamMarker({ item, index, selectedVideoStream, ha
           position={[item.glatitude, item.glongitude]}
           icon={
             L.divIcon({
-              className: 'personnel-marker',
-              html: `<div class="personnel-icon" ><img src="${cameramanImg}" alt="" /></div>`,
+              className: '',
+              html: `<div class="bgwhite-marker" ><img src="${cameramanImg}" alt="" /></div>`,
             })
           }
           eventHandlers={{

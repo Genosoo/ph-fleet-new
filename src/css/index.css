@@ -57,11 +57,11 @@
   }
 
   .sidebar_container{
-    @apply flex
+    @apply flex font-manrope
   }
 
   .sidebar{
-    @apply bg-gray-800 transition-all duration-500 text-white w-[200px] flex flex-col items-center z-[1000]  overflow-y-auto pb-20
+    @apply bg-[#404958] transition-all duration-500 text-white w-[200px] flex flex-col items-center z-[1000]  overflow-y-auto pb-20
   }
 
 
@@ -83,11 +83,11 @@
   
 
   .link_wrapper{
-    @apply w-[80%] flex flex-col gap-[5px]
+    @apply w-[80%] flex flex-col gap-[5px] 
   }
 
-  .link_wrapper span{
-    @apply uppercase text-sm tracking-wider font-medium mt-3 mb-4
+  .link_wrapper p{
+    @apply uppercase text-xs tracking-wider font-normal   pt-6
   }
 
   .link_wrapper2{
@@ -314,17 +314,29 @@
 
 
 .office-marker {
-  font-size:20px;
-  width:25px !important;
+  width:30px !important;
   border-radius:50%;
-  height:25px !important;
+  height:30px !important;
+  position: relative;
   color: rgb(255, 255, 255);
-  background-color: rgb(255, 255, 255); /* Set the color of the glow effect */
+  background-color: rgb(244, 244, 244); /* Set the color of the glow effect */
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
+.bgwhite-marker{
+  background-color: #fff;
+  width:25px;
+  height:25px;
+  border-radius:50%;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
 
 .vehicle-marker {
   font-size:20px;
@@ -332,7 +344,6 @@
   border-radius:50%;
   height:25px !important;
   color: rgb(255, 255, 255);
-  background-color: rgb(255, 255, 255); /* Set the color of the glow effect */
   text-align: center;
   display: flex;
   align-items: center;
@@ -345,7 +356,6 @@
   border-radius:50%;
   height:25px !important;
   color: rgb(255, 255, 255);
-  background-color: rgb(255, 255, 255); /* Set the color of the glow effect */
   text-align: center;
   display: flex;
   align-items: center;

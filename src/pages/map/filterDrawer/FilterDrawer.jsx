@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import './FilterStyle.css'
-import { Drawer, Checkbox, Button } from '@mui/material';
+import { Checkbox, Button } from '@mui/material';
 
 
 import videostreamsIcon from '../../../assets/icon/video_streams.svg'
@@ -105,10 +105,8 @@ export default function FilterDrawer({
   
 return (
   <div className="drawerWrapper">
-    <Drawer anchor="right" variant="persistent" open={true}>
       <div className='drawerListWrapper'>
         <div className="drawerListBox">
-
             <div className=" mb-3 flex">
             {!showAll ? (
               <Button  size='large' sx={{width:'100%', textTransform:"capitalize", backgroundColor:"#0DB0E6",  '&:hover': { backgroundColor: "#1096c3", },}} variant='contained' onClick={handleShowAll} >Select All</Button>
@@ -327,7 +325,6 @@ return (
 
         </div>
       </div>
-    </Drawer>
   </div>
 )
 }
