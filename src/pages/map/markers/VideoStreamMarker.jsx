@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import L from 'leaflet';
-import cameramanImg from '../../../assets/cameraman.png';
+import videostreamIcon from '../../../assets/icon/video_streams.svg';
 import { useRef } from 'react';
 import { Marker, Popup, useMap } from 'react-leaflet';
 
@@ -27,7 +27,9 @@ export default function VideoStreamMarker({ item, index, selectedVideoStream, ha
           icon={
             L.divIcon({
               className: '',
-              html: `<div class="bgwhite-marker" ><img src="${cameramanImg}" alt="" /></div>`,
+              html: `<div class="bgwhite-marker">
+              <img src="${videostreamIcon}" alt="" />
+              </div>`,
             })
           }
           eventHandlers={{
