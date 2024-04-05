@@ -5,10 +5,11 @@ import './css/login.css'
 import { BrowserRouter } from 'react-router-dom'
 import { AuthProvider } from './auth/authContext/AuthContext.jsx'
 
+
 ReactDOM.createRoot(document.getElementById('root')).render(
     <AuthProvider>
         <BrowserRouter>
-          <App />
+                <App />
         </BrowserRouter>
     </AuthProvider>
 ,

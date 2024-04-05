@@ -103,7 +103,7 @@ const handleMarkerClick = () => {
         position={startPosition}
         icon={
           L.divIcon({
-            className: `marinetraffic-marker ${selectedMarineTraffic && selectedMarineTraffic.ship_id === item.ship_id ? 'selected-marker' : ''}`,
+            className: `marinetraffic-marker ${selectedMarineTraffic && selectedMarineTraffic.ship_id === item.ship_id ? 'selected-marinetraffic' : ''}`,
             html: `<img src="${marinetrafficIcon}"  alt="Marine Traffic Icon" style="transform: rotate(${item.course}deg); width:20px;" />`,
           })
         }

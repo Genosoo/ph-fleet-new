@@ -3,41 +3,45 @@
 import Cards from "./cards/Cards";
 import Charts from "./charts/index";
 import ListCards from "./listcards/ListCards";
-
-import { useFetchData } from "../../context/FetchData";
+import { DataContext } from "../../context/DataProvider";
+import { useContext } from "react";
 
 
 export default function Dashboard() {
-  const fetchedData = useFetchData();
-
-
-
+  const {marineTrafficData,
+    traksatData, 
+    spidertracksData, 
+    personnelData, 
+    officeData, 
+    vehiclesData,
+    checkInData, 
+  } = useContext(DataContext)
 
 
   return (
     <div className="dashboard_container">
           <Cards
-            marineTrafficData={fetchedData.marineTrafficData}
-            trakSatData={fetchedData.tracksatData}
-            spiderTrakData={fetchedData.spiderTrakData}
-            personnelData={fetchedData.personnelData}
-            checkInData={fetchedData.checkInData}
-            officesData={fetchedData.officesData}
-            vehiclesData={fetchedData.vehiclesData}
+            marineTrafficData={marineTrafficData}
+            trakSatData={traksatData}
+            spiderTrakData={spidertracksData}
+            personnelData={personnelData}
+            checkInData={checkInData}
+            officesData={officeData}
+            vehiclesData={vehiclesData}
           />
 
           <Charts
-             marineTrafficData={fetchedData.marineTrafficData}
-             trakSatData={fetchedData.tracksatData}
-             spiderTrakData={fetchedData.spiderTrakData}
+             marineTrafficData={marineTrafficData}
+             trakSatData={traksatData}
+             spiderTrakData={spidertracksData}
           />
           
           <ListCards
-            marineTrafficData={fetchedData.marineTrafficData}
-            trakSatData={fetchedData.tracksatData}
-            spiderTrakData={fetchedData.spiderTrakData}
-            personnelData={fetchedData.personnelData}
-            checkInData={fetchedData.checkInData}
+            marineTrafficData={marineTrafficData}
+            trakSatData={traksatData}
+            spiderTrakData={spidertracksData}
+            personnelData={personnelData}
+            checkInData={checkInData}
           />
     </div>
   );

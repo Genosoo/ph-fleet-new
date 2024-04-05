@@ -2,18 +2,36 @@
 
 @layer components{
     .rolesContainer{
-        @apply flex flex-col items-start gap-5 pr-20
+        @apply  font-manrope pr-10 pl-3 pb-10
     }
 
     .rolesBtnBox{
         @apply flex gap-4 text-[#eef5ff]
     }
 
-    .rolesDeleteBtn{
-        @apply p-2 bg-[#be3144]  rounded-full hover:bg-[#e94560] duration-200
+    .rolesTableTopBox{
+        @apply flex items-center  gap-6  justify-end
+        h-[50px]  w-full  mb-3
     }
 
-    .rolesEditBtn{
-        @apply p-2 bg-[#46466e] rounded-full hover:bg-[#5432d3] duration-200
+    .rolesTableContainer{
+        box-shadow:0 0 10px #00000035;
+        @apply rounded-[15px] overflow-hidden 
     }
+
+    .btnAdd{
+        @apply bg-[#86705E] text-white flex items-center w-[200px]
+        justify-center h-full rounded-md gap-2 text-base
+         hover:bg-[#404958] duration-150
+    }  
+    
+    .btnUpdate{
+        @apply bg-[#0DB0E6] w-[30px] h-[30px] rounded-full text-white flex
+        flex-col items-center justify-center text-[18px]
+     }
+
+     .btnDelete{
+        @apply bg-[#EB5454] w-[30px] h-[30px] rounded-full text-white flex
+        flex-col items-center justify-center text-[15px]
+     }
 }

@@ -1,0 +1,42 @@
+@tailwind components;
+
+
+@layer components{
+    
+  .accountContainer{
+    @apply flex flex-col gap-5  font-manrope  pr-10
+  }
+
+  .accountTopFlex{
+    @apply flex w-full justify-between 
+  }
+
+  .accountTopFlex button{
+    @apply bg-[#86705E] text-white flex p-3 rounded-[10px] items-center gap-2
+    text-sm hover:bg-[#404958] duration-150
+  }
+
+  .accountContainer h1{
+    @apply text-xl font-bold text-gray-800
+  }
+
+  .accountWrapper{
+    @apply bg-white p-5 rounded-[10px] shadow-lg
+  }
+
+  .accountBox {
+    @apply flex flex-col gap-5
+  }
+
+  .accountInputBox{
+    @apply flex flex-col 
+  }
+
+  .accountInputBox input{
+    @apply p-3 text-lg rounded-[10px] bg-slate-100 outline-none
+  }
+
+  .accountInputBox span{
+    @apply text-lg font-semibold text-gray-700
+  }
+}

@@ -536,9 +536,9 @@
 
 .spidertrak-marker{
     font-size:20px;
-    width:25px !important;
+    width:32px !important;
     border-radius:50%;
-    height:25px !important;
+    height:32px !important;
     text-align: center;
     display: flex;
     align-items: center;
@@ -548,21 +548,29 @@
 
        @keyframes pulseSpider{
         0%{
-          box-shadow:#1a98ff 0 0 0 0;
+          box-shadow:#006eff 0 0 0 0;
         }
         50%{
-          box-shadow: 0 0 0 16px rgba(2, 145, 255, 0.757);
+          box-shadow: 0 0 0 16px rgba(2, 145, 255, 0.504);
         }
       
         50%{
-         box-shadow: 0 0 0 20px rgba(6, 164, 255, 0.764);
+         box-shadow: 0 0 0 20px rgba(6, 164, 255, 0.38);
       
         }
       }
 
 
       .selected-spidertrak{
-        border:2px solid rgb(45, 171, 255);
+        border:2px solid rgb(20, 184, 255);
+        background: #000000;
+        animation:pulseSpider 1500ms infinite;
+      
+      }
+
+      .selected-personnel{
+        border:2px solid rgb(88, 211, 224);
+        background: #000;
         animation:pulseSpider 1500ms infinite;
       
       }

@@ -16,7 +16,8 @@
     }
 
     .reportCard{
-        @apply bg-white shadow-md p-5 rounded-[10px] 
+        box-shadow: 0 0 10px #0000004a;
+        @apply bg-white  p-5 rounded-[10px] 
         h-[150px] w-[350px] flex flex-col justify-between
     }
 

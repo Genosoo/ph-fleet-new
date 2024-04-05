@@ -8,41 +8,29 @@ import { StyledTableCell } from "./StyledComponent";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import IconButton from '@mui/material/IconButton';
-import { useFetchData } from "../../../context/FetchData";
-
+import { DataContext } from "../../../context/DataProvider";
+import { useContext } from "react";
 
 export default function TraksatList() {
   const [filteredData, setFilteredData] = useState([])
-  const [loading, setLoading] = useState(true);
   const [loadingHistory, setLoadingHistory] = useState(true);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [expandedRow, setExpandedRow] = useState(null); 
   const [searchQuery, setSearchQuery] = useState("")
   const [historyData, setHistoryData] = useState([])
-
-
-  const fetchedData = useFetchData();
-  
-  const trakSatData = fetchedData.tracksatData
-
-  useEffect(() => {
-    if (fetchedData !== null) {
-      setLoading(false); 
-    }
-  }, [fetchedData]);
-
+  const { traksatData } = useContext(DataContext)
 
 
 
   useEffect(() => {
-    const filteredResult = trakSatData.filter(item =>
+    const filteredResult = traksatData.filter(item =>
        item.asset_id.toLowerCase().includes(searchQuery.toLowerCase())  ||
        item.group.toLowerCase().includes(searchQuery.toLowerCase()) ||
        item.description.toLowerCase().includes(searchQuery.toLowerCase()) 
     );
     setFilteredData(filteredResult)
-  },[searchQuery, trakSatData])
+  },[searchQuery, traksatData])
 
 
   const handleRowClick =  async(asset_id,index) => {
@@ -85,9 +73,7 @@ export default function TraksatList() {
         fullWidth
         margin="normal"
       />
-   {loading ? ( // Show loading indicator if data is loading
-        <CircularProgress />
-      ) : (
+
       <TableContainer component={Paper}>
         <Table>
           <TableHead className="bg-gray-800 ">
@@ -212,7 +198,6 @@ export default function TraksatList() {
 </TableBody>
         </Table>
       </TableContainer>
-      )}
       <TablePagination
         rowsPerPageOptions={[10, 25, 50]}
         component="div"

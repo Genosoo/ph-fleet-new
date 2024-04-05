@@ -1,16 +1,15 @@
 // Roles.js
 import { useEffect, useState } from "react";
-import { FaTrash, FaEdit } from "react-icons/fa";
+import { FiDelete } from "react-icons/fi";
+import { CiEdit } from "react-icons/ci";
+import { FaPlus } from "react-icons/fa6";
+
 import axios from "axios";
 import { apiRoles, getCsrfToken } from "../../api/api_urls";
 import {
-  Table,
   TableBody,
-  TableCell,
-  TableContainer,
   TableHead,
   TableRow,
-  Paper,
   Button,
   Dialog,
   DialogContent,
@@ -18,8 +17,8 @@ import {
 } from "@mui/material";
 import RoleForm from "./RolesForm"; // Assuming RoleForm is in the same directory
 import './Styles.css'
-import { StyledButtonAdd } from "../vessels/StyledComponent";
-import GroupsIcon from '@mui/icons-material/Groups';
+import { StyledTableContainer, StyledTable, StyledTableCell } from "./Styled";
+
 
 export default function Roles() {
   const [rolesData, setRolesData] = useState([]);
@@ -145,39 +144,42 @@ export default function Roles() {
 
   return (
     <div className="rolesContainer">
-      <StyledButtonAdd variant="contained"  startIcon={ <GroupsIcon /> } onClick={() => setOpenDialog(true)}>
-        Add Role
-      </StyledButtonAdd>
-
-      <TableContainer component={Paper}>
-        <Table>
+      <div className="rolesTableTopBox">
+        <button className="btnAdd"  onClick={() => setOpenDialog(true)}>
+          <FaPlus/>  Add Role
+        </button>
+      </div>
+     
+      <div className="rolesTableContainer">
+      <StyledTableContainer >
+        <StyledTable stickyHeader aria-label="sticky table">
           <TableHead className="bg-gray-800">
             <TableRow>
-              <TableCell><b className="text-white">Role Name</b></TableCell>
-              <TableCell><b className="text-white">Action</b></TableCell>
+              <StyledTableCell><b className="text-white">Role Name</b></StyledTableCell>
+              <StyledTableCell><b className="text-white">Action</b></StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {rolesData.map((item, index) => (
               <TableRow key={index}>
-                <TableCell>{item.name}</TableCell>
-                <TableCell>
+                <StyledTableCell>{item.name}</StyledTableCell>
+                <StyledTableCell>
                   <span className="rolesBtnBox">
-                    <button onClick={() => handleDeleteRole(item.id)} className="rolesDeleteBtn">
-                      <FaTrash  />
+                  
+                    <button onClick={() => handleEditRole(item)} className="btnUpdate">
+                    <CiEdit   />
                     </button>
-                    <button onClick={() => handleEditRole(item)} className="rolesEditBtn">
-                    <FaEdit  />
+                    <button onClick={() => handleDeleteRole(item.id)} className="btnDelete">
+                      <FiDelete  />
                     </button>
-                   
                   </span>
-                </TableCell>
+                </StyledTableCell>
               </TableRow>
             ))}
           </TableBody>
-        </Table>
-      </TableContainer>
-
+        </StyledTable>
+      </StyledTableContainer>
+      </div>
       {/* Dialog for creating a role */}
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
         <DialogTitle>Create Role</DialogTitle>

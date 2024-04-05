@@ -27,6 +27,8 @@ const BoldMenuItem = styled(MenuItem)(({ isSelected }) => ({
 
 export default function Barchart({ trakSatData, marineTrafficData, spiderTrakData }) {
   const countItemsByDay = (data) => {
+    if (!data) return []; // Check if data is undefined or null
+
     const dayCounts = {
       Sun: 0,
       Mon: 0,

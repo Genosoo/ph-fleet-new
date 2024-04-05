@@ -1,49 +1,39 @@
-import { useEffect, useState } from "react"
-import axios from "axios";
-import { apiAccount } from "../../api/api_urls";
-
-
+import { useContext } from "react"
+import { DataContext } from "../../context/DataProvider";
+import './Styles.css'
+import { MdOutlineEdit } from "react-icons/md";
 export default function Account() {
-  const [accountData, setAccountData] = useState({});
+  const {accountData} = useContext(DataContext)
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const accountResponse = await axios.get(apiAccount);
-        const responseData = accountResponse.data.success
-        console.log(responseData);
-        setAccountData(responseData);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchData();
-  }, []);
 
   return (
-    <div className="account_container">
-      <h1>My Account</h1>
-      <div className="account_wrapper">
-        <div className="account_box">
-          <div className="account_input_box">
+    <div className="accountContainer">
+       <div className="accountTopFlex">
+        <h1>Account</h1>
+        <button> <MdOutlineEdit /> Edit Account</button>
+       </div>
+      <div className="accountWrapper">
+
+        <div className="accountBox">
+          <div className="accountInputBox">
             <span>Username</span>
-            <input type="text" value={accountData.username || ""} />
+            <input type="text" value={accountData?.username || "N/A"} />
           </div>
-          <div className="account_input_box">
+          <div className="accountInputBox">
             <span>Email</span>
-            <input type="text" value={accountData.email || ""} />
+            <input type="text" value={accountData?.email || "N/A"} />
           </div>
-          <div className="account_input_box">
+          <div className="accountInputBox">
             <span>First Name</span>
-            <input type="text" value={accountData.first_name || ""} />
+            <input type="text" value={accountData?.first_name || "N/A"} />
           </div>
-          <div className="account_input_box">
+          <div className="accountInputBox">
             <span>Last Name</span>
-            <input type="text" value={accountData.last_name || ""} />
+            <input type="text" value={accountData?.last_name || "N/A"} />
           </div>
-          <div className="account_input_box">
+          <div className="accountInputBox">
             <span>Role</span>
-            <input type="text" value={accountData.groups?.[0]?.name || ""} />
+            <input type="text" value={accountData?.groups?.[0]?.name || "N/A"} />
           </div>
         </div>
       </div>

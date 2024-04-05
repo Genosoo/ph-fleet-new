@@ -1,25 +1,9 @@
+/* eslint-disable react/prop-types */
 import BarChart from "./BarChart";
 import DoughnutChart from "./DonutChart";
-import { useEffect, useState } from "react";
-import { useFetchData } from "../../../context/FetchData";
-import Loader from "../../../Loader";
 import './ChartStyle.css'
 
-export default function Charts() {
-  const [loading, setLoading] = useState(true); // State to track loading status
-  const fetchedData = useFetchData();
-
-
-  useEffect(() => {
-    if (fetchedData !== null) {
-      setLoading(false);
-    }
-  }, [fetchedData]); 
-
- 
-  if (loading) {
-    return <Loader />
-  }
+export default function Charts({ marineTrafficData, tracksatData, spiderTrakData }) {
 
 
   return (
@@ -28,16 +12,16 @@ export default function Charts() {
       <div className="chartWrapper">
             <div className="chartBox p-10">
               <BarChart 
-               marineTrafficData={fetchedData.marineTrafficData}
-               trakSatData={fetchedData.tracksatData}
-               spiderTrakData={fetchedData.spiderTrakData}
+               marineTrafficData={marineTrafficData}
+               trakSatData={tracksatData}
+               spiderTrakData={spiderTrakData}
               />
             </div>
             <div className="chartBox p-10">
               <DoughnutChart 
-               marineTrafficData={fetchedData.marineTrafficData}
-               trakSatData={fetchedData.tracksatData}
-               spiderTrakData={fetchedData.spiderTrakData}
+               marineTrafficData={marineTrafficData}
+               trakSatData={tracksatData}
+               spiderTrakData={spiderTrakData}
               />
             </div>
       </div>

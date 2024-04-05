@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 // eslint-disable-next-line react-hooks/exhaustive-deps
 // eslint-disable-next-line react/prop-types
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { DialogContentText,  TableBody, TableHead, TableRow, TablePagination,
    TextField, Button, Dialog, DialogTitle, DialogContent, DialogActions, Select, MenuItem, FormControl,InputLabel,
    Snackbar, Alert
@@ -9,14 +9,16 @@ import { DialogContentText,  TableBody, TableHead, TableRow, TablePagination,
 import Search from "./Search";
 import axios from 'axios';
 import { Link } from "react-router-dom";
-import { apiPersonnelRank, apiPersonnelStatus, apiUnit, apiOfficesData, baseUrl, apiRoles } from "../../../api/api_urls";
+import { apiPersonnelRank, apiPersonnelStatus, apiUsers, apiUnit, apiOfficesData, baseUrl, apiRoles } from "../../../api/api_urls";
 import ButtonAdd from "./buttons/buttonAdd";
 import { StyledTableCell, StyledTable, StyledTableContainer } from "./Styled";
 import ButtonUpdate from "./buttons/ButtonUpdate";
 import ButtonDelete from "./buttons/ButtonDelete";
 import ButtonProfile from "./buttons/ButtonProfile";
+import { DataContext } from "../../../context/DataProvider";
 
-export default function TableComponent({ apiUsers, csrfToken }) {
+export default function TableComponent({  csrfToken }) {
+   const { usersData, updateUsersData } = useContext(DataContext);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [searchQuery, setSearchQuery] = useState("");
@@ -42,7 +44,6 @@ export default function TableComponent({ apiUsers, csrfToken }) {
             unit:"",
         }
     });
-    const [usersData, setUsersData] = useState([]);
     const [rankData, setRankData] = useState([]);
     const [statusData, setStatusData] = useState([]);
     const [unitData, setUnitData] = useState([]);
@@ -124,14 +125,12 @@ export default function TableComponent({ apiUsers, csrfToken }) {
     useEffect(() => {
       const fetchData = async () => {
           try {
-              const usersResponse = await axios.get(apiUsers);
               const rankResponse = await axios.get(apiPersonnelRank);
               const statusResponse = await axios.get(apiPersonnelStatus);
               const unitResponse = await axios.get(apiUnit);
               const officeResponse = await axios.get(apiOfficesData);
               const rolesResponse = await axios.get(apiRoles);
 
-              setUsersData(usersResponse.data.success);
               setRankData(rankResponse.data.success)
               setStatusData(statusResponse.data.success)
               setUnitData(unitResponse.data.success)
@@ -150,7 +149,7 @@ export default function TableComponent({ apiUsers, csrfToken }) {
       };
 
         fetchData();
-    }, [apiUsers]);
+    }, []);
 
     useEffect(() => {
         const filteredResult = usersData.filter(item => {
@@ -221,7 +220,7 @@ export default function TableComponent({ apiUsers, csrfToken }) {
                 personnel_status:"",
                 unit:"",
                 office: "",
-                middle_name: "",
+                // middle_name: "",
                 gender:"",
             }
         });
@@ -235,7 +234,7 @@ export default function TableComponent({ apiUsers, csrfToken }) {
                 }
             });
             const newUser = response.data.data;
-            setUsersData([...usersData, newUser]);
+            updateUsersData([...usersData, newUser]);
             setFilteredData([...filteredData, newUser]);
             handleCloseAddForm();
             showSuccessMessage("User added successfully!");
@@ -261,7 +260,7 @@ export default function TableComponent({ apiUsers, csrfToken }) {
                 }
                 return user;
             });
-            setUsersData(updatedUsers);
+            updateUsersData(updatedUsers);
             setFilteredData(updatedUsers);
             handleCloseUpdateForm();
             showSuccessMessage("User updated successfully!");
@@ -280,7 +279,7 @@ export default function TableComponent({ apiUsers, csrfToken }) {
                 }
             });
             const updatedUsers = usersData.filter(user => user.id !== id);
-            setUsersData(updatedUsers);
+            updateUsersData(updatedUsers);
             setFilteredData(updatedUsers);
             showSuccessMessage("User deleted successfully!");
         } catch (error) {
@@ -413,7 +412,7 @@ export default function TableComponent({ apiUsers, csrfToken }) {
                         value={formData.personal_details.first_name}
                         onChange={handleFormChange}
                     />
-                     <TextField
+                     {/* <TextField
                         autoFocus
                         margin="dense"
                         name="personal_details.middle_name"
@@ -422,7 +421,7 @@ export default function TableComponent({ apiUsers, csrfToken }) {
                         fullWidth
                         value={formData.personal_details.middle_name}
                         onChange={handleFormChange}
-                    />
+                    /> */}
                     <TextField
                         autoFocus
                         margin="dense"
@@ -564,8 +563,8 @@ export default function TableComponent({ apiUsers, csrfToken }) {
                   
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleCloseAddForm} color="secondary">Cancel</Button>
-                    <Button onClick={handleAddUser} color="primary">Add</Button>
+                    <Button variant="contained" onClick={handleCloseAddForm} color="secondary">Cancel</Button>
+                    <Button variant="contained" onClick={handleAddUser} color="primary">Add</Button>
                 </DialogActions>
             </Dialog>
 
@@ -754,8 +753,8 @@ export default function TableComponent({ apiUsers, csrfToken }) {
                        
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={handleCloseUpdateForm} color="secondary">Cancel</Button>
-                        <Button onClick={handleUpdateUser} color="primary">Update</Button>
+                        <Button variant="contained" onClick={handleCloseUpdateForm} color="secondary">Cancel</Button>
+                        <Button variant="contained" onClick={handleUpdateUser} color="primary">Update</Button>
                     </DialogActions>
                 </Dialog>
 
@@ -768,8 +767,8 @@ export default function TableComponent({ apiUsers, csrfToken }) {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleCloseDeleteConfirmation} color="secondary">Cancel</Button>
-                    <Button onClick={handleConfirmDeleteUser} color="primary">Delete</Button>
+                    <Button variant="contained" onClick={handleCloseDeleteConfirmation} color="secondary">Cancel</Button>
+                    <Button variant="contained" onClick={handleConfirmDeleteUser} color="primary">Delete</Button>
                 </DialogActions>
             </Dialog>
         </div>

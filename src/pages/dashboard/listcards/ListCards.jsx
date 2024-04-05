@@ -34,17 +34,16 @@ export default function ListCards({ marineTrafficData, trakSatData, spiderTrakDa
                   <tbody>
                   {displayMarineTraffic.map((item, index) => (
                     <tr key={index}>
-                    <td className="listCardTable">
-                      {item.mmsi}
+                      <td className="listCardTable">
+                        {item.mmsi}
+                      </td>
+                      <td className="listCardTable">
+                      {item.shipname}
                     </td>
-                     <td className="listCardTable">
-                     {item.shipname}
-                   </td>
-                    <td className="listCardTable">
-                    {item.type_name}
-                  </td>
+                      <td className="listCardTable">
+                      {item.type_name}
+                    </td>
                   </tr>
-                  
                   ))}
                   </tbody>
 
@@ -55,12 +54,12 @@ export default function ListCards({ marineTrafficData, trakSatData, spiderTrakDa
 
             <div className="listCardBox">
                 <div className="listCardHeader">
-                <h3>Traksat</h3>
-                <Link to={'/fleet/traksat-list'}>
-                  <span>View All <RiArrowRightSLine/></span>
-                </Link>
-              </div>
-              <table className='listCardTable'>
+                  <h3>Traksat</h3>
+                  <Link to={'/fleet/traksat-list'}>
+                    <span>View All <RiArrowRightSLine/></span>
+                  </Link>
+                </div>
+               <table className='listCardTable'>
                   <thead>
                   <tr>
                       <th>Asset ID</th>
@@ -68,22 +67,14 @@ export default function ListCards({ marineTrafficData, trakSatData, spiderTrakDa
                       <th>Type</th>
                     </tr>
                   </thead>
-                  
                   <tbody>
-                  {displayTrakSat.map((item, index) => (
-                    <tr key={index}>
-                    <td className="listCardTable">
-                      {item.asset_id}
-                    </td>
-                     <td className="listCardTable">
-                     {item.description}
-                   </td>
-                    <td className="listCardTable">
-                    {item.group}
-                  </td>
-                  </tr>
-
-                  ))}
+                    {displaySpiderTrak.map((item, index) => (
+                      <tr key={index}>
+                        <td className="listCardTable">{item.track_id}</td>
+                        <td className="listCardTable">{item.unit_id}</td>
+                        <td className="listCardTable">{item.type_name}</td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
             </div>

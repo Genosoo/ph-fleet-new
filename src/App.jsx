@@ -1,11 +1,10 @@
 import { Routes, Route } from 'react-router-dom'
 import Login from './auth/Login'
-import RoutesDashboard from './routes/Routes_dashboard';
+import RouteDashboard from './routes/RouteDashboard';
 import Layout from './layout/Layout'
 import PrivateRoute from './auth/privateRoute/PrivateRoute'
 import UnderConstruction from './pages/UnderConstruction'
 import MarineTrafficList from './pages/dashboard/listPage/MarineTrafficList';
-
 
 export default function App() {
 
@@ -14,11 +13,10 @@ export default function App() {
     <Routes>
       <Route path='/login' element={<Login />} />
       <Route path='' element={<Login />} />
-
       <Route element={<Layout />} >
          <Route path='/fleet/*' element={
           <PrivateRoute>
-                <RoutesDashboard/>
+                  <RouteDashboard/>
           </PrivateRoute>
          } />
       </Route>
@@ -32,6 +30,8 @@ export default function App() {
       <Route path='/other-aircrafts' element={<UnderConstruction />} />
       <Route path='/other-vehicles' element={<UnderConstruction />} />
     </Routes>
+      
+
    </>
   )
 }

@@ -22,7 +22,7 @@ export default function Profile() {
                 <p className='text1'>{item?.username || "--"}</p>
                   <p className='text2'>
                   {item?.personal_details?.first_name || "---"}{' '}
-                  {item?.personal_details?.middle_name ? item.personal_details.middle_name + ' ' : ''} 
+                  {/* {item?.personal_details?.middle_name ? item.personal_details.middle_name + ' ' : ''}  */}
                   {item?.personal_details?.last_name || "---"}
                 </p>
 
@@ -37,13 +37,13 @@ export default function Profile() {
                 <p>Username</p>
                 <p>Last Name</p>
                 <p>First Name</p>
-                <p>Middle Name</p>
+                {/* <p>Middle Name</p> */}
                </span>
                <span className='span2'>
                      <p>{item?.username || "N/A"}</p>
                      <p>{item?.personal_details?.last_name || "N/A"}</p>
                      <p>{item?.personal_details?.first_name || "N/A"}</p>
-                     <p>{item?.personal_details?.middle_name || "N/A"} </p>
+                     {/* <p>{item?.personal_details?.middle_name || "N/A"} </p> */}
                </span>
             </div>
             {/* <p><b>First Name:</b> </p>

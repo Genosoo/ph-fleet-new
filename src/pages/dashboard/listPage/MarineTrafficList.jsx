@@ -8,41 +8,35 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import IconButton from '@mui/material/IconButton';
 import { StyledTableCell } from "./StyledComponent";
-import { useFetchData } from "../../../context/FetchData";
+import { DataContext } from "../../../context/DataProvider";
+import { useContext } from "react";
 
 
 export default function MarineTrafficList() {
   const [filteredData, setFilteredData] = useState([])
-  const [loading, setLoading] = useState(true); // State for loading indicator
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [expandedRow, setExpandedRow] = useState(null); // State to manage expanded row
   const [searchQuery, setSearchQuery] = useState("")
   const [historyData, setHistoryData] = useState([])
   const [historyLoading, setHistoryLoading] = useState(false); // State for loading historical data
-  const fetchedData = useFetchData();
   
-  const vesselsData = fetchedData.marineTrafficData
+  const { marineTrafficData } = useContext(DataContext)
 
 
-  useEffect(() => {
-    if (fetchedData !== null) {
-      setLoading(false); 
-    }
-  }, [fetchedData]);
 
 
  
 
 
   useEffect(() => {
-    const filteredResult = vesselsData.filter(item =>
+    const filteredResult = marineTrafficData.filter(item =>
        item.ship_id.toLowerCase().includes(searchQuery.toLowerCase())  ||
        item.shipname.toLowerCase().includes(searchQuery.toLowerCase()) ||
        item.shiptype.toLowerCase().includes(searchQuery.toLowerCase()) 
     );
     setFilteredData(filteredResult)
-  },[searchQuery, vesselsData])
+  },[searchQuery, marineTrafficData])
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -84,9 +78,6 @@ export default function MarineTrafficList() {
         margin="normal"
       />
 
-      {loading ? ( // Show loading indicator if data is loading
-        <CircularProgress />
-      ) : (
      <>
         <TableContainer component={Paper}>
           <Table>
@@ -215,7 +206,6 @@ export default function MarineTrafficList() {
          onRowsPerPageChange={handleChangeRowsPerPage}
        />
      </>
-      )}
      
     </div>
   );

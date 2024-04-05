@@ -1,12 +1,4 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { 
-  apiOfficesData, 
-  apiPersonnelData, 
-  apiVesselsData,
-  apiAircraftData,
-  apiVehiclesData
-} from "../../api/api_urls";
 import "./ReportStyles.css"
 
 import officeIcon from '../../assets/icon/offices.svg'
@@ -17,59 +9,33 @@ import personnelIcon from '../../assets/icon/personnel.svg'
 import ondutyIcon from '../../assets/icon/personnel_on_duty.svg'
 import onleaveIcon from '../../assets/icon/personnel_on_leave.svg'
 import rnrIcon from '../../assets/icon/personnel_rnr.svg'
-
+import { DataContext } from "../../context/DataProvider";
+import { useContext } from "react";
 
 export default function Reports() {
   const [officesCount, setOfficesCount] = useState(0);
-  const [officesData, setOfficesData] = useState(0);
   const [personnelCount, setPersonnelCount] = useState(0);
-  const [personnelData, setPersonnelData] = useState(0);
   const [noOnDuty, setNoOnDuty] = useState(0);
   const [noOnLeave, setNoOnLeave] = useState(0);
   const [noRnR, setNoRnR] = useState(0);
   const [vesselsCount, setVesselsCount] = useState(0);
-  const [vesselsData, setVesselsData] = useState(0);
   const [aircraftCount, setaircraftCount] = useState(0);
-  const [aircraftData, setaircraftData] = useState(0);
   const [vehiclesCount, setvehiclesCount] = useState(0);
-  const [vehiclesData, setvehiclesData] = useState(0);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const officesResponse = await axios.get(apiOfficesData);
-        const personnelResponse = await axios.get(apiPersonnelData);
-        const vesselsResponse = await axios.get(apiVesselsData);
-        const aircraftResponse = await axios.get(apiAircraftData);
-        const vehiclesResponse = await axios.get(apiVehiclesData);
 
-        setOfficesData(officesResponse.data.success)
-        setPersonnelData(personnelResponse.data.success)
-        setVesselsData(vesselsResponse.data.success)
-        setaircraftData(aircraftResponse.data.success)
-        setvehiclesData(vehiclesResponse.data.success)
-        
-        console.log("offices", officesResponse.data.success);
-        console.log("Personnel", personnelResponse.data.success);
-        console.log("vessels", vesselsResponse.data.success);
-        console.log("aircraft", aircraftResponse.data.success);
-        console.log("vehicles", vehiclesResponse.data.success);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const {
+    personnelData, 
+    officeData, 
+    vehiclesData,
+    aircraftData,
+    vesselsData,
+} = useContext(DataContext)
 
 
   useEffect(() => {
  
-
-
-
-    if (officesData && officesData.length) {
-        setOfficesCount(officesData.length);
+    if (officeData && officeData.length) {
+        setOfficesCount(officeData.length);
       }
 
 
@@ -100,7 +66,7 @@ export default function Reports() {
       setvehiclesCount(vehiclesData.length);
     }
 
-  }, [officesData, personnelData, vesselsData, aircraftData, vehiclesData]);
+  }, [officeData, personnelData, vesselsData, aircraftData, vehiclesData]);
 
 
 

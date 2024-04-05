@@ -8,39 +8,30 @@ import { StyledTableCell } from "./StyledComponent";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import IconButton from '@mui/material/IconButton';
-import { useFetchData } from "../../../context/FetchData";
-
+import { DataContext } from "../../../context/DataProvider";
+import { useContext } from "react";
 
 export default function SpiderTrakList() {
   const [filteredData, setFilteredData] = useState([])
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [loading, setLoading] = useState(true);
   const [loadingHistory, setLoadingHistory] = useState(true);
   const [expandedRow, setExpandedRow] = useState(null); 
   const [searchQuery, setSearchQuery] = useState("")
   const [historyData, setHistoryData] = useState([])
 
+  const { spidertracksData, } = useContext(DataContext)
 
-  const fetchedData = useFetchData();
-  
-  const spiderTrakData = fetchedData.spiderTrakData
-
-  useEffect(() => {
-    if (fetchedData !== null) {
-      setLoading(false); 
-    }
-  }, [fetchedData]);
 
 
   useEffect(() => {
-    const filteredResult = spiderTrakData.filter(item =>
+    const filteredResult = spidertracksData.filter(item =>
        item.unit_id.toLowerCase().includes(searchQuery.toLowerCase())  ||
        item.track_id.toLowerCase().includes(searchQuery.toLowerCase()) ||
        item.esn.toLowerCase().includes(searchQuery.toLowerCase()) 
     );
     setFilteredData(filteredResult)
-  },[searchQuery, spiderTrakData])
+  },[searchQuery, spidertracksData])
 
 
   const handleRowClick =  async(unit_id,index) => {
@@ -84,9 +75,7 @@ export default function SpiderTrakList() {
         fullWidth
         margin="normal"
       />
-        {loading ? ( // Show loading indicator if data is loading
-        <CircularProgress />
-      ) : ( 
+  
         <TableContainer component={Paper}>
         <Table>
           <TableHead className="bg-gray-800 ">
@@ -172,7 +161,6 @@ export default function SpiderTrakList() {
       </TableBody>
         </Table>
       </TableContainer>
-      )}
      
       <TablePagination
         rowsPerPageOptions={[10, 25, 50]}

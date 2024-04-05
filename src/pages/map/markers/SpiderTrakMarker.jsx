@@ -52,7 +52,7 @@ const SpiderTrakMarker = ({ item, selectedSpiderTrak, showSpiderTrakDesc, handle
           L.divIcon({
             className: `spidertrak-marker ${ selectedSpiderTrak && selectedSpiderTrak.unit_id === item.unit_id ? 'selected-spidertrak' : ""  } `,
             html: `<div class="relative">
-            ${showSpiderTrakDesc ? `<span class="text-[9px] top-2 w-[60px]  text-center left-8 text-black font-bold rounded-[10px] bg-lime-400   absolute">${item.unit_id}</span>` : `<div></div>` }
+            ${showSpiderTrakDesc ? `<span class="text-[9px] top-2 w-[60px] p-1  text-center left-9 text-black font-bold rounded-[10px] bg-blue-200   absolute">${item.unit_id}</span>` : `<div></div>` }
             <img src="${iconUrl}" style="transform: rotate(${item.cog}deg); width:50px; " />
             </div>
             `,
