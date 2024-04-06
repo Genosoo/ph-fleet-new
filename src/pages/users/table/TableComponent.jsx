@@ -2,7 +2,7 @@
 // eslint-disable-next-line react-hooks/exhaustive-deps
 // eslint-disable-next-line react/prop-types
 import { useState, useEffect, useContext } from "react";
-import { DialogContentText,  TableBody, TableHead, TableRow, TablePagination,
+import {  TableBody, TableHead, TableRow, TablePagination,
    TextField, Button, Dialog, DialogTitle, DialogContent, DialogActions, Select, MenuItem, FormControl,InputLabel,
    Snackbar, Alert
 } from "@mui/material";
@@ -11,12 +11,12 @@ import axios from 'axios';
 import { Link } from "react-router-dom";
 import { apiPersonnelRank, apiPersonnelStatus, apiUsers, apiUnit, apiOfficesData, baseUrl, apiRoles } from "../../../api/api_urls";
 import ButtonAdd from "./buttons/buttonAdd";
-import { StyledTableCell, StyledTable, StyledTableContainer } from "./Styled";
+import {StyledDialog, StyledTableCell, StyledTable, StyledTableContainer } from "./Styled";
 import ButtonUpdate from "./buttons/ButtonUpdate";
 import ButtonDelete from "./buttons/ButtonDelete";
 import ButtonProfile from "./buttons/ButtonProfile";
 import { DataContext } from "../../../context/DataProvider";
-
+import { PiWarningLight } from "react-icons/pi";
 export default function TableComponent({  csrfToken }) {
    const { usersData, updateUsersData } = useContext(DataContext);
     const [page, setPage] = useState(0);
@@ -301,7 +301,7 @@ export default function TableComponent({  csrfToken }) {
 
     return (
         <div className="usersTableWrapper">
-           <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'left' }}  open={snackbarOpen} autoHideDuration={2000} onClose={handleSnackbarClose}>
+           <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'right' }}  open={snackbarOpen} autoHideDuration={2000} onClose={handleSnackbarClose}>
                 <Alert onClose={handleSnackbarClose} severity={successMessage ? "success" : "error"}>
                     {successMessage || errorMessage}
                 </Alert>
@@ -364,7 +364,7 @@ export default function TableComponent({  csrfToken }) {
             </div>
 
 
-            {/*============= Add FORM ============================*/}
+{/*======================= ADD DIALOG FORM===============================*/}
             <Dialog open={openAddForm} onClose={handleCloseAddForm}>
                 <DialogTitle>Add User</DialogTitle>
                 <DialogContent>
@@ -569,7 +569,7 @@ export default function TableComponent({  csrfToken }) {
             </Dialog>
 
 
-            {/*============= UPDATE FORM ============================*/}
+{/*========================== UPDATE DIALOG FORM ============================*/}
             <Dialog open={openUpdateForm} onClose={handleCloseUpdateForm}>
                     <DialogTitle>Update User</DialogTitle>
                     <DialogContent>
@@ -758,19 +758,22 @@ export default function TableComponent({  csrfToken }) {
                     </DialogActions>
                 </Dialog>
 
-
-            <Dialog open={openDeleteConfirmation} onClose={handleCloseDeleteConfirmation}>
-                <DialogTitle>Confirm Deletion</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Are you sure you want to delete this user?
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button variant="contained" onClick={handleCloseDeleteConfirmation} color="secondary">Cancel</Button>
-                    <Button variant="contained" onClick={handleConfirmDeleteUser} color="primary">Delete</Button>
-                </DialogActions>
-            </Dialog>
+{/*========================== DELETE DIALOG ============================*/}
+            <StyledDialog open={openDeleteConfirmation} onClose={handleCloseDeleteConfirmation}>
+                <div className="deleteDialogBox">
+                    <span className="deleteIcon">
+                        <PiWarningLight/>
+                    </span>
+                    <h3>Are you sure you want to <br /> delete this user?</h3>
+                   <p>
+                   This action cannot be undone. All values  <br /> associated within this field will be lost.
+                   </p>
+                  <div className="deleteDialogBtn">
+                  <button className="delete"  onClick={handleConfirmDeleteUser} >Delete field</button>
+                    <button className="cancel" onClick={handleCloseDeleteConfirmation} >Cancel</button>
+                  </div>
+                </div>
+            </StyledDialog>
         </div>
     );
 }

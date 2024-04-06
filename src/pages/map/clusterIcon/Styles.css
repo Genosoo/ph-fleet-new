@@ -1,0 +1,136 @@
+@tailwind components;
+
+
+@layer components{
+    
+
+.marineTraffic-cluster-icon {
+    background-color: yellow;
+    height: 40px;
+    width: 40px;
+    color: #000000;
+    font-weight:600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    box-shadow: 0 0 0px 5px rgba(255, 255, 0, 0.474);
+  }
+  
+  
+  .trakSat-cluster-icon {
+    background-color: rgb(8, 247, 8);
+    height: 40px;
+    width: 40px;
+    color: #000000;
+    font-weight:600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    box-shadow: 0 0 0px 5px rgba(1, 255, 1, 0.547);
+  }
+  
+  .incident-cluster-icon {
+    background-color: #EE404C;
+    height: 40px;
+    width: 40px;
+    color: #0e0e0e;
+    font-weight:600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    box-shadow: 0 0 0px 5px rgba(255, 0, 0, 0.547);
+  }
+  
+  .personnel-cluster-icon {
+    background-color: rgb(8, 235, 247);
+    height: 40px;
+    width: 40px;
+    color: #000000;
+    font-weight:600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    box-shadow: 0 0 0px 5px rgba(1, 217, 255, 0.547);
+  }
+  
+  .vehicle-cluster-icon {
+    background-color: rgb(5, 201, 255);
+    height: 40px;
+    width: 40px;
+    color: #000000;
+    font-weight:600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    box-shadow: 0 0 0px 5px rgba(9, 211, 247, 0.547);
+  }
+  
+  .car-cluster-icon {
+    background-color: #7E84FA;
+    height: 40px;
+    width: 40px;
+    color: #000000;
+    font-weight:600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    box-shadow: 0 0 0px 5px #7e84faa2;
+  }
+  
+  .videoStream-cluster-icon {
+    background-color: #F28482;
+    height: 40px;
+    width: 40px;
+    color: #000000;
+    font-weight:600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    box-shadow: 0 0 0px 5px #f2848295;
+  }
+  
+  
+  .spiderTrak-cluster-icon {
+    background-color: rgb(0, 140, 255);
+    height: 40px;
+    width: 40px;
+    color: #000000;
+    font-weight:600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    box-shadow: 0 0 0px 5px rgba(0, 140, 255, 0.519);
+  }
+
+
+  .office-cluster-icon {
+    background-color: #34D1C6;
+    height: 40px;
+    width: 40px;
+    color: #000000;
+    font-weight:600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    box-shadow: 0 0 0px 5px #34d1c794;
+  }
+  
+}

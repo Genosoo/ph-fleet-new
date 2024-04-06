@@ -14,7 +14,9 @@ import {
   personnelClusterCustomIcon,
   incidentClusterCustomIcon,
   vehicleClusterCustomIcon,
-  carClusterCustomIcon
+  carClusterCustomIcon,
+  videoStreamClusterCustomIcon,
+  officeClusterCustomIcon
 } from './clusterIcon/ClusterIcon';
 import WindyMap from './windy/WindyMap'; 
 import FilterDrawer from './filterDrawer/FilterDrawer';
@@ -153,6 +155,8 @@ export default function MapComponent({
     setShowAll(getCheckboxState('showAll', false));
     setShowAllVessels(getCheckboxState('showAllVessels', false));
     setShowAllAircrafts(getCheckboxState('showAircrafts', false));
+    setShowOffice(getCheckboxState('showOffice', false));
+    setShowPersonnel(getCheckboxState('showPersonnel', false));
   }, []);
 
    // Update local storage based on state changes
@@ -169,6 +173,8 @@ export default function MapComponent({
     updateLocalStorage('showAll', showAll);
     updateLocalStorage('showAllVessels', showAllVessels);
     updateLocalStorage('showAllAircrafts', showAllAircrafts);
+    updateLocalStorage('showOffice', showOffice);
+    updateLocalStorage('showPersonnel', showPersonnel);
   }, [
     showMarineTraffic,
     showTrakSat,
@@ -181,7 +187,9 @@ export default function MapComponent({
     showCarTrack,
     showAll,
     showAllVessels,
-    showAllAircrafts
+    showAllAircrafts,
+    showOffice,
+    showPersonnel,
   ]);
 
 
@@ -531,11 +539,16 @@ export default function MapComponent({
   
 
 
+{/*=============================== WEATHER MARKER ==================================*/}
     {mapLayer !== 'windy' &&  showWeather &&
       weatherData.map((location) => (
         <WeatherMarker key={`weather-${location.id}`} location={location} isCelsius={isCelsius} />
       ))}
 
+
+{/*=============================== OFFICE MARKER ==================================*/}
+{mapLayer !== 'windy' && !withCluster ?
+  <MarkerClusterGroup chunkedLoading iconCreateFunction={officeClusterCustomIcon} >
       {mapLayer !== 'windy' &&  showOffice && officeData && officeData.map((item, index) => (
             item && item.latitude && item.longitude && (
              <OfficeMarker
@@ -546,9 +559,26 @@ export default function MapComponent({
              handleOfficeMarkerClick={handleOfficeMarkerClick}
              />
             )
-            
       ))}
+      </MarkerClusterGroup> : 
+      <>
+      {mapLayer !== 'windy' &&  showOffice && officeData && officeData.map((item, index) => (
+            item && item.latitude && item.longitude && (
+             <OfficeMarker
+             key={`cargo-${index}`}
+             item={item}
+             index={index}
+             selectedOffice={selectedOffice}
+             handleOfficeMarkerClick={handleOfficeMarkerClick}
+             />
+            )
+      ))}
+      </>
+      } 
 
+{/*=============================== VIDEO STREAM MARKER ==================================*/}
+{mapLayer !== 'windy' && !withCluster ?
+      <MarkerClusterGroup chunkedLoading iconCreateFunction={videoStreamClusterCustomIcon} >
           {mapLayer !== 'windy' &&  showVideoStream && videoStreamData && videoStreamData.map((item, index) => (
             item && item.glatitude && item.glongitude && (
               <VideoStreamMarker
@@ -562,9 +592,29 @@ export default function MapComponent({
               videoStreamUrl={videoStreamUrl}
             />
             )))}
+      </MarkerClusterGroup> :
 
+ <>
+   {mapLayer !== 'windy' &&  showVideoStream && videoStreamData && videoStreamData.map((item, index) => (
+            item && item.glatitude && item.glongitude && (
+              <VideoStreamMarker
+              key={`cargo-${index}`}
+              item={item}
+              index={index}
+              selectedVideoStream={selectedVideoStream}
+              handleVideoStreamMarkerClick={handleVideoStreamMarkerClick}
+              isVideoPlaying={isVideoPlaying}
+              handleToggleVideo={handleToggleVideo}
+              videoStreamUrl={videoStreamUrl}
+            />
+            )))}
+ </>
+ }
+
+
+{/*=============================== PERSONNEL MARKER ==================================*/}
 {mapLayer !== 'windy' && !withCluster ? 
-<MarkerClusterGroup chunkedLoading iconCreateFunction={incidentClusterCustomIcon} >
+<MarkerClusterGroup chunkedLoading iconCreateFunction={personnelClusterCustomIcon} >
 {mapLayer !== 'windy' &&  showPersonnel &&
   personnelData &&
   personnelData
@@ -644,9 +694,10 @@ export default function MapComponent({
           ))} */}
 
 
-{mapLayer !== 'windy' && !withCluster ? 
-<MarkerClusterGroup chunkedLoading iconCreateFunction={personnelClusterCustomIcon} >
 
+{/*=============================== INCIDENT MARKER ==================================*/}
+{mapLayer !== 'windy' && !withCluster ? 
+<MarkerClusterGroup chunkedLoading iconCreateFunction={incidentClusterCustomIcon} >
 {showIncident && incidentData && incidentData.map((item, index) => (
             item && item.glatitude_incident && item.glongitude_incident && (
              <IncidentsMarker 
@@ -675,6 +726,9 @@ export default function MapComponent({
           ))}
 </> }    
 
+
+
+{/*=============================== VEHICLES MARKER ==================================*/}
 {mapLayer !== 'windy' && !withCluster ? 
     <MarkerClusterGroup chunkedLoading iconCreateFunction={vehicleClusterCustomIcon} >
         {mapLayer !== 'windy' &&  showVehicles && vehiclesData && vehiclesData.map((item, index) => (
@@ -704,6 +758,9 @@ export default function MapComponent({
       </>
 }
 
+
+
+{/*=============================== CARTRACK MARKER ==================================*/}
  {mapLayer !== 'windy' && !withCluster ? 
     <MarkerClusterGroup chunkedLoading iconCreateFunction={carClusterCustomIcon} >
       {showCarTrack &&  carData &&  carData.map((item, index) => (
@@ -734,7 +791,7 @@ export default function MapComponent({
 
 
 
-
+{/*=============================== MARINETRAFFIC MARKER ==================================*/}
       {mapLayer !== 'windy' && !withCluster ? 
           <MarkerClusterGroup chunkedLoading iconCreateFunction={marineTrafficClusterCustomIcon} >
                 {showMarineTraffic && marineTrafficData && marineTrafficData.map((item, index) => (
@@ -762,6 +819,7 @@ export default function MapComponent({
 
 
 
+{/*======================================= TRAKSAT MARKER ==================================*/}
         {mapLayer !== 'windy' && !withCluster ? 
         <MarkerClusterGroup chunkedLoading iconCreateFunction={trakSatClusterCustomIcon}>
         {mapLayer !== 'windy' &&  showTrakSat && tracksatData && tracksatData.map((item, index) => (
@@ -788,6 +846,8 @@ export default function MapComponent({
         </>}
         
 
+
+{/*======================================= SPIDERTRACKS MARKER ==================================*/}
         {mapLayer !== 'windy' && !withCluster ?
          <MarkerClusterGroup chunkedLoading iconCreateFunction={spiderTrakClusterCustomIcon}>
          {showSpiderTrak && spiderTrakData && spiderTrakData.map((item, index) => (

@@ -534,19 +534,19 @@
     
 }
 
-.spidertrak-marker{
-    font-size:20px;
-    width:32px !important;
-    border-radius:50%;
-    height:32px !important;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-       }
 
 
-       @keyframes pulseSpider{
+
+
+
+
+       
+
+
+      
+      
+       /*=========== PULSE ==============*/
+      @keyframes pulseSpider{
         0%{
           box-shadow:#006eff 0 0 0 0;
         }
@@ -561,16 +561,288 @@
       }
 
 
-      .selected-spidertrak{
+      @keyframes pulsePersonnel{
+        0%{
+          box-shadow:#B6D4DF;
+        }
+        50%{
+          box-shadow: 0 0 0 16px #b6d4dfbc;
+        }
+      
+        50%{
+         box-shadow: 0 0 0 20px #b6d4df90;
+      
+        }
+      }
+
+
+      @keyframes pulseIncident{
+        0%{
+          box-shadow:#EE404C;
+        }
+        50%{
+          box-shadow: 0 0 0 16px #ee404cd7;
+        }
+      
+        50%{
+         box-shadow: 0 0 0 20px #ee404cac;
+      
+        }
+      }
+
+
+      @keyframes pulseOffice{
+        0%{
+          box-shadow:#34D1C6;
+        }
+        50%{
+          box-shadow: 0 0 0 16px #34d1c792;
+        }
+      
+        50%{
+         box-shadow: 0 0 0 20px #34d1c767;
+      
+        }
+      }
+
+      @keyframes pulseVehicles{
+        0%{
+          box-shadow:#F8AE78;
+        }
+        50%{
+          box-shadow: 0 0 0 16px #f8ad78be;
+        }
+      
+        50%{
+         box-shadow: 0 0 0 20px #f8ad7878;
+      
+        }
+      }
+
+      @keyframes pulseCar{
+        0%{
+          box-shadow:#7E84FA;
+        }
+        50%{
+          box-shadow: 0 0 0 16px #7e84faac;
+        }
+      
+        50%{
+         box-shadow: 0 0 0 20px #7e84fa9c;
+      
+        }
+      }
+
+      @keyframes pulseVideo{
+        0%{
+          box-shadow:#F28482;
+        }
+        50%{
+          box-shadow: 0 0 0 16px #f28482b7;
+        }
+      
+        50%{
+         box-shadow: 0 0 0 20px #f2848296;
+      
+        }
+      }
+
+      @keyframes pulseMarinetraffic{
+        0%{
+          box-shadow: #fd9b09;
+        }
+        50%{
+          box-shadow: 0 0 0 16px #fd9b0999;
+        }
+      
+        50%{
+         box-shadow: 0 0 0 20px  #fd9b0986;
+      
+        }
+      }
+
+
+      @keyframes pulseTraksat{
+        0%{
+          box-shadow:#00FF00;
+        }
+        50%{
+          box-shadow: 0 0 0 16px rgb(38, 214, 70);
+        }
+      
+        50%{
+         box-shadow: 0 0 0 20px rgba(38, 214, 50, 0.581);
+      
+        }
+      }
+        
+   /*========= SELECTED ==========*/
+    .selected-spidertrak{
         border:2px solid rgb(20, 184, 255);
         background: #000000;
         animation:pulseSpider 1500ms infinite;
+    }
+
+
+    .selected-personnel{
+        border:2px solid #B6D4DF;
+        background: #000;
+        animation:pulsePersonnel 1500ms infinite;
       
       }
 
-      .selected-personnel{
-        border:2px solid rgb(88, 211, 224);
+    .selected-incident{
+        border:2px solid #EE404C;
         background: #000;
-        animation:pulseSpider 1500ms infinite;
+        animation:pulseIncident 1500ms infinite;
+    }
+
+    .selected-office{
+        border:2px solid #34D1C6;
+        background: #000;
+        animation:pulseOffice 1500ms infinite;
+    }
+
+
+    .selected-vehicles{
+        border:2px solid #F8AE78;
+        background: #000;
+        animation:pulseVehicles 1500ms infinite;
+    }
+
+    .selected-car{
+        border:2px solid #7E84FA;
+        background: #000;
+        animation:pulseCar 1500ms infinite;
+    }
+
+    .selected-video{
+        border:2px solid #F28482;
+        background: #000;
+        animation:pulseVideo 1500ms infinite;
+    }
+
+    .selected-traksat{
+        border:2px solid #00FF00;
+        background: #000;
+        animation:pulseTraksat 1500ms infinite;
+    }
+
+
+    .selected-marinetraffic{
+        border:2px solid #fd9b09;
+        background: #000;
+        animation:pulseMarinetraffic 1500ms infinite;
       
+      }
+    
+   /*========= MARKERS ==========*/
+   .bgwhite-marker{
+        background-color: #fff;
+        width:25px;
+        height:25px;
+        border-radius:50%;
+        display:flex;
+        justify-content: center;
+    }
+
+    .bgdark-marker{
+        background-color: #313030;
+        width:25px;
+        height:25px;
+        border-radius:50%;
+        display:flex;
+        justify-content: center;
+    }
+
+
+    .personnel-marker {
+        width:35px !important;
+        border-radius:50%;
+        height:35px !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+    .spidertrak-marker{
+        font-size:20px;
+        width:32px !important;
+        border-radius:50%;
+        height:32px !important;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+
+    
+
+    .incident-marker {
+        width:35px !important;
+        border-radius:50%;
+        height:35px !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+  
+
+   
+
+    .office-marker {
+        width:35px !important;
+        border-radius:50%;
+        height:35px !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .vehicles-marker {
+        width:35px !important;
+        border-radius:50%;
+        height:35px !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .car-marker {
+        width:35px !important;
+        border-radius:50%;
+        height:35px !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      } 
+
+      .video-marker {
+        width:35px !important;
+        border-radius:50%;
+        height:35px !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      } 
+
+      .marinetraffic-marker {
+        width:35px !important;
+        border-radius:50%;
+        height:35px !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+
+      .traksat-marker {
+        width:35px !important;
+        border-radius:50%;
+        height:35px !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }

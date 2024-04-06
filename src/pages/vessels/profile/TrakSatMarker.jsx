@@ -23,16 +23,16 @@ const TrakSatMarker = ({ selectedVessel }) => {
   let iconHtml;
 
   if (selectedVessel.heading_deg !== null) {
-    iconHtml = `<img src="${traksat1Icon}" style="transform: rotate(${selectedVessel.course}deg); width:20px; " />`;
+    iconHtml = `<div class="bgdark-marker"><img src="${traksat1Icon}" style="transform: rotate(${selectedVessel.course}deg);" /></div>`;
   } else {
-    iconHtml = `<img src="${traksat2Icon}" style="transform: rotate(${selectedVessel.course}deg); width:20px;" />`;
+    iconHtml = `<div class="bgdark-marker"><img src="${traksat2Icon}" style="transform: rotate(${selectedVessel.course}deg);" /></div>`;
   }
 
   return (
     <Marker
       position={startPosition}
       icon={L.divIcon({
-        className: `traksat-marker ${selectedVessel && selectedVessel.id ? 'selected-marker-traksat' : ''}`,
+        className: `traksat-marker ${selectedVessel && selectedVessel.id ? 'selected-traksat' : ''}`,
         html: `${iconHtml}`
       })}
     />

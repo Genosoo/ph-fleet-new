@@ -34,4 +34,40 @@
         @apply bg-[#EB5454] w-[30px] h-[30px] rounded-full text-white flex
         flex-col items-center justify-center text-[15px]
      }
+
+
+     
+    .deleteDialogBox{
+        @apply flex flex-col items-center gap-5 p-10 font-manrope
+        rounded-[20px]
+    }
+
+    .deleteDialogBox h3{
+        @apply font-bold text-center text-lg
+    }
+
+    .deleteDialogBox p{
+        @apply text-center text-sm font-medium
+    }
+
+    .deleteIcon{
+        @apply text-[#EB5454] text-[30px] bg-[#eb54545b]
+        p-4 rounded-full
+    }
+
+    .deleteDialogBtn{
+        @apply flex flex-col w-full gap-3
+    }
+
+    .deleteDialogBtn button{
+        @apply  w-full text-sm p-3 rounded-lg  hover:bg-[#404958] hover:text-white duration-150
+    }
+
+    .deleteDialogBtn .delete{
+        @apply bg-[#EB5454] text-white 
+    }
+
+    .deleteDialogBtn .cancel{
+        @apply border
+    }
 }

@@ -128,7 +128,7 @@ export const linkItem1 = [
         path:"/other-personnel",
         name:"Other Personnel",
         icon:<BiGroup/>,
-        disabled:false
+        disabled:true
 
     },
 
@@ -136,7 +136,7 @@ export const linkItem1 = [
         path:"/other-offices",
         name:"Other Offices",
         icon:<PiBuildingsLight/>,
-        disabled:false
+        disabled:true
 
     },
 
@@ -144,7 +144,7 @@ export const linkItem1 = [
         path:"/other-vessels",
         name:"Other Vessels",
         icon:<LuShip/>,
-        disabled:false
+        disabled:true
 
     },
 
@@ -152,7 +152,7 @@ export const linkItem1 = [
         path:"/other-aircrafts",
         name:"Other Aircrafts",
         icon:<BsAirplaneEngines/>,
-        disabled:false
+        disabled:true
 
     },
 
@@ -160,7 +160,7 @@ export const linkItem1 = [
         path:"/other-vehicles",
         name:"Other Vehicles",
         icon:<MdOutlineDirectionsCar/>,
-        disabled:false
+        disabled:true
 
     },
 

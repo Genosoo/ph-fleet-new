@@ -2,8 +2,15 @@
 import BarChart from "./BarChart";
 import DoughnutChart from "./DonutChart";
 import './ChartStyle.css'
+import { DataContext } from "../../../context/DataProvider";
+import { useContext } from "react";
 
-export default function Charts({ marineTrafficData, tracksatData, spiderTrakData }) {
+export default function Charts() {
+  const {marineTrafficData,
+    traksatData, 
+    spidertracksData, 
+   
+  } = useContext(DataContext)
 
 
   return (
@@ -13,15 +20,15 @@ export default function Charts({ marineTrafficData, tracksatData, spiderTrakData
             <div className="chartBox p-10">
               <BarChart 
                marineTrafficData={marineTrafficData}
-               trakSatData={tracksatData}
-               spiderTrakData={spiderTrakData}
+               traksatData={traksatData}
+               spidertracksData={spidertracksData}
               />
             </div>
             <div className="chartBox p-10">
               <DoughnutChart 
                marineTrafficData={marineTrafficData}
-               trakSatData={tracksatData}
-               spiderTrakData={spiderTrakData}
+               traksatData={traksatData}
+               spidertracksData={spidertracksData}
               />
             </div>
       </div>

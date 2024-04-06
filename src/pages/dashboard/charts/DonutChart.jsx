@@ -28,7 +28,7 @@ const BoldMenuItem = styled(MenuItem)(({ isSelected }) => ({
 }));
 
 
-const DoughnutChart = ({ trakSatData, marineTrafficData, spiderTrakData }) => {
+const DoughnutChart = ({ traksatData, marineTrafficData, spidertracksData }) => {
   // Use localStorage to persist state
   const [selectedData, setSelectedData] = useState(marineTrafficData);
   const [groupingProperty, setGroupingProperty] = useState("ais_type_summary");
@@ -102,14 +102,14 @@ const DoughnutChart = ({ trakSatData, marineTrafficData, spiderTrakData }) => {
 
   const handleSelectionChange = (event) => {
     const selectedValue = event.target.value;
-    if (selectedValue === "trakSatData") {
-      setSelectedData(trakSatData);
+    if (selectedValue === "traksatData") {
+      setSelectedData(traksatData);
       setGroupingProperty("group");
     } else if (selectedValue === "marineTrafficData") {
       setSelectedData(marineTrafficData);
       setGroupingProperty("ais_type_summary");
-    } else if (selectedValue === "spiderTrakData") {
-      setSelectedData(spiderTrakData);
+    } else if (selectedValue === "spidertracksData") {
+      setSelectedData(spidertracksData);
       setGroupingProperty("unit_id");
     }
   };
@@ -118,13 +118,13 @@ const DoughnutChart = ({ trakSatData, marineTrafficData, spiderTrakData }) => {
     <div className="doughnut_chart_box">
        <div className="absolute top-0">
        <StyledSelect  defaultValue={'marineTrafficData'} onChange={handleSelectionChange}>
-      <BoldMenuItem value="trakSatData" isSelected={selectedData === trakSatData}>
+      <BoldMenuItem value="traksatData" isSelected={selectedData === traksatData}>
           Traksat Donut Chart By Vessel Type
       </BoldMenuItem>
       <BoldMenuItem value="marineTrafficData" isSelected={selectedData === marineTrafficData}>
           MarineTraffic Donut Chart By Vessel Type
       </BoldMenuItem>
-      <BoldMenuItem value="spiderTrakData" isSelected={selectedData === spiderTrakData}>
+      <BoldMenuItem value="spidertracksData" isSelected={selectedData === spidertracksData}>
           Spidertracks Donut Chart By Vessel Type
       </BoldMenuItem>
       </StyledSelect>

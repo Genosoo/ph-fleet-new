@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 // eslint-disable-next-line react-hooks/exhaustive-deps
 // eslint-disable-next-line react/prop-types
@@ -10,12 +12,12 @@ import { DialogContentText,  TableBody, TableHead, TableRow, TablePagination,
 import Search from "./Search";
 import axios from 'axios';
 import { Link } from "react-router-dom";
-import { apiPersonnelRank, apiPersonnelStatus, apiUnit, apiUsers, apiOfficesData, baseUrl, apiRoles } from "../../../api/api_urls";
+import { apiPersonnelRank, apiPersonnelStatus, apiUnit, apiPersonnelData, apiOfficesData, baseUrl, apiRoles } from "../../../api/api_urls";
 import { StyledTableCell, StyledTable, StyledTableContainer } from "./Styled";
-import ButtonUpdate from "./buttons/ButtonUpdate";
-import ButtonDelete from "./buttons/ButtonDelete";
+// import ButtonUpdate from "./buttons/ButtonUpdate";
+// import ButtonDelete from "./buttons/ButtonDelete";
 import ButtonProfile from "./buttons/ButtonProfile";
-import ButtonAdd from "./buttons/buttonAdd";
+// import ButtonAdd from "./buttons/buttonAdd";
 import { DataContext } from "../../../context/DataProvider";
 
 export default function TableComponent({ csrfToken }) {
@@ -24,9 +26,9 @@ export default function TableComponent({ csrfToken }) {
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [searchQuery, setSearchQuery] = useState("");
     const [filteredData, setFilteredData] = useState([]);
-    const [openAddForm, setOpenAddForm] = useState(false);
-    const [openUpdateForm, setOpenUpdateForm] = useState(false);
-    const [openDeleteConfirmation, setOpenDeleteConfirmation] = useState(false);
+    // const [openAddForm, setOpenAddForm] = useState(false);
+    // const [openUpdateForm, setOpenUpdateForm] = useState(false);
+    // const [openDeleteConfirmation, setOpenDeleteConfirmation] = useState(false);
     const [deleteUserId, setDeleteUserId] = useState(null);
     const [formData, setFormData] = useState({
         username: "",
@@ -184,29 +186,29 @@ export default function TableComponent({ csrfToken }) {
     //     }
     // };
 
-    const handleFormChange = (e) => {
-      const { name, value } = e.target;
-      if (name.includes("personal_details")) {
-          const [key, subKey] = name.split(".");
-          setFormData(prevState => ({
-              ...formData,
-              [key]: {
-                  ...prevState[key],
-                  [subKey]: value
-              }
-          }));
-      } else if (name === "groups") {
-          setFormData({ ...formData, groups: [value] }); // Update roles as an array
-      } else {
-          setFormData({ ...formData, [name]: value });
-      }
-  };
+//     const handleFormChange = (e) => {
+//       const { name, value } = e.target;
+//       if (name.includes("personal_details")) {
+//           const [key, subKey] = name.split(".");
+//           setFormData(prevState => ({
+//               ...formData,
+//               [key]: {
+//                   ...prevState[key],
+//                   [subKey]: value
+//               }
+//           }));
+//       } else if (name === "groups") {
+//           setFormData({ ...formData, groups: [value] }); // Update roles as an array
+//       } else {
+//           setFormData({ ...formData, [name]: value });
+//       }
+//   };
 
-    const handleOpenAddForm = () => setOpenAddForm(true);
-    const handleCloseAddForm = () => {
-        setOpenAddForm(false);
-        resetFormData();
-    };
+    // const handleOpenAddForm = () => setOpenAddForm(true);
+    // const handleCloseAddForm = () => {
+    //     setOpenAddForm(false);
+    //     resetFormData();
+    // };
 
     const resetFormData = () => {
         setFormData({
@@ -229,89 +231,89 @@ export default function TableComponent({ csrfToken }) {
         });
     };
 
-    const handleAddUser = async () => {
-        try {
-            const response = await axios.post(apiUsers, formData, {
-                headers: {
-                    'X-CSRFToken': csrfToken
-                }
-            });
-            const newUser = response.data.data;
-            updateUsersData([...usersData, newUser]);
-            setFilteredData([...filteredData, newUser]);
-            handleCloseAddForm();
-            showSuccessMessage("User added successfully!");
-        } catch (error) {
-            console.error('Error adding user:', error);
-            showErrorMessage("Failed to add user!");
-        }
-    };
+    // const handleAddUser = async () => {
+    //     try {
+    //         const response = await axios.post(apiPersonnelData, formData, {
+    //             headers: {
+    //                 'X-CSRFToken': csrfToken
+    //             }
+    //         });
+    //         const newUser = response.data.data;
+    //         updateUsersData([...usersData, newUser]);
+    //         setFilteredData([...filteredData, newUser]);
+    //         // handleCloseAddForm();
+    //         showSuccessMessage("User added successfully!");
+    //     } catch (error) {
+    //         console.error('Error adding user:', error);
+    //         showErrorMessage("Failed to add user!");
+    //     }
+    // };
 
-    const handleUpdateUser = async () => {
-        try {
-            const updatedFormData = { ...formData, id: selectedUser.id };
+    // const handleUpdateUser = async () => {
+    //     try {
+    //         const updatedFormData = { ...formData, id: selectedUser.id };
 
-            const response = await axios.put(apiUsers, updatedFormData, {
-                headers: {
-                    'X-CSRFToken': csrfToken
-                }
-            });
-            const updatedUser = response.data.data;
-            const updatedUsers = usersData.map(user => {
-                if (user.id === updatedUser.id) {
-                    return updatedUser;
-                }
-                return user;
-            });
-            updateUsersData(updatedUsers);
-            setFilteredData(updatedUsers);
-            handleCloseUpdateForm();
-            showSuccessMessage("User updated successfully!");
-        } catch (error) {
-            console.error('Error updating user:', error);
-            showErrorMessage("Failed to update user!");
-        }
-    };
+    //         const response = await axios.put(apiPersonnelData, updatedFormData, {
+    //             headers: {
+    //                 'X-CSRFToken': csrfToken
+    //             }
+    //         });
+    //         const updatedUser = response.data.data;
+    //         const updatedUsers = usersData.map(user => {
+    //             if (user.id === updatedUser.id) {
+    //                 return updatedUser;
+    //             }
+    //             return user;
+    //         });
+    //         updateUsersData(updatedUsers);
+    //         setFilteredData(updatedUsers);
+    //         handleCloseUpdateForm();
+    //         showSuccessMessage("User updated successfully!");
+    //     } catch (error) {
+    //         console.error('Error updating user:', error);
+    //         showErrorMessage("Failed to update user!");
+    //     }
+    // };
 
-    const handleDeleteUser = async (id) => {
-        try {
-            await axios.delete(apiUsers, {
-                data: { id },
-                headers: {
-                    'X-CSRFToken': csrfToken
-                }
-            });
-            const updatedUsers = usersData.filter(user => user.id !== id);
-            updateUsersData(updatedUsers);
-            setFilteredData(updatedUsers);
-            showSuccessMessage("User deleted successfully!");
-        } catch (error) {
-            console.error('Error deleting user:', error.message);
-            showErrorMessage("Failed to delete user!");
-        }
-    };
+    // const handleDeleteUser = async (id) => {
+    //     try {
+    //         await axios.delete(apiPersonnelData, {
+    //             data: { id },
+    //             headers: {
+    //                 'X-CSRFToken': csrfToken
+    //             }
+    //         });
+    //         const updatedUsers = usersData.filter(user => user.id !== id);
+    //         updateUsersData(updatedUsers);
+    //         setFilteredData(updatedUsers);
+    //         showSuccessMessage("User deleted successfully!");
+    //     } catch (error) {
+    //         console.error('Error deleting user:', error.message);
+    //         showErrorMessage("Failed to delete user!");
+    //     }
+    // };
 
-    const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setFormData({ ...formData, personal_details: { ...formData.personal_details, image: reader.result } });
-            };
-            reader.readAsDataURL(file);
-        }
-    };
+    // const handleImageChange = (e) => {
+    //     const file = e.target.files[0];
+    //     if (file) {
+    //         const reader = new FileReader();
+    //         reader.onloadend = () => {
+    //             setFormData({ ...formData, personal_details: { ...formData.personal_details, image: reader.result } });
+    //         };
+    //         reader.readAsDataURL(file);
+    //     }
+    // };
 
     return (
         <div className="usersTableWrapper">
-           <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'left' }}  open={snackbarOpen} autoHideDuration={2000} onClose={handleSnackbarClose}>
+           <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'right' }}  open={snackbarOpen} autoHideDuration={2000} onClose={handleSnackbarClose}>
                 <Alert onClose={handleSnackbarClose} severity={successMessage ? "success" : "error"}>
                     {successMessage || errorMessage}
                 </Alert>
             </Snackbar>
             <div className="usersTableTopBox">
                 <Search handleSearchChange={handleSearchChange} searchQuery={searchQuery} />
-                <ButtonAdd handleOpenAddForm={handleOpenAddForm} />
+                {/* <ButtonAdd handleOpenAddForm={handleOpenAddForm} /> */}
             </div>
 
             <div className="usersTableContainer">
@@ -329,6 +331,7 @@ export default function TableComponent({ csrfToken }) {
                         <StyledTableCell>Status</StyledTableCell>
                         <StyledTableCell>Unit</StyledTableCell>
                         <StyledTableCell sx={{ position: "sticky", right: 0 }}>Action</StyledTableCell>
+                        {/* <StyledTableCell >Action</StyledTableCell> */}
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -343,12 +346,13 @@ export default function TableComponent({ csrfToken }) {
                             <StyledTableCell>{item?.personal_details?.rank_name || "N/A"}</StyledTableCell>
                             <StyledTableCell>{item?.personal_details?.status_name || "N/A"}</StyledTableCell>
                             <StyledTableCell>{item?.personal_details?.unit_name || "N/A"}</StyledTableCell>
-                            <StyledTableCell sx={{display:"flex", gap:1, alignItems:"center", position: "sticky", right: 0}} >
+                            {/* <StyledTableCell sx={{display:"flex", gap:1, alignItems:"center", position: "sticky", right: 0}} > */}
+                            <StyledTableCell   sx={{display:"flex", gap:1, alignItems:"center", position: "sticky", right: 0}}>
                                 <Link to={'/fleet/personnel/profile'} state={{ user: filteredData[page * rowsPerPage + index] }} >
                                     <ButtonProfile />
                                 </Link>
-                                <ButtonUpdate item={item} handleOpenUpdateForm={handleOpenUpdateForm} />
-                                <ButtonDelete itemId={item.id}  handleOpenDeleteConfirmation={handleOpenDeleteConfirmation}/>
+                                {/* <ButtonUpdate item={item} handleOpenUpdateForm={handleOpenUpdateForm} /> */}
+                                {/* <ButtonDelete itemId={item.id}  handleOpenDeleteConfirmation={handleOpenDeleteConfirmation}/> */}
                             </StyledTableCell>
                         </TableRow>
                     ))}
@@ -368,7 +372,7 @@ export default function TableComponent({ csrfToken }) {
 
 
             {/*============= Add FORM ============================*/}
-            <Dialog open={openAddForm} onClose={handleCloseAddForm}>
+            {/* <Dialog open={openAddForm} onClose={handleCloseAddForm}>
                 <DialogTitle>Add Personnel</DialogTitle>
                 <DialogContent>
 
@@ -569,11 +573,11 @@ export default function TableComponent({ csrfToken }) {
                     <Button variant="contained" onClick={handleCloseAddForm} color="secondary">Cancel</Button>
                     <Button  variant="contained" onClick={handleAddUser} color="primary">Add</Button>
                 </DialogActions>
-            </Dialog>
+            </Dialog> */}
 
 
             {/*============= UPDATE FORM ============================*/}
-            <Dialog open={openUpdateForm} onClose={handleCloseUpdateForm}>
+            {/* <Dialog open={openUpdateForm} onClose={handleCloseUpdateForm}>
                     <DialogTitle>Update Personnel</DialogTitle>
                     <DialogContent>
                     <div className="flex flex-col border p-5 mt-3 rounded-md">
@@ -598,16 +602,7 @@ export default function TableComponent({ csrfToken }) {
                             value={formData.username}
                             onChange={handleFormChange}
                         />
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            name="password"
-                            label="Password"
-                            type="text"
-                            fullWidth
-                            value={formData.password}
-                            onChange={handleFormChange}
-                        />
+                       
                         <TextField
                             autoFocus
                             margin="dense"
@@ -759,10 +754,10 @@ export default function TableComponent({ csrfToken }) {
                         <Button variant="contained" onClick={handleCloseUpdateForm} color="secondary">Cancel</Button>
                         <Button variant="contained" onClick={handleUpdateUser} color="primary">Update</Button>
                     </DialogActions>
-                </Dialog>
+                </Dialog> */}
 
 
-            <Dialog open={openDeleteConfirmation} onClose={handleCloseDeleteConfirmation}>
+            {/* <Dialog open={openDeleteConfirmation} onClose={handleCloseDeleteConfirmation}>
                 <DialogTitle>Confirm Deletion</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
@@ -773,7 +768,7 @@ export default function TableComponent({ csrfToken }) {
                     <Button variant="contained" onClick={handleCloseDeleteConfirmation} color="secondary">Cancel</Button>
                     <Button variant="contained" onClick={handleConfirmDeleteUser} color="primary">Delete</Button>
                 </DialogActions>
-            </Dialog>
+            </Dialog> */}
         </div>
     );
 }

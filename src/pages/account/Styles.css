@@ -11,10 +11,7 @@
     @apply flex w-full justify-between 
   }
 
-  .accountTopFlex button{
-    @apply bg-[#86705E] text-white flex p-3 rounded-[10px] items-center gap-2
-    text-sm hover:bg-[#404958] duration-150
-  }
+ 
 
   .accountContainer h1{
     @apply text-xl font-bold text-gray-800
@@ -24,12 +21,30 @@
     @apply bg-white p-5 rounded-[10px] shadow-lg
   }
 
-  .accountBox {
+  .accountBoxWrapper {
     @apply flex flex-col gap-5
   }
 
+  .accountBox {
+    @apply flex  gap-5 items-center
+  }
+
+  .btnEditAccount{
+    @apply bg-[#86705E] text-white flex p-2 rounded-md items-center gap-2
+    text-xs hover:bg-[#404958] duration-150 
+  }
+
+  .btnChangePassword{
+    @apply bg-[#86705E] text-white flex p-2 rounded-md items-center gap-2
+    text-xs hover:bg-[#404958] duration-150 
+  }
+  .btnChangePicture{
+    @apply bg-[#86705E] text-white flex p-2 rounded-md items-center gap-2
+    text-xs hover:bg-[#404958] duration-150 
+  }
+
   .accountInputBox{
-    @apply flex flex-col 
+    @apply flex flex-col
   }
 
   .accountInputBox input{
@@ -38,5 +53,38 @@
 
   .accountInputBox span{
     @apply text-lg font-semibold text-gray-700
+  }
+
+  .profileImage{
+    @apply w-[250px] h-[250px] rounded-full object-cover border-2 border-[#404958]
+    p-1
+  }
+
+  .imageUploadBoxWrapper{
+    @apply p-5
+  }
+
+  .imageUploadBox{
+    @apply p-5 border
+  }
+
+  .imageUploadBox img{
+    @apply w-full h-[300px] object-cover
+  }
+
+  .imageUploadBox input{
+    @apply w-full p-2 rounded-md mt-3
+  }
+
+  .updateAccountContainer{
+    @apply  p-5 font-manrope
+  }
+
+  .updateAccountForm{
+    @apply flex flex-col gap-5
+  }
+
+  .updateAccountForm h1{
+    @apply text-lg font-bold
   }
 }

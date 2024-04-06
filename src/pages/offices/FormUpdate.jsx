@@ -82,7 +82,7 @@ export default function RoleForm({ onSubmit, initialValues = {} }) {
         open={openSuccessMessage}
         autoHideDuration={3000}
         onClose={handleCloseSuccessMessage}
-        anchorOrigin={{ vertical: "top", horizontal: "left" }}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
       >
         <Alert
           onClose={handleCloseSuccessMessage}
@@ -98,7 +98,7 @@ export default function RoleForm({ onSubmit, initialValues = {} }) {
         open={openErrorMessage}
         autoHideDuration={3000}
         onClose={handleCloseErrorMessage}
-        anchorOrigin={{ vertical: "top", horizontal: "left" }}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
       >
         <Alert
           onClose={handleCloseErrorMessage}

@@ -26,7 +26,7 @@ export default function VideoStreamMarker({ item, index, selectedVideoStream, ha
           position={[item.glatitude, item.glongitude]}
           icon={
             L.divIcon({
-              className: '',
+              className: `video-marker ${selectedVideoStream && selectedVideoStream.id === item.id ? 'selected-video' : ""}`,
               html: `<div class="bgwhite-marker">
               <img src="${videostreamIcon}" alt="" />
               </div>`,

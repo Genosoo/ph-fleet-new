@@ -45,7 +45,7 @@ export default function CarMarker ({ item, index, selectedCarTrack, handleCarTra
           position={[item.location.latitude, item.location.longitude]}
           icon={
               L.divIcon({
-                className: ``,
+                className: `car-marker ${selectedCarTrack && selectedCarTrack.id === item.id ? 'selected-car' : ""}`,
                 html: `<div class="bgwhite-marker"><img src="${carIcon}" alt="" />
                 </div>`,
               })

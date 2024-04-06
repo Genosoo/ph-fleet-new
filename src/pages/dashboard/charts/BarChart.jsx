@@ -25,7 +25,7 @@ const BoldMenuItem = styled(MenuItem)(({ isSelected }) => ({
   fontWeight: isSelected ? 'bold' : 'normal',
 }));
 
-export default function Barchart({ trakSatData, marineTrafficData, spiderTrakData }) {
+export default function Barchart({ traksatData, marineTrafficData, spidertracksData }) {
   const countItemsByDay = (data) => {
     if (!data) return []; // Check if data is undefined or null
 
@@ -48,12 +48,12 @@ export default function Barchart({ trakSatData, marineTrafficData, spiderTrakDat
     return Object.values(dayCounts);
   };
 
-  const [selectedDataset, setSelectedDataset] = useState('trakSatData');
+  const [selectedDataset, setSelectedDataset] = useState('traksatData');
   const [counts, setCounts] = useState([]);
 
   useEffect(() => {
     setCounts(countItemsByDay(eval(selectedDataset)));
-  }, [selectedDataset, trakSatData, marineTrafficData, spiderTrakData]);
+  }, [selectedDataset, traksatData, marineTrafficData, spidertracksData]);
 
   const handleDatasetChange = (event) => {
     setSelectedDataset(event.target.value);
@@ -96,13 +96,13 @@ export default function Barchart({ trakSatData, marineTrafficData, spiderTrakDat
   return (
     <div className="bar_chart_box">
         <StyledSelect value={selectedDataset} onChange={handleDatasetChange}>
-      <BoldMenuItem value="trakSatData" isSelected={selectedDataset === 'trakSatData'}>
+      <BoldMenuItem value="traksatData" isSelected={selectedDataset === 'traksatData'}>
         Traksat Bar Graph By Day (10-days)
       </BoldMenuItem>
       <BoldMenuItem value="marineTrafficData" isSelected={selectedDataset === 'marineTrafficData'}>
         MarineTraffic Bar Graph By Day (10-days)
       </BoldMenuItem>
-      <BoldMenuItem value="spiderTrakData" isSelected={selectedDataset === 'spiderTrakData'}>
+      <BoldMenuItem value="spidertracksData" isSelected={selectedDataset === 'spidertracksData'}>
         Spidertracks Bar Graph By Day (10-days)
       </BoldMenuItem>
     </StyledSelect>

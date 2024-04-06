@@ -1,18 +1,20 @@
 import Breadcrumbs from './breadcrumbs/BreadCrumbs'
 import BtnMenu from './buttons/btnMenu'
 import Avatar from '@mui/material/Avatar';
-import userProfile from '../../assets/user.png'
-
+import { useContext } from "react"
+import { DataContext } from "../../context/DataProvider";
+import { baseUrl } from '../../api/api_urls';
 
 export default function Navbar() {
+  const {accountData} = useContext(DataContext)
+
   return (
     <div className="navbar_container">
         <Breadcrumbs />
         <div className='navbar_menu_wrapper'>
-        <Avatar alt="Remy Sharp" src={userProfile} />
+         <Avatar  alt={accountData?.username || null} src={`${baseUrl}${accountData?.personal_details?.image}`} />
             <BtnMenu />
         </div>
-
     </div>
   )
 }

@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import Map from '../pages/map/Map';
 import Vessels from '../pages/vessels/Page';
-import Aircrafts from '../pages/aircrafts/Aircrafts';
+import Aircrafts from '../pages/aircrafts/Page';
 import Dashboard from '../pages/dashboard/Dashboard';
 import Roles from '../pages/roles/Roles';
 import Users from '../pages/users/Page';
@@ -27,9 +27,12 @@ import CheckCookie from '../components/checkCookie/CheckCookie';
 import UserProfile from '../pages/users/profile/Profile';
 import PersonnelProfile from '../pages/personnel/profile/Profile';
 import VesselsProfile from '../pages/vessels/profile/Profile'
+import AircraftProfile from '../pages/aircrafts/profile/Profile'
 
 import { DataContext } from '../context/DataProvider';
 import { useContext } from "react";
+import ChangePassword from '../pages/account/changepassword/ChangePassword';
+import UpdateAccount from '../pages/account/update/UpdateAccount';
 
 export default function RouteDashboard() {
   const {accountData } = useContext(DataContext)
@@ -63,10 +66,12 @@ export default function RouteDashboard() {
             <Route path='/personnel/profile' element={<PersonnelProfile />} />
 
             <Route path='vessels' element={<Vessels />} />
-            <Route path='/vessels/Profile' element={<VesselsProfile />} />
+            <Route path='/vessels/profile' element={<VesselsProfile />} />
             
             
             <Route path='aircrafts' element={<Aircrafts />} />
+            <Route path='/aircrafts/profile' element={<AircraftProfile/>} />
+
             <Route path='commercial-vessels' element={<VesselsCommercial />} />
             <Route path='commercial-aircrafts' element={<AircraftsCommercial />} />
             <Route path='settings' element={<Settings />} />
@@ -80,11 +85,14 @@ export default function RouteDashboard() {
         ) : (
           // Your existing routes for non-authorized users
           <>
+            <Route index element={<Map />} />
             <Route path='map' element={<Map />} />
           </>
         )}
 
         <Route path='account' element={<Account />} />
+        <Route path='/account/change-password' element={<ChangePassword />} />
+        <Route path='/account/update-account' element={<UpdateAccount/>} />
 
       </Routes>
     </AutoLogout>

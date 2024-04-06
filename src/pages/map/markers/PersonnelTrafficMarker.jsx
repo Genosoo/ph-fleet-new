@@ -27,7 +27,7 @@ const getStatusImage = (status_name) => {
 };
 
 
-const PersonnelMarker = ({ item, index, selectedPersonnel, handlePersonnelMarkerClick, showAllUsernames }) => {
+const PersonnelMarker = ({ item, index, selectedPersonnel, handlePersonnelMarkerClick}) => {
   const statusImage = getStatusImage(item.personal_details.status_name);
   const map = useMap();
   const prevZoomRef = useRef(9);
@@ -66,10 +66,7 @@ const PersonnelMarker = ({ item, index, selectedPersonnel, handlePersonnelMarker
       icon={
         L.divIcon({
           className: `personnel-marker ${selectedPersonnel && selectedPersonnel.id === item.id ? 'selected-personnel' : ""}`,
-          html: `<div class="personnel-icon" >
-          ${showAllUsernames ? `<p class="">${item.username}</p>` : ''}
-                    <img src="${statusImage}" alt="" />
-                  </div>`,
+          html: `<div class="bgwhite-marker"><img src="${statusImage}" alt="" /></div>`,
         })
       }
       eventHandlers={{ click: handleMarkerClick} }

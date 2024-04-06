@@ -237,116 +237,15 @@
 
 
 
-.marinetraffic-marker {
-  width:30px !important;
-  border-radius:50%;
-  height:30px !important;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding:2px;
-}
-
-
-.marinetraffic-icon{
-   width:40px;
-}
-
-.traksat-marker {
-  font-size:20px;
-  width:30px !important;
-  border-radius:50%;
-  height:30px !important;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.spiderTrak-icon img{
-  width:35px;
-  height:35px;
-}
-
-.spiderTrak-text{
-  background-color: rgb(155, 225, 51);
-  width:65px;
-  padding:1px;
-  display: flex;
-  font-size:10px;
-  align-items: center;
-  justify-content: center;
-  border-radius:10px;
-  position: absolute;
-  font-weight:600;
-  left:0;
-  margin-left:13px;
-  margin-top:7px;
-}
-
-
-.office-marker {
-  width:30px !important;
-  border-radius:50%;
-  height:30px !important;
-  position: relative;
-  color: rgb(255, 255, 255);
-  background-color: rgb(244, 244, 244); /* Set the color of the glow effect */
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.bgwhite-marker{
-  background-color: #fff;
-  width:25px;
-  height:25px;
-  border-radius:50%;
-  display:flex;
-  align-items: center;
-  justify-content: center;
-}
 
 
 
-.vehicle-marker {
-  font-size:20px;
-  width:25px !important;
-  border-radius:50%;
-  height:25px !important;
-  color: rgb(255, 255, 255);
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.car-marker {
-  font-size:20px;
-  width:25px !important;
-  border-radius:50%;
-  height:25px !important;
-  color: rgb(255, 255, 255);
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
 
-.personnel-marker {
-  font-size:20px;
-  width:25px !important;
-  border-radius:50%;
-  height:25px !important;
-  color: rgb(254, 254, 254);
-  background-color: rgb(255, 255, 255); /* Set the color of the glow effect */
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+
+
+
+
 
 /* .live{
   height:24px;
@@ -366,98 +265,11 @@
   }
 } */
 
-@keyframes pulse{
-  0%{
-    box-shadow: #fd9b09;
-  }
-  50%{
-    box-shadow: 0 0 0 16px #fd9b0999;
-  }
-
-  50%{
-   box-shadow: 0 0 0 20px  #fd9b0986;
-
-  }
-}
-
-@keyframes pulse2{
-  0%{
-    box-shadow:rgb(50, 214, 38) 0 0 0 0;
-  }
-  50%{
-    box-shadow: 0 0 0 16px rgb(38, 214, 70);
-  }
-
-  50%{
-   box-shadow: 0 0 0 20px rgba(38, 214, 50, 0.246);
-
-  }
-}
-
-
-
-@keyframes pulseitem{
-  0%{
-    box-shadow:#D1E7D0;
-  }
-  50%{
-    box-shadow: 0 0 0 16px #e1e1e1;
-  }
-
-  50%{
-   box-shadow: 0 0 0 20px #f8f8f8f5;
-
-  }
-}
 
 
 
 
-.selected-item{
-  border:2px solid #ffffff;
-  animation:pulseitem 1500ms infinite;
 
-}
-
-.selected-marker{
-  border:2px solid white;
-  animation:pulse 1500ms infinite;
-  background: #000;
-
-}
-
-.selected-marinetraffic{
-  border:2px solid #fd9b09;
-  animation:pulse 1500ms infinite;
-  background: #000;
-
-}
-
-.selected-marker-traksat{
-  animation:pulse2 1500ms infinite;
-  border:2px solid rgb(0, 255, 30);
-  background: #000;
-}
-
-
-.selected-marker-spiderTrak{
-  border:2px solid white;
-  animation:pulse 1500ms infinite;
-  width:100px;
-  height:100px;
-  border-radius:50%;
-  position: absolute;
-
-}
-
-
-.circle-marker{
-  background-color: rgb(7, 230, 29);
-  width:15px;
-  height:15px;
-  border-radius:50%;
-  border: 1px solid #000;
-}
 
 .selected-vessel::before {
   content: "";
@@ -468,121 +280,6 @@
   border-radius: 50%;
   background-color: rgb(255, 255, 255); /* Adjust the color and opacity as needed */
   animation: pulse 1.5s infinite;
-}
-
-
-.marineTraffic-cluster-icon {
-  background-color: yellow;
-  height: 40px;
-  width: 40px;
-  color: #000000;
-  font-weight:600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  font-size: 1.2rem;
-  box-shadow: 0 0 0px 5px rgba(255, 255, 0, 0.474);
-}
-
-
-.trakSat-cluster-icon {
-  background-color: rgb(8, 247, 8);
-  height: 40px;
-  width: 40px;
-  color: #000000;
-  font-weight:600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  font-size: 1.2rem;
-  box-shadow: 0 0 0px 5px rgba(1, 255, 1, 0.547);
-}
-
-.incident-cluster-icon {
-  background-color: rgb(255, 109, 114);
-  height: 40px;
-  width: 40px;
-  color: #0e0e0e;
-  font-weight:600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  font-size: 1.2rem;
-  box-shadow: 0 0 0px 5px rgba(255, 103, 103, 0.547);
-}
-
-.personnel-cluster-icon {
-  background-color: rgb(8, 235, 247);
-  height: 40px;
-  width: 40px;
-  color: #000000;
-  font-weight:600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  font-size: 1.2rem;
-  box-shadow: 0 0 0px 5px rgba(1, 217, 255, 0.547);
-}
-
-.vehicle-cluster-icon {
-  background-color: rgb(5, 201, 255);
-  height: 40px;
-  width: 40px;
-  color: #000000;
-  font-weight:600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  font-size: 1.2rem;
-  box-shadow: 0 0 0px 5px rgba(9, 211, 247, 0.547);
-}
-
-.car-cluster-icon {
-  background-color: rgb(209, 195, 67);
-  height: 40px;
-  width: 40px;
-  color: #000000;
-  font-weight:600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  font-size: 1.2rem;
-  box-shadow: 0 0 0px 5px rgba(210, 193, 36, 0.547);
-}
-
-.videoStream-cluster-icon {
-  background-color: rgb(250, 250, 250);
-  height: 40px;
-  width: 40px;
-  color: #000000;
-  font-weight:600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  font-size: 1.2rem;
-  box-shadow: 0 0 0px 5px rgba(255, 255, 255, 0.547);
-}
-
-
-.spiderTrak-cluster-icon {
-  background-color: rgb(0, 140, 255);
-  height: 40px;
-  width: 40px;
-  color: #000000;
-  font-weight:600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  font-size: 1.2rem;
-  box-shadow: 0 0 0px 5px rgba(0, 140, 255, 0.519);
 }
 
 

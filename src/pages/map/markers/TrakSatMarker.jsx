@@ -87,9 +87,9 @@ const TrakSatMarker = ({ item, selectedTrakSat, showDescription, handleTrakSatMa
     let iconHtml;
 
     if (item.heading_deg !== null) {
-      iconHtml = `<img src="${traksat1Icon}" style="transform: rotate(${item.course}deg); width:20px; " />`;
+      iconHtml = `<div class="bgdark-marker"><img src="${traksat1Icon}" style="transform: rotate(${item.course}deg);" /></div>`;
     } else {
-      iconHtml = `<img src="${traksat2Icon}" style="transform: rotate(${item.course}deg); width:20px;" />`;
+      iconHtml = `<div class="bgdark-marker"><img src="${traksat2Icon}" style="transform: rotate(${item.course}deg);" /></div>`;
     }
 
     return (
@@ -97,7 +97,7 @@ const TrakSatMarker = ({ item, selectedTrakSat, showDescription, handleTrakSatMa
       <Marker
       position={startPosition}
         icon={L.divIcon({
-          className: `traksat-marker ${selectedTrakSat && selectedTrakSat.id === item.id  ? 'selected-marker-traksat' : ''}`, 
+          className: `traksat-marker ${selectedTrakSat && selectedTrakSat.id === item.id  ? 'selected-traksat' : ''}`, 
           html: `${iconHtml}${showDescription ? `<div class="text-[9px] left-7 text-white font-bold px-2 rounded-[10px] bg-green-600  p-1 absolute">
               ${item.description}
             </div>` : `<div></div>` }

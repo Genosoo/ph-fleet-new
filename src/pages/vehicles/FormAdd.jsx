@@ -117,7 +117,7 @@ export default function FormAdd({ csrfToken }) {
         open={openSuccessMessage}
         autoHideDuration={3000}
         onClose={handleCloseSuccessMessage}
-        anchorOrigin={{ vertical: "top", horizontal: "left" }}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
       >
         <Alert
           onClose={handleCloseSuccessMessage}
@@ -133,7 +133,7 @@ export default function FormAdd({ csrfToken }) {
         open={openErrorMessage}
         autoHideDuration={3000}
         onClose={handleCloseErrorMessage}
-        anchorOrigin={{ vertical: "top", horizontal: "left" }}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
       >
         <Alert
           onClose={handleCloseErrorMessage}
@@ -230,7 +230,7 @@ export default function FormAdd({ csrfToken }) {
        
 
 {/* 
-          {["image_main", "image_left", "image_right", "image_front", "image_back"].map((fieldName, index) => (
+          {["image_main", "image_right", "image_right", "image_front", "image_back"].map((fieldName, index) => (
             <label htmlFor={fieldName} className="imageBox" key={index}>
               <span className="imageTitle">{fieldName.replace('_', ' ')}</span>
               <input type="file" name={fieldName} id={fieldName} onChange={(e) => handleFileChange(e, fieldName)} />

@@ -10,14 +10,14 @@ import {
   TableBody,
   TableHead,
   TableRow,
-  Button,
   Dialog,
   DialogContent,
   DialogTitle,
 } from "@mui/material";
 import RoleForm from "./RolesForm"; // Assuming RoleForm is in the same directory
 import './Styles.css'
-import { StyledTableContainer, StyledTable, StyledTableCell } from "./Styled";
+import { StyledTableContainer, StyledTable, StyledTableCell, StyledDialog } from "./Styled";
+import { PiWarningLight } from "react-icons/pi";
 
 
 export default function Roles() {
@@ -180,7 +180,10 @@ export default function Roles() {
         </StyledTable>
       </StyledTableContainer>
       </div>
-      {/* Dialog for creating a role */}
+
+
+
+{/*========================== ADD DIALOG ============================*/}
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
         <DialogTitle>Create Role</DialogTitle>
         <DialogContent>
@@ -188,7 +191,7 @@ export default function Roles() {
         </DialogContent>
       </Dialog>
 
-      {/* Dialog for updating a role */}
+{/*========================== UPDATE DIALOG ============================*/}
       <Dialog open={updateDialog} onClose={() => setUpdateDialog(false)}>
         <DialogTitle>Edit Role</DialogTitle>
         <DialogContent>
@@ -201,21 +204,22 @@ export default function Roles() {
         </DialogContent>
       </Dialog>
 
-      {/* Dialog for confirming deletion */}
-      <Dialog open={deleteDialog} onClose={cancelDelete}>
-        <DialogTitle>Confirm Deletion</DialogTitle>
-        <DialogContent>
-        <span className="flex flex-col gap-3">
-        <p>Are you sure you want to delete this role?</p>
-         <Button size="small" variant="outlined" color="success" onClick={confirmDelete}>
-            Confirm
-          </Button>
-          <Button size="small" variant="outlined" color="error" onClick={cancelDelete}>
-            Cancel
-          </Button>
-        </span>
-        </DialogContent>
-      </Dialog>
+{/*========================== DELETE DIALOG ============================*/}
+      <StyledDialog open={deleteDialog} onClose={cancelDelete}>
+      <div className="deleteDialogBox">
+                    <span className="deleteIcon">
+                        <PiWarningLight/>
+                    </span>
+                    <h3>Are you sure you want to <br /> delete this user?</h3>
+                   <p>
+                   This action cannot be undone. All values  <br /> associated within this field will be lost.
+                   </p>
+                  <div className="deleteDialogBtn">
+                  <button className="delete"  onClick={confirmDelete} >Delete field</button>
+                    <button className="cancel" onClick={cancelDelete} >Cancel</button>
+                  </div>
+                </div>
+      </StyledDialog>
     </div>
   );
 }

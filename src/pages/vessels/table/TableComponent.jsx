@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect, useContext } from "react";
-import { StyledTableCell, StyledTable, StyledTableContainer } from "./Styled";
+import { StyledTableCell, StyledTable, StyledTableContainer, StyledDialog } from "./Styled";
 import axios from 'axios';
 import { Link } from "react-router-dom";
 import {TableBody, TableHead, TableRow, TablePagination, 
    Dialog, DialogTitle, DialogActions, Button, Snackbar,
    Alert, TextField, FormControl, InputLabel, Select, MenuItem
-  ,DialogContent, DialogContentText } from "@mui/material";
+  } from "@mui/material";
 import ButtonUpdate from "./buttons/ButtonUpdate";
 import ButtonDelete from "./buttons/ButtonDelete";
 import ButtonProfile from "./buttons/ButtonProfile";
@@ -14,6 +14,7 @@ import ButtonAdd from "./buttons/buttonAdd";
 import Search from "./Search";
 import { DataContext } from "../../../context/DataProvider";
 import { apiVesselClass, apiVesselType, apiVesselStatus, apiVesselsData } from "../../../api/api_urls";
+import { PiWarningLight } from "react-icons/pi";
 
 export default function TableComponent({ csrfToken }) {
   const { vesselsData, updateVesselsData } = useContext(DataContext);
@@ -30,7 +31,7 @@ export default function TableComponent({ csrfToken }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [openDeleteConfirmation, setOpenDeleteConfirmation] = useState(false);
-  const [deleteUserId, setDeleteUserId] = useState(null);
+  const [deleteVesselId, setDeleteVesselId] = useState(null);
   const [formData, setFormData] = useState({
     vessel_name:"",
     vessel_description:"",
@@ -42,6 +43,8 @@ export default function TableComponent({ csrfToken }) {
     vessel_type:"",
     vessel_status:"",
   });
+
+  const [selectedVessel, setSelectedVessel] = useState(null)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -82,9 +85,6 @@ export default function TableComponent({ csrfToken }) {
 
   const handleCloseAddForm = () => setOpenAddForm(false);
 
-  const handleOpenUpdateForm = () => setOpenUpdateForm(true);
-
-  const handleCloseUpdateForm = () => setOpenUpdateForm(false);
 
   const handleSnackbarClose = () => setSnackbarOpen(false);
 
@@ -125,19 +125,35 @@ export default function TableComponent({ csrfToken }) {
   };
 
 
+  const handleOpenUpdateForm = (vessel) => {
+    setSelectedVessel(vessel);
+    setFormData({
+        vessel_name: vessel.vessel_name,
+        vessel_description: vessel.vessel_description,
+    });
 
-  const handleOpenDeleteConfirmation = (userId) => {
-    setDeleteUserId(userId);
+    setOpenUpdateForm(true);
+};
+
+const handleCloseUpdateForm = () => {
+    setOpenUpdateForm(false);
+    setSelectedVessel(null);
+};
+
+
+
+  const handleOpenDeleteConfirmation = (vesselId) => {
+    setDeleteVesselId(vesselId);
     setOpenDeleteConfirmation(true);
 };
 
 const handleCloseDeleteConfirmation = () => {
     setOpenDeleteConfirmation(false);
-    setDeleteUserId(null);
+    setDeleteVesselId(null);
 };
 
-const handleConfirmDeleteUser = () => {
-    handleDeleteUser(deleteUserId);
+const handleConfirmDeleteVessel = () => {
+    handleDeleteVessel(deleteVesselId);
     handleCloseDeleteConfirmation();
 };
 
@@ -151,7 +167,7 @@ const handleConfirmDeleteUser = () => {
 
 
 
-  const handleDeleteUser = async (id) => {
+  const handleDeleteVessel = async (id) => {
     try {
         await axios.delete(apiVesselsData, {
             data: { id },
@@ -198,9 +214,37 @@ const handleConfirmDeleteUser = () => {
     reader.readAsDataURL(file);
   };
 
+
+  const handleUpdateVessel = async () => {
+    try {
+        const updatedFormData = { ...formData, id: selectedVessel.id };
+
+        const response = await axios.put(apiVesselsData, updatedFormData, {
+            headers: {
+                'X-CSRFToken': csrfToken
+            }
+        });
+        const updatedVessel = response.data.data;
+        const updatedVessels = vesselsData.map(vessel => {
+            if (vessel.id === updatedVessel.id) {
+                return updatedVessel;
+            }
+            return vessel;
+        });
+        updateVesselsData(updatedVessels);
+        setFilteredData(updatedVessels);
+        handleCloseUpdateForm();
+        showSuccessMessage("Successfully updated the vessel!");
+    } catch (error) {
+        console.error('Error updating vessel:', error);
+        showErrorMessage("Failed to update vessel");
+    }
+};
+  
+
   return (
     <div className="vesselsTableWrapper">
-        <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'left' }}  open={snackbarOpen} autoHideDuration={2000} onClose={handleSnackbarClose}>
+        <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'right' }}  open={snackbarOpen} autoHideDuration={2000} onClose={handleSnackbarClose}>
                 <Alert onClose={handleSnackbarClose} severity={successMessage ? "success" : "error"}>
                     {successMessage || errorMessage}
                 </Alert>
@@ -238,7 +282,7 @@ const handleConfirmDeleteUser = () => {
                                 <Link to={'/fleet/vessels/profile'} state={{ vessel: filteredData[page * rowsPerPage + index] }} >
                                     <ButtonProfile />
                                 </Link>
-                                <ButtonUpdate handleOpenUpdateForm={handleOpenUpdateForm} />
+                                <ButtonUpdate item={item} handleOpenUpdateForm={handleOpenUpdateForm} />
                                 <ButtonDelete  itemId={item.id}  handleOpenDeleteConfirmation={handleOpenDeleteConfirmation}/>
                             </StyledTableCell>
                         </TableRow>
@@ -338,23 +382,58 @@ const handleConfirmDeleteUser = () => {
 
 
      {/*============= UPDATE FORM ============================*/}
-  <Dialog open={openUpdateForm} onClose={handleCloseUpdateForm}>
-    <DialogTitle>Update Vessels</DialogTitle>
-  </Dialog>
+     <Dialog open={openUpdateForm} onClose={handleCloseUpdateForm}>
+  <DialogTitle>Update Vessel</DialogTitle>
+  <div className="p-10 flex flex-col gap-3 w-[600px]">
+    {/* Input fields for updating vessel data */}
+    <TextField
+      value={formData.vessel_name || ''}
+      onChange={handleFormChange}
+      autoFocus
+      margin="dense"
+      name="vessel_name"
+      label="Vessel Name"
+      type="text"
+      fullWidth
+    />
+    <TextField
+      value={formData.vessel_description || ''}
+      onChange={handleFormChange}
+      autoFocus
+      margin="dense"
+      name="vessel_description"
+      label="Vessel Description"
+      type="text"
+      fullWidth
+    />
+  </div>
+  <DialogActions>
+    <Button variant="contained" onClick={handleCloseUpdateForm} color="secondary">
+      Cancel
+    </Button>
+    <Button variant="contained" onClick={handleUpdateVessel} color="primary">
+      Update
+    </Button>
+  </DialogActions>
+</Dialog>
 
 
-  <Dialog open={openDeleteConfirmation} onClose={handleCloseDeleteConfirmation}>
-                <DialogTitle>Confirm Deletion</DialogTitle>
-                <DialogContent> 
-                    <DialogContentText>
-                        Are you sure you want to delete this vessel?
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button variant="contained" onClick={handleCloseDeleteConfirmation} color="secondary">Cancel</Button>
-                    <Button variant="contained" onClick={handleConfirmDeleteUser} color="primary">Delete</Button>
-                </DialogActions>
-            </Dialog>
+
+  <StyledDialog open={openDeleteConfirmation} onClose={handleCloseDeleteConfirmation}>
+  <div className="deleteDialogBox">
+      <span className="deleteIcon">
+          <PiWarningLight/>
+      </span>
+      <h3>Are you sure you want to <br /> delete this vessel?</h3>
+      <p>
+      This action cannot be undone. All values  <br /> associated within this field will be lost.
+      </p>
+    <div className="deleteDialogBtn">
+    <button className="delete"  onClick={handleConfirmDeleteVessel} >Delete field</button>
+      <button className="cancel" onClick={handleCloseDeleteConfirmation} >Cancel</button>
+    </div>
+    </div>
+   </StyledDialog>
 
     </div>
   )

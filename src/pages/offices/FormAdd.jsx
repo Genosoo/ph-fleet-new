@@ -94,7 +94,7 @@ export default function FormAdd({ csrfToken }) {
         open={openSuccessMessage}
         autoHideDuration={3000}
         onClose={handleCloseSuccessMessage}
-        anchorOrigin={{ vertical: "top", horizontal: "left" }}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
       >
         <Alert
           onClose={handleCloseSuccessMessage}
@@ -110,7 +110,7 @@ export default function FormAdd({ csrfToken }) {
         open={openErrorMessage}
         autoHideDuration={3000}
         onClose={handleCloseErrorMessage}
-        anchorOrigin={{ vertical: "top", horizontal: "left" }}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
       >
         <Alert
           onClose={handleCloseErrorMessage}

@@ -109,17 +109,24 @@ export default function DataProvider({ children }) {
     }));
   };
 
+  // Define a function to update usersData state
+  const updateUsersData = (newUsersData) => {
+    setData((prevData) => ({
+      ...prevData,
+      usersData: newUsersData,
+    }));
+  };
 
-    // Define a function to update vesselsData state
-    const updateUsersData = (newUsersData) => {
-      setData((prevData) => ({
-        ...prevData,
-        usersData: newUsersData,
-      }));
-    };
+  // Define a function to update accountData state
+  const updateAccountData = (newAccountData) => {
+    setData((prevData) => ({
+      ...prevData,
+      accountData: newAccountData,
+    }));
+  };
 
   return (
-    <DataContext.Provider value={{ ...data, updateVesselsData, updateUsersData }}>
+    <DataContext.Provider value={{ ...data, updateVesselsData, updateUsersData, updateAccountData }}>
       {isLoading ? <Loader /> : children}
     </DataContext.Provider>
   );

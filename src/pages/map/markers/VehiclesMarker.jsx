@@ -42,7 +42,7 @@ export default function VehiclesMarker ({ item, index, selectedVehicles, handleV
         position={[item.latitude, item.longitude]}
         icon={
             L.divIcon({
-              className: ``,
+              className: `vehicles-marker ${selectedVehicles && selectedVehicles.id === item.id ? 'selected-vehicles' : ""}`,
               html: `<div class="bgwhite-marker">
               <img src="${vehiclesImg}" alt="" />
               </div>`,

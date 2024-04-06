@@ -2,6 +2,9 @@
 import { useLocation} from 'react-router-dom';
 import { baseUrl } from '../../../api/api_urls';
 import noImage from '../../../assets/no-image.svg'
+import { MdOutlineEdit } from "react-icons/md";
+
+
 export default function Profile() {
     const location = useLocation();
     console.log({location });
@@ -9,8 +12,11 @@ export default function Profile() {
    const item = location.state.user;
   return (
     <div className='usersProfileContainer'>
+          <div className="usersProfileTop">
+            <h4 className='usersProfileTitle'>User Profile</h4>
+            <button><MdOutlineEdit /> Edit profile</button>
+          </div>
         <div className='usersProfileBox1'>
-          <h4 className='usersProfileTitle'>User Profile</h4>
           <div className="usersProfileInitial">
           {item.personal_details && item.personal_details.image ? ( // Check if personal_details and image are not null
               <img className='usersProfilePhoto' src={`${baseUrl}${item.personal_details.image}`} alt="" />

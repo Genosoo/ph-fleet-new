@@ -44,7 +44,7 @@ export default function OfficeMarker ({ item, index, selectedOffice,  handleOffi
               position={[item.latitude, item.longitude]}
               icon={
                   L.divIcon({
-                    className: ``,
+                    className: `office-marker ${selectedOffice && selectedOffice.id === item.id ? 'selected-office' : ""}`,
                     html: `<div class="bgwhite-marker"><img src="${officeIcon}" alt="" /></div>`,
                   })
                 }

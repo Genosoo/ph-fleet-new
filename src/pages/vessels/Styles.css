@@ -137,5 +137,70 @@
     .profileMapBox{
         @apply w-full h-full rounded-[10px] overflow-hidden 
     }
+
+    
+    .deleteDialogBox{
+        @apply flex flex-col items-center gap-5 p-10 font-manrope
+        rounded-[20px]
+    }
+
+    .deleteDialogBox h3{
+        @apply font-bold text-center text-lg
+    }
+
+    .deleteDialogBox p{
+        @apply text-center text-sm font-medium
+    }
+
+    .deleteIcon{
+        @apply text-[#EB5454] text-[30px] bg-[#eb54545b]
+        p-4 rounded-full
+    }
+
+    .deleteDialogBtn{
+        @apply flex flex-col w-full gap-3
+    }
+
+    .deleteDialogBtn button{
+        @apply  w-full text-sm p-3 rounded-lg  hover:bg-[#404958] hover:text-white duration-150
+    }
+
+    .deleteDialogBtn .delete{
+        @apply bg-[#EB5454] text-white 
+    }
+
+    .deleteDialogBtn .cancel{
+        @apply border
+    }                       
 }
 
+
+@keyframes pulseTraksat{
+    0%{
+      box-shadow:#00FF00;
+    }
+    50%{
+      box-shadow: 0 0 0 16px rgb(38, 214, 70);
+    }
+  
+    50%{
+     box-shadow: 0 0 0 20px rgba(38, 214, 50, 0.581);
+  
+    }
+  }
+
+  .selected-traksat{
+    border:2px solid #00FF00;
+    background: #000;
+    animation:pulseTraksat 1500ms infinite;
+}
+
+
+.bgdark-marker{
+    background-color: #313030;
+    width:25px;
+    height:25px;
+    border-radius:50%;
+    display:flex;
+    justify-content: center;
+}
