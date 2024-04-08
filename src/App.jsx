@@ -9,7 +9,6 @@ import MarineTrafficList from './pages/dashboard/listPage/MarineTrafficList';
 export default function App() {
 
   return (
-   <>
     <Routes>
       <Route path='/login' element={<Login />} />
       <Route path='' element={<Login />} />
@@ -30,8 +29,5 @@ export default function App() {
       <Route path='/other-aircrafts' element={<UnderConstruction />} />
       <Route path='/other-vehicles' element={<UnderConstruction />} />
     </Routes>
-      
-
-   </>
   )
 }

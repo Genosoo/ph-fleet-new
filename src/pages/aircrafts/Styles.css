@@ -3,20 +3,20 @@
 
 @layer components{
 
-    .vesselsContainer{
+    .aircraftsContainer{
         @apply font-manrope pr-10 pl-3 pb-10
     }
 
-    .vesselsContainer button{
+    .aircraftsContainer button{
         @apply hover:bg-[#404958] hover:text-white duration-150
     }
 
-    .vesselsTableTopBox{
+    .aircraftsTableTopBox{
         @apply flex items-center justify-center gap-6 
         h-[50px] mb-3
     }
 
-    .vesselsTableContainer{
+    .aircraftsTableContainer{
         box-shadow:0 0 10px #00000035;
         @apply rounded-[15px] overflow-hidden 
     }
@@ -58,25 +58,25 @@
 
 
     /*====== USER PROFILE STYLE =============*/
-    .vesselsProfileContainer{
+    .aircraftsProfileContainer{
         @apply flex flex-col pr-10 font-manrope
     }
 
-    .vesselsProfileBox1{
+    .aircraftsProfileBox1{
         box-shadow: 0 0 10px #00000012;
         @apply bg-[#F9F9F9]  rounded-[15px]  p-3 flex flex-col justify-between
     }
 
-    .vesselsProfileTitle{
+    .aircraftsProfileTitle{
         @apply text-lg font-bold p-2
     }
 
-    .vesselsProfilePhoto{
-        @apply w-[230px] h-[230px] rounded-full object-cover
+    .aircraftsProfilePhoto{
+        @apply w-[230px] h-[230px] rounded-full object-fill
         border-2 border-[#404958] p-2
     }
 
-    .vesselsProfileInitial{
+    .aircraftsProfileInitial{
         @apply flex items-center gap-16 pb-10 px-3 mt-5
     }
 
@@ -101,7 +101,7 @@
         @apply text-[#404958] font-bold text-lg
     }
 
-    .vesselsProfileBox2{
+    .aircraftsProfileBox2{
         @apply flex mt-5 gap-10 
     }
     .profileCardBox1{
@@ -131,12 +131,47 @@
     }
 
     .profileCardImg img{
-        @apply w-full h-full border rounded-[10px]
+        @apply w-full h-full border rounded-[10px] object-cover
     }
 
     .profileMapBox{
         @apply w-full h-full rounded-[10px] overflow-hidden 
     }
+
+    
+    .deleteDialogBox{
+        @apply flex flex-col items-center gap-5 p-10 font-manrope
+        rounded-[20px]
+    }
+
+    .deleteDialogBox h3{
+        @apply font-bold text-center text-lg
+    }
+
+    .deleteDialogBox p{
+        @apply text-center text-sm font-medium
+    }
+
+    .deleteIcon{
+        @apply text-[#EB5454] text-[30px] bg-[#eb54545b]
+        p-4 rounded-full
+    }
+
+    .deleteDialogBtn{
+        @apply flex flex-col w-full gap-3
+    }
+
+    .deleteDialogBtn button{
+        @apply  w-full text-sm p-3 rounded-lg  hover:bg-[#404958] hover:text-white duration-150
+    }
+
+    .deleteDialogBtn .delete{
+        @apply bg-[#EB5454] text-white 
+    }
+
+    .deleteDialogBtn .cancel{
+        @apply border
+    }                       
 }
 
 

@@ -1,37 +1,37 @@
 import { useLocation} from 'react-router-dom';
 import { baseUrl } from '../../../api/api_urls';
-import noImage from '../../../assets/no-image.svg'
+import noImage from '../../../assets/no-aircraft.png'
 import { MapContainer, TileLayer } from 'react-leaflet';
-import TrakSatMarker from './TrakSatMarker';
+import SpiderTrakMarker from './SpiderTrakMarker';
 
 export default function Profile() {
   const location = useLocation();
   console.log({location});
 
-  const item = location.state.vessel;
+  const item = location.state.aircraft;
 
 
   return (
-    <div className='vesselsProfileContainer'>
-       <div className="vesselsProfileBox1">
-         <h4 className='vesselsProfileTitle'>Vessel Profile</h4>
-         <div className="vesselsProfileInitial">
+    <div className='aircraftsProfileContainer'>
+       <div className="aircraftsProfileBox1">
+         <h4 className='aircraftsProfileTitle'>Aircraft Profile</h4>
+         <div className="aircraftsProfileInitial">
           {item && item.image_main ? ( // Check if personal_details and image are not null
-              <img className='vesselsProfilePhoto' src={`${baseUrl}${item.image_main}`} alt="" />
+              <img className='aircraftsProfilePhoto' src={`${baseUrl}${item.image_main}`} alt="" />
             ) : (
-              <img className='vesselsProfilePhoto' src={noImage} alt="" />
+              <img className='aircraftsProfilePhoto' src={noImage} alt="" />
             )}
 
 
             <div className="textBoxWrapper">
               <div className='textBox1 textBox'>
-                  <span>
-                    <p>Name</p>
-                    <h3>{item?.vessel_name || "N/A"}</h3>
+              <span>
+                    <p>Unit ID</p>
+                    <h3>{item?.unit_id2 || "N/A"}</h3>
                   </span>
                   <span>
-                    <p>Class</p>
-                    <h3>{item?.vessel_class_details?.class_name || "N/A"}</h3>
+                    <p>Name</p>
+                    <h3>{item?.aircraft_name || "N/A"}</h3>
                   </span>
                   <span>
                     <p>Unit</p>
@@ -41,25 +41,25 @@ export default function Profile() {
               <div className='textBox3 textBox'>
                   <span>
                     <p>Type</p>
-                    <h3>{item?.vessel_type_details?.type_name || "N/A"}</h3>
+                    <h3>{item?.aircraft_type_details?.type_name || "N/A"}</h3>
                   </span>
                   <span>
-                    <p>Hull Number</p>
-                    <h3>{item?.hull_number || "N/A"}</h3>
+                    <p>Fuel Capacity</p>
+                    <h3>{item?.fuel_capacity || "N/A"}</h3>
                   </span>
                   <span>
-                    <p>Origin</p>
-                    <h3>{item?.origin || "N/A"}</h3>
+                    <p>Maximum speed</p>
+                    <h3>{item?.maximum_speed || "N/A"}</h3>
                   </span>
               </div>
               <div className='textBox3 textBox'>
                   <span>
-                    <p>Capacity</p>
-                    <h3>{item?.capacity || "N/A"}</h3>
+                    <p>Crew</p>
+                    <h3>{item?.crew || "N/A"}</h3>
                   </span>
                   <span>
-                    <p>Status</p>
-                    <h3>{item?.vessel_status_details?.status_name || "N/A"}</h3>
+                    <p>Payload</p>
+                    <h3>{item?.payload || "N/A"}</h3>
                   </span>
                 
               </div>
@@ -67,9 +67,9 @@ export default function Profile() {
           </div>
        </div>
 
-       <div className="vesselsProfileBox2">
+       <div className="aircraftsProfileBox2">
            <div className="profileCardBox1">
-               <h3 className="vesselsProfileTitle">Perspectives</h3>
+               <h3 className="aircraftsProfileTitle">Perspectives</h3>
                <div className="profileBoxImg">
                 <div className="profileCardImg">
                     {item && item.image_front ? ( // Check if personal_details and image are not null
@@ -108,7 +108,7 @@ export default function Profile() {
                </div>
            </div>
            <div className="profileCardBox2 px-5">
-              <h3 className="vesselsProfileTitle -ml-2">Location</h3>
+              <h3 className="aircraftsProfileTitle -ml-2">Location</h3>
 
              <div className="profileMapBox">
              <MapContainer  center={[12.8797, 121.7740]} zoom={6} style={{ height: '100%', width: '100%' }}>
@@ -116,8 +116,8 @@ export default function Profile() {
                         url="https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}&hl=en"
                         subdomains={['mt0', 'mt1', 'mt2', 'mt3']}
                       />
+                      <SpiderTrakMarker selectedAircraft={item.spidertracks_details} />
 
-                      <TrakSatMarker selectedVessel={item.traksat_details} />
              </MapContainer>
              </div>
            </div>

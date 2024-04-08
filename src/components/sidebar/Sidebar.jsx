@@ -15,7 +15,7 @@ import Logo from '../../assets/logo.png'
 const Sidebar = () => {
     const[isOpen ,setIsOpen] = useState(true);
     const toggle = () => setIsOpen (!isOpen);
-    const [specificMenuItems1, setSpecificMenuItems1] = useState(["Map"]);
+    const [specificMenuItems1, setSpecificMenuItems1] = useState(["Map", "Incidents"]);
     const [specificMenuItems2, setSpecificMenuItems2] = useState("");
     const [specificMenuItems3, setSpecificMenuItems3] = useState("");
     const [specificMenuItems4, setSpecificMenuItems4] = useState("");

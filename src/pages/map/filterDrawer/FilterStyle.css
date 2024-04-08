@@ -62,10 +62,6 @@
         @apply w-[22px] 
     }
 
-    .spidertracksIcon{
-        width: 26px !important;
-    }
-
     .inputShowName{
         @apply flex items-center justify-between px-4 font-manrope
     }

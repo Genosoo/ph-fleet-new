@@ -89,6 +89,10 @@
         @apply flex items-center gap-16 pb-10 px-3
     }
 
+    .textBox{
+        @apply w-full
+    }
+
     .textBox .text1{
         @apply text-[#8E8E8E] text-[18px]
     }

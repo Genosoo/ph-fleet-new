@@ -99,7 +99,7 @@ export default function TableComponent({  csrfToken }) {
         setFormData({
             username: user.username,
             password: user.password,
-            groups: user.groups,
+            groups: user.roles,
             personal_details: {
                 ...user.personal_details
             }

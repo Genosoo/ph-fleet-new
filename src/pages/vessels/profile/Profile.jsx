@@ -1,6 +1,6 @@
 import { useLocation} from 'react-router-dom';
 import { baseUrl } from '../../../api/api_urls';
-import noImage from '../../../assets/no-image.svg'
+import noImage from '../../../assets/no-image.png'
 import { MapContainer, TileLayer } from 'react-leaflet';
 import TrakSatMarker from './TrakSatMarker';
 

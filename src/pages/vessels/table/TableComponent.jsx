@@ -18,6 +18,8 @@ import { PiWarningLight } from "react-icons/pi";
 
 export default function TableComponent({ csrfToken }) {
   const { vesselsData, updateVesselsData } = useContext(DataContext);
+  console.log("vesselsData: ", vesselsData)
+
   const [filteredData, setFilteredData] = useState([]);
   const [classData, setClassData] = useState([]);
   const [typeData, setTypeData] = useState([]);
@@ -301,7 +303,7 @@ const handleConfirmDeleteVessel = () => {
             />
         </div>
 
-  {/*============= Add FORM ============================*/}
+{/*============= Add FORM ============================*/}
   <Dialog open={openAddForm} onClose={handleCloseAddForm}>
     <DialogTitle>Add Vessels</DialogTitle>
        <div className="p-10 flex flex-col gap-3 w-[600px]">
@@ -381,11 +383,10 @@ const handleConfirmDeleteVessel = () => {
    </Dialog>
 
 
-     {/*============= UPDATE FORM ============================*/}
-     <Dialog open={openUpdateForm} onClose={handleCloseUpdateForm}>
+{/*============= UPDATE FORM ============================*/}
+  <Dialog open={openUpdateForm} onClose={handleCloseUpdateForm}>
   <DialogTitle>Update Vessel</DialogTitle>
   <div className="p-10 flex flex-col gap-3 w-[600px]">
-    {/* Input fields for updating vessel data */}
     <TextField
       value={formData.vessel_name || ''}
       onChange={handleFormChange}
@@ -416,6 +417,8 @@ const handleConfirmDeleteVessel = () => {
     </Button>
   </DialogActions>
 </Dialog>
+
+
 
 
 

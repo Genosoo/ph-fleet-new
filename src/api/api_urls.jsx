@@ -105,7 +105,25 @@ export const apiCarTrackSettings = `${baseUrl}/api/cartrack_settings/`
 
 // INCIDENT
 export const apiIncident = `${baseUrl}/api/incident/`;
+export const apiIncidentSeverity = `${baseUrl}/api/incident_severity/`;
+export const apiIncidentType = `${baseUrl}/api/incident_type/`;
+export const apiIncidentStatus = `${baseUrl}/api/incident_status/`;
 
+// ---MANAGE INCIDENT SEVERITY---
+// URL: [BASE_URL]/api/incident_severity/
+// Methods Allowed: GET, POST, PUT, DELETE
+
+// ---MANAGE INCIDENT TYPE---
+// URL: [BASE_URL]/api/incident_type/
+// Methods Allowed: GET, POST, PUT, DELETE
+
+// ---MANAGE INCIDENT STATUS---
+// URL: [BASE_URL]/api/incident_status/
+// Methods Allowed: GET, POST, PUT, DELETE
+
+// ---MANAGE INCIDENT---
+// URL: [BASE_URL]/api/incident/
+// Methods Allowed: GET, POST, PUT, DELETE
 
 // VIDEOSTREAM
 export const apiVideoStream = `${baseUrl}/api/video_stream_latest`;

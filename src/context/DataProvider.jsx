@@ -10,13 +10,17 @@ import {
   apiVideoStream,
   apiOfficesData,
   apiVehiclesData,
-  apiIncident,
   apiCarTrack,
   apiCheckInToday,
   apiVesselsData,
   apiUsers,
   apiAircraftData,
   apiAccount,
+
+  apiIncident,
+  apiIncidentType,
+  apiIncidentSeverity,
+  apiIncidentStatus
 } from '../api/api_urls';
 
 export const DataContext = createContext();
@@ -31,13 +35,18 @@ export default function DataProvider({ children }) {
     videoStreamData: [],
     officeData: [],
     vehiclesData: [],
-    incidentData: [],
     carData: [],
     checkInData: [],
     vesselsData: [],
     usersData: [],
-    aircraftData: [],
+    aircraftsData: [],
     accountData: {},
+
+    incidentData: [],
+    incidentType: [],
+    incidentSeverity: [],
+    incidentStatus: [],
+
   });
 
   useEffect(() => {
@@ -51,13 +60,19 @@ export default function DataProvider({ children }) {
           videoStreamResponse,
           officeResponse,
           vehiclesResponse,
-          incidentResponse,
+        
           carResponse,
           checkInResponse,
           vesselsResponse,
           usersResponse,
           aircraftResponse,
           accountResponse,
+
+          incidentResponse,
+          incidentTypeResponse,
+          incidentSeverityResponse,
+          incidentStatusResponse,
+
         ] = await Promise.all([
           axios.get(apiMarineTrafficData),
           axios.get(apiTrakSatData),
@@ -66,13 +81,18 @@ export default function DataProvider({ children }) {
           axios.get(apiVideoStream),
           axios.get(apiOfficesData),
           axios.get(apiVehiclesData),
-          axios.get(apiIncident),
           axios.get(apiCarTrack),
           axios.get(apiCheckInToday),
           axios.get(apiVesselsData),
           axios.get(apiUsers),
           axios.get(apiAircraftData),
           axios.get(apiAccount),
+
+          axios.get(apiIncident),
+          axios.get(apiIncidentType),
+          axios.get(apiIncidentSeverity),
+          axios.get(apiIncidentStatus),
+
         ]);
 
         setData({
@@ -83,13 +103,18 @@ export default function DataProvider({ children }) {
           videoStreamData: videoStreamResponse.data.success,
           officeData: officeResponse.data.success,
           vehiclesData: vehiclesResponse.data.success,
-          incidentData: incidentResponse.data.success,
           carData: carResponse.data.data,
           checkInData: checkInResponse.data.success,
           vesselsData: vesselsResponse.data.success,
           usersData: usersResponse.data.success,
-          aircraftData: aircraftResponse.data.success,
+          aircraftsData: aircraftResponse.data.success,
           accountData: accountResponse.data.success,
+
+          incidentData: incidentResponse.data.success,
+          incidentType: incidentTypeResponse.data.success,
+          incidentSeverity: incidentSeverityResponse.data.success,
+          incidentStatus: incidentStatusResponse.data.success,
+
         });
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -125,8 +150,30 @@ export default function DataProvider({ children }) {
     }));
   };
 
+   // Define a function to update accountData state
+   const updateAircraftsData = (newAircraftsData) => {
+    setData((prevData) => ({
+      ...prevData,
+      aircraftsData: newAircraftsData,
+    }));
+  };
+
+  const updateIncidentData = (newIncidentData) => {
+    setData((prevData) => ({
+      ...prevData,
+      incidentData: newIncidentData,
+    }));
+  };
+
+
   return (
-    <DataContext.Provider value={{ ...data, updateVesselsData, updateUsersData, updateAccountData }}>
+    <DataContext.Provider value={{ ...data, 
+      updateVesselsData, 
+      updateUsersData, 
+      updateAccountData, 
+      updateAircraftsData,
+      updateIncidentData
+     }}>
       {isLoading ? <Loader /> : children}
     </DataContext.Provider>
   );

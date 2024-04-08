@@ -199,7 +199,7 @@
     }
 
     .stCardHeader img{
-        @apply w-[33px]
+        @apply w-[30px] mx-1
     }
     
     .stCardHeader h3{
@@ -240,12 +240,18 @@
         @apply bg-[#F9F9F9] 
     }
 
+
+
     .stCardDetail span p:nth-child(2),
     .stCardDetail span p:nth-child(4),
     .stCardDetail span p:nth-child(6),
     .stCardDetail span p:nth-child(8),
     .stCardDetail span p:nth-child(10) {
         @apply bg-[#ffffff] 
+    }
+
+    .spidertracks_name{
+        @apply text-[9px] top-1 w-[60px] p-1 flex items-center justify-center  text-center left-8 text-black font-bold rounded-[10px] bg-blue-200   absolute
     }
 
     .incidentCardContainer{
@@ -531,6 +537,55 @@
     .carCardDetail span p:nth-child(10) {
         @apply bg-[#ffffff] 
     }
+
+
+
+    .videoCardContainer{
+        @apply z-[2000]  font-manrope cursor-pointer absolute top-10 left-16 
+        overflow-hidden rounded-[15px]   bg-white 
+    }
+
+    .videoCardHeader{
+        @apply flex gap-3 items-center p-3 border-b-2  justify-between
+    }
+
+    .videoCardHeader img{
+        @apply w-[30px]
+    }
+
+    .videoCardHeader h3{
+        @apply text-base font-bold
+    }
+
+    .videoClose{
+        @apply bg-white text-[25px] rounded-full text-black hover:bg-black
+         hover:text-white duration-200 right-2
+    }
+
+    .videoCardBtn{
+        @apply  flex w-full items-center justify-center text-white p-2 rounded-md mb-2
+    }
+
+    .videoCardDetail{
+        @apply flex flex-col p-2 
+    }
+
+    .videoCardDetail span{
+        @apply p-2 flex gap-3
+    }
+
+    .videoCardDetail span p{
+        @apply text-sm
+    }
+
+    .videoCardDetail span h3{
+        @apply text-sm font-bold
+    }
+
+
+
+  
+ 
     
 }
 
@@ -767,10 +822,9 @@
 
 
     .spidertrak-marker{
-        font-size:20px;
-        width:32px !important;
+        width:35px !important;
         border-radius:50%;
-        height:32px !important;
+        height:35px !important;
         text-align: center;
         display: flex;
         align-items: center;

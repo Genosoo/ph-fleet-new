@@ -6,10 +6,8 @@ export default function Page() {
  const csrfToken =  GetToken()
 
   return (
-    <main className="vesselsContainer">
-    <TableComponent 
-        csrfToken={csrfToken}
-    />
+    <main className="aircraftsContainer">
+       <TableComponent csrfToken={csrfToken}/>
     </main>
   )
 }

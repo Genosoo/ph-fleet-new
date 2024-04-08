@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useLocation} from 'react-router-dom';
 import { baseUrl } from '../../../api/api_urls';
-import noImage from '../../../assets/no-image.svg'
+import noImage from '../../../assets/no-user-image.png'
 export default function Profile() {
     const location = useLocation();
     console.log({location });
@@ -19,14 +19,14 @@ export default function Profile() {
             )}
 
               <span className='textBox'>
-                <p className='text1'>{item?.username || "--"}</p>
+                <p className='text1'>{item?.username || "N/A"}</p>
                   <p className='text2'>
-                  {item?.personal_details?.first_name || "---"}{' '}
+                  {item?.personal_details?.first_name || "N/A"}{' '}
                   {item?.personal_details?.middle_name ? item.personal_details.middle_name + ' ' : ''} 
-                  {item?.personal_details?.last_name || "---"}
+                  {item?.personal_details?.last_name || "N/A"}
                 </p>
 
-                <p className='text3'>{item?.personal_details?.rank_name || "--"}</p>
+                <p className='text3'>{item?.personal_details?.rank_name || "N/A"}</p>
               </span>
           </div>
         </div>

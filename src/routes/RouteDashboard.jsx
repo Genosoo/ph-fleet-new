@@ -17,7 +17,8 @@ import Account from '../pages/account/Account';
 import AutoLogout from '../auth/autoLogout/AutoLogout';
 import Offices from '../pages/offices/Offices';
 import Vehicles from '../pages/vehicles/Vehicles';
-import Incidents from '../pages/incidents/Incidents';
+import Incidents from '../pages/incidents/Page';
+import AddIncidentReport from '../pages/incidents/addreport/AddReport';
 
 import MarineTrafficList from '../pages/dashboard/listPage/MarineTrafficList';
 import TracksatList from '../pages/dashboard/listPage/TracksatList';
@@ -57,6 +58,7 @@ export default function RouteDashboard() {
             <Route path='reports' element={<Reports />} />
             <Route path='alerts' element={<Alerts />} />
             <Route path='incidents' element={<Incidents />} />
+            <Route path='/incidents/add-report' element={<AddIncidentReport />} />
 
             <Route path='roles' element={<Roles />} />
             <Route path='users' element={<Users />} />
@@ -87,6 +89,7 @@ export default function RouteDashboard() {
           <>
             <Route index element={<Map />} />
             <Route path='map' element={<Map />} />
+            <Route path='incidents' element={<Incidents />} />
           </>
         )}
 

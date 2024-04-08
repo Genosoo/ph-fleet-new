@@ -4,7 +4,7 @@ export default function ButtonAdd({ handleOpenAddForm }) {
   return (
     <button className="btnAdd" onClick={handleOpenAddForm}>
         <FaPlus className="icon" />
-        Add Aircraft
+        Add Aircrafts
     </button>
   )
 }

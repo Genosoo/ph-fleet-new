@@ -1,6 +1,12 @@
 import styled from "styled-components";
 
-import { TableCell, Table, TableContainer } from "@mui/material";
+import { TableCell, Table, TableContainer, Dialog } from "@mui/material";
+
+export const StyledDialog = styled(Dialog)`
+  .MuiDialog-paper {
+    border-radius: 12px;
+  }
+`;
 
 export const StyledTableCell = styled(TableCell)`
   font-family: "Manrope", "sans-serif";
