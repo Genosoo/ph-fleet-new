@@ -8,8 +8,8 @@ import './ButtonsStyle.css'
 // Styled ToggleButtonGroup
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)`
   && {
-    background-color: rgba(255, 255, 255, 0.846); /* #fff with 50% opacity */
-    border-radius: 10px; /* Border radius */
+    background-color: rgba(255, 255, 255, 0.846) !important; /* #fff with 50% opacity */
+    border-radius: 10px !important; /* Border radius */
     overflow:hidden;
    
   }
@@ -17,22 +17,22 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)`
 
 // Styled ToggleButton
 const StyledToggleButton = styled(ToggleButton)`
-  border: 0;
-  font-family:"Manrope", "sans-serif";
-  width:100px;
-  font-size: 11px;
-  font-weight:800;
-  text-transform: capitalize;
+  border: 0 !important;
+  font-family:"Manrope", "sans-serif " !important;
+  width:100px !important;
+  font-size: 11px !important;
+  font-weight:800 !important;
+  text-transform: capitalize !important;
   && {
-    color: #000; /* Text color */
+    color: #000 !important; /* Text color */
     &.MuiToggleButton-root.Mui-selected {
-      background-color: #fff;
-      border-radius: 7px;
-      margin: 7px;
-      box-shadow:0 0 5px #00000048;
+      background-color: #fff !important;
+      border-radius: 7px !important;
+      margin: 7px !important;
+      box-shadow:0 0 5px #00000048 !important;
     }
     &:hover {
-      background-color: transparent; /* Remove hover effect */
+      background-color: transparent !important; /* Remove hover effect */
     }
   }
 `;

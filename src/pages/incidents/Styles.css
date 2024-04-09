@@ -167,5 +167,145 @@
     .deleteDialogBtn .cancel{
         @apply border
     }
+
+
+    .reportAddContainer{
+        @apply px-5 font-manrope
+    }
+
+   
+    .reportAddBoxWrapper{
+        box-shadow:0 0 10px #00000033;
+        @apply flex gap-5 p-5  w-[98%]  rounded-lg
+    }
+
+    
+
+    .reportAddBox{
+        @apply w-full flex flex-col gap-5 justify-between
+    }
+    
+    .reportAddBoxInputs{
+        @apply flex flex-col gap-5
+    }
+
+    .reportAddBox3{
+        @apply w-full flex flex-col gap-5
+    }
+
+    .reportAddBox textarea{
+        @apply border w-full  p-2 rounded-md 
+    }
+    
+    .reportAddBox input{
+        @apply border w-full  p-2 rounded-md 
+    }
+    
+
+    .reportAddBox span p{
+        @apply text-base font-bold pb-2
+    }
+
+   
+    .incidentContainer button{
+        @apply hover:bg-[#404958] hover:text-white duration-150
+    }
+
+    .reportAddBox3 span p{
+        @apply text-base font-bold pb-2 
+    }
+
+    .reportAddMapContainer{
+        @apply w-full h-[400px] rounded-lg overflow-hidden
+    }
+
+    .reportAddImageUpload{
+        @apply  rounded-md flex flex-col gap-3
+    }
+
+  
+    .reportAddImageUpload p{
+        @apply text-lg font-bold 
+    }
+
+    .reportAddImageUpload img{
+        @apply w-full h-[300px] rounded-md object-fill
+    }
+
+    .addressBox{ 
+        @apply flex   rounded-md px-5
+    }
+
+
+    .btnReportInfo{
+        @apply border border-black rounded-md font-bold p-2 bg-white hover:bg-[#404958] hover:text-white duration-150
+    }
+
+
+    .reportIncidentInfoContainer{
+        @apply font-manrope flex gap-5
+    }
+
+
+    .reportIncidentInfoWrapper{
+        @apply flex flex-col gap-5 bg-slate-50 p-5
+    }
+
+    .reportIncidentInfoBox1 img{
+        @apply w-[500px] rounded-[10px] h-[350px] object-cover
+    }
+
+    .reportIncidentInfoMap{
+        @apply w-[500px] h-[350px]  rounded-[10px] overflow-hidden
+    }
+
+    .infoTitle{
+        @apply font-bold text-sm mb-2
+    }
+
+    .reportIncidentInfoWrapper2{
+        @apply bg-slate-50 p-5
+    }
+
+    .reportIncidentInfoDetailBox{
+        @apply flex flex-col gap-5 w-[500px]
+    }
+
+    .reportIncidentDetailCard{
+        @apply bg-white p-5 shadow-sm  rounded-[10px]
+    }
+
+    .reportIncidentDetailCard p{
+        @apply text-sm tracking-wider font-normal bg-slate-100 p-3 rounded-[10px]
+    }
+
+    
+
+    .reportIncidentInfoWrapper3{
+        @apply font-manrope flex gap-5 bg-slate-50 p-5 
+    }
+
+    .reportIncidentInfoBoxRepoter{
+        @apply flex flex-col gap-5
+    }
+
+    
+    
+    .reportIncidentBox img{
+        @apply w-[200px] h-[200px] rounded-full object-cover border-2 border-[#404958] p-2 bg-white
+    }
+
+    .reportIncidentCardInfo{
+        @apply bg-white p-3
+    }
+
+    .reportIncidentCardInfo p{
+        @apply font-bold text-sm 
+    }
+
+    .reportIncidentCardInfo h3{
+        @apply text-sm tracking-wider font-normal bg-slate-100 p-3 rounded-[10px] w-[400px]
+    }
+  
 }
 

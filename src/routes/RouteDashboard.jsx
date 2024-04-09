@@ -34,6 +34,8 @@ import { DataContext } from '../context/DataProvider';
 import { useContext } from "react";
 import ChangePassword from '../pages/account/changepassword/ChangePassword';
 import UpdateAccount from '../pages/account/update/UpdateAccount';
+import ReportInfo from '../pages/incidents/reportinfo/ReportInfo';
+import UpdateReport from '../pages/incidents/update/UpdateReport';
 
 export default function RouteDashboard() {
   const {accountData } = useContext(DataContext)
@@ -59,6 +61,8 @@ export default function RouteDashboard() {
             <Route path='alerts' element={<Alerts />} />
             <Route path='incidents' element={<Incidents />} />
             <Route path='/incidents/add-report' element={<AddIncidentReport />} />
+            <Route path='/incidents/report-information' element={<ReportInfo/>} />
+            <Route path='/incidents/update-report' element={<UpdateReport/>} />
 
             <Route path='roles' element={<Roles />} />
             <Route path='users' element={<Users />} />
@@ -90,12 +94,16 @@ export default function RouteDashboard() {
             <Route index element={<Map />} />
             <Route path='map' element={<Map />} />
             <Route path='incidents' element={<Incidents />} />
+            <Route path='/incidents/add-report' element={<AddIncidentReport />} />
+            <Route path='/incidents/update-report' element={<UpdateReport/>} />
+
           </>
         )}
 
         <Route path='account' element={<Account />} />
         <Route path='/account/change-password' element={<ChangePassword />} />
         <Route path='/account/update-account' element={<UpdateAccount/>} />
+        <Route path='/incidents/report-information' element={<ReportInfo/>} />
 
       </Routes>
     </AutoLogout>

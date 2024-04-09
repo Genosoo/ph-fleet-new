@@ -283,7 +283,7 @@ const handleDeleteAircrafts = async (id) => {
   return (
     <div className="aircraftsTableWrapper">
         <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'right' }}  open={snackbarOpen} autoHideDuration={2000} onClose={handleSnackbarClose}>
-                <Alert onClose={handleSnackbarClose} severity={successMessage ? "success" : "error"}>
+                <Alert  variant="filled" onClose={handleSnackbarClose} severity={successMessage ? "success" : "error"}>
                     {successMessage || errorMessage}
                 </Alert>
        </Snackbar>

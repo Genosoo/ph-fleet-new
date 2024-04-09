@@ -302,7 +302,7 @@ export default function TableComponent({  csrfToken }) {
     return (
         <div className="usersTableWrapper">
            <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'right' }}  open={snackbarOpen} autoHideDuration={2000} onClose={handleSnackbarClose}>
-                <Alert onClose={handleSnackbarClose} severity={successMessage ? "success" : "error"}>
+                <Alert variant="filled" onClose={handleSnackbarClose} severity={successMessage ? "success" : "error"}>
                     {successMessage || errorMessage}
                 </Alert>
             </Snackbar>
