@@ -38,7 +38,7 @@ export default function ReportInfo() {
         <div className="reportIncidentInfoWrapper2">
              <div className="reportIncidentInfoDetailBox">
                 <div className="reportIncidentDetailCard">
-                    <h3 className='infoTitle'>Incident Discription</h3>
+                    <h3 className='infoTitle'>Incident Description</h3>
                     <p>{item?.incident_details || "N/A"}</p>
                 </div>
 

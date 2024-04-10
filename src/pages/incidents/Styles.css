@@ -6,7 +6,7 @@
         @apply font-manrope pr-10 pl-3 pb-10
     }
 
-    .incidentContainer button{
+    .incidentTableContainer button{
         @apply hover:bg-[#404958] hover:text-white duration-150
     }
 
@@ -207,10 +207,7 @@
     }
 
    
-    .incidentContainer button{
-        @apply hover:bg-[#404958] hover:text-white duration-150
-    }
-
+  
     .reportAddBox3 span p{
         @apply text-base font-bold pb-2 
     }
@@ -243,7 +240,7 @@
 
 
     .reportIncidentInfoContainer{
-        @apply font-manrope flex gap-5
+        @apply font-manrope flex gap-5 flex-wrap p-10
     }
 
 
@@ -252,7 +249,7 @@
     }
 
     .reportIncidentInfoBox1 img{
-        @apply w-[500px] rounded-[10px] h-[350px] object-cover
+        @apply  w-[500px] rounded-[10px] h-[350px] object-cover
     }
 
     .reportIncidentInfoMap{
@@ -268,7 +265,7 @@
     }
 
     .reportIncidentInfoDetailBox{
-        @apply flex flex-col gap-5 w-[500px]
+        @apply flex flex-col gap-5 w-[400px]
     }
 
     .reportIncidentDetailCard{
@@ -306,6 +303,43 @@
     .reportIncidentCardInfo h3{
         @apply text-sm tracking-wider font-normal bg-slate-100 p-3 rounded-[10px] w-[400px]
     }
+
+    .updateReportContainer{
+        @apply font-manrope flex flex-col
+        gap-5 pr-20 pb-10
+    }
+
+    .updateReportContainer p{
+        @apply font-bold text-sm mb-3
+    }
+
+    .updateMapBox{
+        @apply h-[400px]
+    }
+
+    .updateReportImage{
+        @apply rounded-[10px]
+    }
   
+
+    .statusSelect{
+        @apply p-2 rounded-md text-sm font-manrope text-black  flex items-start justify-items-start 
+    }
+
+    .statusSelect option{
+        @apply bg-white  text-black border-0 outline-none
+    }
+
+    .selectFilter{
+        @apply text-xl 
+    }
+
+    .statusTableCell{
+        @apply flex justify-between px-3 items-center 
+    }
+
+    .actionTableBox{
+        @apply flex gap-2 items-center 
+    }
 }
 

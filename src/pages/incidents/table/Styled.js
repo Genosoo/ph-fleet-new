@@ -9,8 +9,12 @@ export const StyledDialog = styled(Dialog)`
 `;
 
 export const StyledTableCell = styled(TableCell)`
-  font-family: "Manrope", "sans-serif";
-  min-width: 200px;
+  font-family: "Manrope", "sans-serif" !important;
+  min-width: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 0 !important;
 `;
 
 export const StyledTable = styled(Table)`
@@ -21,6 +25,14 @@ export const StyledTable = styled(Table)`
     z-index: 1;
     background-color: #404958;
     color: white;
+  }
+
+  tr {
+    background-color: #ffffff;
+
+    &:nth-child(even) {
+      background-color: #f9f9f9; /* You can adjust the color as needed */
+    }
   }
 `;
 

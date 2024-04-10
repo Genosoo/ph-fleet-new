@@ -327,7 +327,17 @@ export default function AddReport() {
 
              <div className="reportAddBox3">
                <span className="">
-               <p>Select Incident address</p>
+               <p>Enter or Select Incident Address on the Map</p>
+               <TextField
+                        autoFocus
+                        margin="dense"
+                        name="address_incident"
+                        label="Incident Address"
+                        type="text"
+                        fullWidth
+                        value={formData.address_incident}
+                        onChange={handleFormChange}
+                    />   
                   <div className="addressBox">
                     <StyledFormControlLabel control={<StyledCheckbox
                         value="device"
@@ -347,16 +357,7 @@ export default function AddReport() {
                   
                   <span>
                     <p>Incident Address</p>
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        name="address_incident"
-                        label="Incident Address"
-                        type="text"
-                        fullWidth
-                        value={formData.address_incident}
-                        onChange={handleFormChange}
-                    />   
+                  
                   </span>
 
                         <div className="reportAddMapContainer">

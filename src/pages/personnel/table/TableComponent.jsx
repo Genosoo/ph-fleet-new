@@ -1,54 +1,322 @@
-
+/* eslint-disable react/prop-types */
+// eslint-disable-next-line react-hooks/exhaustive-deps
 // eslint-disable-next-line react/prop-types
 import { useState, useEffect, useContext } from "react";
-import { TableBody, TableHead, TableRow, TablePagination,} from "@mui/material";
+import {  TableBody, TableHead, TableRow, TablePagination,
+   TextField, Button, Dialog, DialogTitle, DialogContent, DialogActions, Select, MenuItem, FormControl,InputLabel,
+   Snackbar, Alert
+} from "@mui/material";
 import Search from "./Search";
+import axios from 'axios';
 import { Link } from "react-router-dom";
-import { StyledTableCell, StyledTable, StyledTableContainer } from "./Styled";
+import { apiPersonnelRank, apiPersonnelStatus, apiPersonnelData, apiUnit, apiOfficesData, baseUrl, apiRoles } from "../../../api/api_urls";
+import ButtonAdd from "./buttons/buttonAdd";
+import {StyledDialog, StyledTableCell, StyledTable, StyledTableContainer } from "./Styled";
+import ButtonUpdate from "./buttons/ButtonUpdate";
+import ButtonDelete from "./buttons/ButtonDelete";
 import ButtonProfile from "./buttons/ButtonProfile";
 import { DataContext } from "../../../context/DataProvider";
+import { PiWarningLight } from "react-icons/pi";
 
-export default function TableComponent() {
-    const { checkInData } = useContext(DataContext);
+
+export default function TableComponent({  csrfToken }) {
+   const { personnelData, updatePersonnelData } = useContext(DataContext);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [searchQuery, setSearchQuery] = useState("");
     const [filteredData, setFilteredData] = useState([]);
+    const [openAddForm, setOpenAddForm] = useState(false);
+    const [openUpdateForm, setOpenUpdateForm] = useState(false);
+    const [openDeleteConfirmation, setOpenDeleteConfirmation] = useState(false);
+    const [deleteUserId, setDeleteUserId] = useState(null);
+    const [formData, setFormData] = useState({
+        username: "",
+        password: "",
+        groups:[],
+        personal_details: {
+            first_name: "",
+            last_name: "",
+            middle_name: "",
+            gender:"",
+            email: "",
+            mobile_number: "",
+            image: "",
+            rank:"",
+            personnel_status:"",
+            unit:"",
+        }
+    });
+    const [rankData, setRankData] = useState([]);
+    const [statusData, setStatusData] = useState([]);
+    const [unitData, setUnitData] = useState([]);
+    const [officeData, setOfficeData] = useState([]);
+    const [rolesData, setRolesData] = useState([]);
 
 
+    const [selectedUser, setSelectedUser] = useState(null);
 
+    const [successMessage, setSuccessMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
 
+    const handleSnackbarClose = () => {
+        setSnackbarOpen(false);
+    };
 
+    const showSuccessMessage = (message) => {
+        setSuccessMessage(message);
+        setSnackbarOpen(true);
+        setTimeout(() => {
+            setSuccessMessage("");
+            setSnackbarOpen(false);
+        }, 2000);
+    };
+
+    const showErrorMessage = (message) => {
+        setErrorMessage(message);
+        setSnackbarOpen(true);
+        setTimeout(() => {
+            setErrorMessage("");
+            setSnackbarOpen(false);
+        }, 2000);
+    };
+
+    const handleOpenDeleteConfirmation = (userId) => {
+        setDeleteUserId(userId);
+        setOpenDeleteConfirmation(true);
+    };
+
+    const handleCloseDeleteConfirmation = () => {
+        setOpenDeleteConfirmation(false);
+        setDeleteUserId(null);
+    };
+
+    const handleConfirmDeleteUser = () => {
+        handleDeleteUser(deleteUserId);
+        handleCloseDeleteConfirmation();
+    };
+
+    const handleOpenUpdateForm = (user) => {
+        setSelectedUser(user);
+        setFormData({
+            username: user.username,
+            password: user.password,
+            groups: user.roles,
+            personal_details: {
+                ...user.personal_details
+            }
+        });
+
+        console.log({
+            username: user.username,
+            password: user.password,
+            personal_details: {
+                ...user.personal_details
+            }
+        })
+
+        setOpenUpdateForm(true);
+    };
+
+    const handleCloseUpdateForm = () => {
+        setOpenUpdateForm(false);
+        setSelectedUser(null);
+        resetFormData();
+    };
+    
+    useEffect(() => {
+      const fetchData = async () => {
+          try {
+              const rankResponse = await axios.get(apiPersonnelRank);
+              const statusResponse = await axios.get(apiPersonnelStatus);
+              const unitResponse = await axios.get(apiUnit);
+              const officeResponse = await axios.get(apiOfficesData);
+              const rolesResponse = await axios.get(apiRoles);
+
+              setRankData(rankResponse.data.success)
+              setStatusData(statusResponse.data.success)
+              setUnitData(unitResponse.data.success)
+              setOfficeData(officeResponse.data.success)
+              setRolesData(rolesResponse.data.success)
+
+              console.log('rank:', rankResponse.data.success)
+              console.log('status:', statusResponse.data.success)
+              console.log('unit:', unitResponse.data.success)
+              console.log('office:', officeResponse.data.success)
+              console.log('roles:', rolesResponse.data.success)
+
+          } catch (error) {
+              console.error(error);
+          }
+      };
+
+        fetchData();
+    }, []);
 
     useEffect(() => {
-        const filteredResult = checkInData.filter(item => {
+        const filteredResult = personnelData.filter(item => {
             const username = item.username ? item.username.toLowerCase() : '';
             return username.includes(searchQuery.toLowerCase());
         });
         setFilteredData(filteredResult);
-    }, [searchQuery, checkInData]);
+    }, [searchQuery, personnelData]);
 
     const handleChangePage = (event, newPage) => setPage(newPage);
     const handleChangeRowsPerPage = (event) => {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
-
-    
     const handleSearchChange = (e) => setSearchQuery(e.target.value);
-  
+    // const handleFormChange = (e) => {
+    //     const { name, value } = e.target;
+    //     if (name.includes("personal_details")) {
+    //         const [key, subKey] = name.split(".");
+    //         setFormData(prevState => ({
+    //             ...formData,
+    //             [key]: {
+    //                 ...prevState[key],
+    //                 [subKey]: value
+    //             }
+    //         }));
+    //     } else {
+    //         setFormData({ ...formData, [name]: value });
+    //     }
+    // };
+
+    const handleFormChange = (e) => {
+      const { name, value } = e.target;
+      if (name.includes("personal_details")) {
+          const [key, subKey] = name.split(".");
+          setFormData(prevState => ({
+              ...formData,
+              [key]: {
+                  ...prevState[key],
+                  [subKey]: value
+              }
+          }));
+      } else if (name === "groups") {
+          setFormData({ ...formData, groups: [value] }); // Update roles as an array
+      } else {
+          setFormData({ ...formData, [name]: value });
+      }
+  };
+
+    const handleOpenAddForm = () => setOpenAddForm(true);
+    const handleCloseAddForm = () => {
+        setOpenAddForm(false);
+        resetFormData();
+    };
+
+    const resetFormData = () => {
+        setFormData({
+            username: "",
+            password: "",
+            groups: [],
+            personal_details: {
+                first_name: "",
+                last_name: "",
+                email: "",
+                mobile_number: "",
+                image: "",
+                rank:"",
+                personnel_status:"",
+                unit:"",
+                office: "",
+                // middle_name: "",
+                gender:"",
+            }
+        });
+    };
+
+    const handleAddUser = async () => {
+        try {
+            const response = await axios.post(apiPersonnelData, formData, {
+                headers: {
+                    'X-CSRFToken': csrfToken
+                }
+            });
+            const newUser = response.data.data;
+            updatePersonnelData([...personnelData, newUser]);
+            setFilteredData([...filteredData, newUser]);
+            handleCloseAddForm();
+            showSuccessMessage("User added successfully!");
+        } catch (error) {
+            console.error('Error adding user:', error);
+            showErrorMessage("Failed to add user!");
+        }
+    };
+
+    const handleUpdateUser = async () => {
+        try {
+            const updatedFormData = { ...formData, id: selectedUser.id };
+
+            const response = await axios.put(apiPersonnelData, updatedFormData, {
+                headers: {
+                    'X-CSRFToken': csrfToken
+                }
+            });
+            const updatedPersonnel = response.data.data;
+            const updatedPersonnels = personnelData.map(user => {
+                if (user.id === updatedPersonnel.id) {
+                    return updatedPersonnel;
+                }
+                return user;
+            });
+            updatePersonnelData(updatedPersonnels);
+            setFilteredData(updatedPersonnels);
+            handleCloseUpdateForm();
+            showSuccessMessage("User updated successfully!");
+        } catch (error) {
+            console.error('Error updating user:', error);
+            showErrorMessage("Failed to update user!");
+        }
+    };
+
+    const handleDeleteUser = async (id) => {
+        try {
+            await axios.delete(apiPersonnelData, {
+                data: { id },
+                headers: {
+                    'X-CSRFToken': csrfToken
+                }
+            });
+            const updatedPersonnel = personnelData.filter(personnel => personnel.id !== id);
+            updatePersonnelData(updatedPersonnel);
+            setFilteredData(updatedPersonnel);
+            showSuccessMessage("Personnel deleted successfully!");
+        } catch (error) {
+            console.error('Error deleting Personnel:', error.message);
+            showErrorMessage("Failed to delete Personnel!");
+        }
+    };
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setFormData({ ...formData, personal_details: { ...formData.personal_details, image: reader.result } });
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
     return (
         <div className="usersTableWrapper">
-         
+           <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'right' }}  open={snackbarOpen} autoHideDuration={2000} onClose={handleSnackbarClose}>
+                <Alert variant="filled" onClose={handleSnackbarClose} severity={successMessage ? "success" : "error"}>
+                    {successMessage || errorMessage}
+                </Alert>
+            </Snackbar>
             <div className="usersTableTopBox">
                 <Search handleSearchChange={handleSearchChange} searchQuery={searchQuery} />
-                {/* <ButtonAdd handleOpenAddForm={handleOpenAddForm} /> */}
+                <ButtonAdd handleOpenAddForm={handleOpenAddForm} />
             </div>
 
             <div className="usersTableContainer">
             <StyledTableContainer >
            <StyledTable stickyHeader aria-label="sticky table" > 
-                <TableHead>
+                <TableHead >
                     <TableRow>
                         <StyledTableCell>Username</StyledTableCell>
                         <StyledTableCell>First Name</StyledTableCell>
@@ -62,32 +330,28 @@ export default function TableComponent() {
                         <StyledTableCell sx={{ position: "sticky", right: 0 }}>Action</StyledTableCell>
                     </TableRow>
                 </TableHead>
-                  <TableBody>
-        {filteredData.length === 0 ? (
-            <TableRow>
-                <StyledTableCell >No data to show</StyledTableCell>
-            </TableRow>
-        ) : (
-            filteredData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item, index) => (
-                <TableRow key={index}>
-                    <StyledTableCell>{item?.username || "N/A"}</StyledTableCell>
-                    <StyledTableCell>{item?.personal_details?.first_name || "N/A"}</StyledTableCell>
-                    <StyledTableCell>{item?.personal_details?.last_name || "N/A"}</StyledTableCell>
-                    <StyledTableCell>{item?.personal_details?.email || "N/A"}</StyledTableCell>
-                    <StyledTableCell>{item?.personal_details?.mobile_number || "N/A"}</StyledTableCell>
-                    <StyledTableCell>{item.roles && item.roles.length ? item.roles : "Users"}</StyledTableCell>
-                    <StyledTableCell>{item?.personal_details?.rank_name || "N/A"}</StyledTableCell>
-                    <StyledTableCell>{item?.personal_details?.status_name || "N/A"}</StyledTableCell>
-                    <StyledTableCell>{item?.personal_details?.unit_name || "N/A"}</StyledTableCell>
-                    <StyledTableCell   sx={{display:"flex", gap:1, alignItems:"center", position: "sticky", right: 0}}>
-                        <Link to={'/fleet/personnel/profile'} state={{ user: filteredData[page * rowsPerPage + index] }} >
-                            <ButtonProfile />
-                        </Link>
-                    </StyledTableCell>
-                </TableRow>
-            ))
-        )}
-    </TableBody>
+                <TableBody>
+                    {filteredData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item, index) => (
+                        <TableRow key={index}>
+                            <StyledTableCell>{item?.username || "N/A"}</StyledTableCell>
+                            <StyledTableCell>{item?.personal_details?.first_name || "N/A"}</StyledTableCell>
+                            <StyledTableCell>{item?.personal_details?.last_name || "N/A"}</StyledTableCell>
+                            <StyledTableCell>{item?.personal_details?.email || "N/A"}</StyledTableCell>
+                            <StyledTableCell>{item?.personal_details?.mobile_number || "N/A"}</StyledTableCell>
+                            <StyledTableCell>{item.roles && item.roles.length ? item.roles : "Users"}</StyledTableCell>
+                            <StyledTableCell>{item?.personal_details?.rank_name || "N/A"}</StyledTableCell>
+                            <StyledTableCell>{item?.personal_details?.status_name || "N/A"}</StyledTableCell>
+                            <StyledTableCell>{item?.personal_details?.unit_name || "N/A"}</StyledTableCell>
+                            <StyledTableCell sx={{display:"flex", gap:1, alignItems:"center", position: "sticky", right: 0}} >
+                                <Link to={'/fleet/personnel/profile'} state={{ user: filteredData[page * rowsPerPage + index] }} >
+                                    <ButtonProfile />
+                                </Link>
+                                <ButtonUpdate item={item} handleOpenUpdateForm={handleOpenUpdateForm} />
+                                <ButtonDelete itemId={item.id}  handleOpenDeleteConfirmation={handleOpenDeleteConfirmation}/>
+                            </StyledTableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
             </StyledTable>
             </StyledTableContainer>
             <TablePagination
@@ -101,6 +365,417 @@ export default function TableComponent() {
             />
             </div>
 
+
+{/*======================= ADD DIALOG FORM===============================*/}
+            <Dialog open={openAddForm} onClose={handleCloseAddForm}>
+                <DialogTitle>Add User</DialogTitle>
+                <DialogContent>
+
+                <div className="flex flex-col border p-5 mt-3 rounded-md">
+                       <span className="text-lg">Profile Photo</span>
+                     <input
+                        accept="image/*"
+                        id="contained-button-file"
+                        type="file"
+                        onChange={handleImageChange}
+                    />
+                    {formData.personal_details.image && (
+                          <img className="w-[300px]" src={formData.personal_details.image} alt="Uploaded" />
+                      )}
+
+                     </div>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        name="username"
+                        label="Username"
+                        type="text"
+                        fullWidth
+                        value={formData.username}
+                        onChange={handleFormChange}
+                    />
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        name="password"
+                        label="Password"
+                        type="text"
+                        fullWidth
+                        value={formData.password}
+                        onChange={handleFormChange}
+                    />
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        name="personal_details.first_name"
+                        label="First Name"
+                        type="text"
+                        fullWidth
+                        value={formData.personal_details.first_name}
+                        onChange={handleFormChange}
+                    />
+                     {/* <TextField
+                        autoFocus
+                        margin="dense"
+                        name="personal_details.middle_name"
+                        label="Middle Name"
+                        type="text"
+                        fullWidth
+                        value={formData.personal_details.middle_name}
+                        onChange={handleFormChange}
+                    /> */}
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        name="personal_details.last_name"
+                        label="Last Name"
+                        type="text"
+                        fullWidth
+                        value={formData.personal_details.last_name}
+                        onChange={handleFormChange}
+                    />
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        name="personal_details.email"
+                        label="Email"
+                        type="email"
+                        fullWidth
+                        value={formData.personal_details.email}
+                        onChange={handleFormChange}
+                    />
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        name="personal_details.mobile_number"
+                        label="Mobile Number"
+                        type="tel"
+                        fullWidth
+                        value={formData.personal_details.mobile_number}
+                        onChange={handleFormChange}
+                    />
+
+                  <FormControl fullWidth>
+                      <InputLabel id="gender">Gender</InputLabel>
+                      <Select 
+                           labelId="gender"
+                              name="personal_details.gender"
+                              value={formData.personal_details.gender}
+                              onChange={handleFormChange}
+                              fullWidth
+                           
+                          >
+                             <MenuItem  value={"male"}>Male</MenuItem>
+                             <MenuItem  value={"female"}>Female</MenuItem>
+                          </Select>
+                      </FormControl>
+
+                      <FormControl fullWidth>
+                      <InputLabel id="rank">Rank</InputLabel>
+                      <Select 
+                           labelId="rank"
+                              name="personal_details.rank"
+                              value={formData.personal_details.rank}
+                              onChange={handleFormChange}
+                              fullWidth
+                           
+                          >
+                              {rankData.map(rank => (
+                                  <MenuItem key={rank.id} value={rank.id}>
+                                      {rank.rank_name}
+                                  </MenuItem>
+                              ))}
+                          </Select>
+                      </FormControl>
+
+                      <FormControl fullWidth>
+                      <InputLabel id="status">Status</InputLabel>
+                      <Select 
+                           labelId="status"
+                              name="personal_details.personnel_status"
+                              value={formData.personal_details.personnel_status}
+                              onChange={handleFormChange}
+                              fullWidth
+                           
+                          >
+                              {statusData.map(status => (
+                                  <MenuItem key={status.id} value={status.id}>
+                                      {status.status_name}
+                                  </MenuItem>
+                              ))}
+                          </Select>
+                      </FormControl>
+
+                      <FormControl fullWidth>
+                      <InputLabel id="unit">Unit</InputLabel>
+                      <Select 
+                           labelId="unit"
+                              name="personal_details.unit"
+                              value={formData.personal_details.unit}
+                              onChange={handleFormChange}
+                              fullWidth
+                           
+                          >
+                              {unitData.map(unit => (
+                                  <MenuItem key={unit.id} value={unit.id}>
+                                      {unit.unit_name}
+                                  </MenuItem>
+                              ))}
+                          </Select>
+                      </FormControl>
+
+                      <FormControl fullWidth>
+                      <InputLabel id="office">Office</InputLabel>
+                      <Select 
+                           labelId="office"
+                              name="personal_details.office"
+                              value={formData.personal_details.office}
+                              onChange={handleFormChange}
+                              fullWidth
+                           
+                          >
+                              {officeData.map(office => (
+                                  <MenuItem key={office.id} value={office.id}>
+                                      {office.office_name}
+                                  </MenuItem>
+                              ))}
+                          </Select>
+                      </FormControl>
+
+                      <FormControl fullWidth>
+                      <InputLabel id="roles">Roles</InputLabel>
+                      <Select 
+                           labelId="roles"
+                              name="groups"
+                              value={formData.groups}
+                              onChange={handleFormChange}
+                              fullWidth
+                           
+                          >
+                            {rolesData.map((roles,index) => (
+                             <MenuItem key={index}  value={roles.name}>
+                              {roles.name}
+                             </MenuItem>
+                            ))}
+                            
+                          </Select>
+                      </FormControl>
+
+                    
+                  
+                </DialogContent>
+                <DialogActions>
+                    <Button variant="contained" onClick={handleCloseAddForm} color="secondary">Cancel</Button>
+                    <Button variant="contained" onClick={handleAddUser} color="primary">Add</Button>
+                </DialogActions>
+            </Dialog>
+
+
+{/*========================== UPDATE DIALOG FORM ============================*/}
+            <Dialog open={openUpdateForm} onClose={handleCloseUpdateForm}>
+                    <DialogTitle>Update User</DialogTitle>
+                    <DialogContent>
+                    <div className="flex flex-col border p-5 mt-3 rounded-md">
+                            <span className="text-lg">Profile Photo</span>
+                            <input
+                                accept="image/*"
+                                id="contained-button-file"
+                                type="file"
+                                onChange={handleImageChange}
+                            />
+                            {formData.personal_details.image &&
+                            <img className="w-[300px]" src={`${baseUrl}${formData.personal_details.image}`} alt="Uploaded" />
+                            }
+                        </div>
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            name="username"
+                            label="Username"
+                            type="text"
+                            fullWidth
+                            value={formData.username}
+                            onChange={handleFormChange}
+                        />
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            name="password"
+                            label="Password"
+                            type="text"
+                            fullWidth
+                            value={formData.password}
+                            onChange={handleFormChange}
+                        />
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            name="personal_details.first_name"
+                            label="First Name"
+                            type="text"
+                            fullWidth
+                            value={formData.personal_details.first_name}
+                            onChange={handleFormChange}
+                        />
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            name="personal_details.middle_name"
+                            label="Middle Name"
+                            type="text"
+                            fullWidth
+                            value={formData.personal_details.middle_name}
+                            onChange={handleFormChange}
+                        />
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            name="personal_details.last_name"
+                            label="Last Name"
+                            type="text"
+                            fullWidth
+                            value={formData.personal_details.last_name}
+                            onChange={handleFormChange}
+                        />
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            name="personal_details.email"
+                            label="Email"
+                            type="email"
+                            fullWidth
+                            value={formData.personal_details.email}
+                            onChange={handleFormChange}
+                        />
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            name="personal_details.mobile_number"
+                            label="Mobile Number"
+                            type="tel"
+                            fullWidth
+                            value={formData.personal_details.mobile_number}
+                            onChange={handleFormChange}
+                        />
+                        <FormControl fullWidth>
+                            <InputLabel id="gender">Gender</InputLabel>
+                            <Select 
+                                labelId="gender"
+                                name="personal_details.gender"
+                                value={formData.personal_details.gender}
+                                onChange={handleFormChange}
+                                fullWidth
+                            >
+                                <MenuItem  value={"male"}>Male</MenuItem>
+                                <MenuItem  value={"female"}>Female</MenuItem>
+                            </Select>
+                        </FormControl>
+                        <FormControl fullWidth>
+                            <InputLabel id="rank">Rank</InputLabel>
+                            <Select 
+                                labelId="rank"
+                                name="personal_details.rank"
+                                value={formData.personal_details.rank}
+                                onChange={handleFormChange}
+                                fullWidth
+                            >
+                                {rankData.map(rank => (
+                                    <MenuItem key={rank.id} value={rank.id}>
+                                        {rank.rank_name}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                        <FormControl fullWidth>
+                            <InputLabel id="status">Status</InputLabel>
+                            <Select 
+                                labelId="status"
+                                name="personal_details.personnel_status"
+                                value={formData.personal_details.personnel_status}
+                                onChange={handleFormChange}
+                                fullWidth
+                            >
+                                {statusData.map(status => (
+                                    <MenuItem key={status.id} value={status.id}>
+                                        {status.status_name}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                        <FormControl fullWidth>
+                            <InputLabel id="unit">Unit</InputLabel>
+                            <Select 
+                                labelId="unit"
+                                name="personal_details.unit"
+                                value={formData.personal_details.unit}
+                                onChange={handleFormChange}
+                                fullWidth
+                            >
+                                {unitData.map(unit => (
+                                    <MenuItem key={unit.id} value={unit.id}>
+                                        {unit.unit_name}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                        <FormControl fullWidth>
+                            <InputLabel id="office">Office</InputLabel>
+                            <Select 
+                                labelId="office"
+                                name="personal_details.office"
+                                value={formData.personal_details.office}
+                                onChange={handleFormChange}
+                                fullWidth
+                            >
+                                {officeData.map(office => (
+                                    <MenuItem key={office.id} value={office.id}>
+                                        {office.office_name}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+
+
+                        <FormControl fullWidth>
+                          <InputLabel id="roles">Roles</InputLabel>
+                          <Select 
+                              labelId="roles"
+                              name="groups"
+                              value={formData.groups}
+                              onChange={handleFormChange}
+                              fullWidth
+                          >
+                              {rolesData.map(roles => (
+                                  <MenuItem key={roles.id} value={roles.name}>
+                                      {roles.name}
+                                  </MenuItem>
+                              ))}
+                          </Select>
+                      </FormControl>
+                       
+                    </DialogContent>
+                    <DialogActions>
+                        <Button variant="contained" onClick={handleCloseUpdateForm} color="secondary">Cancel</Button>
+                        <Button variant="contained" onClick={handleUpdateUser} color="primary">Update</Button>
+                    </DialogActions>
+                </Dialog>
+
+{/*========================== DELETE DIALOG ============================*/}
+            <StyledDialog open={openDeleteConfirmation} onClose={handleCloseDeleteConfirmation}>
+                <div className="deleteDialogBox">
+                    <span className="deleteIcon">
+                        <PiWarningLight/>
+                    </span>
+                    <h3>Are you sure you want to <br /> delete this user?</h3>
+                   <p>
+                   This action cannot be undone. All values  <br /> associated within this field will be lost.
+                   </p>
+                  <div className="deleteDialogBtn">
+                  <button className="delete"  onClick={handleConfirmDeleteUser} >Delete field</button>
+                    <button className="cancel" onClick={handleCloseDeleteConfirmation} >Cancel</button>
+                  </div>
+                </div>
+            </StyledDialog>
         </div>
     );
 }

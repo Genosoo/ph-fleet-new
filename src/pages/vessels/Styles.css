@@ -81,23 +81,23 @@
     }
 
    
-    .textBoxWrapper{
+    .vesselsProfileContainer .textBoxWrapper{
         @apply flex flex-wrap gap-10
     }
 
-    .textBox{
+    .vesselsProfileContainer .textBox{
         @apply  flex flex-col gap-5   w-[300px]
     }
 
-    .textBox span{
+    .vesselsProfileContainer .textBox span{
         @apply flex flex-col 
     }
 
-    .textBox span p{
+    .vesselsProfileContainer .textBox span p{
         @apply text-[#8E8E8E] text-base
     }
 
-    .textBox span h3{
+    .vesselsProfileContainer .textBox span h3{
         @apply text-[#404958] font-bold text-lg
     }
 

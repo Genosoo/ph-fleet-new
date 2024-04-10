@@ -62,6 +62,15 @@
         @apply flex flex-col pr-10 font-manrope
     }
 
+    .usersProfileTop{
+        @apply flex justify-between pb-3
+    }
+
+    .usersProfileTop button{
+            @apply bg-[#86705E] text-white flex p-3 rounded-[10px] items-center gap-2
+            text-sm hover:bg-[#404958] duration-150 w-[150px] justify-center
+    }
+
     .usersProfileBox1{
         box-shadow: 0 0 10px #00000012;
         @apply bg-[#F9F9F9]  rounded-[15px] h-[400px] p-3 flex flex-col justify-between
@@ -78,6 +87,10 @@
 
     .usersProfileInitial{
         @apply flex items-center gap-16 pb-10 px-3
+    }
+
+    .textBox{
+        @apply w-full
     }
 
     .textBox .text1{
@@ -122,5 +135,38 @@
         @apply border w-full
     }
 
+    .deleteDialogBox{
+        @apply flex flex-col items-center gap-5 p-10 font-manrope
+        rounded-[20px]
+    }
+
+    .deleteDialogBox h3{
+        @apply font-bold text-center text-lg
+    }
+
+    .deleteDialogBox p{
+        @apply text-center text-sm font-medium
+    }
+
+    .deleteIcon{
+        @apply text-[#EB5454] text-[30px] bg-[#eb54545b]
+        p-4 rounded-full
+    }
+
+    .deleteDialogBtn{
+        @apply flex flex-col w-full gap-3
+    }
+
+    .deleteDialogBtn button{
+        @apply  w-full text-sm p-3 rounded-lg  hover:bg-[#404958] hover:text-white duration-150
+    }
+
+    .deleteDialogBtn .delete{
+        @apply bg-[#EB5454] text-white 
+    }
+
+    .deleteDialogBtn .cancel{
+        @apply border
+    }
 }
 

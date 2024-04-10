@@ -13,9 +13,10 @@ import ButtonDelete from "./buttons/ButtonDelete";
 import { PiWarningLight } from "react-icons/pi";
 import { apiIncident } from "../../../api/api_urls";
 import axios from 'axios';
+import { MdFilterAlt, MdFilterAltOff  } from "react-icons/md";
 
 export default function TableComponent({ csrfToken }) {
-  const { incidentData, accountData, updateIncidentData } = useContext(DataContext)
+  const { incidentData, incidentStatus, accountData, usersData, updateIncidentData } = useContext(DataContext)
 
    const [page, setPage] = useState(0);
    const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -24,12 +25,27 @@ export default function TableComponent({ csrfToken }) {
    const [openDeleteConfirmation, setOpenDeleteConfirmation] = useState(false);
    const [deleteIncidentId, setDeleteIncidentId] = useState(null);
    const username = accountData.username;
-   console.log("Incident:", incidentData)
-   console.log("username:", username)
+  
 
    const [successMessage, setSuccessMessage] = useState("");
    const [errorMessage, setErrorMessage] = useState("");
    const [snackbarOpen, setSnackbarOpen] = useState(false);
+
+   const [selectedStatus, setSelectedStatus] = useState("All");
+   console.log("selected Status:", selectedStatus)
+
+
+
+   console.log("Incident:", incidentData)
+   console.log("username:", username)
+   console.log("status:", incidentStatus)
+   const [showSelect, setShowSelect] = useState(false); // State to manage visibility of select dropdown
+
+   // Function to toggle the visibility of the select dropdown
+   const toggleSelectFilter = () => {
+     setShowSelect(!showSelect);
+   };
+ 
 
    const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -83,10 +99,10 @@ const handleDeleteIncident= async (id) => {
       const updatedIncidents = incidentData.filter(incident => incident.id !== id);
       updateIncidentData(updatedIncidents);
       setFilteredData(updatedIncidents);
-      showSuccessMessage("Vessels deleted successfully!");
+      showSuccessMessage("Incident deleted successfully!");
   } catch (error) {
-      console.error('Error deleting Vessels:', error.message);
-      showErrorMessage("Failed to delete Vessels!");
+      console.error('Error deleting Incident:', error.message);
+      showErrorMessage("Failed to delete Incident!");
   }
 };
 
@@ -112,6 +128,83 @@ const handleSnackbarClose = () => setSnackbarOpen(false);
   };
 
 
+
+  const handleStatusChange = async (incidentId, newStatus) => {
+    // Create a FormData object
+    const formData = new FormData();
+    
+    // Append the status and ID to the FormData object
+    formData.append('status', newStatus);
+    formData.append('id', incidentId);
+    
+    try {
+      // Perform the PUT request to update status
+      await axios.put(apiIncident, formData, {
+        headers: {
+          'X-CSRFToken': csrfToken
+        }
+      });
+    
+      // Update the incident data in state
+      const updatedIncidents = incidentData.map(incident => {
+        if (incident.id === incidentId) {
+          return { ...incident, status: newStatus };
+        }
+        return incident;
+      });
+      updateIncidentData(updatedIncidents);
+    
+      // Show success message
+      showSuccessMessage("Successfully changed the status!");
+    } catch (error) {
+      // Handle errors
+      console.error('Error updating status:', error.message);
+      showErrorMessage("Failed to update status!");
+    }
+  };
+  
+  // Define a color palette for status values 1 to 7
+const statusColors = {
+  null: '#D6EAF8',
+  1: '#D6EAF8', // Status 1 color
+  2: '#FAE5D3', // Status 2 color
+  3: '#FCF3CF', // Status 3 color
+  4: '#D5F5E3', // Status 4 color
+  5: '#FADBD8', // Status 5 color
+  6: '#EBDEF0', // Status 6 color
+  7: '#EAEDED', // Status 7 color
+};
+
+
+const statusTextColors = {
+  null: '#3498DB',
+  1: '#3498DB', // Status 1 color
+  2: '#E67E22', // Status 2 color
+  3: '#F1C40F', // Status 3 color
+  4: '#2ECC71', // Status 4 color
+  5: '#E74C3C', // Status 5 color
+  6: '#9B59B6', // Status 6 color
+  7: '#95A5A6', // Status 7 color
+};
+
+
+const filteredByUsername = filteredData.filter(item => item.user_details.username === username);
+const filteredDataToShow = selectedStatus === "All" ? filteredData : filteredData.filter(item => item.status === selectedStatus);
+
+const formatDate = (dateString) => {
+  const options = { 
+    year: 'numeric', 
+    month: '2-digit', 
+    day: '2-digit', 
+    hour: '2-digit', 
+    minute: '2-digit', 
+    hour12: true 
+  };
+  const date = new Date(dateString);
+  return date.toLocaleString('en-US', options);
+};
+
+
   return (
     <div className="incidentTableWrapper">
         <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'right' }}  open={snackbarOpen} autoHideDuration={2000} onClose={handleSnackbarClose}>
@@ -126,83 +219,179 @@ const handleSnackbarClose = () => setSnackbarOpen(false);
     <div className="incidentTableContainer">
         
         <StyledTableContainer >
-            <StyledTable stickyHeader aria-label="sticky table" >
-            <TableHead className="bg-gray-800 ">
-                <TableRow>
-                <StyledTableCell>Type</StyledTableCell>
-                <StyledTableCell>Description</StyledTableCell>
-                {/* <StyledTableCell>Address Incidents</StyledTableCell>
-                <StyledTableCell>Address Reported</StyledTableCell> */}
-                <StyledTableCell>Reporter</StyledTableCell>
-                <StyledTableCell>Status</StyledTableCell>
-                <StyledTableCell sx={{ position: "sticky", right: 0 }}>Action</StyledTableCell>
-                </TableRow>
-            </TableHead>
-            <TableBody>
-            {accountData.roles[0] === "Administrator" ? (
-                  // Show all data without any filtering
-                  filteredData
-                      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                      .map((item, index) => (
-                          <TableRow key={index}>
-                              <StyledTableCell>{item?.type_details?.type_name || "N/A"}</StyledTableCell>
-                              <StyledTableCell>{item?.incident_details || "N/A"}</StyledTableCell>
-                              {/* <StyledTableCell>{item?.address_incident || "N/A"}</StyledTableCell>
-                              <StyledTableCell>{item?.address_reported || "N/A"}</StyledTableCell> */}
-                              <StyledTableCell>{item?.user_details?.username || "N/A"}</StyledTableCell>
-                              <StyledTableCell>{item?.status_details?.type_status || "N/A"}</StyledTableCell>
-                              <StyledTableCell  sx={{display:"flex", gap:1, alignItems:"center", position: "sticky", right: 0}}>
-                                 <Link to={"/fleet/incidents/report-information"} state={{ incident: filteredData[page * rowsPerPage + index] }} >
-                                     <ButtonReportInfo  />
-                                  </Link>
+        {filteredData.length > 0 ? ( 
+             <StyledTable stickyHeader aria-label="sticky table" >
+             <TableHead className="bg-gray-800 ">
+                 <TableRow>
+                 <StyledTableCell>Date/Time</StyledTableCell>
+                 <StyledTableCell>Incident Description</StyledTableCell>
+                 <StyledTableCell>Severity</StyledTableCell>
+                 <StyledTableCell>Type</StyledTableCell>
+                 <StyledTableCell>Reporter</StyledTableCell>
+                 <StyledTableCell>Address Incidents</StyledTableCell>
+                 <StyledTableCell>Address Reported</StyledTableCell>
+                 <StyledTableCell>
+                  <div className="statusTableCell">
+                    <p>Status</p>
+                    {showSelect && (
+                      <select
+                      className="statusSelect"
+                      value={selectedStatus}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        // Parse integer value if it's not "All", otherwise, set it as is
+                        setSelectedStatus(value !== "All" ? parseInt(value) : value);
+                      }}
+                    >
+                    <option value="All">All</option>
+                    {incidentStatus.map((status, index) => (
+                        <option key={index} value={status.id}>
+                          {status.type_status}
+                        </option>
+                    ))}
+                  </select>
+                  )}
+                 <button className="selectFilter" onClick={toggleSelectFilter}>
+                          {showSelect ? <MdFilterAltOff/> : <MdFilterAlt/>}
+                        </button>
+                  </div>
+                 </StyledTableCell>
+                 <StyledTableCell>Assigned Responder</StyledTableCell>
 
-                                  <Link to={"/fleet/incidents/update-report"} state={{ incident: filteredData[page * rowsPerPage + index] }} >
-                                     <ButtonUpdate  />
-                                  </Link>
-                                <ButtonDelete  itemId={item.id}  handleOpenDeleteConfirmation={handleOpenDeleteConfirmation}/>
-                              </StyledTableCell>
-                          </TableRow>
-                      ))
-              ) : (
-                  // Filter based on username match
-                  filteredData
-                      .filter(item => item.user_details.username === username)
-                      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                      .map((item, index) => (
-                          <TableRow key={index}>
-                              <StyledTableCell>{item?.type_details?.type_name || "N/A"}</StyledTableCell>
-                              <StyledTableCell>{item?.incident_details || "N/A"}</StyledTableCell>
-                              {/* <StyledTableCell>{item?.address_incident || "N/A"}</StyledTableCell>
-                              <StyledTableCell>{item?.address_reported || "N/A"}</StyledTableCell> */}
-                              <StyledTableCell>{item?.user_details?.username || "N/A"}</StyledTableCell>
-                              <StyledTableCell >{item?.status_details?.type_status || "N/A"}</StyledTableCell>
-                              <StyledTableCell  sx={{display:"flex", gap:1, alignItems:"center", position: "sticky", right: 0}}>
-                              <Link to={"/fleet/incidents/report-information"} state={{ incident: item }} >
-                                     <ButtonReportInfo  />
-                                  </Link>
-                                  <Link to={"/fleet/incidents/update-report"} state={{ incident: item }} >
-                                     <ButtonUpdate  />
-                                  </Link>
-                                <ButtonDelete  itemId={item.id}  handleOpenDeleteConfirmation={handleOpenDeleteConfirmation}/>
+                 <StyledTableCell sx={{ position: "sticky", right: 0 }}>Action</StyledTableCell>
+                 </TableRow>
+             </TableHead>
+             <TableBody>
+             {accountData.roles[0] === "Administrator" ? (
+                   // Show all data without any filtering
+                  filteredDataToShow 
+                       .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                       .map((item, index) => (
+                           <TableRow key={index}>
+                            
+                               <StyledTableCell>{item.created_at ? formatDate(item.created_at) : "N/A"}</StyledTableCell>
+                               <StyledTableCell>{item?.type_details?.type_name || "N/A"}</StyledTableCell>
+                               <StyledTableCell>{item?.severity_details?.severity_name || "N/A"}</StyledTableCell>
+                               <StyledTableCell>{item?.incident_details || "N/A"}</StyledTableCell>
+                               <StyledTableCell>{item?.user_details?.username || "N/A"}</StyledTableCell>
+                               <StyledTableCell>{item?.address_incident || "N/A"}</StyledTableCell>
+                               <StyledTableCell>{item?.address_reported || "N/A"}</StyledTableCell>
+  
+                               <StyledTableCell >
+                                  <select className="statusSelect"  name="status"
+                                  style={{
+                                    backgroundColor: statusColors[item.status],
+                                    color: statusTextColors[item.status] || '#000',
+                                  }}
+                                 value={item.status || 'N/A'} // If item.status is null, set the value to 'N/A'
+                                 onChange={(e) => handleStatusChange(item.id, parseInt(e.target.value))}
+                               >
+                                 {incidentStatus.map((status, index) => (
+                                   <option  key={index} value={status.id}>{status.type_status}</option>
+                                 ))}
+                               </select>
+                               </StyledTableCell>
+                               <StyledTableCell>
+                                <select className=""  name="assigned_to" value={item.assigned_to || "N/A"} >
+                                  {usersData.map((user, index) => (
+                                    <option  key={index} value={user.id}>{user.username}</option>
+                                  ))}
+                                </select>
+                               </StyledTableCell>
 
-                              </StyledTableCell>
-                              
-                          </TableRow>
-                      ))
-              )}
+                               <StyledTableCell  sx={{position: "sticky", right: 0}}>
+                                   <div className="actionTableBox">
+                                   <Link to={"/fleet/incidents/report-information"} state={{ incident: filteredData[page * rowsPerPage + index] }} >
+                                      <ButtonReportInfo  />
+                                   </Link>
+ 
+                                   <Link to={"/fleet/incidents/update-report"} state={{ incident: filteredData[page * rowsPerPage + index] }} >
+                                      <ButtonUpdate  />
+                                   </Link>
+                                 <ButtonDelete  itemId={item.id}  handleOpenDeleteConfirmation={handleOpenDeleteConfirmation}/>
+                                   </div>
+                               </StyledTableCell>
+
+                           </TableRow>
+                       ))
+               ) : (
+                   filteredByUsername.length > 0 ? (
+                  filteredDataToShow 
+                   .filter(item => item.user_details.username === username)
+                       .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                       .map((item, index) => (
+                           <TableRow key={index}>
+                               <StyledTableCell>{item.created_at ? formatDate(item.created_at) : "N/A"}</StyledTableCell>
+                               <StyledTableCell>{item?.type_details?.type_name || "N/A"}</StyledTableCell>
+                               <StyledTableCell>{item?.severity_details?.severity_name || "N/A"}</StyledTableCell>
+                               <StyledTableCell>{item?.incident_details || "N/A"}</StyledTableCell>
+                               <StyledTableCell>{item?.user_details?.username || "N/A"}</StyledTableCell>
+                               <StyledTableCell>{item?.address_incident || "N/A"}</StyledTableCell>
+                               <StyledTableCell>{item?.address_reported || "N/A"}</StyledTableCell>
+
+                               <StyledTableCell>
+                               <select
+                                    className="statusSelect"
+                                    name="status"
+                                    style={{
+                                      backgroundColor: statusColors[item.status],
+                                      color: statusTextColors[item.status] || '#000'  // Set text color based on background color
+                                      // Use status color if available, else fallback to green
+                                    }}
+                                    value={item.status !== null ? item.status : 'N/A'} // If item.status is null, set the value to 'N/A'
+                                    onChange={(e) => {
+                                      if (accountData.roles[0] !== "Administrator") {
+                                        // Show popup message for non-admin users 
+                                        alert("Only administrators can change the status.");
+                                      } else {
+                                        // Handle status change for admin users
+                                        handleStatusChange(item.id, parseInt(e.target.value));
+                                      }
+                                    }}
+                                  >
+                                    {incidentStatus.map((status, index) => (
+                                      <option key={index} value={status.id}>{status.type_status}</option>
+                                    ))}
+                                  </select>
 
 
-            </TableBody>
-            </StyledTable>
+                               </StyledTableCell>
+                               <StyledTableCell  sx={{display:"flex", gap:1, alignItems:"center", position: "sticky", right: 0}}>
+                               <Link to={"/fleet/incidents/report-information"} state={{ incident: item }} >
+                                      <ButtonReportInfo  />
+                                   </Link>
+                                   <Link to={"/fleet/incidents/update-report"} state={{ incident: item }} >
+                                      <ButtonUpdate  />
+                                   </Link>
+                                 <ButtonDelete  itemId={item.id}  handleOpenDeleteConfirmation={handleOpenDeleteConfirmation}/>
+ 
+                               </StyledTableCell>
+                               
+                           </TableRow>
+                       ))
+
+                      ): (
+                        <TableRow>
+                        <StyledTableCell colSpan={6}>No available report</StyledTableCell>
+                        </TableRow>
+                      )
+               )}
+             </TableBody>
+             </StyledTable>
+        ) : (
+          <div>No report available</div>
+        )}
+         
         </StyledTableContainer>
         <TablePagination
             rowsPerPageOptions={[10, 25, 50]}
             component="div"
             count={
-              accountData.roles[0] === "Administrator"
-                ? incidentData.length
-                : filteredData.filter(item => item.user_details.username === username).length
+              (accountData.roles && accountData.roles.length > 0 && accountData.roles[0] === "Administrator")
+                ? (incidentData ? incidentData.length : 0)
+                : (filteredData.filter(item => item.user_details.username === username).length)
             }
+            
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

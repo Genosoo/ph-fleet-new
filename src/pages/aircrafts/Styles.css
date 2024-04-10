@@ -81,27 +81,27 @@
     }
 
    
-    .textBoxWrapper{
+    .aircraftsProfileContainer .textBoxWrapper{
         @apply flex flex-wrap gap-10
     }
 
-    .textBox{
+    .aircraftsProfileContainer .textBox{
         @apply  flex flex-col gap-5   w-[300px]
     }
 
-    .textBox span{
+    .aircraftsProfileContainer .textBox span{
         @apply flex flex-col 
     }
 
-    .textBox span p{
+    .aircraftsProfileContainer .textBox span p{
         @apply text-[#8E8E8E] text-base
     }
 
-    .textBox span h3{
+    .aircraftsProfileContainer .textBox span h3{
         @apply text-[#404958] font-bold text-lg
     }
 
-    .aircraftsProfileBox2{
+    .aircraftsProfileContainer .aircraftsProfileBox2{
         @apply flex mt-5 gap-10 
     }
     .profileCardBox1{

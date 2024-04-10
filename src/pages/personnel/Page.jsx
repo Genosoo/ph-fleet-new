@@ -7,7 +7,7 @@ export default function Page() {
 
   return (
     <main className="usersContainer">
-        <TableComponent csrfToken={csrfToken}  />
+        <TableComponent csrfToken={csrfToken} />
     </main>
   )
 }

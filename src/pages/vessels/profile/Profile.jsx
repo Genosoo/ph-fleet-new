@@ -112,11 +112,7 @@ export default function Profile() {
 
              <div className="profileMapBox">
              <MapContainer  center={[12.8797, 121.7740]} zoom={6} style={{ height: '100%', width: '100%' }}>
-                      <TileLayer
-                        url="https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}&hl=en"
-                        subdomains={['mt0', 'mt1', 'mt2', 'mt3']}
-                      />
-
+                        <TileLayer url="http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&hl=en" subdomains={['mt0', 'mt1', 'mt2', 'mt3']} />
                       <TrakSatMarker selectedVessel={item.traksat_details} />
              </MapContainer>
              </div>

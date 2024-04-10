@@ -165,6 +165,14 @@ export default function DataProvider({ children }) {
     }));
   };
 
+  const updatePersonnelData = (newPersonnelData) => {
+    setData((prevData) => ({
+      ...prevData,
+      incidentData: newPersonnelData,
+    }));
+  };
+
+
 
   return (
     <DataContext.Provider value={{ ...data, 
@@ -172,7 +180,8 @@ export default function DataProvider({ children }) {
       updateUsersData, 
       updateAccountData, 
       updateAircraftsData,
-      updateIncidentData
+      updateIncidentData,
+      updatePersonnelData
      }}>
       {isLoading ? <Loader /> : children}
     </DataContext.Provider>
