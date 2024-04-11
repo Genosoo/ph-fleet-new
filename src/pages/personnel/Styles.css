@@ -3,7 +3,7 @@
 
 @layer components{
 
-    .usersContainer{
+    .personnelContainer{
         @apply font-manrope pr-10 pl-3 pb-10
     }
 
@@ -57,84 +57,6 @@
     }
 
 
-    /*====== USER PROFILE STYLE =============*/
-    .usersProfileContainer{
-        @apply flex flex-col pr-10 font-manrope
-    }
-
-    .usersProfileTop{
-        @apply flex justify-between pb-3
-    }
-
-    .usersProfileTop button{
-            @apply bg-[#86705E] text-white flex p-3 rounded-[10px] items-center gap-2
-            text-sm hover:bg-[#404958] duration-150 w-[150px] justify-center
-    }
-
-    .usersProfileBox1{
-        box-shadow: 0 0 10px #00000012;
-        @apply bg-[#F9F9F9]  rounded-[15px] h-[400px] p-3 flex flex-col justify-between
-    }
-
-    .usersProfileTitle{
-        @apply text-lg font-bold p-2
-    }
-
-    .usersProfilePhoto{
-        @apply w-[250px] h-[250px] rounded-full object-cover
-        border-2 border-[#404958] p-2
-    }
-
-    .usersProfileInitial{
-        @apply flex items-center gap-16 pb-10 px-3
-    }
-
-    .textBox{
-        @apply w-full
-    }
-
-    .textBox .text1{
-        @apply text-[#8E8E8E] text-[18px]
-    }
-
-    .textBox .text2{
-        @apply text-[#404958] font-bold text-[3rem] capitalize
-    }
-
-    .textBox .text3{
-        @apply text-[#404958] font-bold text-[1.5rem] capitalize tracking-wide
-    }
-
-
-    .usersProfileBox2{
-        @apply  mt-5  w-full
-    }
-
-    .usersProfileBox2 .title{
-        @apply font-bold text-lg 
-    }
-
-    .usersTableDetail{
-        @apply flex rounded-[15px] overflow-hidden w-full border mt-5
-    }
-
-    .usersTableDetail .span1{
-        @apply font-bold flex flex-col bg-[#EAEAEC] w-[300px] items-start  pl-3
-    }
-
-   
-    .usersTableDetail .span2{
-        @apply flex flex-col bg-[#F7F7F8] w-full items-start 
-    }
-
-    .usersTableDetail span p{
-        @apply p-5 text-base
-    }
-
-    .usersTableDetail .span2 p{
-        @apply border w-full
-    }
-
     .deleteDialogBox{
         @apply flex flex-col items-center gap-5 p-10 font-manrope
         rounded-[20px]
@@ -168,5 +90,168 @@
     .deleteDialogBtn .cancel{
         @apply border
     }
+
+
+    
+    .personnelProfileMainContainer{
+        @apply font-manrope  pr-10
+    }
+
+    .personnelProfileHeader{
+        @apply font-manrope pb-5 flex w-full items-center justify-end
+    }
+
+    .personnelProfileHeader button{
+        @apply bg-[#86705E] text-white p-3 px-5
+         rounded-lg flex items-center gap-3 hover:bg-[#404958]
+         duration-150
+    }
+
+    .personnelProfileContainer{
+        @apply font-manrope pb-10 flex gap-7 
+    }
+
+
+    .personnelProfileWrapper{
+        @apply flex flex-col gap-7 w-[50%]  
+    }
+
+    .personnelProfileBox1{
+        @apply border text-[#404958] p-5 rounded-xl 
+        flex flex-col gap-5 w-full
+    }
+
+    .personnelProfileBox1 h1{
+        @apply text-lg font-bold
+    }
+
+    .personnelProfileDetailBox1 {
+        @apply flex items-center gap-10
+    }
+
+    .personnelProfileDetailBox1 img{
+        @apply w-[200px] h-[200px] rounded-full object-cover
+        border-2 p-2 border-[#404958]
+    }
+
+    .personnelProfileDetailBox1 span{
+        @apply flex flex-col items-start
+    }
+
+    .personnelProfileDetailBox1 span h2{
+        @apply font-bold text-[2rem]
+    }
+
+    .personnelProfileDetailBox1 span h4{
+        @apply font-bold text-lg text-[#8E8E8E]
+    }
+
+    .personnelProfileDetailBox1 span p{
+        @apply bg-green-200 text-center
+        rounded-full text-green-700 p-2 mt-3
+        text-sm px-5 font-bold
+    }
+
+    .personnelProfileBox2{
+        @apply border text-[#404958] p-5 rounded-xl 
+        flex flex-col gap-5   w-full
+    }
+    
+    .personnelProfileBox2 h1{
+        @apply text-lg font-bold   
+    }
+
+    .personnelProfileDetailBox2 {
+        @apply flex items-center gap-10
+        flex-col
+    }
+
+    .personnelProfileDetailBox2 span{
+        @apply flex flex-col gap-1 w-full
+        
+    }
+
+    .personnelProfileDetailBox2 span p{
+        @apply font-normal text-base
+    }
+    
+    .personnelProfileDetailBox2 span h4{
+        @apply bg-[#F9F9F9] text-[#8E8E8E] 
+        font-bold p-2 text-base rounded-lg
+    }
+
+
+    .personnelProfileWrapper2{
+        @apply flex flex-col gap-7 w-[50%]
+    }
+
+
+    .personnelProfileBox3{
+        @apply border text-[#404958] p-5 rounded-xl w-full
+        flex flex-col gap-5 
+    }
+
+    .personnelProfileBox3 h1{
+        @apply text-lg font-bold   
+    }
+
+
+    .personnelProfileMapBox{
+        @apply w-full h-[500px] rounded-xl overflow-hidden
+    }
+
+
+
+    .personnelProfileBox4{
+        @apply border text-[#404958] p-5 rounded-xl w-full
+        flex flex-col gap-5 
+    }
+
+    .personnelProfileBox4 h1{
+        @apply text-lg font-bold   
+    }
+
+    .spanheader{
+        @apply flex  gap-5 bg-[#404958] text-white text-sm rounded-lg
+    }
+
+    .spanheader p{
+        @apply w-[200px] p-3
+    }
+
+    .boxLogDetails{
+        @apply flex flex-col gap-5 h-[450px] overflow-y-auto pr-3
+    }
+
+    .boxLogDetails::-webkit-scrollbar {
+            width: 10px;
+        height: 10px;
+      }
+    
+    .boxLogDetails::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+    
+    .boxLogDetails::-webkit-scrollbar-thumb {
+        background: #404958;
+        border-radius: 10px;
+      }
+    
+    .boxLogDetails::-webkit-scrollbar-thumb:hover {
+        background: #555;
+      }
+
+    .spanDetails{
+        @apply flex gap-5 border  border-[#DCDCDC] rounded-lg items-center
+    }
+
+    .spanDetails p{
+        @apply w-[200px] p-3
+    }
+
+    .statusLog{
+        @apply bg-green-300 rounded-full text-center text-green-800 m-3
+    }
+
 }
 

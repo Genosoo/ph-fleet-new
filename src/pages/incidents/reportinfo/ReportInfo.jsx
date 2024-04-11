@@ -27,7 +27,7 @@ export default function ReportInfo() {
             <div className="reportIncidentInfoBox2">
                  <p className='infoTitle'>Incident Location</p>
                <div className="reportIncidentInfoMap">
-                <MapContainer  center={[12.8797, 121.7740]} zoom={6} style={{ height: '100%', width: '100%'}}>
+                <MapContainer zoomControl={false}  center={[12.8797, 121.7740]} zoom={6} style={{ height: '100%', width: '100%'}}>
                         <TileLayer url="http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&hl=en" subdomains={['mt0', 'mt1', 'mt2', 'mt3']} />
                         <IncidentMarker selectedIncident={item} />
                     </MapContainer>

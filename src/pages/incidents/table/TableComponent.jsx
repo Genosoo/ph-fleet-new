@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 import { DataContext } from "../../../context/DataProvider"
 import {  useState, useEffect, useContext } from "react";
-import {  TableBody, TableHead, TableRow,  TablePagination,  Snackbar,
+import {  TableBody, TableHead, TableRow,  TablePagination,  Snackbar, 
   Alert, } from "@mui/material";
-import { StyledTableContainer, StyledTableCell, StyledTable,  StyledDialog } from "./Styled";
+import { StyledTableContainer, StyledTableCell, StyledTable,  StyledDialog , StyledSelect, StyledMenuItem } from "./Styled";
 import Search from "./Search";
 import ButtonAddReport from "./buttons/ButtonAddReport";
 import ButtonReportInfo from "./buttons/ButtonReportInfo";
@@ -13,10 +13,16 @@ import ButtonDelete from "./buttons/ButtonDelete";
 import { PiWarningLight } from "react-icons/pi";
 import { apiIncident } from "../../../api/api_urls";
 import axios from 'axios';
-import { MdFilterAlt, MdFilterAltOff  } from "react-icons/md";
+import StatusFilter from "./filters/StatusFilter";
+import TypeFilter from "./filters/TypeFilter";
+import SeverityFilter from "./filters/SeverityFilter";
+import ButtonResetFilter from "./buttons/ButtonResetFilter";
+import { IoIosArrowDown } from "react-icons/io";
+import ExportFiles from "./export/ExportFiles";
+
 
 export default function TableComponent({ csrfToken }) {
-  const { incidentData, incidentStatus, accountData, usersData, updateIncidentData } = useContext(DataContext)
+  const { incidentData, incidentStatus, incidentSeverity, incidentType, accountData, usersData, updateIncidentData } = useContext(DataContext)
 
    const [page, setPage] = useState(0);
    const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -32,6 +38,9 @@ export default function TableComponent({ csrfToken }) {
    const [snackbarOpen, setSnackbarOpen] = useState(false);
 
    const [selectedStatus, setSelectedStatus] = useState("All");
+   const [selectedType, setSelectedType] = useState("All");
+   const [selectedSeverity, setSelectedSeverity] = useState("All");
+
    console.log("selected Status:", selectedStatus)
 
 
@@ -39,12 +48,16 @@ export default function TableComponent({ csrfToken }) {
    console.log("Incident:", incidentData)
    console.log("username:", username)
    console.log("status:", incidentStatus)
-   const [showSelect, setShowSelect] = useState(false); // State to manage visibility of select dropdown
 
-   // Function to toggle the visibility of the select dropdown
-   const toggleSelectFilter = () => {
-     setShowSelect(!showSelect);
-   };
+  
+
+
+   // Reset filters function
+  const resetFilters = () => {
+    setSelectedStatus("All");
+    setSelectedType("All");
+    setSelectedSeverity("All");
+  };
  
 
    const handleChangePage = (event, newPage) => {
@@ -128,6 +141,80 @@ const handleSnackbarClose = () => setSnackbarOpen(false);
   };
 
 
+  const handleSeverityChange = async (incidentId, newSeverity) => {
+    // Create a FormData object
+    const formData = new FormData();
+    
+    // Append the status and ID to the FormData object
+    formData.append('severity', newSeverity);
+    formData.append('id', incidentId);
+    
+    try {
+      // Perform the PUT request to update status
+      await axios.put(apiIncident, formData, {
+        headers: {
+          'X-CSRFToken': csrfToken
+        }
+      });
+    
+      // Update the incident data in state
+      const updatedIncidents = incidentData.map(incident => {
+        if (incident.id === incidentId) {
+          return { ...incident, severity: newSeverity };
+        }
+        return incident;
+      });
+      updateIncidentData(updatedIncidents);
+    
+      // Show success message
+      showSuccessMessage("Successfully update incident severity.");
+    } catch (error) {
+      // Handle errors
+      console.error('Error updating status:', error.message);
+      showErrorMessage("Failed to update  incident  severity");
+    }
+  };
+  
+
+
+
+
+  const handleUserAssignedChange = async (incidentId, newAssignedTo) => {
+    // Create a FormData object
+    const formData = new FormData();
+    
+    // Append the status and ID to the FormData object
+    formData.append('user_assigned_to', newAssignedTo);
+    formData.append('id', incidentId);
+    
+    try {
+      // Perform the PUT request to update status
+      await axios.put(apiIncident, formData, {
+        headers: {
+          'X-CSRFToken': csrfToken
+        }
+      });
+    
+      // Update the incident data in state
+      const updatedIncidents = incidentData.map(incident => {
+        if (incident.id === incidentId) {
+          return { ...incident, user_assigned_to: newAssignedTo };
+        }
+        return incident;
+      });
+      updateIncidentData(updatedIncidents);
+    
+      // Show success message
+      showSuccessMessage("Successfully added assigned responder");
+    } catch (error) {
+      // Handle errors
+      console.error('Error updating status:', error.message);
+      showErrorMessage("Failed to add assigned responder");
+    }
+  };
+  
+
+
 
   const handleStatusChange = async (incidentId, newStatus) => {
     // Create a FormData object
@@ -189,7 +276,28 @@ const statusTextColors = {
 
 
 const filteredByUsername = filteredData.filter(item => item.user_details.username === username);
-const filteredDataToShow = selectedStatus === "All" ? filteredData : filteredData.filter(item => item.status === selectedStatus);
+
+
+const filteredDataToShow = filteredData.filter(item => {
+  
+  const statusMatch = 
+    selectedStatus === "All" || // If selectedStatus is "All", match all statuses
+    (selectedStatus ===  1 && (item.status === null || item.status === "")) || // If selectedStatus is "1", match null and empty statuses
+  item.status === selectedStatus; 
+
+  // Check if the item matches the selected type
+  const typeMatch = selectedType === "All" || item.type === selectedType;
+
+
+  const severityMatch = selectedSeverity === "All" || item.severity === selectedSeverity;
+  
+  // Return true only if both status and type match
+  return statusMatch && typeMatch && severityMatch;
+});
+
+     
+    
+
 
 const formatDate = (dateString) => {
   const options = { 
@@ -214,10 +322,30 @@ const formatDate = (dateString) => {
        </Snackbar>
         <div className="incidentTableTopBox">
             <Search  handleSearchChange={handleSearchChange}/>
+              
+
+             <ButtonResetFilter resetFilters={resetFilters} />
+              <SeverityFilter 
+              selectedSeverity={selectedSeverity}
+              incidentSeverity={incidentSeverity}
+              setSelectedSeverity={setSelectedSeverity}
+              />
+
+              <TypeFilter 
+                selectedType={selectedType}
+                incidentType={incidentType}
+                setSelectedType={setSelectedType}
+              />
+
+            
+              <StatusFilter
+                  selectedStatus={selectedStatus}
+                  incidentStatus={incidentStatus}
+                  setSelectedStatus={setSelectedStatus}
+              />
             <ButtonAddReport />
        </div>
     <div className="incidentTableContainer">
-        
         <StyledTableContainer >
         {filteredData.length > 0 ? ( 
              <StyledTable stickyHeader aria-label="sticky table" >
@@ -228,36 +356,10 @@ const formatDate = (dateString) => {
                  <StyledTableCell>Severity</StyledTableCell>
                  <StyledTableCell>Type</StyledTableCell>
                  <StyledTableCell>Reporter</StyledTableCell>
-                 <StyledTableCell>Address Incidents</StyledTableCell>
-                 <StyledTableCell>Address Reported</StyledTableCell>
-                 <StyledTableCell>
-                  <div className="statusTableCell">
-                    <p>Status</p>
-                    {showSelect && (
-                      <select
-                      className="statusSelect"
-                      value={selectedStatus}
-                      onChange={(e) => {
-                        const value = e.target.value;
-                        // Parse integer value if it's not "All", otherwise, set it as is
-                        setSelectedStatus(value !== "All" ? parseInt(value) : value);
-                      }}
-                    >
-                    <option value="All">All</option>
-                    {incidentStatus.map((status, index) => (
-                        <option key={index} value={status.id}>
-                          {status.type_status}
-                        </option>
-                    ))}
-                  </select>
-                  )}
-                 <button className="selectFilter" onClick={toggleSelectFilter}>
-                          {showSelect ? <MdFilterAltOff/> : <MdFilterAlt/>}
-                        </button>
-                  </div>
-                 </StyledTableCell>
+                 <StyledTableCell>Incident Address </StyledTableCell>
+                 <StyledTableCell>Reporter Address</StyledTableCell>
+                 <StyledTableCell>Report Status</StyledTableCell>
                  <StyledTableCell>Assigned Responder</StyledTableCell>
-
                  <StyledTableCell sx={{ position: "sticky", right: 0 }}>Action</StyledTableCell>
                  </TableRow>
              </TableHead>
@@ -270,19 +372,46 @@ const formatDate = (dateString) => {
                            <TableRow key={index}>
                             
                                <StyledTableCell>{item.created_at ? formatDate(item.created_at) : "N/A"}</StyledTableCell>
-                               <StyledTableCell>{item?.type_details?.type_name || "N/A"}</StyledTableCell>
-                               <StyledTableCell>{item?.severity_details?.severity_name || "N/A"}</StyledTableCell>
                                <StyledTableCell>{item?.incident_details || "N/A"}</StyledTableCell>
+                               <StyledTableCell>
+                               <StyledSelect   IconComponent={IoIosArrowDown} name="severity"  value={item.severity || "N/A"} onChange={(e) => handleSeverityChange(item.id,parseInt(e.target.value))}>
+                                  {incidentSeverity.map((severity, index) => (
+                                    <StyledMenuItem  key={index} value={severity.id}>{severity.severity_name}</StyledMenuItem>
+                                  ))}
+                                </StyledSelect>
+                               </StyledTableCell>
+                               <StyledTableCell>{item?.type_details?.type_name || "N/A"}</StyledTableCell>
                                <StyledTableCell>{item?.user_details?.username || "N/A"}</StyledTableCell>
                                <StyledTableCell>{item?.address_incident || "N/A"}</StyledTableCell>
                                <StyledTableCell>{item?.address_reported || "N/A"}</StyledTableCell>
   
                                <StyledTableCell >
-                                  <select className="statusSelect"  name="status"
-                                  style={{
+                               <StyledSelect
+                                  IconComponent={IoIosArrowDown }
+                                  sx={{
+                                        backgroundColor: statusColors[item.status],
+                                        color: statusTextColors[item.status] || '#000',
+                                    }}     
+                                    name="status"
+                                    
+                                    value={item.status  ? item.status : ""} // If item.status is null, set the value to 'N/A'
+                                    onChange={(e) => handleStatusChange(item.id, parseInt(e.target.value))}
+                                  >
+
+                                <StyledMenuItem disabled value="">
+                                          {item.status ? "Select Status" : "New"}
+                                      </StyledMenuItem>
+                                 {incidentStatus.map((status, index) => (
+                                   <StyledMenuItem   key={index} value={status.id}>{status.type_status}</StyledMenuItem>
+                                 ))}
+                               </StyledSelect>
+
+                                  {/* <div  style={{
                                     backgroundColor: statusColors[item.status],
                                     color: statusTextColors[item.status] || '#000',
-                                  }}
+                                  }} className="selectStatus">
+                                  <select className=""  name="status"
+                                 
                                  value={item.status || 'N/A'} // If item.status is null, set the value to 'N/A'
                                  onChange={(e) => handleStatusChange(item.id, parseInt(e.target.value))}
                                >
@@ -290,22 +419,33 @@ const formatDate = (dateString) => {
                                    <option  key={index} value={status.id}>{status.type_status}</option>
                                  ))}
                                </select>
+                                  </div> */}
                                </StyledTableCell>
                                <StyledTableCell>
-                                <select className=""  name="assigned_to" value={item.assigned_to || "N/A"} >
-                                  {usersData.map((user, index) => (
-                                    <option  key={index} value={user.id}>{user.username}</option>
-                                  ))}
-                                </select>
+                                  <StyledSelect 
+                                      IconComponent={IoIosArrowDown}
+                                      name="user_assigned_to" 
+                                      value={item.user_assigned_to ? item.user_assigned_to : ""}
+                                      onChange={(e) => handleUserAssignedChange(item.id, parseInt(e.target.value))}
+                                      displayEmpty
+                                  >
+                                      <StyledMenuItem disabled value="">
+                                          {item.user_assigned_to ? "Select responder" : "No responder assigned"}
+                                      </StyledMenuItem>
+                                      {usersData.map((user, index) => (
+                                          <StyledMenuItem key={index} value={user.id}>{user.username}</StyledMenuItem>
+                                      ))}
+                                  </StyledSelect>
+
                                </StyledTableCell>
 
                                <StyledTableCell  sx={{position: "sticky", right: 0}}>
                                    <div className="actionTableBox">
-                                   <Link to={"/fleet/incidents/report-information"} state={{ incident: filteredData[page * rowsPerPage + index] }} >
+                                   <Link to={"/fleet/incidents/report-information"} state={{ incident: item}} >
                                       <ButtonReportInfo  />
                                    </Link>
  
-                                   <Link to={"/fleet/incidents/update-report"} state={{ incident: filteredData[page * rowsPerPage + index] }} >
+                                   <Link to={"/fleet/incidents/update-report"} state={{ incident: item}} >
                                       <ButtonUpdate  />
                                    </Link>
                                  <ButtonDelete  itemId={item.id}  handleOpenDeleteConfirmation={handleOpenDeleteConfirmation}/>
@@ -322,21 +462,25 @@ const formatDate = (dateString) => {
                        .map((item, index) => (
                            <TableRow key={index}>
                                <StyledTableCell>{item.created_at ? formatDate(item.created_at) : "N/A"}</StyledTableCell>
-                               <StyledTableCell>{item?.type_details?.type_name || "N/A"}</StyledTableCell>
-                               <StyledTableCell>{item?.severity_details?.severity_name || "N/A"}</StyledTableCell>
                                <StyledTableCell>{item?.incident_details || "N/A"}</StyledTableCell>
+                               <StyledTableCell>{item?.severity_details?.severity_name || "N/A"}</StyledTableCell>
+                               <StyledTableCell>{item?.type_details?.type_name || "N/A"}</StyledTableCell>
                                <StyledTableCell>{item?.user_details?.username || "N/A"}</StyledTableCell>
                                <StyledTableCell>{item?.address_incident || "N/A"}</StyledTableCell>
                                <StyledTableCell>{item?.address_reported || "N/A"}</StyledTableCell>
 
                                <StyledTableCell>
-                               <select
+
+                                  <p  className="statusOfReport"  style={{
+                                        backgroundColor: statusColors[item.status],
+                                        color: statusTextColors[item.status] || '#000'  // Set text color based on background color
+                                      }}>{item.status_details.type_status}</p>
+                               {/* <select
                                     className="statusSelect"
                                     name="status"
                                     style={{
                                       backgroundColor: statusColors[item.status],
                                       color: statusTextColors[item.status] || '#000'  // Set text color based on background color
-                                      // Use status color if available, else fallback to green
                                     }}
                                     value={item.status !== null ? item.status : 'N/A'} // If item.status is null, set the value to 'N/A'
                                     onChange={(e) => {
@@ -352,11 +496,14 @@ const formatDate = (dateString) => {
                                     {incidentStatus.map((status, index) => (
                                       <option key={index} value={status.id}>{status.type_status}</option>
                                     ))}
-                                  </select>
+                                  </select> */}
 
 
                                </StyledTableCell>
-                               <StyledTableCell  sx={{display:"flex", gap:1, alignItems:"center", position: "sticky", right: 0}}>
+                               <StyledTableCell>{item?.user_assigned_to_details?.username || "No Assigned Responder"}</StyledTableCell>
+
+                               <StyledTableCell   sx={{position: "sticky", right: 0}}>
+                               <div className="actionTableBox">
                                <Link to={"/fleet/incidents/report-information"} state={{ incident: item }} >
                                       <ButtonReportInfo  />
                                    </Link>
@@ -364,7 +511,7 @@ const formatDate = (dateString) => {
                                       <ButtonUpdate  />
                                    </Link>
                                  <ButtonDelete  itemId={item.id}  handleOpenDeleteConfirmation={handleOpenDeleteConfirmation}/>
- 
+                                 </div>
                                </StyledTableCell>
                                
                            </TableRow>
@@ -379,7 +526,7 @@ const formatDate = (dateString) => {
              </TableBody>
              </StyledTable>
         ) : (
-          <div>No report available</div>
+          <div className="p-5">No report available</div>
         )}
          
         </StyledTableContainer>
@@ -397,7 +544,9 @@ const formatDate = (dateString) => {
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
-
+            {accountData.roles && accountData.roles.length > 0 && accountData.roles[0] === "Administrator" && (
+        <ExportFiles />
+      )}
       </div>
 
       <StyledDialog open={openDeleteConfirmation} onClose={handleCloseDeleteConfirmation}>

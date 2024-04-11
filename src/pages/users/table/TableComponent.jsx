@@ -50,6 +50,8 @@ export default function TableComponent({  csrfToken }) {
     const [officeData, setOfficeData] = useState([]);
     const [rolesData, setRolesData] = useState([]);
 
+    console.log("users:", usersData)
+
 
     const [selectedUser, setSelectedUser] = useState(null);
 

@@ -30,6 +30,7 @@ export const apiCheckInToday = `${baseUrl}/api/checked_in_users/`;
 export const apiPersonnelData = `${baseUrl}/api/personnel_latest/`;
 export const apiPersonnelStatus = `${baseUrl}/api/personnel_status/`
 export const apiPersonnelRank = `${baseUrl}/api/rank/`
+export const apiPersonnelHistory = `${baseUrl}/api/personnel_history/`
 
 
 // OFFICE

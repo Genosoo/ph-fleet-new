@@ -15,6 +15,7 @@ export default function Dashboard() {
     officeData, 
     vehiclesData,
     checkInData, 
+    incidentData,
   } = useContext(DataContext)
 
 
@@ -40,8 +41,8 @@ export default function Dashboard() {
             marineTrafficData={marineTrafficData}
             trakSatData={traksatData}
             spiderTrakData={spidertracksData}
-            personnelData={personnelData}
             checkInData={checkInData}
+            incidentData={incidentData}
           />
     </div>
   );

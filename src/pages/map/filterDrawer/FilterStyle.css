@@ -133,14 +133,13 @@
 
 
 .MuiDrawer-paper{
-    background: #F9F9F9 !important;
+    background: transparent !important;
     margin-top:100px;
-    height:790px !important;
+    width:350px !important;
     border:0 !important;
     padding:10px !important;
     border-radius:5px !important;
     margin-right:90px;
-    overflow-y: hidden !important;
   }
   
   

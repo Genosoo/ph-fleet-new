@@ -7,7 +7,7 @@ export default function Search({ searchQuery, handleSearchChange }) {
         value={searchQuery}
         onChange={handleSearchChange}
         type="search"
-        placeholder="Search User..."
+        placeholder="Search Personnel..."
       />
      <FiSearch />
     </div>

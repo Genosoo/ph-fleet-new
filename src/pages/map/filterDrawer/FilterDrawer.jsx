@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import './FilterStyle.css'
-import { Checkbox, Button } from '@mui/material';
+import { Checkbox, Button} from '@mui/material';
 
 
 import videostreamsIcon from '../../../assets/icon/video_streams.svg'
@@ -97,13 +97,20 @@ export default function FilterDrawer({
   handleToggleShowAllUsernames,
 
   showCarTrack,
-  handleCarTrack
-  
+  handleCarTrack,
+  // toggleDrawer
 }) {
 
 
   
 return (
+//   <Drawer
+//   anchor="right"
+//   variant="persistent"
+//   open={toggleDrawer}
+//   hideBackdrop={true}
+
+// >
   <div className="drawerWrapper">
       <div className='drawerListWrapper'>
         <div className="drawerListBox">
@@ -326,5 +333,6 @@ return (
         </div>
       </div>
   </div>
+  // </Drawer>
 )
 }

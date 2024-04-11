@@ -21,11 +21,13 @@ export default function Cards({
     const [vehiclesCount, setVehiclesCount] = useState(0);
 
 
-    const [checkInCount, setCheckInCount] = useState(0);
-    const [noCheckInsToday, setNoCheckInsToday] = useState(0);
+    // const [checkInCount, setCheckInCount] = useState(0);
+    // const [noCheckInsToday, setNoCheckInsToday] = useState(0);
     const [noOnDuty, setNoOnDuty] = useState(0);
     const [noOnLeave, setNoOnLeave] = useState(0);
     const [noRnR, setNoRnR] = useState(0);
+    const [nonUniform, setNonUniform] = useState(0);
+    const [officialBusiness, setOfficialBusiness] = useState(0);
 
     useEffect(() => {
         if (marineTrafficData && marineTrafficData.length) {
@@ -61,17 +63,23 @@ export default function Cards({
 
             const RnRCount = personnelData.filter(item => item.personal_details && item.personal_details.status_name === 'Rest and Recreation').length;
             setNoRnR(RnRCount);
+
+            const nonUniformCount = personnelData.filter(item => item.personal_details && item.personal_details.status_name === 'Non-Uniform').length;
+            setNonUniform(nonUniformCount);
+
+            const officialBusinessCount = personnelData.filter(item => item.personal_details && item.personal_details.status_name === 'Official Business').length;
+            setOfficialBusiness(officialBusinessCount);
         }
           
         
-        if (checkInData && checkInData.length) {
-            setCheckInCount(checkInData.length)
-        }
+        // if (checkInData && checkInData.length) {
+        //     setCheckInCount(checkInData.length)
+        // }
 
-        if (checkInData && checkInData.length) {
-            setCheckInCount(checkInData.length);
-            setNoCheckInsToday(personnelCount - checkInCount);
-          }
+        // if (checkInData && checkInData.length) {
+        //     setCheckInCount(checkInData.length);
+        //     // setNoCheckInsToday(personnelCount - checkInCount);
+        //   }
 
 
       }, [marineTrafficData, trakSatData, spiderTrakData, personnelData, checkInData, officesData, vehiclesData]);
@@ -82,61 +90,61 @@ export default function Cards({
                 <div className="card_box card_box_1">
                  <Link  className="card" to={'/fleet/marinetraffic-list'}>
                         <h2>{marineTrafficCount}</h2>
-                        <span>No.of Commercial Vessels (Marine Traffic)</span>
+                        <span>Commercial Vessels (Marine Traffic)</span>
                  </Link>
 
                  <Link className="card" to={'/fleet/traksat-list'}>
                     <h2>{trakSatCount}</h2>
-                    <span>No. of PF Vessels (TrakSat)</span>
+                    <span>PF Vessels (TrakSat)</span>
                 </Link>
 
                 <Link className="card"  to={'/fleet/spidertrak-list'}>
                     <h2>{spiderTrakCount}</h2>
-                    <span>No. of PF Aircrafts (SpiderTrak)</span>
+                    <span>PF Aircrafts (SpiderTrak)</span>
                 </Link>
 
                 <div className="card opacity-[0.3]">
                     <h2>0</h2>
-                    <span>No. of Commercial Aircrafts (FlightRadar)</span>
+                    <span>Commercial Aircrafts (FlightRadar)</span>
                 </div>
                 </div>
 
                 <div className='card_box card_box_2'>
                 <div className="card">
                     <h2>{personnelCount}</h2>
-                    <span>No. of Personnel</span>
+                    <span>Personnel</span>
                 </div>
                     <div className="card">
                         <h2>{noOnDuty}</h2>
-                        <span>No. On-Duty</span>
+                        <span>On-Duty</span>
                     </div>
                     <div className="card">
                         <h2>{noOnLeave}</h2>
-                        <span>No. On-Leave</span>
+                        <span>On-Leave</span>
                     </div>
                     <div className="card">
                         <h2>{noRnR}</h2>
-                        <span>No. RnR</span>
+                        <span>RnR</span>
                     </div>
                 </div>            
 
             <div className='card_box card_box_2'>
               
                     <div className="card">
-                        <h2>{checkInCount}</h2>
-                        <span>Report-ins Today</span>
+                        <h2>{officialBusiness}</h2>
+                        <span>Official Business</span>
                     </div>
                     <div className="card">
-                        <h2>{noCheckInsToday}</h2>
-                        <span>No. Report-ins Today</span>
+                        <h2>{nonUniform}</h2>
+                        <span>Non-Uniform</span>
                     </div>
                     <div className="card">
                         <h2>{officesCount}</h2>
-                        <span>No. of Offices</span>
+                        <span>Offices</span>
                     </div>
                     <div className="card">
                         <h2>{vehiclesCount}</h2>
-                        <span> No. of Vehicles</span>
+                        <span>Vehicles</span>
                     </div>
                 </div>
            </div>

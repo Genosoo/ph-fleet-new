@@ -6,7 +6,7 @@ export default function Incident() {
   const csrfToken =  GetToken()
  
   return (
-    <div className="pr-20">
+    <div className="incidentContainer">
       <TableComponent csrfToken={csrfToken}  />
     </div>
   );

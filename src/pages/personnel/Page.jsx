@@ -1,13 +1,15 @@
+
 import TableComponent from "./table/TableComponent";
-import GetToken from "../../components/token/GetToken";
 import './Styles.css'
+import GetToken from "../../components/token/GetToken";
+
 
 export default function Page() {
-  const csrfToken =  GetToken()
+  const csrfToken = GetToken()
 
   return (
-    <main className="usersContainer">
-        <TableComponent csrfToken={csrfToken} />
-    </main>
+    <div className="personnelContainer">
+        <TableComponent  csrfToken={csrfToken} />
+    </div>
   )
 }

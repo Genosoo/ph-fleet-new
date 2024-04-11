@@ -35,6 +35,7 @@ import ButtonMapChange from './buttons/btnChangeMap';
 import ButtonFullScreenMap from './buttons/btnFullScreenMap'
 import ButtonToggleCluster from './buttons/btnToggleCluster'
 import ButtonZoom from './buttons/buttonZoom'
+import ButtonToggleDrawer from './buttons/btnToggleDrawer'
 
 import axios from "axios";
 import CityData from '../../city.list.json'
@@ -102,6 +103,12 @@ export default function MapComponent({
   const [mapLayer, setMapLayer] = useState('osm');
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+
+  const [toggleDrawer, setToggleDrawer] = useState(true)
+
+  const handleToggleDrawer = () => {
+       setToggleDrawer(!toggleDrawer)
+  }
 
   useEffect(() => {
     const map = mapRef.current;
@@ -373,9 +380,7 @@ export default function MapComponent({
  
 
 
-   const toggleDrawer = () => {
-     setIsDrawerOpen(!isDrawerOpen);
-   };
+  
 
    const handleOffice = () => {
     setShowOffice(!showOffice)
@@ -451,70 +456,74 @@ export default function MapComponent({
   <div className='map_container' >
 
 
-  {mapLayer !== 'windy' &&  <FilterDrawer
-      handleShowAllAircrafts={handleShowAllAircrafts}
-      showAllAircrafts={showAllAircrafts}
+  {toggleDrawer && mapLayer !== 'windy' && (
+ <FilterDrawer
+ toggleDrawer={toggleDrawer}
 
-      handleShowAllVessels={handleShowAllVessels}
-      showAllVessels={showAllVessels}
+ handleShowAllAircrafts={handleShowAllAircrafts}
+ showAllAircrafts={showAllAircrafts}
 
-      handleUnShowAll={handleUnShowAll}
-      unShowAll={unShowAll}
-      
-      handleShowAll={handleShowAll}
-      showAll={showAll}
+ handleShowAllVessels={handleShowAllVessels}
+ showAllVessels={showAllVessels}
 
-      showOnDuty={showOnDuty}
-      handleToggleOnDuty={handleToggleOnDuty}
-      showOnLeave={showOnLeave}
-      handleToggleOnLeave={handleToggleOnLeave}
+ handleUnShowAll={handleUnShowAll}
+ unShowAll={unShowAll}
+ 
+ handleShowAll={handleShowAll}
+ showAll={showAll}
 
-      showRnr={showRnr}
-      handleToggleRnr={handleToggleRnr}
+ showOnDuty={showOnDuty}
+ handleToggleOnDuty={handleToggleOnDuty}
+ showOnLeave={showOnLeave}
+ handleToggleOnLeave={handleToggleOnLeave}
 
-      showAllUsernames={showAllUsernames}
-      handleToggleShowAllUsernames={handleToggleShowAllUsernames}
+ showRnr={showRnr}
+ handleToggleRnr={handleToggleRnr}
 
-      showIncident={showIncident}
-      handleIncident={handleIncident}
+ showAllUsernames={showAllUsernames}
+ handleToggleShowAllUsernames={handleToggleShowAllUsernames}
 
-      showVehicles={showVehicles}
-      handleVehicles={handleVehicles}
+ showIncident={showIncident}
+ handleIncident={handleIncident}
 
-      showMarineTraffic={showMarineTraffic}
-      handleMarineTraffic={handleMarineTraffic}
+ showVehicles={showVehicles}
+ handleVehicles={handleVehicles}
 
-      showTrakSat={showTrakSat}
-      handleTrakSat={handleTrakSat}
-      showTrakSatLabel={showTrakSatLabel}
+ showMarineTraffic={showMarineTraffic}
+ handleMarineTraffic={handleMarineTraffic}
 
-      showDescription={showDescription}
-      setShowDescription={setShowDescription}
+ showTrakSat={showTrakSat}
+ handleTrakSat={handleTrakSat}
+ showTrakSatLabel={showTrakSatLabel}
 
-      showSpiderTrak={showSpiderTrak}
-      handleSpiderTrak={handleSpiderTrak}
+ showDescription={showDescription}
+ setShowDescription={setShowDescription}
 
-      showSpiderTrakDesc={showSpiderTrakDesc}
-      setShowSpiderTrakDesc={setShowSpiderTrakDesc}
+ showSpiderTrak={showSpiderTrak}
+ handleSpiderTrak={handleSpiderTrak}
 
-      showPersonnel={showPersonnel}
-      handlePersonnel={handlePersonnel}
+ showSpiderTrakDesc={showSpiderTrakDesc}
+ setShowSpiderTrakDesc={setShowSpiderTrakDesc}
 
-      showVideoStream={showVideoStream}
-      handleVideoStream={handleVideoStream}
-      
-      handleOffice={handleOffice}
-      showOffice={showOffice}
+ showPersonnel={showPersonnel}
+ handlePersonnel={handlePersonnel}
 
-      showWeather={showWeather}
-      toggleWeather={toggleWeather}
+ showVideoStream={showVideoStream}
+ handleVideoStream={handleVideoStream}
+ 
+ handleOffice={handleOffice}
+ showOffice={showOffice}
 
-      showNonUniform={showNonUniform}
-      handleToggleNonUniform={handleToggleNonUniform}
+ showWeather={showWeather}
+ toggleWeather={toggleWeather}
 
-      showCarTrack={showCarTrack}
-      handleCarTrack={handleCarTrack}
-    /> }
+ showNonUniform={showNonUniform}
+ handleToggleNonUniform={handleToggleNonUniform}
+
+ showCarTrack={showCarTrack}
+ handleCarTrack={handleCarTrack}
+/>
+  )}
 
      <MapContainer  zoomControl={false} ref={mapRef} center={[12.8797, 121.7740]} zoom={6} style={{ height: '100%', width: '100%' }}>
       
@@ -531,6 +540,7 @@ export default function MapComponent({
 
    <ButtonMapChange setMapLayer={setMapLayer} mapLayer={mapLayer} />
     <div className="btnBottomSide">
+        {mapLayer !== 'windy' &&  <ButtonToggleDrawer toggleDrawer={toggleDrawer}  handleToggleDrawer={handleToggleDrawer} />}
         {mapLayer !== 'windy' &&  <ButtonToggleCluster handleToggleCluster={handleToggleCluster}  withCluster={withCluster}/> }
         {mapLayer !== 'windy' && <ButtonZoom /> }
         <ButtonFullScreenMap isFullscreen={isFullscreen} toggleFullscreen={toggleFullscreen} />

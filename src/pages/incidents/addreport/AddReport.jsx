@@ -25,6 +25,8 @@ export default function AddReport() {
         incident_details: "",
         address_incident:"",
         address_reported:"",
+        status:1,
+        severity:1,
         type:""
     });  
 

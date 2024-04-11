@@ -9,6 +9,7 @@ import personnelIcon from '../../assets/icon/personnel.svg'
 import ondutyIcon from '../../assets/icon/personnel_on_duty.svg'
 import onleaveIcon from '../../assets/icon/personnel_on_leave.svg'
 import rnrIcon from '../../assets/icon/personnel_rnr.svg'
+import nonUniformIcon from '../../assets/icon/personnel_non_uniform.svg'
 import { DataContext } from "../../context/DataProvider";
 import { useContext } from "react";
 
@@ -18,6 +19,8 @@ export default function Reports() {
   const [noOnDuty, setNoOnDuty] = useState(0);
   const [noOnLeave, setNoOnLeave] = useState(0);
   const [noRnR, setNoRnR] = useState(0);
+  const [nonUniform, setNonUniform] = useState(0);
+  const [officialBusiness, setOfficialBusiness] = useState(0);
   const [vesselsCount, setVesselsCount] = useState(0);
   const [aircraftCount, setaircraftCount] = useState(0);
   const [vehiclesCount, setvehiclesCount] = useState(0);
@@ -51,6 +54,13 @@ export default function Reports() {
 
         const RnRCount = personnelData.filter(item => item.personal_details && item.personal_details.status_name === 'Rest and Recreation').length;
         setNoRnR(RnRCount);
+
+        
+        const nonUniformCount = personnelData.filter(item => item.personal_details && item.personal_details.status_name === 'Non-Uniform').length;
+        setNonUniform(nonUniformCount);
+
+        const officialBusinessCount = personnelData.filter(item => item.personal_details && item.personal_details.status_name === 'Official Business').length;
+        setOfficialBusiness(officialBusinessCount);
     }
 
 
@@ -154,6 +164,22 @@ export default function Reports() {
           <img src={rnrIcon} alt="" />
           </div>
           <p className="text1">On-RnR</p>
+        </div>
+
+        <div className="reportCard">
+        <div className="reportCardFlex">
+          <h2 >{nonUniform}</h2>
+          <img src={nonUniformIcon} alt="" />
+          </div>
+          <p className="text1">Non-Uniform</p>
+        </div>
+
+        <div className="reportCard">
+        <div className="reportCardFlex">
+          <h2 >{officialBusiness}</h2>
+          <img src={rnrIcon} alt="" />
+          </div>
+          <p className="text1">Official Business</p>
         </div>
 
        </div>

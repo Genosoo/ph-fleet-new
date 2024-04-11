@@ -16,11 +16,12 @@ import {
   apiUsers,
   apiAircraftData,
   apiAccount,
-
   apiIncident,
   apiIncidentType,
   apiIncidentSeverity,
-  apiIncidentStatus
+  apiIncidentStatus,
+  apiPersonnelHistory,
+  apiPersonnelStatus
 } from '../api/api_urls';
 
 export const DataContext = createContext();
@@ -31,9 +32,8 @@ export default function DataProvider({ children }) {
     marineTrafficData: [],
     traksatData: [],
     spidertracksData: [],
-    personnelData: [],
     videoStreamData: [],
-    officeData: [],
+    officesData: [],
     vehiclesData: [],
     carData: [],
     checkInData: [],
@@ -47,6 +47,11 @@ export default function DataProvider({ children }) {
     incidentSeverity: [],
     incidentStatus: [],
 
+    personnelData: [],
+    personnelHistory: [],
+    personnelStatus: [],
+
+
   });
 
   useEffect(() => {
@@ -56,7 +61,6 @@ export default function DataProvider({ children }) {
           marineTrafficResponse,
           tracksatResponse,
           spidertracksResponse,
-          personnelResponse,
           videoStreamResponse,
           officeResponse,
           vehiclesResponse,
@@ -73,11 +77,15 @@ export default function DataProvider({ children }) {
           incidentSeverityResponse,
           incidentStatusResponse,
 
+          personnelResponse,
+          personnelHistoryResponse,
+          personnelStatusResponse,
+
+
         ] = await Promise.all([
           axios.get(apiMarineTrafficData),
           axios.get(apiTrakSatData),
           axios.get(apiSpiderTrakData),
-          axios.get(apiPersonnelData),
           axios.get(apiVideoStream),
           axios.get(apiOfficesData),
           axios.get(apiVehiclesData),
@@ -93,15 +101,19 @@ export default function DataProvider({ children }) {
           axios.get(apiIncidentSeverity),
           axios.get(apiIncidentStatus),
 
+          axios.get(apiPersonnelData),
+          axios.get(apiPersonnelHistory),
+          axios.get(apiPersonnelStatus),
+
+
         ]);
 
         setData({
           marineTrafficData: marineTrafficResponse.data.success,
           traksatData: tracksatResponse.data.success,
           spidertracksData: spidertracksResponse.data.success,
-          personnelData: personnelResponse.data.success,
           videoStreamData: videoStreamResponse.data.success,
-          officeData: officeResponse.data.success,
+          officesData: officeResponse.data.success,
           vehiclesData: vehiclesResponse.data.success,
           carData: carResponse.data.data,
           checkInData: checkInResponse.data.success,
@@ -114,6 +126,12 @@ export default function DataProvider({ children }) {
           incidentType: incidentTypeResponse.data.success,
           incidentSeverity: incidentSeverityResponse.data.success,
           incidentStatus: incidentStatusResponse.data.success,
+
+
+          personnelData: personnelResponse.data.success,
+          personnelHistory: personnelHistoryResponse.data.success,
+          personnelStatus: personnelStatusResponse.data.success,
+
 
         });
       } catch (error) {
@@ -168,7 +186,15 @@ export default function DataProvider({ children }) {
   const updatePersonnelData = (newPersonnelData) => {
     setData((prevData) => ({
       ...prevData,
-      incidentData: newPersonnelData,
+      personnelData: newPersonnelData,
+    }));
+  };
+
+
+  const updateOfficesData = (newOfficesData) => {
+    setData((prevData) => ({
+      ...prevData,
+      officesData: newOfficesData,
     }));
   };
 
@@ -181,7 +207,8 @@ export default function DataProvider({ children }) {
       updateAccountData, 
       updateAircraftsData,
       updateIncidentData,
-      updatePersonnelData
+      updatePersonnelData,
+      updateOfficesData
      }}>
       {isLoading ? <Loader /> : children}
     </DataContext.Provider>

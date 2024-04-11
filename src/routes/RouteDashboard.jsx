@@ -15,8 +15,9 @@ import Reports from '../pages/reports/Reports';
 import Alerts from '../pages/alerts/Alerts';
 import Account from '../pages/account/Account';
 import AutoLogout from '../auth/autoLogout/AutoLogout';
-import Offices from '../pages/offices/Offices';
-import Vehicles from '../pages/vehicles/Vehicles';
+import Offices from '../pages/offices/Page';
+import OfficeProfile from '../pages/offices/profile/Profile';
+import Vehicles from '../pages/vehicles/Page';
 import Incidents from '../pages/incidents/Page';
 import AddIncidentReport from '../pages/incidents/addreport/AddReport';
 
@@ -82,6 +83,7 @@ export default function RouteDashboard() {
             <Route path='commercial-aircrafts' element={<AircraftsCommercial />} />
             <Route path='settings' element={<Settings />} />
             <Route path='offices' element={<Offices />} />
+            <Route path='/offices/profile' element={<OfficeProfile />} />
             <Route path='vehicles' element={<Vehicles />} />
 
             <Route path='marinetraffic-list' element={<MarineTrafficList />} />

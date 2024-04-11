@@ -9,7 +9,7 @@ export const StyledDialog = styled(Dialog)`
 `;
 
 export const StyledTableCell = styled(TableCell)`
-  font-family: "Manrope", "sans-serif";
+  font-family: "Manrope", "sans-serif" !important;
 `;
 
 export const StyledTable = styled(Table)`
