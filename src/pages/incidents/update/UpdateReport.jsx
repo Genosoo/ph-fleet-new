@@ -6,7 +6,7 @@ import { useContext, useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import { TextField,  Select, MenuItem, FormControl,InputLabel, Snackbar, Alert, } from "@mui/material";
 import { MapContainer, TileLayer, Marker} from 'react-leaflet';
-import MapSelection from '../addreport/MapSelection';
+import MapSelection from '../addIncident/MapSelection';
 import markerIcon from '../../../assets/incident/location.svg';
 import L from 'leaflet';
 import { StyledButtonAdd, StyledFormControlLabel, StyledCheckbox } from "./Styled";

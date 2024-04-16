@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import  { useState, useEffect } from 'react';
@@ -10,24 +11,14 @@ export default function Cards({
     personnelData,
     checkInData,
     officesData,
-    vehiclesData
+    vehiclesData,
+    summaryData
+
 }) {
     const [marineTrafficCount, setMarineTrafficCount] = useState(0);
     const [trakSatCount, setTrakSatCount] = useState(0);
     const [spiderTrakCount, setSpiderTrakCount] = useState(0);
-    const [personnelCount, setPersonnelCount] = useState(0);
-    const [officesCount, setOfficesCount] = useState(0);
-
-    const [vehiclesCount, setVehiclesCount] = useState(0);
-
-
-    // const [checkInCount, setCheckInCount] = useState(0);
-    // const [noCheckInsToday, setNoCheckInsToday] = useState(0);
-    const [noOnDuty, setNoOnDuty] = useState(0);
-    const [noOnLeave, setNoOnLeave] = useState(0);
-    const [noRnR, setNoRnR] = useState(0);
-    const [nonUniform, setNonUniform] = useState(0);
-    const [officialBusiness, setOfficialBusiness] = useState(0);
+   
 
     useEffect(() => {
         if (marineTrafficData && marineTrafficData.length) {
@@ -38,38 +29,12 @@ export default function Cards({
           setTrakSatCount(trakSatData.length);
         }
 
-        if (vehiclesData && vehiclesData.length) {
-            setVehiclesCount(vehiclesData.length);
-        }
-
-        if (officesData && officesData.length) {
-            setOfficesCount(officesData.length);
-          }
-
 
         if (spiderTrakData && spiderTrakData.length) {
             setSpiderTrakCount(spiderTrakData.length);
           }
           
-          if (personnelData && personnelData.length) {
-            setPersonnelCount(personnelData.length);
-            
-            // Count the number of personnel with status_name "On-Duty"
-            const onDutyCount = personnelData.filter(item => item.personal_details && item.personal_details.status_name === 'On-Duty').length;
-            setNoOnDuty(onDutyCount);
-
-            const onLeaveCount = personnelData.filter(item => item.personal_details && item.personal_details.status_name === 'On-Leave').length;
-            setNoOnLeave(onLeaveCount);
-
-            const RnRCount = personnelData.filter(item => item.personal_details && item.personal_details.status_name === 'Rest and Recreation').length;
-            setNoRnR(RnRCount);
-
-            const nonUniformCount = personnelData.filter(item => item.personal_details && item.personal_details.status_name === 'Non-Uniform').length;
-            setNonUniform(nonUniformCount);
-
-            const officialBusinessCount = personnelData.filter(item => item.personal_details && item.personal_details.status_name === 'Official Business').length;
-            setOfficialBusiness(officialBusinessCount);
-        }
+   
           
         
         // if (checkInData && checkInData.length) {
@@ -83,6 +48,16 @@ export default function Cards({
 
 
       }, [marineTrafficData, trakSatData, spiderTrakData, personnelData, checkInData, officesData, vehiclesData]);
+
+
+  
+      let total = 0;
+        if (summaryData && summaryData.personnel) {
+        for (const key in summaryData.personnel) {
+            total += summaryData.personnel[key];
+        }
+        }
+
       
     return (
         <div className="cards_container">
@@ -110,42 +85,43 @@ export default function Cards({
                 </div>
 
                 <div className='card_box card_box_2'>
-                <div className="card">
-                    <h2>{personnelCount}</h2>
-                    <span>Personnel</span>
-                </div>
-                    <div className="card">
-                        <h2>{noOnDuty}</h2>
+                    <Link className="card" to={'/fleet/personnel'}>
+                        <h2>{total}</h2>
+                        <span>Personnel</span>
+                    </Link>
+                    <Link className="card" to={'/fleet/personnel'}>
+                        <h2>{summaryData?.personnel && summaryData.personnel['On-Duty'] ? summaryData?.personnel['On-Duty'] : 0}</h2>
                         <span>On-Duty</span>
-                    </div>
-                    <div className="card">
-                        <h2>{noOnLeave}</h2>
+                    </Link>
+                    <Link className="card" to={'/fleet/personnel'}>
+                        <h2>{summaryData?.personnel && summaryData.personnel['On-Leave'] ? summaryData?.personnel['On-Leave'] : 0}</h2>
                         <span>On-Leave</span>
-                    </div>
-                    <div className="card">
-                        <h2>{noRnR}</h2>
+                    </Link>
+
+                    <Link className="card" to={'/fleet/personnel'}>
+                        <h2>{summaryData?.personnel && summaryData.personnel['Rest and Recreation'] ? summaryData?.personnel['Rest and Recreation'] : 0}</h2>
                         <span>RnR</span>
-                    </div>
+                    </Link>
                 </div>            
 
             <div className='card_box card_box_2'>
               
-                    <div className="card">
-                        <h2>{officialBusiness}</h2>
+                    <Link className="card" to={'/fleet/personnel'}>
+                        <h2>{summaryData?.personnel && summaryData.personnel['Official Business'] ?  summaryData?.personnel['Official Business'] : 0}</h2>
                         <span>Official Business</span>
-                    </div>
-                    <div className="card">
-                        <h2>{nonUniform}</h2>
+                    </Link>
+                    <Link className="card" to={'/fleet/personnel'}>
+                        <h2>{summaryData?.personnel && summaryData.personnel['Non-Uniform'] ? summaryData?.personnel['Non-Uniform'] : 0}</h2>
                         <span>Non-Uniform</span>
-                    </div>
-                    <div className="card">
-                        <h2>{officesCount}</h2>
+                    </Link>
+                    <Link className="card" to={'/fleet/offices'}>
+                        <h2>{summaryData?.offices && summaryData.offices ? summaryData?.offices?.total : 0}</h2>
                         <span>Offices</span>
-                    </div>
-                    <div className="card">
-                        <h2>{vehiclesCount}</h2>
+                    </Link>
+                    <Link className="card" to={'/fleet/vehicles'}>
+                        <h2>{summaryData?.vehicle && summaryData.vehicle ? summaryData?.vehicle?.total : 0}</h2>
                         <span>Vehicles</span>
-                    </div>
+                    </Link>
                 </div>
            </div>
         </div>

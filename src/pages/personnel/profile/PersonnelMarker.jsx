@@ -23,19 +23,28 @@ const getStatusImage = (status_name) => {
 };
 
 
-const PersonnelMarker = ({  selectedPersonnel }) => {
+const PersonnelMarker = ({ selectedPersonnel }) => {
   const map = useMap();
+
+  // Skip rendering the marker if selectedPersonnel is null or personal_details is null, or glatitude/glongitude is null
   if (!selectedPersonnel || !selectedPersonnel.personal_details || selectedPersonnel.glatitude === null || selectedPersonnel.glongitude === null) {
-    return null; // Skip rendering the marker if selectedPersonnel is null or personal_details is null, or glatitude/glongitude is null
+    return null;
   }
   
   const statusImage = getStatusImage(selectedPersonnel.personal_details.status_name);
-  const startPosition = [selectedPersonnel.glatitude, selectedPersonnel.glongitude];
-  
-  map.flyTo(startPosition, 12, {
-    duration: 2, // Adjust duration as needed (in seconds)
-    easeLinearity: 0.25 // Adjust ease linearity as needed
-  });
+  let startPosition = [selectedPersonnel.glatitude, selectedPersonnel.glongitude];
+
+  // Check if the latitude and longitude are valid
+  if (!isNaN(startPosition[0]) && !isNaN(startPosition[1])) {
+    // Fly to the marker position if it's defined
+    map.flyTo(startPosition, 12, {
+      duration: 2, // Adjust duration as needed (in seconds)
+      easeLinearity: 0.25 // Adjust ease linearity as needed
+    });
+  } else {
+    // If latitude or longitude is invalid, return null to skip rendering the marker
+    return null;
+  }
 
   return (
     <Marker
@@ -50,5 +59,5 @@ const PersonnelMarker = ({  selectedPersonnel }) => {
   );
 };
 
-
 export default PersonnelMarker;
+

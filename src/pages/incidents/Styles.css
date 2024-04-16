@@ -3,7 +3,7 @@
 
 @layer components{
     .incidentContainer{
-        @apply font-manrope pr-10 pl-3 pb-10 
+        @apply font-manrope pr-10 pl-3 pb-10
     }
 
     .incidentTableContainer button{
@@ -187,7 +187,7 @@
 
 
     .reportAddContainer{
-        @apply px-5 font-manrope
+        @apply pl-8 font-manrope
     }
 
    
@@ -381,5 +381,196 @@
     .actionTableBox{
         @apply flex gap-2 items-center 
     }
+
+
+    .addIncidentContainer{
+        @apply font-manrope pb-10 px-8  flex flex-col lg:flex-row gap-5 text-[#404958]
+        mt-10
+    }
+
+    .addIncidentWrapper1{
+        @apply lg:w-[50%] flex flex-col gap-10
+    }
+
+    .addIncidentBox1{
+        box-shadow: 0 0 10px #00000033;
+        @apply  p-4 rounded-lg 
+        flex flex-col gap-5 w-full
+    }
+
+
+
+    .addIncidentBox1 span h4{
+        @apply text-base pb-3 font-medium
+    }
+
+    .addIncidentBox1 span p{
+        @apply bg-[#F9F9F9] text-sm  p-3
+        rounded-lg
+    }
+
+    .addIncidentBox1 span input{
+        @apply border text-sm p-2 rounded-lg 
+        w-full
+    }
+
+    .addIncidentBox2{
+        box-shadow: 0 0 10px #00000033;
+        @apply  p-4 rounded-lg 
+        flex flex-col gap-5 w-full pb-7
+    }
+
+    .addIncidentBox2 h3{
+        @apply font-bold text-base
+    }
+
+    .addIncidentBox2 span h4{
+        @apply font-semibold text-sm pb-3
+    }
+
+    .addIncidentBox2 span input{
+        @apply border text-sm p-2 rounded-lg 
+        w-full
+    }
+
+    .addIncidentBox2 .selectionBox{
+        @apply border rounded-lg p-3
+    }
+
+    .addIncidentBox2 .selectionBox select{
+        @apply w-full
+    }
+
+
+
+    .addIncidentBox3{
+        box-shadow: 0 0 10px #00000033;
+        @apply  p-4 rounded-lg 
+        flex flex-col gap-5 w-full pb-7
+    }
+
+    .addIncidentBox3 h3{
+        @apply font-bold text-base
+    }
+
+    
+    .addIncidentBox3 span h4{
+        @apply font-semibold text-sm pb-3
+    }
+
+    .addIncidentBox3 span input{
+        @apply border text-sm p-2 rounded-lg 
+        w-full
+    }
+
+    .addIncidentBox3 span p{
+        @apply bg-[#F9F9F9] text-sm  p-3
+        rounded-lg
+    }
+
+    .addIncidentBox3 span{
+        @apply w-full
+    }
+
+    .addIncidentBox3 .checkboxFlex{
+        @apply flex w-full mt-4 
+    }
+
+    .addIncidentBox3 .checkboxBox{
+        @apply flex  w-full  gap-2 pl-5
+    }
+
+    .addIncidentBox3 .checkboxBox input{
+        @apply w-[15px]
+    }
+
+    .addIncidentBox3 .checkboxBox h5{
+        @apply text-sm font-bold text-[#8E8E8E]
+    }
+
+
+    .addIncidentBox4{
+        box-shadow: 0 0 10px #00000033;
+        @apply border p-4 rounded-lg 
+        flex flex-col gap-5 w-full pb-7
+    }
+
+    .addIncidentBox4 h3{
+        @apply font-bold text-base 
+    }
+
+    .addIncidentBox4 textarea{
+        @apply h-[300px] border rounded-lg text-sm p-3
+    }
+
+    .addIncidentWrapper2{
+        @apply lg:w-[50%] flex flex-col gap-10
+    }
+
+    .addIncidentMap{
+        box-shadow: 0 0 10px #00000033;
+        @apply border p-4 rounded-lg 
+        flex flex-col gap-5 w-full pb-7
+    }
+
+    .addIncidentMap h3{
+        @apply text-base font-medium
+    }
+
+    .addIncidentMapBox{
+        @apply h-[500px] rounded-lg overflow-hidden
+    }
+
+
+    .addIncidentBox5{
+        box-shadow: 0 0 10px #00000033;
+        @apply  p-4 rounded-lg 
+        flex flex-col gap-5 w-full pb-7
+    }
+
+    .addIncidentBox5 h3{
+        @apply font-bold text-base
+    }
+
+    .addIncidentBox5 p{
+        @apply text-sm text-[#8E8E8E]
+    }
+
+    .addIncidentFileBox{
+        @apply flex gap-3
+    }
+
+    .addIncidentFileCard{
+        @apply border rounded-lg  w-[50%]
+        p-2 flex flex-col gap-3
+    }
+
+    .fileCard{
+        border:2px dashed #8E8E8E;
+        @apply rounded-lg h-[300px]
+        flex items-center justify-center
+    }
+
+    .fileCard img{
+        @apply w-[70px]
+    }
+
+    .addIncidentFileCard h3{
+        @apply bg-[#0DB0E6] text-center p-2 rounded-lg
+        text-white font-medium
+    }
+
+    .addIncidentFileBox textarea{
+        @apply  w-[50%] border rounded-lg p-3 text-sm
+    }
+
+    .addIncidentFooter{
+        @apply flex items-center font-manrope justify-center w-full
+    }
+
+    .addIncidentFooter p{
+        @apply text-base font-bold text-center p-5
+    }
+
 }
 

@@ -57,84 +57,6 @@
     }
 
 
-    /*====== USER PROFILE STYLE =============*/
-    .officesProfileContainer{
-        @apply flex flex-col pr-10 font-manrope
-    }
-
-    .officesProfileTop{
-        @apply flex justify-between pb-3
-    }
-
-    .officesProfileTop button{
-            @apply bg-[#86705E] text-white flex p-3 rounded-[10px] items-center gap-2
-            text-sm hover:bg-[#404958] duration-150 w-[150px] justify-center
-    }
-
-    .usersProfileBox1{
-        box-shadow: 0 0 10px #00000012;
-        @apply bg-[#F9F9F9]  rounded-[15px] h-[400px] p-3 flex flex-col justify-between
-    }
-
-    .usersProfileTitle{
-        @apply text-lg font-bold p-2
-    }
-
-    .usersProfilePhoto{
-        @apply w-[250px] h-[250px] rounded-full object-cover
-        border-2 border-[#404958] p-2
-    }
-
-    .usersProfileInitial{
-        @apply flex items-center gap-16 pb-10 px-3
-    }
-
-    .textBox{
-        @apply w-full
-    }
-
-    .textBox .text1{
-        @apply text-[#8E8E8E] text-[18px]
-    }
-
-    .textBox .text2{
-        @apply text-[#404958] font-bold text-[3rem] capitalize
-    }
-
-    .textBox .text3{
-        @apply text-[#404958] font-bold text-[1.5rem] capitalize tracking-wide
-    }
-
-
-    .usersProfileBox2{
-        @apply  mt-5  w-full
-    }
-
-    .usersProfileBox2 .title{
-        @apply font-bold text-lg 
-    }
-
-    .usersTableDetail{
-        @apply flex rounded-[15px] overflow-hidden w-full border mt-5
-    }
-
-    .usersTableDetail .span1{
-        @apply font-bold flex flex-col bg-[#EAEAEC] w-[300px] items-start  pl-3
-    }
-
-   
-    .usersTableDetail .span2{
-        @apply flex flex-col bg-[#F7F7F8] w-full items-start 
-    }
-
-    .usersTableDetail span p{
-        @apply p-5 text-base
-    }
-
-    .usersTableDetail .span2 p{
-        @apply border w-full
-    }
-
     .deleteDialogBox{
         @apply flex flex-col items-center gap-5 p-10 font-manrope
         rounded-[20px]
@@ -168,5 +90,107 @@
     .deleteDialogBtn .cancel{
         @apply border
     }
+
+   
+
+    .addFormContainer{
+        @apply font-manrope
+    }
+
+    .addFormHeader{
+        @apply flex justify-between text-lg font-bold p-5 border-b
+    }
+
+    .addFormHeader svg{
+        @apply text-[25px] text-[#404958]
+    }
+
+    .addFormBoxDetails{
+        @apply p-10
+    }
+
+    .addFormImageBox{
+        @apply flex items-center gap-5
+    }
+
+    .addFormImageBox img{
+        @apply w-[200px] h-[200px] rounded-full object-cover border-2 border-[#404958] p-2
+    }
+
+    .uploadImageBtn{
+        @apply border p-4  px-8 rounded-[15px] border-[#8E8E8E] text-[#404958] font-bold
+        text-sm hover:bg-[#404958] hover:text-white duration-150
+    }
+
+    .addFormBoxDetail1 {
+        @apply mt-6 flex flex-col gap-4
+    }
+
+    .addFormBoxDetail1 p{
+        @apply font-bold mt-4
+    }
+
+    .addFormBoxDetail2 p{
+        @apply font-bold mt-10
+    }
+
+    .addFormBoxDetail2{
+        @apply flex flex-col gap-5
+    }
+
+    .addFormFooter{
+        @apply flex  gap-5 p-5
+    }
+
+    .addFormFooter button{
+        @apply w-full rounded-lg p-4 text-sm 
+    }
+
+    .addFormBtnCancel{
+        @apply border-[#0DB0E6] border-2 text-[#404958]
+    }
+
+    .addFormBtnAdd{
+        @apply bg-[#0DB0E6] text-white
+    }
+
+
+    .officesProfileContainer{
+      @apply font-manrope flex gap-5 p-6  flex-col lg:flex-row
+    }
+
+    .officesDetails{
+        @apply  border w-full rounded-xl 
+        p-10 text-[#404958] flex flex-col
+        gap-5 shadow-lg
+    }
+
+    .officesDetails h2{
+        @apply text-lg font-bold text-[#404958]
+    }
+
+
+    .officesDetails span h4{
+        @apply text-base
+    }
+
+    .officesDetails span p {
+        @apply bg-[#F9F9F9] p-3 rounded-lg font-bold text-[#8E8E8E]
+    }
+
+    .officesMapContainer{
+        @apply border w-full rounded-xl p-10 flex flex-col
+        gap-5  shadow-lg
+    }
+
+    .officesMapContainer h2{
+        @apply font-bold text-lg text-[#404958]
+    } 
+
+    .officeMapBox{
+        @apply w-full lg:h-full rounded-lg overflow-hidden
+        h-[400px]
+    }
+
 }
 

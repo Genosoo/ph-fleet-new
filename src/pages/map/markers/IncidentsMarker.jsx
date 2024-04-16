@@ -23,7 +23,7 @@ export default function IncidentMarker ({ item, index, selectedIncident, handleI
     const isSameIncident = selectedIncident && selectedIncident.id === item.id;
     if (!isSameIncident) {
       prevZoomRef.current = map.getZoom();
-      map.flyTo(startPosition, 12, {
+      map.flyTo(startPosition, 9, {
         duration: 2, // Adjust duration as needed (in seconds)
         easeLinearity: 0.25 // Adjust ease linearity as needed
       });

@@ -46,6 +46,6 @@ export default function btnLogout() {
     
 
   return (
-    <button className='w-full text-left' onClick={handleLogout}>Logout</button>
+    <button className='w-full text-left font-manrope text-sm' onClick={handleLogout}>Logout</button>
   )
 }

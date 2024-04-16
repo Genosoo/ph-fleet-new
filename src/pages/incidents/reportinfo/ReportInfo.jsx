@@ -1,8 +1,8 @@
 import { useLocation} from 'react-router-dom';
 import { baseUrl } from '../../../api/api_urls';
 import { MapContainer, TileLayer } from 'react-leaflet';
-import IncidentMarker from './IncidentsMarker';
 import 'leaflet/dist/leaflet.css';
+import IncidentMarker from './IncidentsMarker';
 import noImage from '../../../assets/incident/no-incident-image.svg'
 
 

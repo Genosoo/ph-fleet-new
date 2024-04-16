@@ -238,7 +238,7 @@ const statusTextColors = {
                    style={{
                       backgroundColor: statusColors[item.status],
                       color: statusTextColors[item.status] || '#000'  // Set text color based on background color
-                     }}>{item.status_details.type_status}</p>
+                     }}>{item?.status_details?.type_status || "N/A"}</p>
                   </td>
                   </tr>
                   

@@ -50,10 +50,11 @@ export default function MapComponent({
   spiderTrakData, 
   personnelData,
   videoStreamData,
-  officeData,
+  officesData,
   vehiclesData,
   incidentData,
-  carData
+  carData,
+  checkInData
   
 }) {
   const mapRef = useRef(null);
@@ -343,8 +344,8 @@ export default function MapComponent({
     setSelectedIncident(incidentData);
   };
 
-  const handleOfficeMarkerClick = (officeData) => {
-    setSelectedOffice(officeData,);
+  const handleOfficeMarkerClick = (officesData) => {
+    setSelectedOffice(officesData,);
   };
 
 
@@ -456,78 +457,147 @@ export default function MapComponent({
   <div className='map_container' >
 
 
-  {toggleDrawer && mapLayer !== 'windy' && (
- <FilterDrawer
- toggleDrawer={toggleDrawer}
+  {!isFullscreen &&  toggleDrawer && mapLayer !== 'windy' && (
+   <FilterDrawer
+    toggleDrawer={toggleDrawer}
 
- handleShowAllAircrafts={handleShowAllAircrafts}
- showAllAircrafts={showAllAircrafts}
+    handleShowAllAircrafts={handleShowAllAircrafts}
+    showAllAircrafts={showAllAircrafts}
 
- handleShowAllVessels={handleShowAllVessels}
- showAllVessels={showAllVessels}
+    handleShowAllVessels={handleShowAllVessels}
+    showAllVessels={showAllVessels}
 
- handleUnShowAll={handleUnShowAll}
- unShowAll={unShowAll}
- 
- handleShowAll={handleShowAll}
- showAll={showAll}
+    handleUnShowAll={handleUnShowAll}
+    unShowAll={unShowAll}
+    
+    handleShowAll={handleShowAll}
+    showAll={showAll}
 
- showOnDuty={showOnDuty}
- handleToggleOnDuty={handleToggleOnDuty}
- showOnLeave={showOnLeave}
- handleToggleOnLeave={handleToggleOnLeave}
+    showOnDuty={showOnDuty}
+    handleToggleOnDuty={handleToggleOnDuty}
+    showOnLeave={showOnLeave}
+    handleToggleOnLeave={handleToggleOnLeave}
 
- showRnr={showRnr}
- handleToggleRnr={handleToggleRnr}
+    showRnr={showRnr}
+    handleToggleRnr={handleToggleRnr}
 
- showAllUsernames={showAllUsernames}
- handleToggleShowAllUsernames={handleToggleShowAllUsernames}
+    showAllUsernames={showAllUsernames}
+    handleToggleShowAllUsernames={handleToggleShowAllUsernames}
 
- showIncident={showIncident}
- handleIncident={handleIncident}
+    showIncident={showIncident}
+    handleIncident={handleIncident}
 
- showVehicles={showVehicles}
- handleVehicles={handleVehicles}
+    showVehicles={showVehicles}
+    handleVehicles={handleVehicles}
 
- showMarineTraffic={showMarineTraffic}
- handleMarineTraffic={handleMarineTraffic}
+    showMarineTraffic={showMarineTraffic}
+    handleMarineTraffic={handleMarineTraffic}
 
- showTrakSat={showTrakSat}
- handleTrakSat={handleTrakSat}
- showTrakSatLabel={showTrakSatLabel}
+    showTrakSat={showTrakSat}
+    handleTrakSat={handleTrakSat}
+    showTrakSatLabel={showTrakSatLabel}
 
- showDescription={showDescription}
- setShowDescription={setShowDescription}
+    showDescription={showDescription}
+    setShowDescription={setShowDescription}
 
- showSpiderTrak={showSpiderTrak}
- handleSpiderTrak={handleSpiderTrak}
+    showSpiderTrak={showSpiderTrak}
+    handleSpiderTrak={handleSpiderTrak}
 
- showSpiderTrakDesc={showSpiderTrakDesc}
- setShowSpiderTrakDesc={setShowSpiderTrakDesc}
+    showSpiderTrakDesc={showSpiderTrakDesc}
+    setShowSpiderTrakDesc={setShowSpiderTrakDesc}
 
- showPersonnel={showPersonnel}
- handlePersonnel={handlePersonnel}
+    showPersonnel={showPersonnel}
+    handlePersonnel={handlePersonnel}
 
- showVideoStream={showVideoStream}
- handleVideoStream={handleVideoStream}
- 
- handleOffice={handleOffice}
- showOffice={showOffice}
+    showVideoStream={showVideoStream}
+    handleVideoStream={handleVideoStream}
+    
+    handleOffice={handleOffice}
+    showOffice={showOffice}
 
- showWeather={showWeather}
- toggleWeather={toggleWeather}
+    showWeather={showWeather}
+    toggleWeather={toggleWeather}
 
- showNonUniform={showNonUniform}
- handleToggleNonUniform={handleToggleNonUniform}
+    showNonUniform={showNonUniform}
+    handleToggleNonUniform={handleToggleNonUniform}
 
- showCarTrack={showCarTrack}
- handleCarTrack={handleCarTrack}
-/>
+    showCarTrack={showCarTrack}
+    handleCarTrack={handleCarTrack}
+    />
   )}
+
 
      <MapContainer  zoomControl={false} ref={mapRef} center={[12.8797, 121.7740]} zoom={6} style={{ height: '100%', width: '100%' }}>
       
-      
+     {isFullscreen && toggleDrawer && mapLayer !== 'windy' && (
+   <FilterDrawer
+    toggleDrawer={toggleDrawer}
+
+    handleShowAllAircrafts={handleShowAllAircrafts}
+    showAllAircrafts={showAllAircrafts}
+
+    handleShowAllVessels={handleShowAllVessels}
+    showAllVessels={showAllVessels}
+
+    handleUnShowAll={handleUnShowAll}
+    unShowAll={unShowAll}
+    
+    handleShowAll={handleShowAll}
+    showAll={showAll}
+
+    showOnDuty={showOnDuty}
+    handleToggleOnDuty={handleToggleOnDuty}
+    showOnLeave={showOnLeave}
+    handleToggleOnLeave={handleToggleOnLeave}
+
+    showRnr={showRnr}
+    handleToggleRnr={handleToggleRnr}
+
+    showAllUsernames={showAllUsernames}
+    handleToggleShowAllUsernames={handleToggleShowAllUsernames}
+
+    showIncident={showIncident}
+    handleIncident={handleIncident}
+
+    showVehicles={showVehicles}
+    handleVehicles={handleVehicles}
+
+    showMarineTraffic={showMarineTraffic}
+    handleMarineTraffic={handleMarineTraffic}
+
+    showTrakSat={showTrakSat}
+    handleTrakSat={handleTrakSat}
+    showTrakSatLabel={showTrakSatLabel}
+
+    showDescription={showDescription}
+    setShowDescription={setShowDescription}
+
+    showSpiderTrak={showSpiderTrak}
+    handleSpiderTrak={handleSpiderTrak}
+
+    showSpiderTrakDesc={showSpiderTrakDesc}
+    setShowSpiderTrakDesc={setShowSpiderTrakDesc}
+
+    showPersonnel={showPersonnel}
+    handlePersonnel={handlePersonnel}
+
+    showVideoStream={showVideoStream}
+    handleVideoStream={handleVideoStream}
+    
+    handleOffice={handleOffice}
+    showOffice={showOffice}
+
+    showWeather={showWeather}
+    toggleWeather={toggleWeather}
+
+    showNonUniform={showNonUniform}
+    handleToggleNonUniform={handleToggleNonUniform}
+
+    showCarTrack={showCarTrack}
+    handleCarTrack={handleCarTrack}
+    />
+  )}
+
      {mapLayer === 'osm' ? (
         <TileLayer url="https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}&hl=en" subdomains={['mt0', 'mt1', 'mt2', 'mt3']} />
       ) : mapLayer === 'windy' ? (
@@ -559,7 +629,7 @@ export default function MapComponent({
 {/*=============================== OFFICE MARKER ==================================*/}
 {mapLayer !== 'windy' && !withCluster ?
   <MarkerClusterGroup chunkedLoading iconCreateFunction={officeClusterCustomIcon} >
-      {mapLayer !== 'windy' &&  showOffice && officeData && officeData.map((item, index) => (
+      {mapLayer !== 'windy' &&  showOffice && officesData && officesData.map((item, index) => (
             item && item.latitude && item.longitude && (
              <OfficeMarker
              key={`cargo-${index}`}
@@ -572,7 +642,7 @@ export default function MapComponent({
       ))}
       </MarkerClusterGroup> : 
       <>
-      {mapLayer !== 'windy' &&  showOffice && officeData && officeData.map((item, index) => (
+      {mapLayer !== 'windy' &&  showOffice && officesData && officesData.map((item, index) => (
             item && item.latitude && item.longitude && (
              <OfficeMarker
              key={`cargo-${index}`}
@@ -626,8 +696,8 @@ export default function MapComponent({
 {mapLayer !== 'windy' && !withCluster ? 
 <MarkerClusterGroup chunkedLoading iconCreateFunction={personnelClusterCustomIcon} >
 {mapLayer !== 'windy' &&  showPersonnel &&
-  personnelData &&
-  personnelData
+  checkInData &&
+  checkInData
     .filter(
       (item) =>
         item &&
@@ -647,6 +717,8 @@ export default function MapComponent({
           key={`cargo-${index}`}
           item={item}
           index={index}
+
+          showDescription={showDescription}
           selectedPersonnel={selectedPersonnel}
           handlePersonnelMarkerClick={handlePersonnelMarkerClick}
           showAllUsernames={showAllUsernames}  // Pass showAllUsernames as a prop to PersonnelMarker
@@ -658,8 +730,8 @@ export default function MapComponent({
 
    <>
      {mapLayer !== 'windy' &&  showPersonnel &&
-    personnelData &&
-    personnelData
+    checkInData &&
+    checkInData
       .filter(
         (item) =>
           item &&
@@ -679,6 +751,7 @@ export default function MapComponent({
             key={`cargo-${index}`}
             item={item}
             index={index}
+            showDescription={showDescription}
             selectedPersonnel={selectedPersonnel}
             handlePersonnelMarkerClick={handlePersonnelMarkerClick}
             showAllUsernames={showAllUsernames}  // Pass showAllUsernames as a prop to PersonnelMarker

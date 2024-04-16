@@ -30,6 +30,7 @@ import ButtonProfile from "./buttons/ButtonProfile";
 import ButtonAdd from "./buttons/buttonAdd";
 import Search from "./Search";
 import { PiWarningLight } from "react-icons/pi";
+import ExportFiles from "./export/ExportFiles";
  
 export default function TableComponent({ csrfToken }) {
   const { aircraftsData, updateAircraftsData } = useContext(DataContext);
@@ -335,6 +336,7 @@ const handleDeleteAircrafts = async (id) => {
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
             />
+            <ExportFiles />
       </div>
 
 

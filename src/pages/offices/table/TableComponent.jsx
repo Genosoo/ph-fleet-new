@@ -1,22 +1,150 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { DataContext } from "../../../context/DataProvider";
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext, useRef, useEffect } from "react";
+
 import ButtonUpdate from "./buttons/ButtonUpdate";
 import ButtonDelete from "./buttons/ButtonDelete";
 import ButtonProfile from "./buttons/ButtonProfile";
 import ButtonAdd from "./buttons/buttonAdd";
-import {StyledTableCell, StyledTable, StyledTableContainer } from "./Styled";
 import Search from "./Search";
-import {  TableBody, TableHead, TableRow, TablePagination} from "@mui/material";
+import { Snackbar, Alert,  TableBody, TableHead, TableRow, TablePagination, Dialog} from "@mui/material";
 import { Link } from "react-router-dom";
+import {StyledTableCell, StyledTable, StyledTableContainer,  StyledDialog, StyledTextField,  StyledFormControlLabel, StyledCheckbox} from "./Styled";
+import { IoClose } from "react-icons/io5";
+import { apiOfficesData } from "../../../api/api_urls";
+import axios from "axios";
+import { MapContainer, TileLayer, Marker} from 'react-leaflet';
+import L from 'leaflet'
+import markerIcon from '../../../assets/incident/location.svg';
+import MapSelection from "./MapSelection";
+import { PiWarningLight } from "react-icons/pi";
+import ExportFiles from "./export/ExportFiles";
 
-export default function TableComponent() {
+// Define a custom icon
+const customIcon = new L.Icon({
+    iconUrl: markerIcon,
+    iconSize: [32, 32],
+    iconAnchor: [16, 32],
+  });
+
+export default function TableComponent({ csrfToken }) {
   const { officesData, updateOfficesData } = useContext(DataContext);
   const [filteredData, setFilteredData] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState("")
+  const [formData, setFormData] = useState({
+    office_name: "",
+    office_code: "",
+    office_address:"",
+    camp_base:"",
+    latitude:"",
+    longitude:""
+});
 
+  const [openAddForm, setOpenAddForm] = useState(false);
+  const [openUpdateForm, setOpenUpdateForm] = useState(false);
+  const [selectedOffice, setSelectedOffice] = useState(null);
+  const [openDeleteConfirmation, setOpenDeleteConfirmation] = useState(false);
+  const [deleteOfficeId, setDeleteOfficeId] = useState(null);
+
+
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+
+  
+  const [showDeviceMarker, setShowDeviceMarker] = useState(true);
+  const [deviceLocation, setDeviceLocation] = useState(null);
+  const [locationChoice, setLocationChoice] = useState('map');
+
+  const mapRef = useRef(null);
+  const initialZoom = 5;
+
+  const handleCloseAddForm = () =>  setOpenAddForm(false);
+  const handleOpenAddForm = () => setOpenAddForm(true);
+
+  const handleOpenDeleteConfirmation = (officeId) => {
+    setDeleteOfficeId(officeId);
+    setOpenDeleteConfirmation(true);
+};
+
+const handleCloseDeleteConfirmation = () => {
+    setOpenDeleteConfirmation(false);
+    setDeleteOfficeId(null);
+};
+
+const handleConfirmDeleteUser = () => {
+    handleDeleteUser(deleteOfficeId);
+    handleCloseDeleteConfirmation();
+};
+
+const handleDeleteUser = async (id) => {
+    try {
+        await axios.delete(apiOfficesData, {
+            data: { id },
+            headers: {
+                'X-CSRFToken': csrfToken
+            }
+        });
+        const updatedOffices = officesData.filter(office => office.id !== id);
+        updateOfficesData(updatedOffices);
+        setFilteredData(updatedOffices);
+        showSuccessMessage("Office deleted successfully!");
+    } catch (error) {
+        console.error('Error deleting Office:', error.message);
+        showErrorMessage("Failed to delete office!");
+    }
+};
+
+
+  const handleOpenUpdateForm = (office) => {
+    setSelectedOffice(office);
+    setFormData({
+        office_name: office.office_name,
+        office_code:  office.office_code,
+        office_address:  office.office_address,
+        camp_base:  office.camp_base,
+        latitude:"",
+        longitude:""
+    });
+
+    setOpenUpdateForm(true);
+};
+
+const handleCloseUpdateForm = () => {
+    setOpenUpdateForm(false);
+    setSelectedOffice(null);
+};
+
+
+
+
+
+  
+  const handleSnackbarClose = () => {
+      setSnackbarOpen(false);
+  };
+  
+  const showSuccessMessage = (message) => {
+      setSuccessMessage(message);
+      setSnackbarOpen(true);
+      setTimeout(() => {
+          setSuccessMessage("");
+          setSnackbarOpen(false);
+      }, 2000);
+  };
+  
+  const showErrorMessage = (message) => {
+      setErrorMessage(message);
+      setSnackbarOpen(true);
+      setTimeout(() => {
+          setErrorMessage("");
+          setSnackbarOpen(false);
+      }, 2000);
+  };
+  
   console.log("offices:", officesData)
 
   useEffect(() => {
@@ -34,11 +162,215 @@ const handleChangeRowsPerPage = (event) => {
 };
 const handleSearchChange = (e) => setSearchQuery(e.target.value);
 
+const handleFormChange = (e) => {
+    const { name, value } = e.target;
+    if (name.includes("personal_details")) {
+        const [key, subKey] = name.split(".");
+        setFormData(prevState => ({
+            ...formData,
+            [key]: {
+                ...prevState[key],
+                [subKey]: value
+            }
+        }));
+    } else {
+        setFormData({ ...formData, [name]: value });
+    }
+};
+
+
+const handleAddOffice = async () => {
+    if (formData.office_name.trim() === "") {
+        showErrorMessage("Office name cannot be empty");
+        return;
+    }
+
+    if (formData.office_address.trim() === "") {
+        showErrorMessage("Office address cannot be empty");
+        return;
+    }
+
+    try {
+        const response = await axios.post(apiOfficesData, formData, {
+            headers: {
+                'X-CSRFToken': csrfToken
+            }
+        });
+        const newOffice = response.data.data;
+        updateOfficesData([...officesData, newOffice]);
+        setFilteredData([...filteredData, newOffice]);
+        handleCloseAddForm();
+        showSuccessMessage("Office added successfully!");
+    } catch (error) {
+        console.error('Error adding Office:', error);
+        showErrorMessage("Failed to add office");
+    }
+};
+
+
+
+useEffect(() => {
+    const fetchUserLocation = () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const { latitude, longitude } = position.coords;
+            setFormData({
+              ...formData,
+                latitude: latitude,
+                longitude: longitude,
+            });
+            
+          },
+          (error) => {
+            console.error('Error getting user location:', error);
+          }
+        );
+      } else {
+        console.error('Geolocation is not supported by this browser.');
+      }
+    };
+
+    fetchUserLocation();
+  }, []);
+
+useEffect(() => {
+    const fetchAddress = async () => {
+      try {
+        const response = await axios.get(`https://nominatim.openstreetmap.org/reverse?lat=${formData.latitude}&lon=${formData.longitude}&format=json`);
+        const { display_name } = response.data;
+    
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          office_address: display_name,
+        }));
+
+        console.log('Address response:', response);
+      } catch (error) {
+        console.error('Error fetching address:', error);
+      }
+    };
+  
+    if (formData.latitude && formData.longitude) {
+      fetchAddress();
+    }
+  }, [formData.latitude, formData.longitude]);
+  
+  
+
+
+const handleLocationChoiceChange = (event) => {
+    if (event.target.value === 'map') {
+      // Reset the map's zoom level
+      if (mapRef.current) {
+        mapRef.current.setView([12.8797, 121.774], initialZoom);
+      }
+    }
+    // Handle other location choices if needed
+    setLocationChoice(event.target.value);
+  
+  };
+
+
+
+  const handleDeviceLocation = () => {
+    console.log('Attempting to get device location...');
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          console.log('Device location retrieved successfully:', position.coords);
+          const { latitude, longitude } = position.coords;
+          setDeviceLocation({ latitude, longitude });
+  
+          // Update the map's center and zoom level
+          mapRef.current.setView([latitude, longitude], 14,  { animate: true }); // 14 is an example zoom level
+  
+          setShowDeviceMarker(true); // Show the device marker again
+          try {
+            const response = await axios.get(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`);
+            const { display_name } = response.data;
+            setFormData((prevFormData) => ({
+              ...prevFormData,
+              office_address: display_name
+            }));
+          } catch (error) {
+            console.error('Error fetching address:', error);
+          }
+        },
+        (error) => {
+          console.error('Error getting user location:', error);
+        }
+      );
+    } else {
+      console.error('Geolocation is not supported by this browser.');
+    }
+  };
+
+
+  const handleMapChange = async (location) => {
+    try {
+      const response = await axios.get(`https://nominatim.openstreetmap.org/reverse?lat=${location.lat}&lon=${location.lng}&format=json`);
+      const { display_name } = response.data;
+      setFormData({
+        ...formData,
+        latitude: location.lat,
+        longitude: location.lng,
+        office_address: display_name
+      });
+
+        // Zoom the map to the selected location
+mapRef.current.setView([location.lat, location.lng], 14, { animate: true });
+
+      console.log('address map', response)
+      // Hide the device marker when the user selects a location on the map
+      setShowDeviceMarker(false);
+    } catch (error) {
+      console.error('Error fetching address:', error);
+    }
+  };
+
+
+
+
+  const handleUpdateUser = async () => {
+    try {
+        const updatedFormData = { ...formData, id: selectedOffice.id };
+
+        const response = await axios.put(apiOfficesData, updatedFormData, {
+            headers: {
+                'X-CSRFToken': csrfToken
+            }
+        });
+
+        const updatedOffice = response.data.data;
+        const updatedOffices = officesData.map(office => {
+            if (office.id === updatedOffice.id) {
+                return updatedOffice;
+            }
+            return office;
+        });
+        updateOfficesData(updatedOffices);
+        setFilteredData(updatedOffices);
+        handleCloseUpdateForm();
+        showSuccessMessage("Office updated successfully!");
+    } catch (error) {
+        console.error('Error updating Office:', error);
+        showErrorMessage("Failed to update Office!");
+    }
+};
+
+
+
   return (
     <div  className="officesTableWrapper">
+          <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'right' }}  open={snackbarOpen} autoHideDuration={2000} onClose={handleSnackbarClose}>
+                <Alert variant="filled" onClose={handleSnackbarClose} severity={successMessage ? "success" : "error"}>
+                    {successMessage || errorMessage}
+                </Alert>
+            </Snackbar>
       <div className="officesTableTopBox">
                 <Search  handleSearchChange={handleSearchChange}/>
-                <ButtonAdd/>
+                <ButtonAdd handleOpenAddForm={handleOpenAddForm} />
             </div>
 
             <div className="usersTableContainer">
@@ -46,24 +378,29 @@ const handleSearchChange = (e) => setSearchQuery(e.target.value);
            <StyledTable stickyHeader aria-label="sticky table" > 
                 <TableHead >
                     <TableRow>
+                       <StyledTableCell>Office Code</StyledTableCell>
                         <StyledTableCell>Office Name</StyledTableCell>
                         <StyledTableCell>Office Address</StyledTableCell>
+                        <StyledTableCell>Camp Base</StyledTableCell>
                         <StyledTableCell >Action</StyledTableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {filteredData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item, index) => (
                         <TableRow key={index}>
+                            <StyledTableCell>{item?.office_code || "N/A"}</StyledTableCell>
                             <StyledTableCell>{item?.office_name || "N/A"}</StyledTableCell>
                             <StyledTableCell>{item?.office_address || "N/A"}</StyledTableCell>
+                            <StyledTableCell>{item?.camp_base || "N/A"}</StyledTableCell>
                             <StyledTableCell sx={{display:"flex", gap:1, alignItems:"center"}} >
                                 <div className="flex gap-4">
-                                {/* <Link to={'/fleet/offices/profile'} state={{ office: filteredData[page * rowsPerPage + index] }} >
-                                </Link> */}
+                                <Link to={'/fleet/offices/profile'} state={{ office: item }} >
                                 <ButtonProfile />
+                            
+                                 </Link>
 
-                                <ButtonUpdate />
-                                <ButtonDelete/>
+                                <ButtonUpdate item={item} handleOpenUpdateForm={handleOpenUpdateForm}   />
+                                <ButtonDelete  itemId={item.id}  handleOpenDeleteConfirmation={handleOpenDeleteConfirmation}/>
                                 </div>
                             </StyledTableCell>
                         </TableRow>
@@ -80,7 +417,207 @@ const handleSearchChange = (e) => setSearchQuery(e.target.value);
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
             />
+            <ExportFiles />
             </div>
+
+{/*======================= ADD DIALOG FORM===============================*/}
+<Dialog fullWidth open={openAddForm} onClose={handleCloseAddForm}>
+    <div className="addFormContainer">
+    <div className="addFormHeader">
+        <p>Add Offices</p>
+        <IoClose onClick={handleCloseAddForm} />
+    </div>
+
+    <div className="addFormBoxDetails">
+    <p className="font-bold">Office Information</p>
+        <div className="addFormBoxDetail1">
+        <StyledTextField
+                autoFocus
+                margin="dense"
+                name="office_name"
+                label="Office Name"
+                type="text"
+                fullWidth
+                value={formData.office_name}
+                onChange={handleFormChange}
+            />
+
+        <StyledTextField
+                autoFocus
+                margin="dense"
+                name="office_code"
+                label="Office Code"
+                type="text"
+                fullWidth
+                value={formData.office_code}
+                onChange={handleFormChange}
+            />
+        <div className="reportAddBox3">
+            <span className="">
+            <p>Enter or Select Office Address on the Map</p>
+                <StyledTextField
+                    autoFocus
+                    margin="dense"
+                    name="office_address"
+                    label="Office Address"
+                    type="text"
+                    fullWidth
+                    value={formData.office_address}
+                    onChange={handleFormChange}
+                />   
+                <div className="addressBox">
+                    <StyledFormControlLabel control={<StyledCheckbox
+                        value="device"
+                        checked={locationChoice === 'device'}
+                        onChange={handleLocationChoiceChange}
+                        onClick={handleDeviceLocation} 
+                        defaultChecked />} label=" Use Current Location" />
+
+                    <StyledFormControlLabel control={<StyledCheckbox
+                        type="radio"
+                        value="map"
+                        checked={locationChoice === 'map'}
+                        onChange={handleLocationChoiceChange}
+                        />} label="Select on map" />
+                </div >
+            </span>
+            <div className="reportAddMapContainer">
+                <MapContainer  ref={mapRef}  center={[12.8797, 121.774]}  zoom={initialZoom} style={{ height: '100%', width: '100%' }}>
+                    <TileLayer url="http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&hl=en" subdomains={['mt0', 'mt1', 'mt2', 'mt3']} />
+                        {locationChoice !== 'device' && <MapSelection onChange={handleMapChange} />}
+                        {/* Render the deviceLocation marker only if locationChoice is 'device' and showDeviceMarker is true */}
+                        {locationChoice === 'device' && showDeviceMarker && deviceLocation && (
+                        <Marker position={[deviceLocation.latitude, deviceLocation.longitude]} icon={customIcon} />
+                        )}
+                </MapContainer>
+            </div>
+        </div>
+
+        </div>
+    </div>
+
+
+
+        <div className="addFormFooter">
+        <button className="addFormBtnCancel"  onClick={handleCloseAddForm} >Cancel</button>
+        <button className="addFormBtnAdd"   onClick={handleAddOffice}>Add Office</button>
+        </div>
+    </div>
+ </Dialog>
+
+ <Dialog open={openUpdateForm} onClose={handleCloseUpdateForm}>
+
+ <div className="addFormContainer">
+    <div className="addFormHeader">
+        <p>Update Offices</p>
+        <IoClose onClick={handleCloseUpdateForm} />
+    </div>
+
+    <div className="addFormBoxDetails">
+    <p className="font-bold">Office Information</p>
+        <div className="addFormBoxDetail1">
+        <StyledTextField
+                autoFocus
+                margin="dense"
+                name="office_name"
+                label="Office Name"
+                type="text"
+                fullWidth
+                value={formData.office_name}
+                onChange={handleFormChange}
+            />
+
+        <StyledTextField
+                autoFocus
+                margin="dense"
+                name="office_code"
+                label="Office Code"
+                type="text"
+                fullWidth
+                value={formData.office_code}
+                onChange={handleFormChange}
+            />
+        <div className="reportAddBox3">
+            <span className="">
+            <p>Enter or Select Office Address on the Map</p>
+                <StyledTextField
+                    autoFocus
+                    margin="dense"
+                    name="office_address"
+                    label="Office Address"
+                    type="text"
+                    fullWidth
+                    value={formData.office_address}
+                    onChange={handleFormChange}
+                /> 
+
+                   <StyledTextField
+                    autoFocus
+                    margin="dense"
+                    name="camp_base"
+                    label="Camp Base"
+                    type="text"
+                    fullWidth
+                    value={formData.camp_base}
+                    onChange={handleFormChange}
+                />     
+                <div className="addressBox">
+                    <StyledFormControlLabel control={<StyledCheckbox
+                        value="device"
+                        checked={locationChoice === 'device'}
+                        onChange={handleLocationChoiceChange}
+                        onClick={handleDeviceLocation} 
+                        defaultChecked />} label=" Use Current Location" />
+
+                    <StyledFormControlLabel control={<StyledCheckbox
+                        type="radio"
+                        value="map"
+                        checked={locationChoice === 'map'}
+                        onChange={handleLocationChoiceChange}
+                        />} label="Select on map" />
+                </div >
+            </span>
+            <div className="reportAddMapContainer">
+                <MapContainer  ref={mapRef}  center={[12.8797, 121.774]}  zoom={initialZoom} style={{ height: '100%', width: '100%' }}>
+                    <TileLayer url="http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&hl=en" subdomains={['mt0', 'mt1', 'mt2', 'mt3']} />
+                        {locationChoice !== 'device' && <MapSelection onChange={handleMapChange} />}
+                        {/* Render the deviceLocation marker only if locationChoice is 'device' and showDeviceMarker is true */}
+                        {locationChoice === 'device' && showDeviceMarker && deviceLocation && (
+                        <Marker position={[deviceLocation.latitude, deviceLocation.longitude]} icon={customIcon} />
+                        )}
+                </MapContainer>
+            </div>
+        </div>
+
+        </div>
+    </div>
+</div>
+
+ <div className="addFormFooter">
+    <button className="addFormBtnCancel" onClick={handleCloseUpdateForm}>Cancel</button>
+    <button className="addFormBtnAdd" onClick={handleUpdateUser}>Update Office</button>
+  </div>
+</Dialog>
+
+
+    {/*========================== DELETE DIALOG ============================*/}
+    <StyledDialog open={openDeleteConfirmation} onClose={handleCloseDeleteConfirmation}>
+                <div className="deleteDialogBox">
+                    <span className="deleteIcon">
+                        <PiWarningLight/>
+                    </span>
+                    <h3>Are you sure you want to <br /> delete this office?</h3>
+                   <p>
+                   This action cannot be undone. All values  <br /> associated within this field will be lost.
+                   </p>
+                  <div className="deleteDialogBtn">
+                  <button className="delete"  onClick={handleConfirmDeleteUser} >Delete field</button>
+                    <button className="cancel" onClick={handleCloseDeleteConfirmation} >Cancel</button>
+                  </div>
+                </div>
+            </StyledDialog>           
+
+
     </div>
   )
 }

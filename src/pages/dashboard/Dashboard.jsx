@@ -5,7 +5,9 @@ import Charts from "./charts/index";
 import ListCards from "./listcards/ListCards";
 import { DataContext } from "../../context/DataProvider";
 import { useContext } from "react";
-
+import { apiSummary  } from "../../api/api_urls";
+import axios from 'axios';
+import  { useState, useEffect } from 'react';
 
 export default function Dashboard() {
   const {marineTrafficData,
@@ -18,6 +20,23 @@ export default function Dashboard() {
     incidentData,
   } = useContext(DataContext)
 
+  const [summaryData, setSummaryData] = useState([])
+
+
+  useEffect(() => {
+      const fetchSummary = async() => {
+          try {
+              const res = await axios.get(apiSummary)
+              setSummaryData(res.data.success)
+       console.log("Summary:", res.data.success)
+          } catch (error) {
+              console.error(error)
+          }
+      }
+      fetchSummary();
+  },[])
+
+
 
   return (
     <div className="dashboard_container">
@@ -29,6 +48,7 @@ export default function Dashboard() {
             checkInData={checkInData}
             officesData={officeData}
             vehiclesData={vehiclesData}
+            summaryData={summaryData}
           />
 
           <Charts

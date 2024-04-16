@@ -7,7 +7,7 @@
         @apply font-manrope pr-10 pl-3 pb-10
     }
 
-    .usersContainer button{
+    .personnelContainer button{
         @apply hover:bg-[#404958] hover:text-white duration-150
     }
 
@@ -216,11 +216,11 @@
     }
 
     .spanheader p{
-        @apply w-[200px] p-3
+        @apply w-[200px] p-3 
     }
 
     .boxLogDetails{
-        @apply flex flex-col gap-5 h-[450px] overflow-y-auto pr-3
+        @apply flex flex-col gap-5 h-[450px] overflow-y-auto pr-3 
     }
 
     .boxLogDetails::-webkit-scrollbar {
@@ -246,12 +246,97 @@
     }
 
     .spanDetails p{
-        @apply w-[200px] p-3
+        @apply  py-5 w-[200px] p-3 
     }
 
     .statusLog{
         @apply bg-green-300 rounded-full text-center text-green-800 m-3
     }
 
+    .userStatusBox{
+        @apply flex items-center justify-center gap-3 p-3 rounded-full
+    }
+
+    .userStatusDot{
+        @apply w-[10px] h-[10px] rounded-full
+    }
+
+    .personnelProfileStatusBox{
+        @apply flex items-center justify-center gap-3 p-2 text-sm px-6 rounded-full mt-4
+    }
+
+    .statusDot{
+        @apply w-[10px] h-[10px] rounded-full
+    }
+
+    .logStatusBox{
+        @apply flex items-center justify-center gap-3 p-2 text-sm px-6 rounded-full  w-[200px]
+    }
+
+    .no-check-in-marker{
+        @apply  bg-black 
+    }
+
+
+    .addFormContainer{
+        @apply font-manrope
+    }
+
+    .addFormHeader{
+        @apply flex justify-between text-lg font-bold p-5 border-b
+    }
+
+    .addFormHeader svg{
+        @apply text-[25px] text-[#404958]
+    }
+
+    .addFormBoxDetails{
+        @apply p-10
+    }
+
+    .addFormImageBox{
+        @apply flex items-center gap-5
+    }
+
+    .addFormImageBox img{
+        @apply w-[200px] h-[200px] rounded-full object-cover border-2 border-[#404958] p-2
+    }
+
+    .uploadImageBtn{
+        @apply border p-4  px-8 rounded-[15px] border-[#8E8E8E] text-[#404958] font-bold
+        text-sm hover:bg-[#404958] hover:text-white duration-150
+    }
+
+    .addFormBoxDetail1 {
+        @apply mt-6 flex flex-col gap-4
+    }
+
+    .addFormBoxDetail1 p{
+        @apply font-bold mt-4
+    }
+
+    .addFormBoxDetail2 p{
+        @apply font-bold mt-10
+    }
+
+    .addFormBoxDetail2{
+        @apply flex flex-col gap-5
+    }
+
+    .addFormFooter{
+        @apply flex  gap-5 p-5
+    }
+
+    .addFormFooter button{
+        @apply w-full rounded-lg p-4 text-sm  hover:bg-[#404958] hover:text-white duration-150
+    }
+
+    .addFormBtnCancel{
+        @apply border-[#0DB0E6] border-2 text-[#404958]
+    }
+
+    .addFormBtnAdd{
+        @apply bg-[#0DB0E6] text-white
+    }
 }
 

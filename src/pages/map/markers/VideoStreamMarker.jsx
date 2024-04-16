@@ -19,7 +19,7 @@ export default function VideoStreamMarker({ item, index, selectedVideoStream, ha
   const handleMarkerClick = () => {
     setShowSelectedInfo(true);
     prevZoomRef.current = map.getZoom();
-    map.flyTo(startPosition, 12, {
+    map.flyTo(startPosition, 9, {
       duration: 2, // Adjust duration as needed (in seconds)
       easeLinearity: 0.25 // Adjust ease linearity as needed
     });

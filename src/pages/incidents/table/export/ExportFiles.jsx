@@ -59,14 +59,14 @@ export default function ExportFiles() {
   const generateCSVData = () => {
     const csvData = incidentData.map(item => ({
       DateTime: item.created_at ? formatDate(item.created_at) : "N/A",
-      Description: item.incident_details || "N/A",
-      Severity: item.severity_details.severity_name || "N/A",
-      Type: item.type_details?.type_name || "N/A",
-      Reporter: item.user_details?.username || "N/A",
-      incidentAddress: item.address_incident || "N/A",
-      reporterAddress: item.address_reported || "N/A",
-      Status: item.status_details.type_status || "N/A",
-      AssignedResponder: item.user_assigned_to_details?.username || "No Assigned Responder"
+      Description: item?.incident_details || "N/A",
+      Severity: item?.severity_details.severity_name || "N/A",
+      Type: item?.type_details?.type_name || "N/A",
+      Reporter: item?.user_details?.username || "N/A",
+      incidentAddress: item?.address_incident || "N/A",
+      reporterAddress: item?.address_reported || "N/A",
+      Status: item?.status_details?.type_status || "N/A",
+      AssignedResponder: item?.user_assigned_to_details?.username || "No Assigned Responder"
     }));
     return csvData;
   };

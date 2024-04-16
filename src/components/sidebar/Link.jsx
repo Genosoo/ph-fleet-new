@@ -5,7 +5,7 @@ import { BiGridAlt, BiUser, BiUserCircle, BiGroup, BiNews, BiCog, BiInfoCircle }
 import { PiBuildingsLight } from "react-icons/pi";
 import { MdOutlineDirectionsCar } from "react-icons/md";
 import { PiWarningDiamond } from "react-icons/pi";
-
+import { BsPersonCheck } from "react-icons/bs";
 
 export const linkItem1 = [
 
@@ -24,6 +24,12 @@ export const linkItem1 = [
 
     //________________________________________________________________LINKS 2_______________________________________________________________________ //
     {
+        path:"/fleet/report-in",
+        name:"Report In",
+        icon:<BsPersonCheck/>,
+        disabled:false
+
+    }, {
         path:"/fleet/reports",
         name:"Reports",
         icon:<BiNews/>,

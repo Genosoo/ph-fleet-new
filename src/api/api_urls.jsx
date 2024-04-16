@@ -24,6 +24,7 @@ export const apiUsers = `${baseUrl}/api/users/`;
 
 // CHECK IN
 export const apiCheckInToday = `${baseUrl}/api/checked_in_users/`;
+export const apiReportIn = `${baseUrl}/api/personnel_latest/`;
 
 
 // PERSONNEL
@@ -134,6 +135,7 @@ export const apiVideoStream = `${baseUrl}/api/video_stream_latest`;
 export const apiRoles = `${baseUrl}/api/groups/`;
 
 
+export const apiSummary = `${baseUrl}/api/summary/`;
 
 
 

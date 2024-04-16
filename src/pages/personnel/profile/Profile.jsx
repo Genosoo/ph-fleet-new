@@ -2,19 +2,21 @@ import { useLocation} from 'react-router-dom';
 import { baseUrl } from '../../../api/api_urls';
 import noImage from '../../../assets/no-user-image.png'
 import { MapContainer, TileLayer } from 'react-leaflet';
-import { MdOutlineEdit } from "react-icons/md";
+// import { MdOutlineEdit } from "react-icons/md";
 import { DataContext } from '../../../context/DataProvider';
 import { useContext } from 'react';
 import PersonnelMarker from './PersonnelMarker';
 
 export default function Profile() {
-  const { personnelHistory } = useContext(DataContext)
+  const { personnelHistory, checkInData } = useContext(DataContext)
   const location = useLocation();
   const item = location.state.personnel;
-  const user = item.user;
+  const user = item.personal_details.user;
 
   const filteredHistory = personnelHistory.filter(historyItem => historyItem.user === user);
-  
+  const filteredCheckInData = checkInData.filter(dataItem => dataItem.user === item.id);
+  console.log("filteredCheckInData:",  filteredCheckInData);
+
   
   console.log({location});
   console.log("personnel History:", personnelHistory );
@@ -28,10 +30,32 @@ export default function Profile() {
 };
 
 
+
+const statusColors = {
+  null: '#858585',
+  "On-Duty": '#EBFAF1',
+  "On-Leave": '#F9F5E2',
+  "Rest and Recreation": '#E6F0F7', 
+  "Non-Uniform": '#FADBD8', 
+  "Official Business": '#EBDEF0', 
+};
+
+
+const statusTextColors = {
+  null: '#ffffff', 
+  "On-Duty": '#2ECC71', 
+  "On-Leave": '#F1C40F', 
+  "Rest and Recreation": '#3498DB', 
+  "Non-Uniform": '#E74C3C', 
+  "Official Business": '#9B59B6', 
+};
+
+
+
   return (
    <div className="personnelProfileMainContainer">
     <div className="personnelProfileHeader">
-       <button disabled><MdOutlineEdit/> Update Profile</button>
+       {/* <button disabled><MdOutlineEdit/> Update Profile</button> */}
     </div>
       <div className='personnelProfileContainer'>
        <div className="personnelProfileWrapper">
@@ -45,7 +69,16 @@ export default function Profile() {
                   <span>
                     <h2>{item?.personal_details?.first_name || "N/A"} {item?.personal_details?.last_name || ""}</h2>
                     <h4>{item?.username || "N/A"}</h4>
-                    <p>{item?.personal_details?.status_name || "No status"}</p>
+                    <div className="personnelProfileStatusBox"  style={{
+                                        backgroundColor: statusColors[item?.personal_details?.status_name || item?.personal_details],
+                                        color: statusTextColors[item?.personal_details?.status_name || item?.personal_details],
+                                    }} >
+                                        <div
+                                         style={{
+                                            backgroundColor: statusTextColors[item?.personal_details?.status_name || item?.personal_details],
+                                        }} className="statusDot"></div>
+                                    {item?.personal_details?.status_name || "No Status"}
+                                </div>
                   </span>
               </div>
           </div>
@@ -105,7 +138,7 @@ export default function Profile() {
               <div className='personnelProfileMapBox'>
                 <MapContainer zoomControl={false} center={[12.8797, 121.7740]} zoom={6} style={{ height: '100%', width: '100%' }}>
                    <TileLayer url="http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&hl=en" subdomains={['mt0', 'mt1', 'mt2', 'mt3']} />
-                  <PersonnelMarker selectedPersonnel={item} />
+                  <PersonnelMarker selectedPersonnel={filteredCheckInData[0]} />
                </MapContainer>
               </div>
           </div>
@@ -123,7 +156,16 @@ export default function Profile() {
                    {filteredHistory.map((item, index) => (
                      <span className='spanDetails' key={index}>
                         <p>{formatDateTime(item.updated_at) || "N/A"}</p>
-                        <p className='statusLog'>{item?.personal_details?.status_name || "N/A"}</p>
+                        <div className="logStatusBox"  style={{
+                                        backgroundColor: statusColors[item?.personal_details?.status_name || item?.personal_details],
+                                        color: statusTextColors[item?.personal_details?.status_name || item?.personal_details] ,
+                                    }} >
+                                        <div
+                                         style={{
+                                            backgroundColor: statusTextColors[item?.personal_details?.status_name || item?.personal_details],
+                                        }} className="userStatusDot"></div>
+                                    {item?.personal_details?.status_name || "N/A"}
+                                </div>
                         <p >{item.address || "N/A"}</p>
                      </span>
                    ))}

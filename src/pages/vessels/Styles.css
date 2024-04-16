@@ -171,7 +171,110 @@
 
     .deleteDialogBtn .cancel{
         @apply border
-    }                       
+    }   
+
+
+    .vesselsFormContainer{
+        @apply font-manrope
+    }
+
+    .vesselsFormHeader{
+        @apply flex justify-between text-lg font-bold p-5 border-b
+    }
+
+    .vesselsFormHeader svg{
+        @apply text-[25px] text-[#404958]
+    }
+
+    .vesselsFormBoxDetails{
+        @apply pb-10
+    }   
+    
+    .vesselsFormBoxDetail p{
+        @apply font-bold 
+    }    
+    
+    
+    
+    .vesselsFormImageBox{
+        @apply flex items-center gap-5 border-b pb-5
+    }
+
+    .vesselsFormBoxDetail{
+        @apply p-10 flex flex-col gap-5
+    }
+    .vesselsFormBoxDetail p{
+        @apply font-bold text-base
+    }
+
+    .vesselsFormImageBox img{
+        @apply w-[200px] h-[200px] rounded-full object-cover border-2 border-[#404958] p-2
+    }
+
+
+    
+    .vesselsFormFooter{
+        @apply flex  gap-5 p-5
+    }
+
+    .vesselsFormFooter button{
+        @apply w-full rounded-lg p-4 text-sm  hover:bg-[#404958] hover:text-white duration-150
+    }
+
+    .vesselsFormFooter .btn1{
+        @apply border-[#0DB0E6] border-2 text-[#404958]
+    }
+
+    .vesselsFormFooter .btn2{
+        @apply bg-[#0DB0E6] text-white
+    }
+
+    .vesselsImageContainer{
+        @apply flex flex-col gap-5
+    }
+
+    .vesselsImageWrapper{
+        @apply flex gap-4 
+    }
+
+    .vesselsImageCardBox{
+        @apply border  text-center rounded-xl  w-[300px] h-[300px]
+        items-center flex flex-col 
+    }
+
+    .vesselsImageCardBox h3{
+        @apply text-sm border-b  w-full text-center p-3 font-medium  
+    }
+
+    .vesselsImageCard{
+        border: 2px dashed #8E8E8E;
+        @apply flex flex-col w-[280px] h-[220px] rounded-lg 
+        items-center justify-center overflow-hidden relative mt-3 
+    }
+
+    .vesselsImageCard svg{
+        @apply text-[2rem] text-[#DCDCDC]
+    }
+
+    .vesselsImageCard p{
+        @apply font-manrope font-normal text-[#8E8E8E] text-sm
+
+    }
+
+    .vesselsImageCard p span{
+        @apply text-[#0DB0E6]
+    }
+
+    .vesselsImageCard img{
+        @apply absolute 
+    }
+
+    .vesselsImagesCardBox{
+        @apply flex gap-4
+    }
+
+ 
+
 }
 
 

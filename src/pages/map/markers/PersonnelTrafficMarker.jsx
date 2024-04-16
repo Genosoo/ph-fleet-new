@@ -27,7 +27,7 @@ const getStatusImage = (status_name) => {
 };
 
 
-const PersonnelMarker = ({ item, index, selectedPersonnel, handlePersonnelMarkerClick}) => {
+const PersonnelMarker = ({ item, index, selectedPersonnel, handlePersonnelMarkerClick, showAllUsernames}) => {
   const statusImage = getStatusImage(item.personal_details.status_name);
   const map = useMap();
   const prevZoomRef = useRef(9);
@@ -41,7 +41,7 @@ const PersonnelMarker = ({ item, index, selectedPersonnel, handlePersonnelMarker
     const isSamePerson = selectedPersonnel && selectedPersonnel.id === item.id;
     if (!isSamePerson) {
       prevZoomRef.current = map.getZoom();
-      map.flyTo(startPosition, 12, {
+      map.flyTo(startPosition, 9, {
         duration: 2, // Adjust duration as needed (in seconds)
         easeLinearity: 0.25 // Adjust ease linearity as needed
       });
@@ -66,7 +66,8 @@ const PersonnelMarker = ({ item, index, selectedPersonnel, handlePersonnelMarker
       icon={
         L.divIcon({
           className: `personnel-marker ${selectedPersonnel && selectedPersonnel.id === item.id ? 'selected-personnel' : ""}`,
-          html: `<div class="bgwhite-marker"><img src="${statusImage}" alt="" /></div>`,
+          html: `<div class="bgwhite-marker"><img src="${statusImage}" alt="" /></div>
+          ${showAllUsernames ?  `<p class="showPersonnelUsername">${item.username}</p> `: `<p></p>`}`,
         })
       }
       eventHandlers={{ click: handleMarkerClick} }

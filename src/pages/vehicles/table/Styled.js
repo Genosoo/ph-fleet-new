@@ -7,6 +7,10 @@ import {
   Dialog,
   Select,
   MenuItem,
+  FormControl,
+  TextField,
+  FormControlLabel,
+  Checkbox,
 } from "@mui/material";
 
 export const StyledDialog = styled(Dialog)`
@@ -83,4 +87,39 @@ export const StyledMenuItem = styled(MenuItem)`
   font-weight: 600 !important;
   color: #404958 !important;
   border-bottom: 1px solid #eaeaec !important;
+`;
+
+export const StyledFormControl = styled(FormControl)`
+  font-family: "Manrope", "sans-serif" !important;
+  .MuiOutlinedInput-notchedOutline {
+    border-radius: 10px !important;
+    font-family: "Manrope", "sans-serif" !important;
+  }
+
+  .MuiInputLabel-root {
+    background-color: #fff !important;
+    font-family: "Manrope", "sans-serif" !important;
+  }
+`;
+
+export const StyledTextField = styled(TextField)`
+  .MuiOutlinedInput-root {
+    border-radius: 10px !important;
+    font-family: "Manrope", "sans-serif" !important;
+  }
+`;
+
+export const StyledFormControlLabel = styled(FormControlLabel)`
+  font-weight: bold !important;
+  background-color: #fff !important;
+  border-radius: 10px !important;
+  padding: 0 10px !important;
+  .MuiTypography-root {
+    font-family: "Manrope", "sans-serif" !important;
+  }
+`;
+
+export const StyledCheckbox = styled(Checkbox)`
+  margin-right: 8px !important;
+  font-family: "Manrope", "sans-serif" !important;
 `;

@@ -7,32 +7,58 @@ import {
   Dialog,
   Select,
   MenuItem,
+  TextField,
+  FormControl,
 } from "@mui/material";
+
+export const StyledFormControl = styled(FormControl)`
+  font-family: "Manrope", "sans-serif" !important;
+  .MuiOutlinedInput-notchedOutline {
+    border-radius: 10px !important;
+    font-family: "Manrope", "sans-serif" !important;
+  }
+
+  .MuiInputLabel-root {
+    background-color: #fff !important;
+    font-family: "Manrope", "sans-serif" !important;
+  }
+`;
+
+export const StyledTextField = styled(TextField)`
+  .MuiOutlinedInput-root {
+    border-radius: 10px !important;
+    font-family: "Manrope", "sans-serif" !important;
+  }
+`;
 
 export const StyledDialog = styled(Dialog)`
   .MuiDialog-paper {
     border-radius: 12px;
+    font-family: "Manrope", "sans-serif" !important;
   }
 `;
 
 export const StyledTableCell = styled(TableCell)`
   font-family: "Manrope", "sans-serif" !important;
-  min-width: 200px;
+  min-width: 250px;
   border: 0 !important;
 `;
 
 export const StyledTable = styled(Table)`
-  th {
+  thead {
     /* Add sticky styles here */
     position: sticky;
     top: 0;
     z-index: 1;
+  }
+
+  th {
     background-color: #404958;
     color: white;
   }
 
   tr {
-    background-color: #ffffff !;
+    background-color: #ffffff;
     display: flex !important;
 
     &:nth-child(even) {

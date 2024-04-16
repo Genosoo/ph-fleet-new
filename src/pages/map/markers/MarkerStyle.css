@@ -2,8 +2,8 @@
 
 @layer components{
     .traksatCardContainer{
-        @apply z-[2000]  font-manrope cursor-pointer absolute top-10 left-16 
-        overflow-hidden rounded-[15px]  shadow-xl bg-white
+        @apply z-[2000]  font-manrope absolute top-10 left-16 
+        overflow-hidden rounded-[15px]  shadow-xl bg-white cursor-move
     }
 
     .traksatCardHeader{
@@ -62,13 +62,13 @@
     }
 
     .traksatClose{
-        @apply bg-white absolute right-2 text-[1.5rem] rounded-full text-black hover:bg-black hover:text-white duration-200
+        @apply bg-white cursor-pointer absolute right-2 text-[1.5rem] rounded-full text-black hover:bg-black hover:text-white duration-200
     }
 
     .mtCardContainer{
         cursor: move;
-        @apply  absolute cursor-pointer z-[2000] top-10  w-[350px]
-        left-16  rounded-[15px] overflow-hidden bg-white font-manrope
+        @apply  absolute z-[2000] top-10  w-[350px]
+        left-16  rounded-[15px] overflow-hidden bg-white font-manrope cursor-move
     }
     
    
@@ -89,7 +89,7 @@
     }
 
     .mtClose{
-        @apply bg-white text-[20px] rounded-full text-black hover:bg-black
+        @apply bg-white cursor-pointer text-[20px] rounded-full text-black hover:bg-black
          hover:text-white duration-200  absolute right-2
     }
     
@@ -187,8 +187,8 @@
     }
 
     .stCardContainer{
-    @apply z-[2000] w-[400px] cursor-pointer absolute top-10 left-16 
-     overflow-hidden rounded-[15px] font-manrope shadow-xl bg-white
+    @apply z-[2000] w-[400px]  absolute top-10 left-16 
+     overflow-hidden rounded-[15px] font-manrope shadow-xl bg-white cursor-move
         
     }
 
@@ -210,7 +210,7 @@
     .stClose{
     @apply bg-white text-[1.5rem] rounded-full
      text-black hover:bg-black hover:text-white duration-200
-     absolute right-3
+     absolute right-3 cursor-pointer
     }
 
     .stCardDetail{
@@ -255,8 +255,8 @@
     }
 
     .incidentCardContainer{
-        @apply z-[2000]  font-manrope cursor-pointer absolute top-10 left-16 
-        overflow-hidden rounded-[15px]   bg-white w-[500px]
+        @apply z-[2000]  font-manrope  absolute top-10 left-16 
+        overflow-hidden rounded-[15px]   bg-white w-[500px] cursor-move
     }
 
     .incidentCardHeader{
@@ -274,7 +274,7 @@
    
     .incidentClose{
         @apply bg-white text-[25px] rounded-full text-black hover:bg-black
-         hover:text-white duration-200  absolute right-2
+         hover:text-white duration-200  absolute right-2 cursor-pointer
     }
 
     .incidentCardDetail{
@@ -323,8 +323,8 @@
     }
 
     .personnelCardContainer{
-        @apply z-[2000]  font-manrope cursor-pointer absolute top-10 left-16 
-        overflow-hidden rounded-[15px]   bg-white w-[350px]
+        @apply z-[2000]  font-manrope  absolute top-10 left-16 
+        overflow-hidden rounded-[15px]   bg-white w-[350px] cursor-move
     }
 
     .personnelCardHeader{
@@ -341,7 +341,7 @@
    
     .personnelClose{
         @apply bg-white text-[25px] rounded-full text-black hover:bg-black
-         hover:text-white duration-200  absolute right-2
+         hover:text-white duration-200  absolute right-2 cursor-pointer
     }
 
     
@@ -385,11 +385,14 @@
         @apply bg-[#ffffff] 
     }
 
-
+    .showPersonnelUsername{
+        @apply bg-[#EAEAEC] absolute ml-24 px-3 rounded-full
+        text-xs font-bold font-manrope p-1
+    }
 
     .officeCardContainer{
-        @apply z-[2000]  font-manrope cursor-pointer absolute top-10 left-16 
-        overflow-hidden rounded-[15px]   bg-white w-[350px]
+        @apply z-[2000]  font-manrope  absolute top-10 left-16 
+        overflow-hidden rounded-[15px]   bg-white w-[350px] cursor-move
     }
 
     .officeCardHeader{
@@ -406,7 +409,7 @@
    
     .officeClose{
         @apply bg-white text-[25px] rounded-full text-black hover:bg-black
-         hover:text-white duration-200  absolute right-2
+         hover:text-white duration-200  absolute right-2 cursor-pointer
     }
 
     .officeCardDetail{
@@ -431,7 +434,7 @@
     }
 
     .vehicleCardContainer{
-        @apply z-[2000]  font-manrope cursor-pointer absolute top-10 left-16 
+        @apply z-[2000]  font-manrope cursor-move absolute top-10 left-16 
         overflow-hidden rounded-[15px]   bg-white 
     }
 
@@ -449,7 +452,7 @@
 
     .vehicleClose{
         @apply bg-white text-[25px] rounded-full text-black hover:bg-black
-         hover:text-white duration-200  absolute right-2
+         hover:text-white duration-200  absolute right-2 cursor-pointer
     }
 
     .vehicleCardDetail{
@@ -485,7 +488,7 @@
     }
 
     .carCardContainer{
-        @apply z-[2000]  font-manrope cursor-pointer absolute top-10 left-16 
+        @apply z-[2000]  font-manrope  cursor-move absolute top-10 left-16 
         overflow-hidden rounded-[15px]   bg-white 
     }
 
@@ -503,7 +506,7 @@
 
     .carClose{
         @apply bg-white text-[25px] rounded-full text-black hover:bg-black
-         hover:text-white duration-200  absolute right-2
+         hover:text-white duration-200  absolute right-2 cursor-pointer
     }
 
     .carCardDetail{
@@ -541,7 +544,7 @@
 
 
     .videoCardContainer{
-        @apply z-[2000]  font-manrope cursor-pointer absolute top-10 left-16 
+        @apply z-[2000]  font-manrope cursor-move absolute top-10 left-16 
         overflow-hidden rounded-[15px]   bg-white 
     }
 
@@ -559,7 +562,7 @@
 
     .videoClose{
         @apply bg-white text-[25px] rounded-full text-black hover:bg-black
-         hover:text-white duration-200 right-2
+         hover:text-white duration-200 right-2 cursor-pointer 
     }
 
     .videoCardBtn{

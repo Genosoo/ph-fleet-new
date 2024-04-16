@@ -17,7 +17,7 @@ export default function VehiclesMarker ({ item, index, selectedVehicles, handleV
     const isSamePerson = selectedVehicles && selectedVehicles.id === item.id;
     if (!isSamePerson) {
       prevZoomRef.current = map.getZoom();
-      map.flyTo(startPosition, 12, {
+      map.flyTo(startPosition, 9, {
         duration: 2, // Adjust duration as needed (in seconds)
         easeLinearity: 0.25 // Adjust ease linearity as needed
       });

@@ -441,11 +441,11 @@ const formatDate = (dateString) => {
 
                                <StyledTableCell  sx={{position: "sticky", right: 0}}>
                                    <div className="actionTableBox">
-                                   <Link to={"/fleet/incidents/report-information"} state={{ incident: item}} >
+                                   <Link to={"/fleet/incidents/incident-information"} state={{ incident: item}} >
                                       <ButtonReportInfo  />
                                    </Link>
  
-                                   <Link to={"/fleet/incidents/update-report"} state={{ incident: item}} >
+                                   <Link to={"/fleet/incidents/update-incident"} state={{ incident: item}} >
                                       <ButtonUpdate  />
                                    </Link>
                                  <ButtonDelete  itemId={item.id}  handleOpenDeleteConfirmation={handleOpenDeleteConfirmation}/>

@@ -19,7 +19,7 @@ export default function OfficeMarker ({ item, index, selectedOffice,  handleOffi
     const isSameOffice = selectedOffice && selectedOffice.id === item.id;
     if (!isSameOffice) {
       prevZoomRef.current = map.getZoom();
-      map.flyTo(startPosition, 12, {
+      map.flyTo(startPosition, 9, {
         duration: 2, // Adjust duration as needed (in seconds)
         easeLinearity: 0.25 // Adjust ease linearity as needed
       });

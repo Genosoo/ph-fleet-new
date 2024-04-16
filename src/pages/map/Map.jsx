@@ -9,17 +9,19 @@ export default function Map() {
     spidertracksData, 
     personnelData, 
     videoStreamData, 
-    officeData, 
+    officesData, 
     vehiclesData,
     incidentData,
     carData,
-    // checkInData, 
+    checkInData, 
     // vesselsData, 
     // usersData, 
     // aircraftData,
    
 } = useContext(DataContext)
 
+
+console.log("Check In Data:", checkInData)
 
 
   return (
@@ -30,10 +32,11 @@ export default function Map() {
         spiderTrakData={spidertracksData}
         personnelData={personnelData}
         videoStreamData={videoStreamData}
-        officeData={officeData}
+        officesData={officesData}
         vehiclesData={vehiclesData}
         incidentData={incidentData}
         carData={carData}
+        checkInData={checkInData}
       />
     </div>
   );

@@ -177,7 +177,8 @@
   }
 
   .card{
-    @apply w-[200px] lg:w-[300px]  relative  xl:w-[350px] xl:h-[150px] rounded-[10px] text-white p-5
+    @apply w-[200px] lg:w-[300px]  relative  xl:w-[350px] xl:h-[150px] rounded-[10px]
+     text-white p-5 hover:shadow-lg hover:shadow-[#000000] duration-200 cursor-pointer
   }
 
   .card h2{

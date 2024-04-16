@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import "./ReportStyles.css"
 
 import officeIcon from '../../assets/icon/offices.svg'
@@ -10,73 +9,36 @@ import ondutyIcon from '../../assets/icon/personnel_on_duty.svg'
 import onleaveIcon from '../../assets/icon/personnel_on_leave.svg'
 import rnrIcon from '../../assets/icon/personnel_rnr.svg'
 import nonUniformIcon from '../../assets/icon/personnel_non_uniform.svg'
-import { DataContext } from "../../context/DataProvider";
-import { useContext } from "react";
+import { apiSummary  } from "../../api/api_urls";
+import  { useState, useEffect } from 'react';
+import axios from 'axios';
 
 export default function Reports() {
-  const [officesCount, setOfficesCount] = useState(0);
-  const [personnelCount, setPersonnelCount] = useState(0);
-  const [noOnDuty, setNoOnDuty] = useState(0);
-  const [noOnLeave, setNoOnLeave] = useState(0);
-  const [noRnR, setNoRnR] = useState(0);
-  const [nonUniform, setNonUniform] = useState(0);
-  const [officialBusiness, setOfficialBusiness] = useState(0);
-  const [vesselsCount, setVesselsCount] = useState(0);
-  const [aircraftCount, setaircraftCount] = useState(0);
-  const [vehiclesCount, setvehiclesCount] = useState(0);
+
+  const [summaryData, setSummaryData] = useState([])
 
 
-  const {
-    personnelData, 
-    officeData, 
-    vehiclesData,
-    aircraftData,
-    vesselsData,
-} = useContext(DataContext)
 
 
   useEffect(() => {
- 
-    if (officeData && officeData.length) {
-        setOfficesCount(officeData.length);
-      }
-
-
-
-      if (personnelData && personnelData.length) {
-        setPersonnelCount(personnelData.length);
-        
-        const onDutyCount = personnelData.filter(item => item.personal_details && item.personal_details.status_name === 'On-Duty').length;
-        setNoOnDuty(onDutyCount);
-
-        const onLeaveCount = personnelData.filter(item => item.personal_details && item.personal_details.status_name === 'On-Leave').length;
-        setNoOnLeave(onLeaveCount);
-
-        const RnRCount = personnelData.filter(item => item.personal_details && item.personal_details.status_name === 'Rest and Recreation').length;
-        setNoRnR(RnRCount);
-
-        
-        const nonUniformCount = personnelData.filter(item => item.personal_details && item.personal_details.status_name === 'Non-Uniform').length;
-        setNonUniform(nonUniformCount);
-
-        const officialBusinessCount = personnelData.filter(item => item.personal_details && item.personal_details.status_name === 'Official Business').length;
-        setOfficialBusiness(officialBusinessCount);
+    const fetchSummary = async() => {
+        try {
+            const res = await axios.get(apiSummary)
+            setSummaryData(res.data.success)
+     console.log("Summary:", res.data.success)
+        } catch (error) {
+            console.error(error)
+        }
     }
+    fetchSummary();
+},[])
 
-
-    if (vesselsData && vesselsData.length) {
-      setVesselsCount(vesselsData.length);
-    }
-
-    if (aircraftData && aircraftData.length) {
-      setaircraftCount(aircraftData.length);
-    }
-
-    if (vehiclesData && vehiclesData.length) {
-      setvehiclesCount(vehiclesData.length);
-    }
-
-  }, [officeData, personnelData, vesselsData, aircraftData, vehiclesData]);
+let totalPersonnel = 0;
+if (summaryData && summaryData.personnel) {
+for (const key in summaryData.personnel) {
+    totalPersonnel += summaryData.personnel[key];
+}
+}
 
 
 
@@ -86,7 +48,7 @@ export default function Reports() {
          <h1 className="title">Office</h1>
          <div className="reportCard">
              <div className="reportCardFlex">
-              <h2 >{officesCount}</h2>
+              <h2 >{summaryData?.offices && summaryData?.offices ? summaryData?.offices?.total : 0}</h2>
                <img src={officeIcon} alt="" />
              </div>
           <p className="text1">Total No. of Offices</p>
@@ -100,7 +62,7 @@ export default function Reports() {
       <h1 className="title">Vessels</h1>
       <div className="reportCard">
           <div className="reportCardFlex">
-           <h2 >{vesselsCount}</h2>
+           <h2 >{summaryData?.vessel && summaryData?.vessel ? summaryData?.vessel?.total : 0}</h2>
            <img src={marinetrafficIcon} alt="" />
           </div>
           <p className="text1">Total Vessels Count</p>
@@ -112,7 +74,7 @@ export default function Reports() {
             <h1 className="title">Aircrafts</h1>
           <div className="reportCard">
             <div className="reportCardFlex">
-                <h2 >{aircraftCount}</h2>
+                <h2 >{summaryData?.aircraft && summaryData?.aircraft ? summaryData?.aircraft?.total : 0}</h2>
                 <img src={spidertracksIcon} alt="" />
               </div>
               <p className="text1">Total Aircrafts Count</p>
@@ -123,7 +85,7 @@ export default function Reports() {
         <h1 className="title">Vehicles</h1>
           <div className="reportCard">
           <div className="reportCardFlex">
-              <h2>{vehiclesCount}</h2>
+              <h2>{summaryData?.vehicle && summaryData.vehicle ? summaryData?.vehicle?.total : 0}</h2>
               <img src={vehiclesIcon} alt="" />
           </div>
               <p className="text1">Total Vehicles Count</p>
@@ -136,7 +98,7 @@ export default function Reports() {
          <div className="reportCardWrapper">
           <div className="reportCard">
           <div className="reportCardFlex">
-              <h2 >{personnelCount}</h2>
+              <h2 >{totalPersonnel}</h2>
               <img src={personnelIcon} alt="" />
             </div>
             <p className="text1">Total Personnel Count</p>
@@ -144,7 +106,7 @@ export default function Reports() {
 
         <div className="reportCard">
           <div className="reportCardFlex">
-            <h2 >{noOnDuty}</h2>
+            <h2 >{summaryData?.personnel && summaryData.personnel['On-Duty'] ? summaryData?.personnel['On-Duty'] : 0}</h2>
             <img src={ondutyIcon} alt="" />
           </div>
           <p className="text1">On-Duty</p>
@@ -152,7 +114,7 @@ export default function Reports() {
 
         <div className="reportCard">
           <div className="reportCardFlex">
-            <h2 >{noOnLeave}</h2>
+            <h2 >{summaryData?.personnel && summaryData.personnel['On-Leave'] ? summaryData?.personnel['On-Leave'] : 0}</h2>
             <img src={onleaveIcon} alt="" />
           </div>
           <p className="text1"> On-Leave</p>
@@ -160,7 +122,7 @@ export default function Reports() {
 
         <div className="reportCard">
         <div className="reportCardFlex">
-          <h2 >{noRnR}</h2>
+          <h2 >{summaryData?.personnel && summaryData.personnel['Rest and Recreation'] ? summaryData?.personnel['Rest and Recreation'] : 0}</h2>
           <img src={rnrIcon} alt="" />
           </div>
           <p className="text1">On-RnR</p>
@@ -168,7 +130,7 @@ export default function Reports() {
 
         <div className="reportCard">
         <div className="reportCardFlex">
-          <h2 >{nonUniform}</h2>
+          <h2 >{summaryData?.personnel && summaryData.personnel['Non-Uniform'] ? summaryData?.personnel['Non-Uniform'] : 0}</h2>
           <img src={nonUniformIcon} alt="" />
           </div>
           <p className="text1">Non-Uniform</p>
@@ -176,7 +138,7 @@ export default function Reports() {
 
         <div className="reportCard">
         <div className="reportCardFlex">
-          <h2 >{officialBusiness}</h2>
+          <h2 >{summaryData?.personnel && summaryData.personnel['Official Business'] ? summaryData?.personnel['Official Business'] : 0}</h2>
           <img src={rnrIcon} alt="" />
           </div>
           <p className="text1">Official Business</p>

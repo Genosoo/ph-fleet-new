@@ -18,27 +18,31 @@ export const StyledDialog = styled(Dialog)`
 export const StyledTableCell = styled(TableCell)`
   font-family: "Manrope", "sans-serif" !important;
   min-width: 300px;
-  display: flex !important;
   align-items: center;
   justify-content: space-between;
   border: 0 !important;
 `;
 
 export const StyledTable = styled(Table)`
-  th {
-    /* Add sticky styles here */
+  thead {
     position: sticky !important;
     top: 0 !important;
     z-index: 1 !important;
     background-color: #404958 !important;
     color: white;
     min-width: 300px !important;
+    display: flex !important;
+  }
+
+  th {
+    background-color: #404958 !important;
+    color: white;
   }
 
   tr {
-    background-color: #ffffff !;
+    background-color: #ffffff;
     display: flex !important;
-
+    align-items: center !important;
     &:nth-child(even) {
       background-color: #f9f9f9; /* You can adjust the color as needed */
     }

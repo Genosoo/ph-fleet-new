@@ -6,6 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import BtnLogout from './btnLogout';
 import { Link } from 'react-router-dom';
+import BtnFeedBack from '../buttons/btnFeedBack'
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -90,17 +91,21 @@ export default function CustomizedMenus() {
           Home
         </MenuItem> */}
         <MenuItem onClick={handleClose} disableRipple>
-        <Link to={'fleet/account'} className='w-full'>
+        <Link to={'fleet/account'} className='w-full font-manrope text-sm'>
           My Account
           </Link>
 
         </MenuItem>
 
+      
+        
+        <MenuItem >
+          <BtnFeedBack onClick={handleClose} />
+        </MenuItem>
+      
         <MenuItem>
           <BtnLogout/>
         </MenuItem>
-        
-      
       </StyledMenu>
     </div>
   );

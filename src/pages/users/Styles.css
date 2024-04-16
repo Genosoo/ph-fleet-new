@@ -168,5 +168,13 @@
     .deleteDialogBtn .cancel{
         @apply border
     }
+
+    .userStatusBox{
+        @apply flex items-center justify-center gap-3 p-3 rounded-full
+    }
+
+    .userStatusDot{
+        @apply w-[10px] h-[10px] rounded-full
+    }
 }
 

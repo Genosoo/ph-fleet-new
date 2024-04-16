@@ -3,20 +3,20 @@
 
 @layer components{
 
-    .officesContainer{
+    .vehiclesContainer{
         @apply font-manrope pr-10 pl-3 pb-10
     }
 
-    .officesContainer button{
+    .vehiclesContainer button{
         @apply hover:bg-[#404958] hover:text-white duration-150
     }
 
-    .officesTableTopBox{
+    .vehiclesTableTopBox{
         @apply flex items-center justify-center gap-6 
         h-[50px] mb-3
     }
 
-    .officesTableContainer{
+    .vehiclesTableContainer{
         box-shadow:0 0 10px #00000035;
         @apply rounded-[15px] overflow-hidden 
     }
@@ -58,15 +58,15 @@
 
 
     /*====== USER PROFILE STYLE =============*/
-    .officesProfileContainer{
+    .vehiclesProfileContainer{
         @apply flex flex-col pr-10 font-manrope
     }
 
-    .officesProfileTop{
+    .vehiclesProfileTop{
         @apply flex justify-between pb-3
     }
 
-    .officesProfileTop button{
+    .vehiclesProfileTop button{
             @apply bg-[#86705E] text-white flex p-3 rounded-[10px] items-center gap-2
             text-sm hover:bg-[#404958] duration-150 w-[150px] justify-center
     }

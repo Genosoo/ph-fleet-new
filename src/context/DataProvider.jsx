@@ -21,7 +21,7 @@ import {
   apiIncidentSeverity,
   apiIncidentStatus,
   apiPersonnelHistory,
-  apiPersonnelStatus
+  apiReportIn,
 } from '../api/api_urls';
 
 export const DataContext = createContext();
@@ -41,6 +41,9 @@ export default function DataProvider({ children }) {
     usersData: [],
     aircraftsData: [],
     accountData: {},
+    rolesData: [],
+    unitData: [],
+    
 
     incidentData: [],
     incidentType: [],
@@ -50,6 +53,10 @@ export default function DataProvider({ children }) {
     personnelData: [],
     personnelHistory: [],
     personnelStatus: [],
+    personnelRank: [],
+
+    reportInData: [],
+
 
 
   });
@@ -71,7 +78,6 @@ export default function DataProvider({ children }) {
           usersResponse,
           aircraftResponse,
           accountResponse,
-
           incidentResponse,
           incidentTypeResponse,
           incidentSeverityResponse,
@@ -79,7 +85,9 @@ export default function DataProvider({ children }) {
 
           personnelResponse,
           personnelHistoryResponse,
-          personnelStatusResponse,
+
+          reportInResponse,
+
 
 
         ] = await Promise.all([
@@ -103,8 +111,8 @@ export default function DataProvider({ children }) {
 
           axios.get(apiPersonnelData),
           axios.get(apiPersonnelHistory),
-          axios.get(apiPersonnelStatus),
-
+          
+          axios.get(apiReportIn),
 
         ]);
 
@@ -130,7 +138,8 @@ export default function DataProvider({ children }) {
 
           personnelData: personnelResponse.data.success,
           personnelHistory: personnelHistoryResponse.data.success,
-          personnelStatus: personnelStatusResponse.data.success,
+
+          reportInData: reportInResponse.data.success,
 
 
         });
@@ -199,7 +208,23 @@ export default function DataProvider({ children }) {
   };
 
 
+  const updateReportInData = (newReportInData) => {
+    setData((prevData) => ({
+      ...prevData,
+      reportInData: newReportInData,
+    }));
+  };
 
+
+  const updateVehiclesData = (newVehiclesData) => {
+    setData((prevData) => ({
+      ...prevData,
+      vehiclesData: newVehiclesData,
+    }));
+  };
+
+
+ 
   return (
     <DataContext.Provider value={{ ...data, 
       updateVesselsData, 
@@ -208,7 +233,9 @@ export default function DataProvider({ children }) {
       updateAircraftsData,
       updateIncidentData,
       updatePersonnelData,
-      updateOfficesData
+      updateOfficesData,
+      updateReportInData,
+      updateVehiclesData
      }}>
       {isLoading ? <Loader /> : children}
     </DataContext.Provider>

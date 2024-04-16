@@ -3,22 +3,30 @@
 // eslint-disable-next-line react/prop-types
 import { useState, useEffect, useContext } from "react";
 import {  TableBody, TableHead, TableRow, TablePagination,
-   TextField, Button, Dialog, DialogTitle, DialogContent, DialogActions, Select, MenuItem, FormControl,InputLabel,
+   Dialog, Select, MenuItem, InputLabel,
    Snackbar, Alert
 } from "@mui/material";
 import Search from "./Search";
-import axios from 'axios';
 import { Link } from "react-router-dom";
-import { apiPersonnelRank, apiPersonnelStatus, apiUsers, apiUnit, apiOfficesData, baseUrl, apiRoles } from "../../../api/api_urls";
+import {  apiUsers } from "../../../api/api_urls";
 import ButtonAdd from "./buttons/buttonAdd";
-import {StyledDialog, StyledTableCell, StyledTable, StyledTableContainer } from "./Styled";
+import { StyledFormControl,StyledTableCell, StyledTable, StyledTableContainer, StyledTextField, StyledDialog,  StyledSelect, StyledMenuItem,} from "./Styled";
 import ButtonUpdate from "./buttons/ButtonUpdate";
 import ButtonDelete from "./buttons/ButtonDelete";
 import ButtonProfile from "./buttons/ButtonProfile";
 import { DataContext } from "../../../context/DataProvider";
 import { PiWarningLight } from "react-icons/pi";
-export default function TableComponent({  csrfToken }) {
-   const { usersData, updateUsersData } = useContext(DataContext);
+import { IoIosArrowDown } from "react-icons/io";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { IoClose } from "react-icons/io5";
+import noImage from '../../../assets/no-user-image.png'
+import { baseUrl } from "../../../api/api_urls";
+import axios from 'axios';
+import ExportFiles from "./export/ExportFiles";
+
+
+export default function TableComponent({  csrfToken, rolesData, unitData, personnelStatus, personnelRank }) {
+   const { usersData, updateUsersData, officesData } = useContext(DataContext);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [searchQuery, setSearchQuery] = useState("");
@@ -30,13 +38,13 @@ export default function TableComponent({  csrfToken }) {
     const [formData, setFormData] = useState({
         username: "",
         password: "",
-        groups:[],
+        groups:["Personnel"],
         personal_details: {
             first_name: "",
             last_name: "",
+            email: "",
             middle_name: "",
             gender:"",
-            email: "",
             mobile_number: "",
             image: "",
             rank:"",
@@ -44,11 +52,7 @@ export default function TableComponent({  csrfToken }) {
             unit:"",
         }
     });
-    const [rankData, setRankData] = useState([]);
-    const [statusData, setStatusData] = useState([]);
-    const [unitData, setUnitData] = useState([]);
-    const [officeData, setOfficeData] = useState([]);
-    const [rolesData, setRolesData] = useState([]);
+
 
     console.log("users:", usersData)
 
@@ -107,14 +111,6 @@ export default function TableComponent({  csrfToken }) {
             }
         });
 
-        console.log({
-            username: user.username,
-            password: user.password,
-            personal_details: {
-                ...user.personal_details
-            }
-        })
-
         setOpenUpdateForm(true);
     };
 
@@ -124,34 +120,6 @@ export default function TableComponent({  csrfToken }) {
         resetFormData();
     };
     
-    useEffect(() => {
-      const fetchData = async () => {
-          try {
-              const rankResponse = await axios.get(apiPersonnelRank);
-              const statusResponse = await axios.get(apiPersonnelStatus);
-              const unitResponse = await axios.get(apiUnit);
-              const officeResponse = await axios.get(apiOfficesData);
-              const rolesResponse = await axios.get(apiRoles);
-
-              setRankData(rankResponse.data.success)
-              setStatusData(statusResponse.data.success)
-              setUnitData(unitResponse.data.success)
-              setOfficeData(officeResponse.data.success)
-              setRolesData(rolesResponse.data.success)
-
-              console.log('rank:', rankResponse.data.success)
-              console.log('status:', statusResponse.data.success)
-              console.log('unit:', unitResponse.data.success)
-              console.log('office:', officeResponse.data.success)
-              console.log('roles:', rolesResponse.data.success)
-
-          } catch (error) {
-              console.error(error);
-          }
-      };
-
-        fetchData();
-    }, []);
 
     useEffect(() => {
         const filteredResult = usersData.filter(item => {
@@ -242,9 +210,10 @@ export default function TableComponent({  csrfToken }) {
             showSuccessMessage("User added successfully!");
         } catch (error) {
             console.error('Error adding user:', error);
-            showErrorMessage("Failed to add user!");
+            showErrorMessage(error.response.data.error.username);
         }
     };
+
 
     const handleUpdateUser = async () => {
         try {
@@ -301,6 +270,53 @@ export default function TableComponent({  csrfToken }) {
         }
     };
 
+    const handleUserAssignedChange = async (userId, newRole) => {
+      
+        try {
+          // Perform the PUT request to update status
+          await axios.put(apiUsers, {groups:[newRole], id:userId}, {
+            headers: {
+              'X-CSRFToken': csrfToken
+            }
+          });
+        
+          // Update the incident data in state
+          const updatedUsers = usersData.map(user => {
+            if (user.id === userId) {
+              return { ...user, roles: [newRole] };
+            }
+            return user;
+          });
+          updateUsersData(updatedUsers);
+        
+          // Show success message
+          showSuccessMessage("Successfully updated role!");
+        } catch (error) {
+          // Handle errors
+          console.error('Error updating status:', error.message);
+          showErrorMessage("Failed to update role");
+        }
+      };
+
+
+  const statusColors = {
+    "On-Duty": '#EBFAF1',
+    "On-Leave": '#F9F5E2',
+    "Rest and Recreation": '#E6F0F7', 
+    "Non-Uniform": '#FADBD8', 
+    "Official Business": '#EBDEF0', 
+  };
+  
+  
+  const statusTextColors = {
+    "On-Duty": '#2ECC71', 
+    "On-Leave": '#F1C40F', 
+    "Rest and Recreation": '#3498DB', 
+    "Non-Uniform": '#E74C3C', 
+    "Official Business": '#9B59B6', 
+  };
+
+
     return (
         <div className="usersTableWrapper">
            <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'right' }}  open={snackbarOpen} autoHideDuration={2000} onClose={handleSnackbarClose}>
@@ -338,9 +354,31 @@ export default function TableComponent({  csrfToken }) {
                             <StyledTableCell>{item?.personal_details?.last_name || "N/A"}</StyledTableCell>
                             <StyledTableCell>{item?.personal_details?.email || "N/A"}</StyledTableCell>
                             <StyledTableCell>{item?.personal_details?.mobile_number || "N/A"}</StyledTableCell>
-                            <StyledTableCell>{item.roles && item.roles.length ? item.roles : "Users"}</StyledTableCell>
+                            <StyledTableCell>
+                            <StyledSelect 
+                                      IconComponent={IoIosArrowDown}
+                                      name="groups" 
+                                      value={item.roles[0]}
+                                      onChange={(e) => handleUserAssignedChange(item.id, e.target.value)}
+                                  >
+                                      {rolesData.map((user, index) => (
+                                          <StyledMenuItem key={index} value={user.name}>{user.name}</StyledMenuItem>
+                                      ))}
+                                  </StyledSelect>
+                            </StyledTableCell>
                             <StyledTableCell>{item?.personal_details?.rank_name || "N/A"}</StyledTableCell>
-                            <StyledTableCell>{item?.personal_details?.status_name || "N/A"}</StyledTableCell>
+                            <StyledTableCell>
+                                <div className="userStatusBox"  style={{
+                                        backgroundColor: statusColors[item?.personal_details?.status_name],
+                                        color: statusTextColors[item?.personal_details?.status_name] || "#000",
+                                    }} >
+                                        <div
+                                         style={{
+                                            backgroundColor: statusTextColors[item?.personal_details?.status_name],
+                                        }} className="userStatusDot"></div>
+                                    {item?.personal_details?.status_name || "N/A"}
+                                </div>
+                                </StyledTableCell>
                             <StyledTableCell>{item?.personal_details?.unit_name || "N/A"}</StyledTableCell>
                             <StyledTableCell sx={{display:"flex", gap:1, alignItems:"center", position: "sticky", right: 0}} >
                                 <Link to={'/fleet/users/profile'} state={{ user: filteredData[page * rowsPerPage + index] }} >
@@ -363,48 +401,60 @@ export default function TableComponent({  csrfToken }) {
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
             />
+               <ExportFiles />
             </div>
 
 
 {/*======================= ADD DIALOG FORM===============================*/}
-            <Dialog open={openAddForm} onClose={handleCloseAddForm}>
-                <DialogTitle>Add User</DialogTitle>
-                <DialogContent>
-
-                <div className="flex flex-col border p-5 mt-3 rounded-md">
-                       <span className="text-lg">Profile Photo</span>
-                     <input
+<Dialog fullWidth open={openAddForm} onClose={handleCloseAddForm}>
+               <div className="addFormContainer">
+                <div className="addFormHeader">
+                    <p>Add User</p>
+                    <IoClose onClick={handleCloseAddForm} />
+                </div>
+                 
+                 <div className="addFormBoxDetails">
+                 <div className="addFormImageBox">
+                    <input
                         accept="image/*"
                         id="contained-button-file"
                         type="file"
                         onChange={handleImageChange}
+                        style={{ display: 'none' }}
                     />
-                    {formData.personal_details.image && (
-                          <img className="w-[300px]" src={formData.personal_details.image} alt="Uploaded" />
-                      )}
+                    {formData.personal_details.image ? (
+                        <img className="" src={formData?.personal_details.image} alt="Uploaded" />
+                    ) : (
+                        <img className="" src={noImage} alt="Uploaded" />
+                    )}
+                     <label htmlFor="contained-button-file" className="uploadImageBtn">
+                        Upload a photo
+                    </label>
+                </div>
 
-                     </div>
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        name="username"
-                        label="Username"
-                        type="text"
-                        fullWidth
-                        value={formData.username}
-                        onChange={handleFormChange}
-                    />
-                    <TextField
+                    <div className="addFormBoxDetail1">
+                        <p>Personal Information</p>
+                        <StyledTextField
+                            autoFocus
+                            margin="dense"
+                            name="username"
+                            label="Username"
+                            type="text"
+                            fullWidth
+                            value={formData.username}
+                            onChange={handleFormChange}
+                        />
+                    <StyledTextField
                         autoFocus
                         margin="dense"
                         name="password"
                         label="Password"
-                        type="text"
+                        type="password"
                         fullWidth
                         value={formData.password}
                         onChange={handleFormChange}
                     />
-                    <TextField
+                    <StyledTextField
                         autoFocus
                         margin="dense"
                         name="personal_details.first_name"
@@ -414,17 +464,8 @@ export default function TableComponent({  csrfToken }) {
                         value={formData.personal_details.first_name}
                         onChange={handleFormChange}
                     />
-                     {/* <TextField
-                        autoFocus
-                        margin="dense"
-                        name="personal_details.middle_name"
-                        label="Middle Name"
-                        type="text"
-                        fullWidth
-                        value={formData.personal_details.middle_name}
-                        onChange={handleFormChange}
-                    /> */}
-                    <TextField
+                   
+                    <StyledTextField
                         autoFocus
                         margin="dense"
                         name="personal_details.last_name"
@@ -434,7 +475,7 @@ export default function TableComponent({  csrfToken }) {
                         value={formData.personal_details.last_name}
                         onChange={handleFormChange}
                     />
-                    <TextField
+                    <StyledTextField
                         autoFocus
                         margin="dense"
                         name="personal_details.email"
@@ -444,7 +485,7 @@ export default function TableComponent({  csrfToken }) {
                         value={formData.personal_details.email}
                         onChange={handleFormChange}
                     />
-                    <TextField
+                    <StyledTextField
                         autoFocus
                         margin="dense"
                         name="personal_details.mobile_number"
@@ -455,22 +496,26 @@ export default function TableComponent({  csrfToken }) {
                         onChange={handleFormChange}
                     />
 
-                  <FormControl fullWidth>
+                  <StyledFormControl fullWidth>
                       <InputLabel id="gender">Gender</InputLabel>
                       <Select 
+                      variant="outlined"
                            labelId="gender"
                               name="personal_details.gender"
                               value={formData.personal_details.gender}
                               onChange={handleFormChange}
                               fullWidth
-                           
+                              IconComponent={ExpandMoreIcon}
                           >
                              <MenuItem  value={"male"}>Male</MenuItem>
                              <MenuItem  value={"female"}>Female</MenuItem>
                           </Select>
-                      </FormControl>
+                      </StyledFormControl>
+                    </div>
 
-                      <FormControl fullWidth>
+                    <div className="addFormBoxDetail2">
+                        <p>Service Details</p>
+                      <StyledFormControl fullWidth>
                       <InputLabel id="rank">Rank</InputLabel>
                       <Select 
                            labelId="rank"
@@ -478,17 +523,18 @@ export default function TableComponent({  csrfToken }) {
                               value={formData.personal_details.rank}
                               onChange={handleFormChange}
                               fullWidth
+                              IconComponent={ExpandMoreIcon}
                            
                           >
-                              {rankData.map(rank => (
+                              {personnelRank.map(rank => (
                                   <MenuItem key={rank.id} value={rank.id}>
                                       {rank.rank_name}
                                   </MenuItem>
                               ))}
                           </Select>
-                      </FormControl>
+                      </StyledFormControl>
 
-                      <FormControl fullWidth>
+                      <StyledFormControl fullWidth>
                       <InputLabel id="status">Status</InputLabel>
                       <Select 
                            labelId="status"
@@ -496,17 +542,18 @@ export default function TableComponent({  csrfToken }) {
                               value={formData.personal_details.personnel_status}
                               onChange={handleFormChange}
                               fullWidth
+                              IconComponent={ExpandMoreIcon}
                            
                           >
-                              {statusData.map(status => (
+                              {personnelStatus.map(status => (
                                   <MenuItem key={status.id} value={status.id}>
                                       {status.status_name}
                                   </MenuItem>
                               ))}
                           </Select>
-                      </FormControl>
+                      </StyledFormControl>
 
-                      <FormControl fullWidth>
+                      <StyledFormControl fullWidth>
                       <InputLabel id="unit">Unit</InputLabel>
                       <Select 
                            labelId="unit"
@@ -514,6 +561,7 @@ export default function TableComponent({  csrfToken }) {
                               value={formData.personal_details.unit}
                               onChange={handleFormChange}
                               fullWidth
+                              IconComponent={ExpandMoreIcon}
                            
                           >
                               {unitData.map(unit => (
@@ -522,9 +570,9 @@ export default function TableComponent({  csrfToken }) {
                                   </MenuItem>
                               ))}
                           </Select>
-                      </FormControl>
+                      </StyledFormControl>
 
-                      <FormControl fullWidth>
+                      <StyledFormControl fullWidth>
                       <InputLabel id="office">Office</InputLabel>
                       <Select 
                            labelId="office"
@@ -532,62 +580,57 @@ export default function TableComponent({  csrfToken }) {
                               value={formData.personal_details.office}
                               onChange={handleFormChange}
                               fullWidth
+                              IconComponent={ExpandMoreIcon}
                            
                           >
-                              {officeData.map(office => (
+                              {officesData.map(office => (
                                   <MenuItem key={office.id} value={office.id}>
                                       {office.office_name}
                                   </MenuItem>
                               ))}
                           </Select>
-                      </FormControl>
+                      </StyledFormControl>
+                    </div>
 
-                      <FormControl fullWidth>
-                      <InputLabel id="roles">Roles</InputLabel>
-                      <Select 
-                           labelId="roles"
-                              name="groups"
-                              value={formData.groups}
-                              onChange={handleFormChange}
-                              fullWidth
-                           
-                          >
-                            {rolesData.map((roles,index) => (
-                             <MenuItem key={index}  value={roles.name}>
-                              {roles.name}
-                             </MenuItem>
-                            ))}
-                            
-                          </Select>
-                      </FormControl>
-
-                    
+                 </div>
                   
-                </DialogContent>
-                <DialogActions>
-                    <Button variant="contained" onClick={handleCloseAddForm} color="secondary">Cancel</Button>
-                    <Button variant="contained" onClick={handleAddUser} color="primary">Add</Button>
-                </DialogActions>
+                    <div className="addFormFooter">
+                    <button className="addFormBtnCancel" onClick={handleCloseAddForm}>Cancel</button>
+                    <button className="addFormBtnAdd" onClick={handleAddUser}>Add User</button>
+                    </div>
+               </div>
             </Dialog>
 
+  {/*========================== UPDATE DIALOG FORM ============================*/}
+  <Dialog open={openUpdateForm} onClose={handleCloseUpdateForm}>
+       <div className="addFormContainer">
+          <div className="addFormHeader">
+             <p>Update Personnel</p>
+               <IoClose onClick={handleCloseUpdateForm} />
+          </div>
 
-{/*========================== UPDATE DIALOG FORM ============================*/}
-            <Dialog open={openUpdateForm} onClose={handleCloseUpdateForm}>
-                    <DialogTitle>Update User</DialogTitle>
-                    <DialogContent>
-                    <div className="flex flex-col border p-5 mt-3 rounded-md">
-                            <span className="text-lg">Profile Photo</span>
-                            <input
-                                accept="image/*"
-                                id="contained-button-file"
-                                type="file"
-                                onChange={handleImageChange}
-                            />
-                            {formData.personal_details.image &&
-                            <img className="w-[300px]" src={`${baseUrl}${formData.personal_details.image}`} alt="Uploaded" />
-                            }
-                        </div>
-                        <TextField
+              <div className="addFormBoxDetails">
+             <div className="addFormImageBox">
+                    <input
+                        accept="image/*"
+                        id="contained-button-file"
+                        type="file"
+                        onChange={handleImageChange}
+                        style={{ display: 'none' }}
+                    />
+                    {formData.personal_details.image ? (
+                      <img className="" src={`${baseUrl}${formData.personal_details.image}`} alt="Uploaded" />
+                    ) : (
+                        <img className="" src={noImage} alt="Uploaded" />
+                    )}
+                     <label htmlFor="contained-button-file" className="uploadImageBtn">
+                        Upload a photo
+                    </label>
+        </div>
+                       
+       <div className="addFormBoxDetail1">
+                        <p>Personal Information</p>
+                        <StyledTextField
                             autoFocus
                             margin="dense"
                             name="username"
@@ -597,168 +640,154 @@ export default function TableComponent({  csrfToken }) {
                             value={formData.username}
                             onChange={handleFormChange}
                         />
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            name="password"
-                            label="Password"
-                            type="text"
-                            fullWidth
-                            value={formData.password}
-                            onChange={handleFormChange}
-                        />
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            name="personal_details.first_name"
-                            label="First Name"
-                            type="text"
-                            fullWidth
-                            value={formData.personal_details.first_name}
-                            onChange={handleFormChange}
-                        />
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            name="personal_details.middle_name"
-                            label="Middle Name"
-                            type="text"
-                            fullWidth
-                            value={formData.personal_details.middle_name}
-                            onChange={handleFormChange}
-                        />
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            name="personal_details.last_name"
-                            label="Last Name"
-                            type="text"
-                            fullWidth
-                            value={formData.personal_details.last_name}
-                            onChange={handleFormChange}
-                        />
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            name="personal_details.email"
-                            label="Email"
-                            type="email"
-                            fullWidth
-                            value={formData.personal_details.email}
-                            onChange={handleFormChange}
-                        />
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            name="personal_details.mobile_number"
-                            label="Mobile Number"
-                            type="tel"
-                            fullWidth
-                            value={formData.personal_details.mobile_number}
-                            onChange={handleFormChange}
-                        />
-                        <FormControl fullWidth>
-                            <InputLabel id="gender">Gender</InputLabel>
-                            <Select 
-                                labelId="gender"
-                                name="personal_details.gender"
-                                value={formData.personal_details.gender}
-                                onChange={handleFormChange}
-                                fullWidth
-                            >
-                                <MenuItem  value={"male"}>Male</MenuItem>
-                                <MenuItem  value={"female"}>Female</MenuItem>
-                            </Select>
-                        </FormControl>
-                        <FormControl fullWidth>
-                            <InputLabel id="rank">Rank</InputLabel>
-                            <Select 
-                                labelId="rank"
-                                name="personal_details.rank"
-                                value={formData.personal_details.rank}
-                                onChange={handleFormChange}
-                                fullWidth
-                            >
-                                {rankData.map(rank => (
-                                    <MenuItem key={rank.id} value={rank.id}>
-                                        {rank.rank_name}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-                        <FormControl fullWidth>
-                            <InputLabel id="status">Status</InputLabel>
-                            <Select 
-                                labelId="status"
-                                name="personal_details.personnel_status"
-                                value={formData.personal_details.personnel_status}
-                                onChange={handleFormChange}
-                                fullWidth
-                            >
-                                {statusData.map(status => (
-                                    <MenuItem key={status.id} value={status.id}>
-                                        {status.status_name}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-                        <FormControl fullWidth>
-                            <InputLabel id="unit">Unit</InputLabel>
-                            <Select 
-                                labelId="unit"
-                                name="personal_details.unit"
-                                value={formData.personal_details.unit}
-                                onChange={handleFormChange}
-                                fullWidth
-                            >
-                                {unitData.map(unit => (
-                                    <MenuItem key={unit.id} value={unit.id}>
-                                        {unit.unit_name}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-                        <FormControl fullWidth>
-                            <InputLabel id="office">Office</InputLabel>
-                            <Select 
-                                labelId="office"
-                                name="personal_details.office"
-                                value={formData.personal_details.office}
-                                onChange={handleFormChange}
-                                fullWidth
-                            >
-                                {officeData.map(office => (
-                                    <MenuItem key={office.id} value={office.id}>
-                                        {office.office_name}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
+                   
+                    <StyledTextField
+                        autoFocus
+                        margin="dense"
+                        name="personal_details.first_name"
+                        label="First Name"
+                        type="text"
+                        fullWidth
+                        value={formData.personal_details.first_name}
+                        onChange={handleFormChange}
+                    />
+                   
+                    <StyledTextField
+                        autoFocus
+                        margin="dense"
+                        name="personal_details.last_name"
+                        label="Last Name"
+                        type="text"
+                        fullWidth
+                        value={formData.personal_details.last_name}
+                        onChange={handleFormChange}
+                    />
+                    <StyledTextField
+                        autoFocus
+                        margin="dense"
+                        name="personal_details.email"
+                        label="Email"
+                        type="email"
+                        fullWidth
+                        value={formData.personal_details.email}
+                        onChange={handleFormChange}
+                    />
+                    <StyledTextField
+                        autoFocus
+                        margin="dense"
+                        name="personal_details.mobile_number"
+                        label="Mobile Number"
+                        type="tel"
+                        fullWidth
+                        value={formData.personal_details.mobile_number}
+                        onChange={handleFormChange}
+                    />
 
-
-                        <FormControl fullWidth>
-                          <InputLabel id="roles">Roles</InputLabel>
-                          <Select 
-                              labelId="roles"
-                              name="groups"
-                              value={formData.groups}
+                  <StyledFormControl fullWidth>
+                      <InputLabel id="gender">Gender</InputLabel>
+                      <Select 
+                      variant="outlined"
+                           labelId="gender"
+                              name="personal_details.gender"
+                              value={formData.personal_details.gender}
                               onChange={handleFormChange}
                               fullWidth
+                              IconComponent={ExpandMoreIcon}
                           >
-                              {rolesData.map(roles => (
-                                  <MenuItem key={roles.id} value={roles.name}>
-                                      {roles.name}
+                             <MenuItem  value={"male"}>Male</MenuItem>
+                             <MenuItem  value={"female"}>Female</MenuItem>
+                          </Select>
+                      </StyledFormControl>
+                    </div>
+
+                    <div className="addFormBoxDetail2">
+                        <p>Service Details</p>
+                      <StyledFormControl fullWidth>
+                      <InputLabel id="rank">Rank</InputLabel>
+                      <Select 
+                           labelId="rank"
+                              name="personal_details.rank"
+                              value={formData.personal_details.rank}
+                              onChange={handleFormChange}
+                              fullWidth
+                              IconComponent={ExpandMoreIcon}
+                           
+                          >
+                              {personnelRank.map(rank => (
+                                  <MenuItem key={rank.id} value={rank.id}>
+                                      {rank.rank_name}
                                   </MenuItem>
                               ))}
                           </Select>
-                      </FormControl>
-                       
-                    </DialogContent>
-                    <DialogActions>
-                        <Button variant="contained" onClick={handleCloseUpdateForm} color="secondary">Cancel</Button>
-                        <Button variant="contained" onClick={handleUpdateUser} color="primary">Update</Button>
-                    </DialogActions>
-                </Dialog>
+                      </StyledFormControl>
+
+                      <StyledFormControl fullWidth>
+                      <InputLabel id="status">Status</InputLabel>
+                      <Select 
+                           labelId="status"
+                              name="personal_details.personnel_status"
+                              value={formData.personal_details.personnel_status}
+                              onChange={handleFormChange}
+                              fullWidth
+                              IconComponent={ExpandMoreIcon}
+                           
+                          >
+                              {personnelStatus.map(status => (
+                                  <MenuItem key={status.id} value={status.id}>
+                                      {status.status_name}
+                                  </MenuItem>
+                              ))}
+                          </Select>
+                      </StyledFormControl>
+
+                      <StyledFormControl fullWidth>
+                      <InputLabel id="unit">Unit</InputLabel>
+                      <Select 
+                           labelId="unit"
+                              name="personal_details.unit"
+                              value={formData.personal_details.unit}
+                              onChange={handleFormChange}
+                              fullWidth
+                              IconComponent={ExpandMoreIcon}
+                           
+                          >
+                              {unitData.map(unit => (
+                                  <MenuItem key={unit.id} value={unit.id}>
+                                      {unit.unit_name}
+                                  </MenuItem>
+                              ))}
+                          </Select>
+                      </StyledFormControl>
+
+                      <StyledFormControl fullWidth>
+                      <InputLabel id="office">Office</InputLabel>
+                      <Select 
+                           labelId="office"
+                              name="personal_details.office"
+                              value={formData.personal_details.office}
+                              onChange={handleFormChange}
+                              fullWidth
+                              IconComponent={ExpandMoreIcon}
+                           
+                          >
+                              {officesData.map(office => (
+                                  <MenuItem key={office.id} value={office.id}>
+                                      {office.office_name}
+                                  </MenuItem>
+                              ))}
+                          </Select>
+                      </StyledFormControl>
+                    </div>
+       </div>
+       </div>
+
+   
+    
+                    <div className="addFormFooter">
+                        <button className="addFormBtnCancel" onClick={handleCloseUpdateForm}>Cancel</button>
+                        <button className="addFormBtnAdd" onClick={handleUpdateUser}>Update User</button>
+                    </div>
+   </Dialog>
 
 {/*========================== DELETE DIALOG ============================*/}
             <StyledDialog open={openDeleteConfirmation} onClose={handleCloseDeleteConfirmation}>

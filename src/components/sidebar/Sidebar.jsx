@@ -15,7 +15,7 @@ import Logo from '../../assets/logo.png'
 const Sidebar = () => {
     const[isOpen ,setIsOpen] = useState(true);
     const toggle = () => setIsOpen (!isOpen);
-    const [specificMenuItems1, setSpecificMenuItems1] = useState(["Map", "Incidents"]);
+    const [specificMenuItems1, setSpecificMenuItems1] = useState(["Map", "Incidents", "Report In"]);
     const [specificMenuItems2, setSpecificMenuItems2] = useState("");
     const [specificMenuItems3, setSpecificMenuItems3] = useState("");
     const [specificMenuItems4, setSpecificMenuItems4] = useState("");
@@ -49,7 +49,7 @@ const Sidebar = () => {
             // Update specificMenuItems1 based on the user role
             if (userRole === "Administrator") {
                 setSpecificMenuItems1(["Dashboard", "Map"]);
-                setSpecificMenuItems2(["Reports", "Alerts", "Incidents"]);
+                setSpecificMenuItems2(["Report In",  "Reports", "Alerts", "Incidents"]);
                 setSpecificMenuItems3(["Roles", "Users"]);
                 setSpecificMenuItems4(["Personnel", "Offices", "Vessels", "Aircrafts", "Vehicles"]);
                 setSpecificMenuItems5(["Other Vessels", "Other Aircrafts", "Other Vehicles", "Other Offices", "Other Personnel"]);

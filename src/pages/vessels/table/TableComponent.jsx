@@ -1,6 +1,7 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/prop-types */
 import { useState, useEffect, useContext } from "react";
-import { StyledTableCell, StyledTable, StyledTableContainer, StyledDialog } from "./Styled";
+import { StyledTableCell, StyledTable, StyledTableContainer, StyledDialog, StyledTextField } from "./Styled";
 import axios from 'axios';
 import { Link } from "react-router-dom";
 import {TableBody, TableHead, TableRow, TablePagination, 
@@ -15,8 +16,36 @@ import Search from "./Search";
 import { DataContext } from "../../../context/DataProvider";
 import { apiVesselClass, apiVesselType, apiVesselStatus, apiVesselsData } from "../../../api/api_urls";
 import { PiWarningLight } from "react-icons/pi";
+import { IoClose } from "react-icons/io5";
+import noImage from '../../../assets/no-user-image.png'
+import {useDropzone} from 'react-dropzone'
+import { AiOutlineCloudUpload } from "react-icons/ai";
+import ExportFiles from "./export/ExportFiles";
+
 
 export default function TableComponent({ csrfToken }) {
+
+  const { getRootProps: getRootPropsLeft, getInputProps: getInputPropsLeft } = useDropzone({
+    accept: 'image/*',
+    onDrop: (acceptedFiles) => handleFileChange(acceptedFiles, 'image_left')
+  });
+  
+  const { getRootProps: getRootPropsRight, getInputProps: getInputPropsRight } = useDropzone({
+    accept: 'image/*',
+    onDrop: (acceptedFiles) => handleFileChange(acceptedFiles, 'image_right')
+  });
+  
+  const { getRootProps: getRootPropsFront, getInputProps: getInputPropsFront } = useDropzone({
+    accept: 'image/*',
+    onDrop: (acceptedFiles) => handleFileChange(acceptedFiles, 'image_front')
+  });
+  
+  const { getRootProps: getRootPropsBack, getInputProps: getInputPropsBack } = useDropzone({
+    accept: 'image/*',
+    onDrop: (acceptedFiles) => handleFileChange(acceptedFiles, 'image_back')
+  });
+  
+
   const { vesselsData, updateVesselsData } = useContext(DataContext);
   console.log("vesselsData: ", vesselsData)
 
@@ -203,8 +232,8 @@ const handleConfirmDeleteVessel = () => {
     }
   };
 
-  const handleFileChange = (e, fieldName) => {
-    const file = e.target.files[0];
+  const handleFileChange = (acceptedFiles, fieldName) => {
+    const file = acceptedFiles[0];
     const reader = new FileReader();
     reader.onloadend = () => {
       let base64String = reader.result.split(",")[1];
@@ -215,7 +244,6 @@ const handleConfirmDeleteVessel = () => {
     };
     reader.readAsDataURL(file);
   };
-
 
   const handleUpdateVessel = async () => {
     try {
@@ -281,7 +309,7 @@ const handleConfirmDeleteVessel = () => {
                             <StyledTableCell>{item?.origin || "N/A"}</StyledTableCell>
                             <StyledTableCell>{item?.capacity || "N/A"}</StyledTableCell>
                             <StyledTableCell sx={{display:"flex", gap:1, alignItems:"center", position: "sticky", right: 0}} >
-                                <Link to={'/fleet/vessels/profile'} state={{ vessel: filteredData[page * rowsPerPage + index] }} >
+                                <Link to={'/fleet/vessels/profile'} state={{ vessel: item }} >
                                     <ButtonProfile />
                                 </Link>
                                 <ButtonUpdate item={item} handleOpenUpdateForm={handleOpenUpdateForm} />
@@ -301,85 +329,165 @@ const handleConfirmDeleteVessel = () => {
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
             />
+            <ExportFiles />
         </div>
 
 {/*============= Add FORM ============================*/}
-  <Dialog open={openAddForm} onClose={handleCloseAddForm}>
-    <DialogTitle>Add Vessels</DialogTitle>
-       <div className="p-10 flex flex-col gap-3 w-[600px]">
-       <TextField value={formData.vessel_name} onChange={handleFormChange}  autoFocus  margin="dense"  name="vessel_name" label="Vessel Name" type="text"  fullWidth />
-        <TextField value={formData.vessel_description} onChange={handleFormChange}  autoFocus  margin="dense"  name="vessel_description" label="Vessel Description" type="text"  fullWidth />
-        <TextField value={formData.hull_number} onChange={handleFormChange}  autoFocus  margin="dense"  name="hull_number" label="Hull Number" type="text"  fullWidth />
-        <TextField value={formData.beam} onChange={handleFormChange}  autoFocus  margin="dense"  name="beam" label="Beam" type="text"  fullWidth />
-        <TextField value={formData.origin} onChange={handleFormChange}  autoFocus  margin="dense"  name="origin" label="Origin" type="text"  fullWidth />
-        <TextField value={formData.capacity} onChange={handleFormChange}  autoFocus  margin="dense"  name="capacity" label="Capacity" type="text"  fullWidth />
+  <Dialog maxWidth="md" open={openAddForm} onClose={handleCloseAddForm}>
+    <div className="vesselsFormContainer">
+    <div className="vesselsFormHeader">
+             <p>Add Vessel</p>
+               <IoClose onClick={handleCloseAddForm} />
+          </div>
+   
+          <div className="vesselsFormBoxDetail">
+            <p>Vessel Image</p>
+                
+            {["image_main"].map((fieldName, index) => (
+                      <div className="vesselsFormImageBox" key={index}>
+                        <input type="file" name={fieldName} id={fieldName} onChange={(e) => handleFileChange(e, fieldName)} style={{ display: 'none' }} />
+                        {formData[fieldName] ? (
+                          <img src={`data:image/jpeg;base64,${formData[fieldName]}`} alt={fieldName} />
+                        ): (
+                          <img className="" src={noImage} alt="Uploaded" />
+                        )}
+
+                          <label htmlFor={fieldName} className="uploadImageBtn">
+                                Upload a photo
+                            </label>
+                      </div>
+                  ))}
+
+
+                <div className="vesselsImageContainer">
+                <p>Vessel Perception</p>
+                 <div className="vesselsImageWrapper">
+                    <div className="vesselsImageCardBox">
+                    <h3>Front View</h3>
+                    <div className="vesselsImageCard" {...getRootPropsFront()}>
+                        <input {...getInputPropsFront()} />
+                        {formData.image_front && (
+                          <img src={`data:image/jpeg;base64,${formData.image_front}`} alt="Uploaded" />
+                        )}
+                        <AiOutlineCloudUpload/>
+                        <p>Drag & Drop or <span> Choose file</span> here</p>
+                      </div>
+                  </div>
+
+                  <div className="vesselsImageCardBox">
+                    <h3>Back View</h3>
+                    <div className="vesselsImageCard" {...getRootPropsBack()}>
+                        <input {...getInputPropsBack()} />
+                        {formData.image_back && (
+                          <img src={`data:image/jpeg;base64,${formData.image_back}`} alt="Uploaded" />
+                        )}
+                        <AiOutlineCloudUpload/>
+                        <p>Drag & Drop or <span> Choose file</span> here</p>
+                      </div>
+                  </div>
+                </div>
+
+                <div className="vesselsImageWrapper">
+                    <div className="vesselsImageCardBox">
+                    <h3>Right Side View</h3>
+                    <div className="vesselsImageCard" {...getRootPropsRight()}>
+                        <input {...getInputPropsRight()} />
+                        {formData.image_right && (
+                          <img src={`data:image/jpeg;base64,${formData.image_right}`} alt="Uploaded" />
+                        )}
+                        <AiOutlineCloudUpload/>
+                        <p>Drag & Drop or <span> Choose file</span> here</p>
+                      </div>
+                  </div>
+
+                  <div className="vesselsImageCardBox">
+                    <h3>Left Side View</h3>
+                    <div className="vesselsImageCard" {...getRootPropsLeft()}>
+                        <input {...getInputPropsLeft()} />
+                        {formData.image_left && (
+                          <img src={`data:image/jpeg;base64,${formData.image_left}`} alt="Uploaded" />
+                        )}
+                        <AiOutlineCloudUpload/>
+                        <p>Drag & Drop or <span> Choose file</span> here</p>
+                      </div>
+                  </div>
+                </div>
+                 </div>
+
+
+                 <div className="vesselsDetail">
+                  <h3>Vessel Details</h3>
+                  <StyledTextField value={formData.vessel_name} onChange={handleFormChange}  autoFocus  margin="dense"  name="vessel_name" label="Vessel Name" type="text"  fullWidth />
+                    <StyledTextField value={formData.vessel_description} onChange={handleFormChange}  autoFocus  margin="dense"  name="vessel_description" label="Vessel Description" type="text"  fullWidth />
+                    <StyledTextField value={formData.hull_number} onChange={handleFormChange}  autoFocus  margin="dense"  name="hull_number" label="Hull Number" type="text"  fullWidth />
+                    <StyledTextField value={formData.beam} onChange={handleFormChange}  autoFocus  margin="dense"  name="beam" label="Beam" type="text"  fullWidth />
+                    <StyledTextField value={formData.origin} onChange={handleFormChange}  autoFocus  margin="dense"  name="origin" label="Origin" type="text"  fullWidth />
+                    <StyledTextField value={formData.capacity} onChange={handleFormChange}  autoFocus  margin="dense"  name="capacity" label="Capacity" type="text"  fullWidth />
+                  
+                    <FormControl fullWidth>
+                        <InputLabel id="class">Class</InputLabel>
+                        <Select
+                          labelId="class"
+                          id="class"
+                          value={formData.vessel_class}
+                          name="vessel_class"
+                          onChange={handleInputChange}
+                        >
+                          {classData.map((item, index) => (
+                            <MenuItem key={index} value={item.id}>
+                              {item.class_name}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+
+                      <FormControl fullWidth>
+                        <InputLabel id="type">Type</InputLabel>
+                        <Select
+                          labelId="type"
+                          id="type"
+                          value={formData.vessel_type}
+                          name="vessel_type"
+                          onChange={handleInputChange}
+                        >
+                          {typeData.map((item, index) => (
+                            <MenuItem key={index} value={item.id}>
+                              {item.type_name}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+
+                      <FormControl fullWidth>
+                        <InputLabel id="status">Status</InputLabel>
+                        <Select
+                          labelId="status"
+                          id="status"
+                          value={formData.vessel_status}
+                          name="vessel_status"
+                          onChange={handleInputChange}
+                        >
+                          {statusData.map((item, index) => (
+                            <MenuItem key={index} value={item.id}>
+                              {item.status_name}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+
+                 </div>
+
+
+
+           
+          </div>
         
-        <FormControl fullWidth>
-            <InputLabel id="class">Class</InputLabel>
-            <Select
-              labelId="class"
-              id="class"
-              value={formData.vessel_class}
-              name="vessel_class"
-              onChange={handleInputChange}
-            >
-              {classData.map((item, index) => (
-                <MenuItem key={index} value={item.id}>
-                  {item.class_name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+    </div>
 
-          <FormControl fullWidth>
-            <InputLabel id="type">Type</InputLabel>
-            <Select
-              labelId="type"
-              id="type"
-              value={formData.vessel_type}
-              name="vessel_type"
-              onChange={handleInputChange}
-            >
-              {typeData.map((item, index) => (
-                <MenuItem key={index} value={item.id}>
-                  {item.type_name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-
-          <FormControl fullWidth>
-            <InputLabel id="status">Status</InputLabel>
-            <Select
-              labelId="status"
-              id="status"
-              value={formData.vessel_status}
-              name="vessel_status"
-              onChange={handleInputChange}
-            >
-              {statusData.map((item, index) => (
-                <MenuItem key={index} value={item.id}>
-                  {item.status_name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-
-          {["image_main", "image_left", "image_right", "image_front", "image_back"].map((fieldName, index) => (
-            <label htmlFor={fieldName} className="border flex flex-col p-3 gap-4" key={index}>
-              <span className="">{fieldName.replace('_', ' ')}</span>
-              <input type="file" name={fieldName} id={fieldName} onChange={(e) => handleFileChange(e, fieldName)} />
-              {formData[fieldName] && (
-                <img src={`data:image/jpeg;base64,${formData[fieldName]}`} alt={fieldName} />
-              )}
-            </label>
-          ))}
-
-       </div>
-    <DialogActions>
-      <Button variant="contained" onClick={handleCloseAddForm} color="secondary">Cancel</Button>
-      <Button variant="contained" onClick={handleAddVessel} color="primary">Add</Button>
-    </DialogActions>
+    <div className="vesselsFormFooter">
+       <button className="btn1" onClick={handleCloseAddForm}>Cancel</button>
+      <button className="btn2" onClick={handleAddVessel}>Add</button>
+    </div>
    </Dialog>
 
 
