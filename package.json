@@ -27,6 +27,7 @@
     "js-cookie": "^3.0.5",
     "js-cookies": "^1.0.4",
     "leaflet": "^1.9.4",
+    "leaflet-measure": "^3.1.0",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-csv-downloader": "^3.1.0",
@@ -40,6 +41,7 @@
     "react-leaflet": "^4.2.1",
     "react-leaflet-cluster": "^2.1.0",
     "react-leaflet-fullscreen": "^4.1.1",
+    "react-leaflet-measure": "^2.1.1",
     "react-router-dom": "^6.18.0",
     "styled-components": "^6.1.8",
     "xlsx": "^0.18.5"

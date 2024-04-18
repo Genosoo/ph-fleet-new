@@ -11,6 +11,16 @@
          p-2 border-b-2
     }
 
+      
+    .traksatDistance{
+        top: 12%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        @apply flex gap-5 bg-[#000000ad] absolute z-[1000] font-manrope
+        p-3 rounded-xl m-2 text-sm font-bold border-[#00FF00] border-2 text-[#00FF00]
+    }
+
+
     .traksatCardHeader img{
         @apply w-[20px]
     }
@@ -71,6 +81,17 @@
         left-16  rounded-[15px] overflow-hidden bg-white font-manrope cursor-move
     }
     
+    .mtDistance{
+        top: 12%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        @apply flex gap-5 bg-white absolute z-[1000] font-manrope
+        p-3 rounded-xl m-2 text-sm font-bold border-[#fd9b09] border-2
+    }
+
+    .mtDistance p h3{
+        @apply text-gray-100
+    }
    
     .mtCardHeader{
         @apply  flex flex-col 

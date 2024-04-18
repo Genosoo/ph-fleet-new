@@ -527,7 +527,7 @@ export default function MapComponent({
   )}
 
 
-     <MapContainer  zoomControl={false} ref={mapRef} center={[12.8797, 121.7740]} zoom={6} style={{ height: '100%', width: '100%' }}>
+     <MapContainer  zoomControl={false} ref={mapRef} center={[12.8797, 121.7740]} zoom={6} style={{cursor:"pointer", height: '100%', width: '100%' }}>
       
      {isFullscreen && toggleDrawer && mapLayer !== 'windy' && (
    <FilterDrawer

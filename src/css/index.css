@@ -123,7 +123,7 @@
   }
 
   .map_container{
-    @apply border h-[87vh] w-[95%] rounded-md overflow-hidden relative
+    @apply border h-[87vh] w-[95%] rounded-md overflow-hidden relative cursor-pointer
   }
 
   .button_map_wrapper{
