@@ -121,7 +121,7 @@ const MarineTrafficMarker = ({ item, index, selectedMarineTraffic, handleMarineT
       />
 
       {measurementMode && (
-        <p className='mtDistance'><b className='text-gray-500'>Distance:</b> {(measurementDistance).toFixed(2)} NM</p>
+        <p className='mtDistance'><b className='text-white'>Distance:</b> {(measurementDistance).toFixed(2)} NM</p>
       )}
       {showSelectedInfo && selectedMarineTraffic && selectedMarineTraffic.ship_id === item.ship_id && (
         <Draggable onDrag={handleDrag}>

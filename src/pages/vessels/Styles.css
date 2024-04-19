@@ -273,7 +273,40 @@
         @apply flex gap-4
     }
 
- 
+
+    .vesselsInfoContainer{
+        @apply font-manrope  text-[#404958]
+    }
+
+    .vesselsInfoWrapper{
+        @apply w-[50%]
+    }
+
+    .vesselsInfoBox1{
+        box-shadow:0 0 10px #00000029;
+        @apply flex flex-col border rounded-lg p-3 gap-5
+    }
+
+    .vesselsInfoBox1 h3{
+        @apply text-sm font-bold
+    }
+
+    .vesselsInfoFlex{
+        @apply flex items-center gap-5
+    }
+
+    .vesselsInfoFlex span h2{
+        @apply font-bold text-[2rem]
+    }
+
+    .vesselsInfoFlex img{
+        @apply w-[200px] h-[200px] rounded-full object-cover
+        border-[#404958] border-2 p-2
+    }
+
+    .vesselsInfoFlex span p{
+        @apply text-[#8E8E8E] font-semibold
+    }
 
 }
 

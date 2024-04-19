@@ -49,7 +49,9 @@ export default function RouteDashboard() {
 
   // Check if accountData.groups exists before accessing its properties
   const isAdministrator = accountData.roles && accountData.roles[0] === 'Administrator';
-  
+  const isOPViewer = accountData.roles && accountData.roles[0] === 'OP Viewer';
+  const isPersonnel = accountData.roles && accountData.roles[0] === 'Personnel';
+
   return (
         <AutoLogout>
       <CheckCookie />
@@ -95,8 +97,13 @@ export default function RouteDashboard() {
             <Route path='traksat-list' element={<TracksatList />} />
             <Route path='spidertrak-list' element={<SpiderTrakList />} />
           </>
-        ) : (
-          // Your existing routes for non-authorized users
+        ) : isOPViewer ? (
+          // Render only the map for users with the role "OP Viewer"
+          <>
+            <Route index element={<Map />} />
+            <Route path='' element={<Map />} />
+          </>
+        ) :  isPersonnel ? (
           <>
             <Route index element={<Map />} />
             <Route path='map' element={<Map />} />
@@ -104,9 +111,9 @@ export default function RouteDashboard() {
             <Route path='/incidents/add-incident' element={<AddIncident/>} />
             <Route path='/incidents/update-incident' element={<UpdateReport/>} />
             <Route path='report-in' element={<ReportIn/>} />
-
-
           </>
+        ) : (
+          <Route path='map' element={<Map />} />
         )}
 
         <Route path='account' element={<Account />} />

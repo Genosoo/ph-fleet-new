@@ -161,11 +161,9 @@ const TrakSatMarker = ({ item, selectedTrakSat, showDescription, handleTrakSatMa
               </div>
            
              <div className='traksatCardFooter'>
-             <div className='mtBtnBox'>
               <button className={`${measurementMode ? 'bg-[#EB5454]' : 'bg-[#0DB0E6]'}`} onClick={toggleMeasurementMode}>
                 {measurementMode ? 'Stop Measurement' : 'Start Measurement'}
               </button>
-            </div>
              </div>
            </div>
             </Draggable>

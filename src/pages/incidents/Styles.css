@@ -572,5 +572,91 @@
         @apply text-base font-bold text-center p-5
     }
 
+
+
+    /*==================== REPORT INFO CONTAINER  ======================================*/
+    .reportInfoContainer{
+        @apply flex font-manrope gap-5 text-[#404958] p-5
+    }
+
+    .reportInfoWrapper{
+        @apply flex flex-col w-[50%] gap-5
+    }
+    
+    .reportInfoWrapper2{ 
+        @apply flex flex-col w-[50%]  gap-5
+    }
+
+    .reportInfoBox{
+        box-shadow:0 0 10px #00000029;
+        @apply rounded-lg p-5
+    }
+
+    .reportInfoBox1{
+        @apply  flex flex-col gap-5
+    }
+
+    .reportInfoBox1 span h3{
+        @apply text-sm font-bold mb-2
+    }
+
+    .reportInfoBox1 span p{
+        @apply text-sm bg-[#F9F9F9] p-3 rounded-lg text-[#8E8E8E]
+        font-semibold
+    }
+
+    .reportInfoBox1 span .desc{
+        @apply h-[300px]
+    }
+
+
+
+    .reportInfoBox2{
+        @apply  flex flex-col gap-5 h-[260px]
+    }
+
+    .reportInfoBox2 span h3{
+        @apply text-sm font-bold mb-2
+    }
+
+    .reportInfoBox2 .desc{
+        @apply flex items-center   text-sm bg-[#F9F9F9] p-3 rounded-lg
+        gap-4  text-[#8E8E8E]
+        font-semibold
+    }
+
+    .reportInfoBox2 .desc img{
+        @apply w-[50px] h-[50px] rounded-full object-cover 
+    }
+
+    .reportInfoBox2 span p{
+        @apply text-sm bg-[#F9F9F9] p-3 rounded-lg text-[#8E8E8E]
+        font-semibold
+    }
+
+    .reportInfoBox3{
+        @apply flex flex-col gap-3
+    }
+
+    .reportInfoBox3 h3{
+        @apply text-sm font-bold
+    }
+
+    .reportInfoBox3 img{
+        @apply w-full rounded-lg h-[330px] 
+    }
+
+    .reportInfoBox4{
+        @apply flex flex-col gap-3
+    }
+
+    .reportInfoBox4 h3{
+        @apply text-sm font-bold
+    }
+
+    .reportInfoMap{
+        @apply h-[330px] rounded-lg overflow-hidden
+    }
+
 }
 

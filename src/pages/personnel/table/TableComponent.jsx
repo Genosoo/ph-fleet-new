@@ -242,7 +242,6 @@ const showErrorMessage = (message) => {
     const handleUpdateUser = async () => {
         try {
             const updatedFormData = { ...formData, id: selectedUser.id };
-
             const response = await axios.put(apiUsers, updatedFormData, {
                 headers: {
                     'X-CSRFToken': csrfToken
@@ -285,7 +284,6 @@ const showErrorMessage = (message) => {
         "Official Business": '#9B59B6', 
       };
     
-   
 
   return (
     <div>

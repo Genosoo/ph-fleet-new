@@ -38,7 +38,7 @@ export default function TableComponent({  csrfToken, rolesData, unitData, person
     const [formData, setFormData] = useState({
         username: "",
         password: "",
-        groups:["Personnel"],
+        groups:["User"],
         personal_details: {
             first_name: "",
             last_name: "",
@@ -324,6 +324,7 @@ export default function TableComponent({  csrfToken, rolesData, unitData, person
                     {successMessage || errorMessage}
                 </Alert>
             </Snackbar>
+            
             <div className="usersTableTopBox">
                 <Search handleSearchChange={handleSearchChange} searchQuery={searchQuery} />
                 <ButtonAdd handleOpenAddForm={handleOpenAddForm} />

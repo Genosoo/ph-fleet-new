@@ -85,8 +85,9 @@
         top: 12%;
         left: 50%;
         transform: translate(-50%, -50%);
-        @apply flex gap-5 bg-white absolute z-[1000] font-manrope
-        p-3 rounded-xl m-2 text-sm font-bold border-[#fd9b09] border-2
+        @apply flex gap-5 bg-[#000000ad] absolute z-[1000] font-manrope
+        p-3 rounded-xl m-2 text-sm font-bold border-[#fd9b09]
+         text-[#fd9b09] border-2
     }
 
     .mtDistance p h3{

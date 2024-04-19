@@ -8,10 +8,6 @@ import axios from 'axios'
 import Logo from '../../assets/logo.png'
 
 
-
-
-
-
 const Sidebar = () => {
     const[isOpen ,setIsOpen] = useState(true);
     const toggle = () => setIsOpen (!isOpen);
@@ -54,6 +50,12 @@ const Sidebar = () => {
                 setSpecificMenuItems4(["Personnel", "Offices", "Vessels", "Aircrafts", "Vehicles"]);
                 setSpecificMenuItems5(["Other Vessels", "Other Aircrafts", "Other Vehicles", "Other Offices", "Other Personnel"]);
                 setSpecificMenuItems6(["Settings"]);
+            } else if (userRole === "OP Viewer") {
+                setSpecificMenuItems1([ "Map"]);
+            } else if (userRole === "Personnel") {
+                setSpecificMenuItems1([ "Map", "Report In", "Incidents"]);
+            } else{
+                setSpecificMenuItems1([ "Map"]);
             }
         }
     }, [accountData]);
