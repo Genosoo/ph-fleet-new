@@ -97,9 +97,9 @@ const TrakSatMarker = ({ item, selectedTrakSat, showDescription, handleTrakSatMa
     let iconHtml;
 
     if (item.heading_deg !== null) {
-      iconHtml = `<div class="bgdark-marker"><img src="${traksat1Icon}" style="transform: rotate(${item.course}deg);" /></div>`;
+      iconHtml = `<div class="bgdark-marker"><img src="${traksat1Icon}" style="transform: rotate(${item.heading_deg}deg);" /></div>`;
     } else {
-      iconHtml = `<div class="bgdark-marker"><img src="${traksat2Icon}" style="transform: rotate(${item.course}deg);" /></div>`;
+      iconHtml = `<div class="bgdark-marker"><img src="${traksat2Icon}" style="transform: rotate(${item.heading_deg}deg);" /></div>`;
     }
 
     return (

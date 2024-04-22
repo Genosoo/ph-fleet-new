@@ -51,7 +51,7 @@ const Sidebar = () => {
                 setSpecificMenuItems5(["Other Vessels", "Other Aircrafts", "Other Vehicles", "Other Offices", "Other Personnel"]);
                 setSpecificMenuItems6(["Settings"]);
             } else if (userRole === "OP Viewer") {
-                setSpecificMenuItems1([ "Map"]);
+                setSpecificMenuItems1(["Dashboard", "Map"]);
             } else if (userRole === "Personnel") {
                 setSpecificMenuItems1([ "Map", "Report In", "Incidents"]);
             } else{

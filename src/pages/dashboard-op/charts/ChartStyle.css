@@ -1,0 +1,33 @@
+@tailwind components;
+
+@layer components{
+    
+  .chartContainer{
+    @apply mt-5
+  }
+
+  .chartTitle{
+    @apply font-bold text-lg text-gray-800 py-3
+  }
+
+  .chartWrapper{
+    @apply flex gap-5 flex-wrap xl:flex-nowrap
+  }
+
+  .chartBox{
+    @apply  bg-white w-[100%] xl:w-[50%] h-[450px] overflow-hidden flex items-center justify-center rounded-[10px] shadow-md
+  }
+
+  .doughnut_chart_box{
+    @apply flex flex-col h-full w-full justify-between  items-center p-5 relative 
+  }
+
+  .bar_chart_box{
+    @apply flex flex-col h-full  w-full justify-center p-5 relative items-center
+  }
+}
+
+.chart-container canvas {
+  -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 1)), to(rgba(0, 0, 0, 0)));
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+}

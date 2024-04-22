@@ -3,6 +3,7 @@ import Map from '../pages/map/Map';
 import Vessels from '../pages/vessels/Page';
 import Aircrafts from '../pages/aircrafts/Page';
 import Dashboard from '../pages/dashboard/Dashboard';
+import DashboardOP from '../pages/dashboard-op/Dashboard';
 import Roles from '../pages/roles/Roles';
 import Users from '../pages/users/Page';
 import Personnel from '../pages/personnel/Page';
@@ -100,8 +101,9 @@ export default function RouteDashboard() {
         ) : isOPViewer ? (
           // Render only the map for users with the role "OP Viewer"
           <>
-            <Route index element={<Map />} />
-            <Route path='' element={<Map />} />
+            <Route index element={<DashboardOP  />} />
+            <Route path='dashboard' element={<DashboardOP />} />
+            <Route path='/map' element={<Map />} />
           </>
         ) :  isPersonnel ? (
           <>
