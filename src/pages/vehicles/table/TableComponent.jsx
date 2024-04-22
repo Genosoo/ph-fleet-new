@@ -532,7 +532,7 @@ mapRef.current.setView([location.lat, location.lng], 14, { animate: true });
                </div>
                <div className="addFormFooter">
                     <button className="addFormBtnCancel" onClick={handleCloseAddForm}>Cancel</button>
-                    <button className="addFormBtnAdd" onClick={handleAddUser}>Add Personnel</button>
+                    <button className="addFormBtnAdd" onClick={handleAddUser}>Add Vehicle</button>
                     </div>
             </div>
             </Dialog>

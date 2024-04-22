@@ -34,16 +34,15 @@ import PersonnelProfile from '../pages/personnel/profile/Profile';
 import VesselsProfile from '../pages/vessels/profile/Profile'
 import AircraftProfile from '../pages/aircrafts/profile/Profile'
 
-import { DataContext } from '../context/DataProvider';
-import { useContext } from "react";
 import ChangePassword from '../pages/account/changepassword/ChangePassword';
 import UpdateAccount from '../pages/account/update/UpdateAccount';
 import ReportInfo from '../pages/incidents/reportinfo/ReportInfo';
 import UpdateReport from '../pages/incidents/update/UpdateReport';
 import ReportIn from '../pages/report-in/ReportIn';
-
+import { useContext } from "react";
+import { DataContext } from '../context/DataProvider';
 export default function RouteDashboard() {
-  const {accountData } = useContext(DataContext)
+  const { accountData } = useContext(DataContext)
 
 
 

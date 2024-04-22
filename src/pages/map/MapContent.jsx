@@ -454,7 +454,7 @@ export default function MapComponent({
   };
   return (
     <>
-  <div className='map_container' >
+  <div className='mapContainer' >
 
 
   {!isFullscreen &&  toggleDrawer && mapLayer !== 'windy' && (

@@ -4,17 +4,15 @@ import Sidebar from "../components/sidebar/Sidebar"
 import DataProvider from "../context/DataProvider"
 
 export default function Layout() {
-
-
   return (
-      <DataProvider>
-        <div className="main_container">
+    <DataProvider>
+    <div className="main_container">
         <Sidebar />
         <div className="content_container">
             <Navbar />
             <Outlet />
         </div>
-       </div>
-      </DataProvider>
+    </div>
+    </DataProvider>
   )
 }

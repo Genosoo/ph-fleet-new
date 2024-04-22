@@ -25,7 +25,7 @@ console.log("Check In Data:", checkInData)
 
 
   return (
-    <div>
+    <div className="mapMainContainer">
       <MapContent
         marineTrafficData={marineTrafficData}
         tracksatData={traksatData}

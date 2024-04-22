@@ -72,7 +72,7 @@ const Sidebar = () => {
     return (
         <div className="sidebar_container">
            <div 
-             style={{width: isOpen ? "250px" : "100px"}} 
+             style={{width: isOpen ? "210px" : "100px"}} 
              className="sidebar"
             >
               <div className="link_wrapper">
@@ -81,7 +81,7 @@ const Sidebar = () => {
                         <img 
                             src={Logo}
                             alt="logo"  
-                            style={{ width: isOpen ? '70%' : '80px', transition: 'width 0.3s ease'}} 
+                            style={{ width: isOpen ? '100%' : '80px', transition: 'width 0.3s ease'}} 
                         />
                     </div>
                     <p >Navigate</p>

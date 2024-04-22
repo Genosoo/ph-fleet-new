@@ -10,6 +10,7 @@ import { useRef, useState } from 'react';
 import { Marker, useMap } from 'react-leaflet';
 import { IoCloseSharp } from "react-icons/io5";
 import Draggable from 'react-draggable';
+import { baseUrl } from '../../../api/api_urls';
 
 const getStatusImage = (status_name) => {
   switch (status_name) {
@@ -82,30 +83,65 @@ const PersonnelMarker = ({ item, index, selectedPersonnel, handlePersonnelMarker
               </div>
 
               <div className="personnelImgBox">
-                 <img src={userImg} alt="user image" />
+                 <img src={`${baseUrl}${selectedPersonnel.personal_details.image}`} alt="user image" 
+                   onError={(e) => {
+                    e.target.src = userImg; // Set the default image source here
+                }}
+                 />
               </div>
 
-              <div className="personnelCardDetail">
+             <div className="personnelCardDetailWrapper">
+             <div className="personnelCardDetail">
                  <span className='span1'>
+                   <p>Serial Number</p>
                    <p>Username</p>
                    <p>Last Name</p>
                    <p>First Name</p>
+                   <p>Email</p>
+                   <p>Mobile Number</p>
+                   <p>gender</p>
+                   <p>Height</p>
+                   <p>Weight</p>
+                   <p>BMI</p>
                    <p>Status</p>
                    <p>Rank</p>
-                   <p>Unit</p>
-                   {/* <p>Address</p> */}
                  </span>
                  <span>
+                  <p>{selectedPersonnel?.personal_details?.serial_number|| "N/A"}</p>
                   <p>{selectedPersonnel?.username || "N/A"}</p>
                   <p>{selectedPersonnel?.personal_details?.last_name || "N/A"}</p>
                   <p>{selectedPersonnel?.personal_details?.first_name || "N/A"}</p>
+                  <p>{selectedPersonnel?.personal_details?.email || "N/A"}</p>
+                  <p>{selectedPersonnel?.personal_details?.mobile_number || "N/A"}</p>
+                  <p>{selectedPersonnel?.personal_details?.gender || "N/A"}</p>
+                  <p>{selectedPersonnel?.height || "N/A"}</p>
+                  <p>{selectedPersonnel?.weight || "N/A"}</p>
+                  <p>{selectedPersonnel?.bmi || "N/A"}</p>
                   <p>{selectedPersonnel?.personal_details?.status_name || "N/A"}</p>
                   <p>{selectedPersonnel?.personal_details?.rank_name || "N/A"}</p>
-                  <p>{selectedPersonnel?.personal_details?.unit_name || "N/A"}</p>
-                   {/* <p>{selectedPersonnel?.address || "N/A"}</p> */}
                  </span>
+
+              
               </div>
-           
+
+              <div className="personnelCardDetail2">
+              <div className='personnelCard2'>
+                 <p className=' font-bold'>Unit</p>
+                 <p>{selectedPersonnel?.personal_details?.unit_name || "N/A"}</p>
+              </div>
+
+              <div className='personnelCard2'>
+                 <p className=' font-bold'>Office</p>
+                 <p>{selectedPersonnel?.personal_details?.office_name || "N/A"}</p>
+              </div>
+
+              <div className='personnelCard2'>
+                 <p className=' font-bold'>Address</p>
+                 <p>{selectedPersonnel?.address || "N/A"}</p>
+              </div>
+              </div>
+             </div>
+              
           </div>
           </Draggable>
         )}

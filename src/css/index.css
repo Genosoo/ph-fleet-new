@@ -15,7 +15,51 @@
 
 @layer components {
 
+  .mainContainer{
+    @apply flex bg-white h-[100vh] 
+    }
+
+    .contentWrapper{
+        @apply flex flex-col  w-full  h-[100vh] overflow-y-auto
+    }
+
+    .contentContainer{
+        @apply  bg-white 
+    }
+
+   
+
+    .logoBox{
+      @apply w-full p-5 flex items-center justify-center
+  }
+
+  .sidebarContainer{
+    height: 100vh !important;
+    overflow-y: scroll;
+  }
+
+  .sidebarMenuBox{
+      @apply font-manrope bg-[#404958] text-white p-1 
+  }
+
   
+
+  .sidebarMenuBox .link{
+      @apply font-manrope text-sm  text-white flex items-center
+  }
+
+  .sidebarMenuBox p{
+      @apply font-bold text-xs p-2 uppercase tracking-wide
+  }
+
+  .sidebarMenuBox .ant-menu .ant-menu-item-selected{
+      background-color: #ffffff3a !important;
+    }
+
+  .sidebarMenuBox .ant-menu-submenu-title{
+      color: #fff !important;
+  }
+
 
   .main_container{
     @apply flex  md:flex-row bg-[#FFFFFF] h-[100vh] overflow-auto 
@@ -53,7 +97,8 @@
   }
 
   .breadcrumbs{
-    @apply uppercase text-sm font-bold text-gray-800
+    @apply uppercase text-xs font-bold text-gray-500 font-manrope
+    hover:bg-gray-800 hover:text-white p-1 rounded-sm duration-150
   }
 
   .sidebar_container{
@@ -67,18 +112,18 @@
 
   
   /* Track */
-  .sidebar::-webkit-scrollbar {
-    width:7px;
+  .sidebarContainer::-webkit-scrollbar {
+    width:10px;
   }
   
   /* Handle */
-  .sidebar::-webkit-scrollbar-thumb {
-    background-color: rgb(117, 144, 189) ;
+  .sidebarContainer::-webkit-scrollbar-thumb {
+    background-color: rgb(102, 119, 147) ;
   }
   
   /* Handle on hover */
-  .sidebar::-webkit-scrollbar-thumb:hover {
-    background-color:rgb(45, 97, 187);
+  .sidebarContainer::-webkit-scrollbar-thumb:hover {
+    background-color:rgb(127, 149, 184);
   }
   
 
@@ -114,7 +159,8 @@
     @apply  text-[25px]  mt-[10px] text-gray-800 hover:bg-gray-300 duration-300 rounded-md h-[40px] w-[40px] flex items-center justify-center
   }
   .sidebar .link{
-    @apply flex items-center pl-4 text-white w-[100%] p-[10px] rounded-[10px] gap-[10px] transition-all duration-500
+    @apply flex items-center pl-4 text-white w-[100%] p-[10px] 
+    rounded-[10px] gap-[10px] transition-all duration-500 text-sm
   }
 
 
@@ -122,8 +168,12 @@
     background: #FFFFFF4D;
   }
 
-  .map_container{
-    @apply border h-[87vh] w-[95%] rounded-md overflow-hidden relative cursor-pointer
+  .mapMainContainer{
+    @apply   bg-white pr-5
+  }
+
+  .mapContainer{
+    @apply border h-[87vh] w-full rounded-md overflow-hidden relative cursor-pointer
   }
 
   .button_map_wrapper{
@@ -165,11 +215,12 @@
 
 
   .dashboard_container{
-    @apply flex flex-col  overflow-y-auto pr-10 h-[100vh] 
+    @apply flex flex-col  overflow-y-auto p-5 h-[100vh] 
   }
 
   .cards_wrapper{
-    @apply flex flex-col gap-5  p-5 rounded-[10px]
+    box-shadow: 0 0 10px #00000027;
+    @apply flex flex-col gap-5  p-5 rounded-[10px]  
   }
 
   .card_box{
@@ -177,7 +228,7 @@
   }
 
   .card{
-    @apply w-[200px] lg:w-[300px]  relative  xl:w-[350px] xl:h-[150px] rounded-[10px]
+    @apply md:w-[40%] rounded-[10px] h-[150px]
      text-white p-5 hover:shadow-lg hover:shadow-[#000000] duration-200 cursor-pointer
   }
 

@@ -1,5 +1,5 @@
 import TableComponent from "./table/TableComponent";
-import "./Styles.css"
+import "./IncidentStyles.css"
 import GetToken from "../../components/token/GetToken";
 
 export default function Incident() {

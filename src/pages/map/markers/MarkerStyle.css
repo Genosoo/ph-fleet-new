@@ -373,7 +373,25 @@
     }
 
     .personnelImgBox img{
-        @apply w-[120px]
+        @apply w-[150px] h-[150px] rounded-full object-cover
+        border-2 border-[#404958] p-1
+    }
+
+    .personnelCardDetailWrapper{
+        @apply flex flex-col h-[300px] overflow-y-auto cursor-pointer
+    }
+
+    .personnelCardDetailWrapper::-webkit-scrollbar {
+        width:10px; /* Width of the scrollbar */
+    }
+    .personnelCardDetailWrapper::-webkit-scrollbar-track {
+        background: #f1f1f1; /* Color of the scrollbar track */
+    }
+    .personnelCardDetailWrapper::-webkit-scrollbar-thumb {
+        background: rgb(70, 70, 70); /* Color of the scrollbar handle */
+    }
+    .personnelCardDetailWrapper::-webkit-scrollbar-thumb:hover {
+        background: #555; /* Color of the scrollbar handle on hover */
     }
     .personnelCardDetail{
         @apply flex 
@@ -388,6 +406,11 @@
 
     .personnelCardDetail span p{
         @apply text-sm p-3
+    }
+
+    .personnelCard2{
+        @apply text-sm p-3
+     
     }
    
     .personnelCardDetail span p:nth-child(1),

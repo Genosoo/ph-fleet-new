@@ -4,7 +4,7 @@
 
 @layer components{
     .reportContainer{
-        @apply flex flex-col justify-start items-start gap-5 font-manrope
+        @apply flex flex-col justify-start items-start gap-5 font-manrope p-3
     }
 
     .reportBox1{

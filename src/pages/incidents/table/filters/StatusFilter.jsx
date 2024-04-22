@@ -6,13 +6,14 @@ import styled from 'styled-components';
 
 // Styled Select component
 const StyledSelect = styled(Select)`
-  font-family: "Manrope", "sans-serif" !important;
+font-family: "Manrope", "sans-serif" !important;
   font-weight: 600 !important;
   color: #404958 !important;
-  padding-right:30px !important;
+  font-size: 14px !important;
+  padding-right: 20px !important;
 
   .MuiOutlinedInput-notchedOutline { 
-    border: 1px solid #000 !important;
+    border: 1px solid #747474 !important;
     border-radius:6px !important;
    }
 
