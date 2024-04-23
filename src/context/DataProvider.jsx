@@ -4,8 +4,10 @@ import Loader from '../Loader';
 import axios from 'axios';
 import {
   apiMarineTrafficData,
+  apiMarineTrafficHistory,
   apiTrakSatData,
   apiSpiderTrakData,
+  apiSpiderTrakHistory,
   apiPersonnelData,
   apiVideoStream,
   apiOfficesData,
@@ -22,6 +24,7 @@ import {
   apiIncidentStatus,
   apiPersonnelHistory,
   apiReportIn,
+  apiTrakSatHistory
 } from '../api/api_urls';
 
 export const DataContext = createContext();
@@ -30,8 +33,11 @@ export default function DataProvider({ children }) {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState({
     marineTrafficData: [],
+    marineTrafficHistoryData: [],
     traksatData: [],
+    traksatHistoryData: [],
     spidertracksData: [],
+    spidertracksHistoryData: [],
     videoStreamData: [],
     officesData: [],
     vehiclesData: [],
@@ -66,8 +72,11 @@ export default function DataProvider({ children }) {
       try {
         const [
           marineTrafficResponse,
-          tracksatResponse,
+          marineTrafficHistoryResponse,
+          traksatResponse,
+          traksatHistoryResponse,
           spidertracksResponse,
+          spidertracksHistoryResponse,
           videoStreamResponse,
           officeResponse,
           vehiclesResponse,
@@ -92,8 +101,11 @@ export default function DataProvider({ children }) {
 
         ] = await Promise.all([
           axios.get(apiMarineTrafficData),
+          axios.get(apiMarineTrafficHistory),
           axios.get(apiTrakSatData),
+          axios.get(apiTrakSatHistory),
           axios.get(apiSpiderTrakData),
+          axios.get(apiSpiderTrakHistory),
           axios.get(apiVideoStream),
           axios.get(apiOfficesData),
           axios.get(apiVehiclesData),
@@ -118,8 +130,11 @@ export default function DataProvider({ children }) {
 
         setData({
           marineTrafficData: marineTrafficResponse.data.success,
-          traksatData: tracksatResponse.data.success,
+          marineTrafficHistoryData: marineTrafficHistoryResponse.data.success,
+          traksatData: traksatResponse.data.success,
+          traksatHistoryData: traksatHistoryResponse.data.success,
           spidertracksData: spidertracksResponse.data.success,
+          spidertracksHistoryData: spidertracksHistoryResponse.data.success,
           videoStreamData: videoStreamResponse.data.success,
           officesData: officeResponse.data.success,
           vehiclesData: vehiclesResponse.data.success,

@@ -357,15 +357,15 @@ export default function TableComponent({  csrfToken, rolesData, unitData, person
                             <StyledTableCell>{item?.personal_details?.mobile_number || "N/A"}</StyledTableCell>
                             <StyledTableCell>
                             <StyledSelect 
-                                      IconComponent={IoIosArrowDown}
-                                      name="groups" 
-                                      value={item.roles[0]}
-                                      onChange={(e) => handleUserAssignedChange(item.id, e.target.value)}
-                                  >
-                                      {rolesData.map((user, index) => (
-                                          <StyledMenuItem key={index} value={user.name}>{user.name}</StyledMenuItem>
-                                      ))}
-                                  </StyledSelect>
+                                IconComponent={IoIosArrowDown}
+                                name="groups" 
+                                value={item.roles[0]}
+                                onChange={(e) => handleUserAssignedChange(item.id, e.target.value)}
+                                >
+                                {rolesData.map((user, index) => (
+                                    <StyledMenuItem key={index} value={user.name}>{user.name}</StyledMenuItem>
+                                ))}
+                            </StyledSelect>
                             </StyledTableCell>
                             <StyledTableCell>{item?.personal_details?.rank_name || "N/A"}</StyledTableCell>
                             <StyledTableCell>

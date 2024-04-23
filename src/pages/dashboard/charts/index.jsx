@@ -6,9 +6,13 @@ import { DataContext } from "../../../context/DataProvider";
 import { useContext } from "react";
 
 export default function Charts() {
-  const {marineTrafficData,
+  const {
+    marineTrafficData,
+    marineTrafficHistoryData,
     traksatData, 
+    traksatHistoryData,
     spidertracksData, 
+    spidertracksHistoryData, 
    
   } = useContext(DataContext)
 
@@ -20,8 +24,11 @@ export default function Charts() {
             <div className="chartBox p-10">
               <BarChart 
                marineTrafficData={marineTrafficData}
+               marineTrafficHistoryData={marineTrafficHistoryData}
                traksatData={traksatData}
+               traksatHistoryData={traksatHistoryData}
                spidertracksData={spidertracksData}
+               spidertracksHistoryData={spidertracksHistoryData}
               />
             </div>
             <div className="chartBox p-10">

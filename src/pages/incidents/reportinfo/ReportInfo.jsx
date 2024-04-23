@@ -1,9 +1,9 @@
 import { useLocation} from 'react-router-dom';
 import { baseUrl } from '../../../api/api_urls';
 import noImage from '../../../assets/incident/no-incident-image.svg'
-import 'leaflet/dist/leaflet.css';
 import IncidentMarker from './IncidentsMarker';
 import { MapContainer, TileLayer } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
 
 
 export default function ReportInfo() {

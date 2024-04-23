@@ -1,0 +1,128 @@
+@tailwind components; 
+
+@layer components{
+
+    .vesselsInfoContainer{
+        @apply font-manrope flex p-2 gap-5 pb-10
+    }
+
+    .vesselsInfoWrapper{
+        @apply w-[50%] flex flex-col gap-5
+    }
+
+    .vesselsInfoWrapper2{
+        @apply w-[50%] flex flex-col gap-5
+    }
+
+
+    .vesselsImage{
+        @apply w-full mt-3 rounded-lg h-[400px] object-fill border-2 
+    }
+
+    .vesselsInfoHeader {
+        box-shadow: 0 0 10px #0000002a;
+        @apply flex  gap-3 flex-col w-full border rounded-lg p-3
+    }
+
+    .vesselsInfoHeaderBox {
+        @apply flex gap-3 
+    }
+
+
+    .vesselsInfoHeaderBox h2{
+        @apply font-bold text-xl pr-3 border-r-2
+    }
+
+    .vesselsInfoHeaderBox h3{
+        @apply font-medium text-sm pr-3 border-r-2
+    }
+
+    .vesselsInfoHeaderBox p{
+        @apply font-medium text-sm pr-3 
+    }
+
+    .vesselsInfoHeaderBox span {
+        @apply leading-4 flex items-center gap-3
+    }
+
+    
+
+    .vesselsInfoHeader .flag{
+        @apply w-[60px]  rounded-sm
+    }
+
+
+       
+    .vesselsInfoDetails{
+        box-shadow: 0 0 10px #0000002a;
+        @apply flex  gap-3 flex-col w-full border rounded-lg p-3
+    }
+
+    .vesselsInfoDetails h3{
+        @apply font-semibold text-base
+    }
+
+    .vesselsInfoDetails span{
+        @apply flex flex-col gap-1 pl-3
+    }
+
+    .vesselsInfoDetails span h4{
+        @apply text-sm font-medium
+    }
+
+    .vesselsInfoDetails span p{
+        @apply text-sm border p-2 rounded-md
+        font-bold
+    }
+
+    .vesselsInfoBox{
+        box-shadow: 0 0 10px #0000002a;
+        @apply flex  gap-3 flex-col w-full border rounded-lg p-3
+    }
+
+    .vesselsInfoBox h3{
+        @apply font-semibold text-base
+    }
+
+    .vesselsInfoBox span{
+        @apply p-3 flex flex-col gap-2
+    }
+
+    .vesselsInfoBox span h4{
+        @apply font-semibold text-sm
+    }
+
+    .vesselsInfoBox span p{
+        @apply text-sm 
+    }
+
+
+    .vesselsInfoBox2{
+        box-shadow: 0 0 10px #0000002a;
+        @apply flex  gap-3 flex-col w-full border rounded-lg p-3
+    }
+
+    .vesselsInfoBox2 h3{
+        @apply font-semibold text-base
+    }
+
+    .vesselsInfoMap{
+        @apply h-[400px] rounded-md overflow-hidden
+    }
+
+    .btnRoute{
+        @apply absolute z-[1000]  text-white p-2 m-2 rounded-sm font-manrope
+        font-bold bottom-2
+
+    }
+
+    .hideRoute {
+        @apply bg-red-500
+    }
+
+    .showRoute {
+        @apply bg-blue-500
+    }
+ 
+
+}

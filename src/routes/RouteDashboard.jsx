@@ -41,6 +41,8 @@ import UpdateReport from '../pages/incidents/update/UpdateReport';
 import ReportIn from '../pages/report-in/ReportIn';
 import { useContext } from "react";
 import { DataContext } from '../context/DataProvider';
+import MarineTrafficHistory from '../pages/map/history/MarineTrafficHistory';
+import VesselsInfo from '../pages/map/vesselsInfo/VesselsInfo';
 export default function RouteDashboard() {
   const { accountData } = useContext(DataContext)
 
@@ -62,6 +64,8 @@ export default function RouteDashboard() {
             <Route index element={<Dashboard  />} />
             <Route path='dashboard' element={<Dashboard />} />
             <Route path='map' element={<Map  />} />
+            <Route path='/map/marinetraffic-history' element={<MarineTrafficHistory />} />
+            <Route path='/map/marinetraffic-vessel-details' element={<VesselsInfo />} />
 
             <Route path='report-in' element={<ReportIn/>} />
             <Route path='reports' element={<Reports />} />

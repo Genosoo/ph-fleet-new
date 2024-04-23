@@ -21,6 +21,8 @@ export const StyledTableCell = styled(TableCell)`
   font-family: "Manrope", "sans-serif" !important;
   min-width: 220px;
   border: 0 !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
 `;
 
 export const StyledTable = styled(Table)`
@@ -69,6 +71,7 @@ export const StyledTableContainer = styled(TableContainer)`
 // Styled Select component
 export const StyledSelect = styled(Select)`
   font-family: "Manrope", "sans-serif" !important;
+  font-size: 12px !important;
   font-weight: 600 !important;
   .MuiOutlinedInput-notchedOutline {
     border-radius: 10px !important;

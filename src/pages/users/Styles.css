@@ -171,6 +171,7 @@
 
     .userStatusBox{
         @apply flex items-center justify-center gap-3 p-3 rounded-full
+        text-[12px]
     }
 
     .userStatusDot{

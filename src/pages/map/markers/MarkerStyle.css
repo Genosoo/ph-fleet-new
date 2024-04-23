@@ -201,11 +201,16 @@
     
 
     .mtBtnBox{
-        @apply flex flex-col p-3 mt-2 bg-white
+        @apply flex  p-3 mt-2 bg-white gap-3
+    }
+
+    .mtBtnBox .btnHistory{
+        @apply bg-gray-800 text-white text-sm text-center p-2 rounded-md
+        hover:bg-slate-400 duration-150
     }
 
     .mtBtnBox button{
-        @apply text-sm p-2 rounded-[5px] text-white 
+        @apply text-sm p-2 rounded-[5px] text-white  hover:bg-slate-400 duration-150
     }
 
     .stCardContainer{

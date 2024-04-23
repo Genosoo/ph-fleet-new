@@ -35,16 +35,6 @@ export default function Cards({
           }
           
    
-          
-        
-        // if (checkInData && checkInData.length) {
-        //     setCheckInCount(checkInData.length)
-        // }
-
-        // if (checkInData && checkInData.length) {
-        //     setCheckInCount(checkInData.length);
-        //     // setNoCheckInsToday(personnelCount - checkInCount);
-        //   }
 
 
       }, [marineTrafficData, trakSatData, spiderTrakData, personnelData, checkInData, officesData, vehiclesData]);

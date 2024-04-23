@@ -10,6 +10,7 @@ import MarineTrafficIconMeasure from './icon/MarineTrafficIcon';
 
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import { Link } from 'react-router-dom';
 
 const MarineTrafficMarker = ({ item, index, selectedMarineTraffic, handleMarineTrafficMarkerClick }) => {
   const [showSelectedInfo, setShowSelectedInfo] = useState(true);
@@ -183,6 +184,7 @@ const MarineTrafficMarker = ({ item, index, selectedMarineTraffic, handleMarineT
             </div>
 
             <div className='mtBtnBox'>
+              <Link className='btnHistory' to={'/fleet/map/marinetraffic-vessel-details'} state={{ vessel: item }}>Vessel Details</Link>
               <button className={`${measurementMode ? 'bg-[#EB5454]' : 'bg-[#0DB0E6]'}`} onClick={toggleMeasurementMode}>
                 {measurementMode ? 'Stop Measurement' : 'Start Measurement'}
               </button>
