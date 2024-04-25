@@ -8,10 +8,8 @@ import {TableBody, TableHead, TableRow, TablePagination,
    Dialog, DialogTitle, DialogActions, Button, Snackbar,
    Alert, TextField, FormControl, InputLabel, Select, MenuItem
   } from "@mui/material";
-import ButtonUpdate from "./buttons/ButtonUpdate";
 import ButtonDelete from "./buttons/ButtonDelete";
 import ButtonProfile from "./buttons/ButtonProfile";
-import ButtonAdd from "./buttons/buttonAdd";
 import Search from "./Search";
 import { DataContext } from "../../../context/DataProvider";
 import { apiVesselClass, apiVesselType, apiVesselStatus, apiVesselsData } from "../../../api/api_urls";
@@ -21,6 +19,8 @@ import noImage from '../../../assets/no-user-image.png'
 import {useDropzone} from 'react-dropzone'
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import ExportFiles from "./export/ExportFiles";
+import { FaPlus } from "react-icons/fa6";
+import { CiEdit } from "react-icons/ci";
 
 
 export default function TableComponent({ csrfToken }) {
@@ -112,7 +112,6 @@ export default function TableComponent({ csrfToken }) {
     setPage(0);
   };
 
-  const handleOpenAddForm = () => setOpenAddForm(true);
 
   const handleCloseAddForm = () => setOpenAddForm(false);
 
@@ -156,15 +155,6 @@ export default function TableComponent({ csrfToken }) {
   };
 
 
-  const handleOpenUpdateForm = (vessel) => {
-    setSelectedVessel(vessel);
-    setFormData({
-        vessel_name: vessel.vessel_name,
-        vessel_description: vessel.vessel_description,
-    });
-
-    setOpenUpdateForm(true);
-};
 
 const handleCloseUpdateForm = () => {
     setOpenUpdateForm(false);
@@ -281,7 +271,10 @@ const handleConfirmDeleteVessel = () => {
        </Snackbar>
        <div className="vesselsTableTopBox">
                 <Search handleSearchChange={handleSearchChange}/>
-                <ButtonAdd  handleOpenAddForm={handleOpenAddForm}/>
+                <Link className="btnAdd" to={"/fleet/vessels/add-vessel"}>
+                 <FaPlus className="icon" />
+                    Add Vessel
+                </Link>
             </div>
        <div className="vesselsTableContainer">
             <StyledTableContainer >
@@ -312,7 +305,9 @@ const handleConfirmDeleteVessel = () => {
                                 <Link to={'/fleet/vessels/profile'} state={{ vessel: item }} >
                                     <ButtonProfile />
                                 </Link>
-                                <ButtonUpdate item={item} handleOpenUpdateForm={handleOpenUpdateForm} />
+                                <Link  to={'/fleet/vessels/update-vessel'} state={{ vessel: item }}  className="btnUpdate">
+                                    <CiEdit/>
+                                </Link>
                                 <ButtonDelete  itemId={item.id}  handleOpenDeleteConfirmation={handleOpenDeleteConfirmation}/>
                             </StyledTableCell>
                         </TableRow>

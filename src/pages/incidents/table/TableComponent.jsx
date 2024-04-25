@@ -1,8 +1,7 @@
 /* eslint-disable react/prop-types */
 import { DataContext } from "../../../context/DataProvider"
 import {  useState, useEffect, useContext } from "react";
-import {  TableBody, TableHead, TableRow,  TablePagination,  Snackbar, 
-  Alert, } from "@mui/material";
+import {  TableBody, TableHead, TableRow,  TablePagination } from "@mui/material";
 import { StyledTableContainer, StyledTableCell, StyledTable,  StyledDialog , StyledSelect, StyledMenuItem } from "./Styled";
 import Search from "./Search";
 import ButtonAddReport from "./buttons/ButtonAddReport";
@@ -19,6 +18,7 @@ import SeverityFilter from "./filters/SeverityFilter";
 import ButtonResetFilter from "./buttons/ButtonResetFilter";
 import { IoIosArrowDown } from "react-icons/io";
 import ExportFiles from "./export/ExportFiles";
+import { message } from 'antd';
 
 
 export default function TableComponent({ csrfToken }) {
@@ -32,10 +32,6 @@ export default function TableComponent({ csrfToken }) {
    const [deleteIncidentId, setDeleteIncidentId] = useState(null);
    const username = accountData.username;
   
-
-   const [successMessage, setSuccessMessage] = useState("");
-   const [errorMessage, setErrorMessage] = useState("");
-   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
    const [selectedStatus, setSelectedStatus] = useState("All");
    const [selectedType, setSelectedType] = useState("All");
@@ -112,33 +108,12 @@ const handleDeleteIncident= async (id) => {
       const updatedIncidents = incidentData.filter(incident => incident.id !== id);
       updateIncidentData(updatedIncidents);
       setFilteredData(updatedIncidents);
-      showSuccessMessage("Incident deleted successfully!");
+      message.success("Incident deleted successfully!");
   } catch (error) {
       console.error('Error deleting Incident:', error.message);
-      showErrorMessage("Failed to delete Incident!");
+      message.error("Failed to delete Incident!");
   }
 };
-
-
-const handleSnackbarClose = () => setSnackbarOpen(false);
-
-  const showSuccessMessage = (message) => {
-    setSuccessMessage(message);
-    setSnackbarOpen(true);
-    setTimeout(() => {
-        setSuccessMessage("");
-        setSnackbarOpen(false);
-    }, 2000);
-  };
-
-  const showErrorMessage = (message) => {
-    setErrorMessage(message);
-    setSnackbarOpen(true);
-    setTimeout(() => {
-        setErrorMessage("");
-        setSnackbarOpen(false);
-    }, 2000);
-  };
 
 
   const handleSeverityChange = async (incidentId, newSeverity) => {
@@ -167,11 +142,10 @@ const handleSnackbarClose = () => setSnackbarOpen(false);
       updateIncidentData(updatedIncidents);
     
       // Show success message
-      showSuccessMessage("Successfully update incident severity.");
+      message.success("Successfully update incident severity.");
     } catch (error) {
-      // Handle errors
       console.error('Error updating status:', error.message);
-      showErrorMessage("Failed to update  incident  severity");
+      message.error("Failed to update  incident severity");
     }
   };
   
@@ -205,11 +179,11 @@ const handleSnackbarClose = () => setSnackbarOpen(false);
       updateIncidentData(updatedIncidents);
     
       // Show success message
-      showSuccessMessage("Successfully added assigned responder");
+      message.success("Successfully added assigned responder");
     } catch (error) {
       // Handle errors
       console.error('Error updating status:', error.message);
-      showErrorMessage("Failed to add assigned responder");
+      message.error("Failed to add assigned responder");
     }
   };
   
@@ -242,11 +216,11 @@ const handleSnackbarClose = () => setSnackbarOpen(false);
       updateIncidentData(updatedIncidents);
     
       // Show success message
-      showSuccessMessage("Successfully changed the status!");
+      message.success("Successfully changed the status!");
     } catch (error) {
       // Handle errors
       console.error('Error updating status:', error.message);
-      showErrorMessage("Failed to update status!");
+      message.error("Failed to update status!");
     }
   };
   
@@ -315,11 +289,7 @@ const formatDate = (dateString) => {
 
   return (
     <div className="incidentTableWrapper">
-        <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'right' }}  open={snackbarOpen} autoHideDuration={2000} onClose={handleSnackbarClose}>
-                <Alert variant="filled" onClose={handleSnackbarClose} severity={successMessage ? "success" : "error"}>
-                    {successMessage || errorMessage}
-                </Alert>
-       </Snackbar>
+
         <div className="incidentTableTopBox">
             <Search  handleSearchChange={handleSearchChange}/>
               

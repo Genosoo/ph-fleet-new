@@ -357,6 +357,8 @@ export default function MapComponent({
  
   const handleTrakSatMarkerClick = (trackData) => {
    setSelectedTrakSat(trackData)
+   console.log("Selected Traksat:", trackData)
+
   };
 
   const handlePersonnelMarkerClick = (personnelData) => {
@@ -366,6 +368,7 @@ export default function MapComponent({
 
    const handleVideoStreamMarkerClick = (videoStreamData) => {
     setSelectedVideoStream(videoStreamData)
+    console.log("Video Stream:", videoStreamData)
    };
 
 

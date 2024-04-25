@@ -9,12 +9,12 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import axios from 'axios'
 import { 
-  getCsrfToken,
   apiMarineTrafficSetting,
   apiTraksatSetting,
   apiSpiderTrakSetting,
   apiCarTrackSettings
  } from '../../api/api_urls';
+ import GetToken from '../../components/token/GetToken'
 
 export default function Settings() {
   const [marineTrafficApiKey, setMarineTrafficApikey] = useState('')
@@ -23,7 +23,7 @@ export default function Settings() {
   const [trakSatUrl, setTrakSatUrl] = useState('https://traksat.net/0259bb696454208dc7cfbdb2733c325e/list')
   // const [trakSatUrlDisplay, setTrakSatUrlDisplay] = useState('')
   const [spiderTrakUrl, setSpiderTrakUrl] = useState('https://apigw.spidertracks.io/go/aff/feed')
-  const [csrfToken, setCsrfToken] = useState('');
+  const csrfToken = GetToken()
   const [userName, setUserName] = useState('');
   const [userPassword, setUserPassword] = useState('');
 
@@ -38,20 +38,6 @@ export default function Settings() {
 
  
 
-  
-  useEffect(() => {
-    const getTheCsrfToken = async () => {
-      try {
-        const response = await axios.get(getCsrfToken);
-        setCsrfToken(response.data['csrf-token']);
-        console.log(response.data['csrf-token'])
-      } catch (error) {
-        console.log(error);
-      }
-    };
-  
-    getTheCsrfToken();
-  }, []); 
 
 
   const fetchData = async (url, stateSetter, additionalHeaders = {}) => {

@@ -70,7 +70,6 @@ export const StyledTable = styled(Table)`
 export const StyledTableContainer = styled(TableContainer)`
   overflow: auto;
   max-height: 700px;
-
   /* Style scrollbar */
   &::-webkit-scrollbar {
     width: 10px;
@@ -83,7 +82,6 @@ export const StyledTableContainer = styled(TableContainer)`
 
   &::-webkit-scrollbar-thumb {
     background: #404958;
-    border-radius: 10px;
   }
 
   &::-webkit-scrollbar-thumb:hover {

@@ -43,6 +43,14 @@ import { useContext } from "react";
 import { DataContext } from '../context/DataProvider';
 import MarineTrafficHistory from '../pages/map/history/MarineTrafficHistory';
 import VesselsInfo from '../pages/map/vesselsInfo/VesselsInfo';
+
+import UsersAddForm from '../pages/users/table/forms/AddForm';
+import UsersUpdateForm from '../pages/users/table/forms/UpdateForm';
+import PersonnelAddForm from '../pages/personnel/table/forms/AddForm';
+import PersonnelUpdateForm from '../pages/personnel/table/forms/UpdateForm';
+import VesselAddForm from '../pages/vessels/table/forms/AddForm';
+import VesselUpdateForm from '../pages/vessels/table/forms/UpdateForm';
+
 export default function RouteDashboard() {
   const { accountData } = useContext(DataContext)
 
@@ -77,13 +85,19 @@ export default function RouteDashboard() {
 
             <Route path='roles' element={<Roles />} />
             <Route path='users' element={<Users />} />
+            <Route path='/users/add-users' element={<UsersAddForm />} />
+            <Route path='/users/update-users' element={<UsersUpdateForm />} />
             <Route path='/users/profile' element={<UserProfile />} />
 
             <Route path='personnel' element={<Personnel />} />
             <Route path='/personnel/profile' element={<PersonnelProfile />} />
+            <Route path='/personnel/add-personnel' element={<PersonnelAddForm />} />
+            <Route path='/personnel/update-personnel' element={<PersonnelUpdateForm />} />
 
             <Route path='vessels' element={<Vessels />} />
             <Route path='/vessels/profile' element={<VesselsProfile />} />
+            <Route path='/vessels/add-vessel' element={<VesselAddForm />} />
+            <Route path='/vessels/update-vessel' element={<VesselUpdateForm/>} />
             
             
             <Route path='aircrafts' element={<Aircrafts />} />

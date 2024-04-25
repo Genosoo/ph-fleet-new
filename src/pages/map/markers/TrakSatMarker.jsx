@@ -79,7 +79,12 @@ const TrakSatMarker = ({ item, selectedTrakSat, showDescription, handleTrakSatMa
   };
 
   
-
+  const queryDateTime = selectedTrakSat && selectedTrakSat.query_date_time_id
+            ? new Date(selectedTrakSat.query_date_time_id)
+            : null;
+        const formattedDateTime = queryDateTime
+            ? `${queryDateTime.getFullYear()}-${(queryDateTime.getMonth() + 1).toString().padStart(2, '0')}-${queryDateTime.getDate().toString().padStart(2, '0')} ${queryDateTime.getHours().toString().padStart(2, '0')}:${queryDateTime.getMinutes().toString().padStart(2, '0')}:${queryDateTime.getSeconds().toString().padStart(2, '0')}.${queryDateTime.getMilliseconds().toString().padStart(3, '0')}`
+            : "N/A";
 
 
   useMapEvent('click', (e) => {
@@ -138,23 +143,35 @@ const TrakSatMarker = ({ item, selectedTrakSat, showDescription, handleTrakSatMa
                 <span className='span1'>
                    <p>Description</p>
                    <p>Group</p>
-                   <p>Last gps</p>
-                   <p>Lat</p>
-                   <p>Lon</p>
+                   <p>GPS State</p>
+                   <p>Last GPS</p>
+                   <p>Last Report</p>
+                   <p>Query Date/Time</p>
+                   <p>Coordinates</p>
                    <p>Speed kph</p>
+                   <p>Network</p>
+                   <p>ODO</p>
                    <p>Heading</p>
                    <p>Heading deg</p>
+                   <p>Alert</p>
+                   <p>Altitude Metres</p>
                 </span>
 
                 <span>
                   <p>{selectedTrakSat?.description || "N/A"}</p>
                   <p>{selectedTrakSat?.group || "N/A"}</p>
+                  <p>{selectedTrakSat?.gps_state || "N/A"}</p>
                   <p>{selectedTrakSat?.last_gps_gmt || "N/A"}</p>
-                  <p>{selectedTrakSat?.latitude || "N/A"}</p>
-                  <p>{selectedTrakSat?.longitude || "N/A"}</p>
+                  <p>{selectedTrakSat?.last_report_gmt || "N/A"}</p>
+                  <p>{formattedDateTime}</p>
+                  <p>{selectedTrakSat?.latitude || "N/A"}, {selectedTrakSat?.longitude || "N/A"}</p>
                   <p>{selectedTrakSat?.speed_kph || "N/A"}</p>
+                  <p>{selectedTrakSat?.network || "N/A"}</p>
+                  <p>{selectedTrakSat?.odo || "N/A"}</p>
                   <p>{selectedTrakSat?.heading || "N/A"}</p>
                   <p>{selectedTrakSat?.heading_deg || "N/A"}&#xb0;</p>
+                  <p>{selectedTrakSat?.alert || "N/A"}</p>
+                  <p>{selectedTrakSat?.altitude_metres || "N/A"}</p>
                 </span>
              
              

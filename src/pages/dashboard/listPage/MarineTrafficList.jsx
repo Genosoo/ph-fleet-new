@@ -10,6 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import { StyledTableCell } from "./StyledComponent";
 import { DataContext } from "../../../context/DataProvider";
 import { useContext } from "react";
+import ExportFiles from "./export/ExportFiles";
 
 
 export default function MarineTrafficList() {
@@ -47,7 +48,7 @@ export default function MarineTrafficList() {
     setPage(0);
   };
 
-  const handleRowClick =  async(mmsi,index) => {
+  const handleRowClick = async(mmsi,index) => {
     setExpandedRow(expandedRow === index ? null : index);
       try {
         setHistoryLoading(true);
@@ -67,8 +68,12 @@ export default function MarineTrafficList() {
   }
 
   return (
-    <div className="pr-20 font-lato">
-      <h2 className="text-xl font-semibold pb-3">Marine Traffic List</h2>
+    <div className="pr-20 font-lato ">
+
+      <h2 className="text-xl font-semibold pb-3 flex">
+        Marine Traffic List
+
+        </h2>
       <TextField
         label="Search"
         variant="outlined"
@@ -195,7 +200,9 @@ export default function MarineTrafficList() {
               ))}
             </TableBody>
           </Table>
+
         </TableContainer>
+
          <TablePagination
          rowsPerPageOptions={[10, 25, 50]}
          component="div"
@@ -205,7 +212,9 @@ export default function MarineTrafficList() {
          onPageChange={handleChangePage}
          onRowsPerPageChange={handleChangeRowsPerPage}
        />
+
      </>
+     <ExportFiles />
      
     </div>
   );

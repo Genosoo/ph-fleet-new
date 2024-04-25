@@ -3,7 +3,7 @@
 
 @layer components{
     .incidentContainer{
-        @apply font-manrope  pr-10
+        @apply font-manrope  pr-10 p-3
     }
 
     .incidentTableContainer button{
@@ -42,7 +42,7 @@
      }
 
      .btnExportBox{
-        @apply   -mt-32 absolute z-20  bg-white m-2 shadow-md rounded-md
+        @apply   -mt-44 absolute z-20  bg-white m-2 shadow-md rounded-md 
      }
 
      .btnExportBox button{

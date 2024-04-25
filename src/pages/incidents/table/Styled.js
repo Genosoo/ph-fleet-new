@@ -21,8 +21,7 @@ export const StyledTableCell = styled(TableCell)`
   align-items: center;
   justify-content: space-between;
   border: 0 !important;
-  font-size: 12px !important;
-  font-weight: 500 !important;
+  font-size: 14px !important;
 `;
 
 export const StyledTable = styled(Table)`
@@ -77,8 +76,7 @@ export const StyledTableContainer = styled(TableContainer)`
 // Styled Select component
 export const StyledSelect = styled(Select)`
   font-family: "Manrope", "sans-serif" !important;
-  font-size: 12px !important;
-  font-weight: 600 !important;
+  font-size: 14px !important;
   .MuiOutlinedInput-notchedOutline {
     border-radius: 10px !important;
     border: 0 !important;
@@ -88,7 +86,6 @@ export const StyledSelect = styled(Select)`
 // Styled MenuItem component
 export const StyledMenuItem = styled(MenuItem)`
   font-family: "Manrope", "sans-serif" !important;
-  font-weight: 600 !important;
   color: #404958 !important;
   border-bottom: 1px solid #eaeaec !important;
 `;

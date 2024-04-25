@@ -52,7 +52,7 @@ export default function Map() {
           pointColor="color"
         />
       ): (
-        <MapContent
+ <MapContent
         marineTrafficData={marineTrafficData}
         tracksatData={traksatData}
         spiderTrakData={spidertracksData}

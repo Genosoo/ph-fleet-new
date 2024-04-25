@@ -21,8 +21,7 @@ export const StyledTableCell = styled(TableCell)`
   font-family: "Manrope", "sans-serif" !important;
   min-width: 220px;
   border: 0 !important;
-  font-size: 12px !important;
-  font-weight: 500 !important;
+  font-size: 14px !important;
 `;
 
 export const StyledTable = styled(Table)`
@@ -71,7 +70,7 @@ export const StyledTableContainer = styled(TableContainer)`
 // Styled Select component
 export const StyledSelect = styled(Select)`
   font-family: "Manrope", "sans-serif" !important;
-  font-size: 12px !important;
+  font-size: 14px !important;
   font-weight: 600 !important;
   .MuiOutlinedInput-notchedOutline {
     border-radius: 10px !important;
@@ -101,6 +100,7 @@ export const StyledFormControl = styled(FormControl)`
 `;
 
 export const StyledTextField = styled(TextField)`
+  font-family: "Manrope", "sans-serif" !important;
   .MuiOutlinedInput-root {
     border-radius: 10px !important;
     font-family: "Manrope", "sans-serif" !important;

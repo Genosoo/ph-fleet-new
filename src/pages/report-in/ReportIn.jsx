@@ -4,11 +4,12 @@ import { MapContainer, TileLayer, Marker} from 'react-leaflet';
 import L from 'leaflet';
 // import MapSelection from './MapSelection';
 import { useState, useEffect, useRef, useContext} from "react";
-import { TextField, Snackbar, Alert, } from "@mui/material";
+import { TextField } from "@mui/material";
 import { StyledButtonAdd } from "./Styled";
 import markerIcon from '../../assets/incident/location.svg';
 import GetToken from "../../components/token/GetToken";
 import { DataContext } from "../../context/DataProvider";
+import { message } from 'antd';
 
 const customIcon = new L.Icon({
     iconUrl: markerIcon,
@@ -31,12 +32,6 @@ export default function ReportIn() {
         glongitude:"",
         address: "",
     });  
-
-    // const accountID =  accountData.personal_details.user;
-    const [successMessage, setSuccessMessage] = useState("");
-    const [errorMessage, setErrorMessage] = useState("");
-    const [snackbarOpen, setSnackbarOpen] = useState(false);
-
 
     console.log("Check In:", checkInData)
 
@@ -163,37 +158,16 @@ export default function ReportIn() {
                 glongitude: '',
                 glatitude: '',
             });
-            showSuccessMessage(response.data.success);
+            message.success(response.data.success);
         } catch (error) {
             console.error('Error adding user:', error);
-            showErrorMessage("Failed to add report!");
+            message.error("Failed to add report in!");
         }
     };
 
 
     
 
-    const handleSnackbarClose = () => {
-        setSnackbarOpen(false);
-    };
-
-    const showSuccessMessage = (message) => {
-        setSuccessMessage(message);
-        setSnackbarOpen(true);
-        setTimeout(() => {
-            setSuccessMessage("");
-            setSnackbarOpen(false);
-        }, 2000);
-    };
-
-    const showErrorMessage = (message) => {
-        setErrorMessage(message);
-        setSnackbarOpen(true);
-        setTimeout(() => {
-            setErrorMessage("");
-            setSnackbarOpen(false);
-        }, 2000);
-    };
 
 
 
@@ -235,11 +209,7 @@ export default function ReportIn() {
       
   return (
     <div className="pr-10">
-          <Snackbar  anchorOrigin={{ vertical: 'top', horizontal: 'right' }}  open={snackbarOpen} autoHideDuration={2000} onClose={handleSnackbarClose}>
-                <Alert variant="filled" onClose={handleSnackbarClose} severity={successMessage ? "success" : "error"}>
-                    {successMessage || errorMessage}
-                </Alert>
-            </Snackbar>
+
         <div className="reportAddBox3">
                <span className="">
                <p  className="text-sm font-manrope">Report In Address</p>

@@ -1,4 +1,5 @@
-import { TextField,  Select, MenuItem, FormControl,InputLabel, Snackbar, Alert, } from "@mui/material";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { TextField,  Select, MenuItem, FormControl,InputLabel, } from "@mui/material";
 import { useState, useContext, useRef, useEffect } from "react";
 import { DataContext } from "../../../context/DataProvider";
 import { apiIncident } from "../../../api/api_urls";
@@ -10,6 +11,8 @@ import L from 'leaflet';
 import MapSelection from './MapSelection';
 import imageDisplay from '../../../assets/incident/image-display.svg'
 import { StyledButtonAdd, StyledFormControlLabel, StyledCheckbox } from "./Styled";
+import { message } from 'antd';
+
 
 // Define a custom icon
 const customIcon = new L.Icon({
@@ -29,11 +32,6 @@ export default function AddReport() {
         severity:1,
         type:""
     });  
-
-    const [successMessage, setSuccessMessage] = useState("");
-    const [errorMessage, setErrorMessage] = useState("");
-    const [snackbarOpen, setSnackbarOpen] = useState(false);
-
     const mapRef = useRef(null);
     const initialZoom = 5;
 
@@ -109,31 +107,26 @@ export default function AddReport() {
       };
       
 
-
-    const handleSnackbarClose = () => {
-        setSnackbarOpen(false);
-    };
-
-    const showSuccessMessage = (message) => {
-        setSuccessMessage(message);
-        setSnackbarOpen(true);
-        setTimeout(() => {
-            setSuccessMessage("");
-            setSnackbarOpen(false);
-        }, 2000);
-    };
-
-    const showErrorMessage = (message) => {
-        setErrorMessage(message);
-        setSnackbarOpen(true);
-        setTimeout(() => {
-            setErrorMessage("");
-            setSnackbarOpen(false);
-        }, 2000);
-    };
-
-
     const handleAddReport = async () => {
+
+        // Check if the password field is empty
+        if (formData.incident_details.trim() === "" ) {
+          message.error('Please add incident description');
+          return;
+      }
+
+          // Check if the password field is empty
+          if (formData.type === "" ) {
+            message.error('Please select incident type');
+            return;
+        }
+
+             // Check if the password field is empty
+             if (formData.address_incident.trim() === "" ) {
+              message.error('Please select or use current location for incident address');
+              return;
+          }
+
         try {
           if (formData.incident_image) {
             const response = await axios.post(apiIncident, formData, {
@@ -153,15 +146,14 @@ export default function AddReport() {
                 glatitude_reported: '',
                 incident_image: null,
             });
-            showSuccessMessage("Report added successfully!");
-
+         message.success("Incident added successfully!");
         } else {
-            showErrorMessage("Please select an image .");
+          message.error("Please select an image");
         }
           
         } catch (error) {
             console.error('Error adding report:', error);
-            showErrorMessage("Failed to add report!");
+            message.error("Failed to add incident!");
         }
     };
 
@@ -207,6 +199,7 @@ export default function AddReport() {
               setShowDeviceMarker(false);
             } catch (error) {
               console.error('Error fetching address:', error);
+              message.error('Error fetching address:');
             }
           };
 
@@ -235,14 +228,17 @@ export default function AddReport() {
                     }));
                   } catch (error) {
                     console.error('Error fetching address:', error);
+                    message.error('Error fetching address');
                   }
                 },
                 (error) => {
                   console.error('Error getting user location:', error);
+                  message.error('Error getting user location');
                 }
               );
             } else {
               console.error('Geolocation is not supported by this browser.');
+              message.error('Geolocation is not supported by this browser.');
             }
           };
 
@@ -265,12 +261,6 @@ export default function AddReport() {
 
   return (
     <div className="reportAddContainer">
-        <Snackbar  anchorOrigin={{ vertical: 'top', horizontal: 'right' }}  open={snackbarOpen} autoHideDuration={2000} onClose={handleSnackbarClose}>
-                <Alert variant="filled" onClose={handleSnackbarClose} severity={successMessage ? "success" : "error"}>
-                    {successMessage || errorMessage}
-                </Alert>
-            </Snackbar>
-
            <div className="reportAddBoxWrapper">
              <div className="reportAddBox"> 
                  <div className="reportAddBoxInputs">

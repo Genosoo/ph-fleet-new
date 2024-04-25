@@ -5,8 +5,9 @@ import { useRef, useState } from 'react';
 import { Marker,  useMap } from 'react-leaflet';
 import Draggable from 'react-draggable';
 import { IoCloseSharp } from "react-icons/io5";
-import Iframe from 'react-iframe'
-import { videoStreamUrl } from '../../../api/api_urls';
+// import Iframe from 'react-iframe'
+// import { videoStreamUrl } from '../../../api/api_urls';
+import AntMedia from './AntMedia';
 
 export default function VideoStreamMarker({ item, index, selectedVideoStream, handleVideoStreamMarkerClick}) {
     
@@ -14,7 +15,6 @@ export default function VideoStreamMarker({ item, index, selectedVideoStream, ha
   const prevZoomRef = useRef(9);
   const startPosition = [item.glatitude, item.glongitude];
   const [showSelectedInfo, setShowSelectedInfo] = useState(true);
-  const [isPlaying, setIsPlaying] = useState(false); // State to track video playing
 
   const handleMarkerClick = () => {
     setShowSelectedInfo(true);
@@ -32,9 +32,7 @@ export default function VideoStreamMarker({ item, index, selectedVideoStream, ha
     map.setView([item.glatitude, item.glongitude], prevZoomRef.current);
   };
 
-  const handleToggleVideo = () => {
-    setIsPlaying(!isPlaying); // Toggle video playing state
-  }
+
 
   const handleDrag = (e) => {
     e.stopPropagation();
@@ -65,16 +63,39 @@ export default function VideoStreamMarker({ item, index, selectedVideoStream, ha
               <h3>Video Stream</h3></div>
               <IoCloseSharp className='videoClose' onClick={() => handleCloseButtonClick()} />
             </div>
-
-            {isPlaying ?  <Iframe url={`${videoStreamUrl}${item.username}`} id="myId" className="w-[400px] h-[200px]"/> : null}
+            <AntMedia  streamKey={item.stream_key} />
+            {/* {<Iframe url={`${videoStreamUrl}WebRTCApp/play.html?id=${item.stream_key}`} id="myId" className="w-[550px] h-[400px]"/>} */}
            <div className="videoCardDetail">
             <span>
              <p>Username: </p>
-             <h3>{selectedVideoStream.username}</h3>
+             <h3>{selectedVideoStream?.username || "N/A"}</h3>
             </span>
-            <button onClick={handleToggleVideo} className={`videoCardBtn ${isPlaying ? 'bg-[#EB5454]' : 'bg-[#0DB0E6]'}`}>
-              {isPlaying ? 'Pause Video' : 'Play Video'}
-            </button>
+
+            <span>
+              <p>Accuracy: </p>
+              <h3>{selectedVideoStream?.accuracy || "N/A"}</h3>
+            </span>
+
+            <span>
+              <p>Altitude: </p>
+              <h3>{selectedVideoStream?.altitude || "N/A"}</h3>
+            </span>
+
+            <span>
+              <p>Heading: </p>
+              <h3>{selectedVideoStream?.heading || "N/A"}</h3>
+            </span>
+
+            <span>
+              <p>Provider: </p>
+              <h3>{selectedVideoStream?.provider || "N/A"}</h3>
+            </span>
+
+            <span>
+              <p>Coordinates: </p>
+              <h3>{selectedVideoStream?.glatitude}, {selectedVideoStream?.glongitude}</h3>
+            </span>
+
            </div>
           </div>
         </Draggable>

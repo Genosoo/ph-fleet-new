@@ -36,6 +36,7 @@ export default function DataProvider({ children }) {
     marineTrafficHistoryData: [],
     traksatData: [],
     traksatHistoryData: [],
+    traksatLatestData: [],
     spidertracksData: [],
     spidertracksHistoryData: [],
     videoStreamData: [],

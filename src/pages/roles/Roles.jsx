@@ -18,6 +18,7 @@ import RoleForm from "./RolesForm"; // Assuming RoleForm is in the same director
 import './Styles.css'
 import { StyledTableContainer, StyledTable, StyledTableCell, StyledDialog } from "./Styled";
 import { PiWarningLight } from "react-icons/pi";
+import { message } from 'antd';
 
 
 export default function Roles() {
@@ -69,10 +70,13 @@ export default function Roles() {
       // Fetch updated roles data after creating a role
       const updatedRolesResponse = await axios.get(apiRoles);
       setRolesData(updatedRolesResponse.data.success);
+      message.success("Successfully created role")
 
       setOpenDialog(false);
     } catch (error) {
       console.log(error);
+      message.error("Failed to create role")
+
     }
   };
 
@@ -95,11 +99,14 @@ export default function Roles() {
       // Fetch updated roles data after updating a role
       const updatedRolesResponse = await axios.get(apiRoles);
       setRolesData(updatedRolesResponse.data.success);
+      message.success("Successfully updated role")
 
       setUpdateDialog(false);
       setSelectedRole(null);
     } catch (error) {
       console.log(error);
+      message.error("Failed to update role")
+
     }
   };
 
@@ -123,8 +130,11 @@ export default function Roles() {
 
         // Update the rolesData state to exclude the deleted role
         setRolesData((prevRolesData) => prevRolesData.filter((role) => role.id !== roleToDelete));
+      message.success("Successfully deleted role")
       } catch (error) {
         console.log(error);
+      message.success("Failed to deleted role")
+
       } finally {
         setRoleToDelete(null);
         setDeleteDialog(false);

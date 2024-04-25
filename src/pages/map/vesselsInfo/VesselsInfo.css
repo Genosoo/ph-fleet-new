@@ -81,7 +81,7 @@
     }
 
     .vesselsInfoBox h3{
-        @apply font-semibold text-base
+        @apply font-bold text-base
     }
 
     .vesselsInfoBox span{
@@ -89,11 +89,11 @@
     }
 
     .vesselsInfoBox span h4{
-        @apply font-semibold text-sm
+        @apply font-bold text-sm
     }
 
     .vesselsInfoBox span p{
-        @apply text-sm 
+        @apply text-sm font-medium
     }
 
 

@@ -4,6 +4,7 @@ import CsvDownloader from 'react-csv-downloader';
 import { PDFDownloadLink, Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 import { DataContext } from '../../../../context/DataProvider';
 import { GoDownload } from "react-icons/go";
+import * as XLSX from 'xlsx';
 
 
 const styles = StyleSheet.create({
@@ -55,6 +56,14 @@ export default function ExportFiles() {
   const { usersData } = useContext(DataContext);
   const [exportOptionsVisible, setExportOptionsVisible] = useState(false);
 
+  const generateXLSXData = () => {
+    const worksheet = XLSX.utils.json_to_sheet(generateCSVData());
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Users Data');
+    const xlsxBuffer = XLSX.write(workbook, { type: 'buffer' });
+    return xlsxBuffer;
+  };
+  
   const formatDate = (dateString) => {
     const options = { 
       year: 'numeric', 
@@ -131,7 +140,7 @@ export default function ExportFiles() {
 {exportOptionsVisible && (
         <div className='btnExportBox'>
           <CsvDownloader
-            filename="usersRecords.csv"
+            filename="users.csv"
             separator=","
             datas={generateCSVData()}
             wrapColumnChar={'"'}
@@ -139,9 +148,21 @@ export default function ExportFiles() {
             <button>Export as CSV</button>
           </CsvDownloader>
           
-          <PDFDownloadLink document={generatePDFData()} fileName="usersRecords.pdf">
+          <PDFDownloadLink document={generatePDFData()} fileName="users.pdf">
             <button>Export as PDF</button>
           </PDFDownloadLink>
+
+          <button onClick={() => {
+                const xlsxData = generateXLSXData();
+                const blob = new Blob([xlsxData], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'users.xlsx';
+                a.click();
+                URL.revokeObjectURL(url);
+              }}>Export as XLSX
+            </button>
         </div>
       )}
      <button className='btnExport' onClick={toggleExportOptions}>

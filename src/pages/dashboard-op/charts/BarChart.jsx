@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react';
 import { Bar } from 'react-chartjs-2';
@@ -52,7 +51,12 @@ export default function Barchart({ traksatData, marineTrafficData, spidertracksD
   const [counts, setCounts] = useState([]);
 
   useEffect(() => {
-    setCounts(countItemsByDay(eval(selectedDataset)));
+    const dataMap = {
+      traksatData,
+      marineTrafficData,
+      spidertracksData
+    };
+    setCounts(countItemsByDay(dataMap[selectedDataset]));
   }, [selectedDataset, traksatData, marineTrafficData, spidertracksData]);
 
   const handleDatasetChange = (event) => {
@@ -65,7 +69,7 @@ export default function Barchart({ traksatData, marineTrafficData, spidertracksD
       {
         label: 'Count',
         fill: "start",
-        backgroundColor: (context ) => {
+        backgroundColor: (context) => {
           const ctx = context.chart.ctx;
           const gradient = ctx.createLinearGradient(50, 0, 0, 200);
           gradient.addColorStop(0, "#86705E");
@@ -88,26 +92,24 @@ export default function Barchart({ traksatData, marineTrafficData, spidertracksD
       legend: {
         display: false // Disable legend
       },
-      
     }
   };
-  
 
   return (
     <div className="bar_chart_box">
-        <StyledSelect value={selectedDataset} onChange={handleDatasetChange}>
-      <BoldMenuItem value="traksatData" isSelected={selectedDataset === 'traksatData'}>
-        Traksat Bar Graph By Day (10-days)
-      </BoldMenuItem>
-      <BoldMenuItem value="marineTrafficData" isSelected={selectedDataset === 'marineTrafficData'}>
-        MarineTraffic Bar Graph By Day (10-days)
-      </BoldMenuItem>
-      <BoldMenuItem value="spidertracksData" isSelected={selectedDataset === 'spidertracksData'}>
-        Spidertracks Bar Graph By Day (10-days)
-      </BoldMenuItem>
-    </StyledSelect>
+      <StyledSelect value={selectedDataset} onChange={handleDatasetChange}>
+        <BoldMenuItem value="traksatData" isSelected={selectedDataset === 'traksatData'}>
+          Traksat Bar Graph By Day (10-days)
+        </BoldMenuItem>
+        <BoldMenuItem value="marineTrafficData" isSelected={selectedDataset === 'marineTrafficData'}>
+          MarineTraffic Bar Graph By Day (10-days)
+        </BoldMenuItem>
+        <BoldMenuItem value="spidertracksData" isSelected={selectedDataset === 'spidertracksData'}>
+          Spidertracks Bar Graph By Day (10-days)
+        </BoldMenuItem>
+      </StyledSelect>
 
-      <Bar data={data} options={options}  />
+      <Bar data={data} options={options} />
     </div>
   );
 }

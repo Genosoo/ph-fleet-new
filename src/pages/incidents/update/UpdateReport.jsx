@@ -4,12 +4,13 @@ import { apiIncident, baseUrl } from '../../../api/api_urls';
 import { DataContext } from '../../../context/DataProvider';
 import { useContext, useState, useRef, useEffect } from 'react';
 import axios from 'axios';
-import { TextField,  Select, MenuItem, FormControl,InputLabel, Snackbar, Alert, } from "@mui/material";
+import { TextField,  Select, MenuItem, FormControl,InputLabel } from "@mui/material";
 import { MapContainer, TileLayer, Marker} from 'react-leaflet';
 import MapSelection from '../addIncident/MapSelection';
 import markerIcon from '../../../assets/incident/location.svg';
 import L from 'leaflet';
 import { StyledButtonAdd, StyledFormControlLabel, StyledCheckbox } from "./Styled";
+import { message } from 'antd';
 
 
 const customIcon = new L.Icon({
@@ -38,10 +39,6 @@ export default function UpdateReport() {
   });
   const mapRef = useRef(null);
   const initialZoom = 5;
-
-  const [successMessage, setSuccessMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [showDeviceMarker, setShowDeviceMarker] = useState(true);
     const [deviceLocation, setDeviceLocation] = useState(null);
     const [locationChoice, setLocationChoice] = useState('map');
@@ -176,27 +173,6 @@ export default function UpdateReport() {
       
 
 
-  const handleSnackbarClose = () => {
-      setSnackbarOpen(false);
-  };
-
-  const showSuccessMessage = (message) => {
-      setSuccessMessage(message);
-      setSnackbarOpen(true);
-      setTimeout(() => {
-          setSuccessMessage("");
-          setSnackbarOpen(false);
-      }, 2000);
-  };
-
-  const showErrorMessage = (message) => {
-      setErrorMessage(message);
-      setSnackbarOpen(true);
-      setTimeout(() => {
-          setErrorMessage("");
-          setSnackbarOpen(false);
-      }, 2000);
-  };
     const handleFormChange = (e) => {
         const { name, value } = e.target;
         if (name.includes(".")) {
@@ -230,10 +206,10 @@ export default function UpdateReport() {
               return incident;
           });
           updateIncidentData(updatedIncidents);
-          showSuccessMessage("User updated successfully!");
+          message.success("Incident updated successfully!");
       } catch (error) {
           console.error('Error updating user:', error);
-          showErrorMessage("Failed to update user!");
+          message.error("Failed to update incident!");
       }
   };
 
@@ -268,12 +244,6 @@ export default function UpdateReport() {
 
   return (
     <div className='updateReportContainer'>
-        <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'right' }}  open={snackbarOpen} autoHideDuration={2000} onClose={handleSnackbarClose}>
-                <Alert variant="filled" onClose={handleSnackbarClose} severity={successMessage ? "success" : "error"}>
-                    {successMessage || errorMessage}
-                </Alert>
-            </Snackbar>
-
             <span>
                   <p>Upload Image</p>
                   <div className="">

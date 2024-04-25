@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react';
 import { Bar } from 'react-chartjs-2';
@@ -25,12 +24,7 @@ const BoldMenuItem = styled(MenuItem)(({ isSelected }) => ({
   fontWeight: isSelected ? 'bold' : 'normal',
 }));
 
-export default function Barchart({  marineTrafficHistoryData,  spidertracksHistoryData, traksatHistoryData }) {
-  
-  console.log("Traksat History:", traksatHistoryData)
-  console.log("MarineTraffic History:", marineTrafficHistoryData)
-  console.log("Spidertracks History:", spidertracksHistoryData)
-
+export default function Barchart({ traksatData, marineTrafficData, spidertracksData }) {
   const countItemsByDay = (data) => {
     if (!data) return []; // Check if data is undefined or null
 
@@ -53,14 +47,17 @@ export default function Barchart({  marineTrafficHistoryData,  spidertracksHisto
     return Object.values(dayCounts);
   };
 
-  const [selectedDataset, setSelectedDataset] = useState('traksatHistoryData');
+  const [selectedDataset, setSelectedDataset] = useState('traksatData');
   const [counts, setCounts] = useState([]);
 
-  console.log("counts:", counts)
-
   useEffect(() => {
-    setCounts(countItemsByDay(eval(selectedDataset)));
-  }, [selectedDataset, traksatHistoryData, marineTrafficHistoryData,  spidertracksHistoryData]);
+    const dataMap = {
+      traksatData,
+      marineTrafficData,
+      spidertracksData
+    };
+    setCounts(countItemsByDay(dataMap[selectedDataset]));
+  }, [selectedDataset, traksatData, marineTrafficData, spidertracksData]);
 
   const handleDatasetChange = (event) => {
     setSelectedDataset(event.target.value);
@@ -72,7 +69,7 @@ export default function Barchart({  marineTrafficHistoryData,  spidertracksHisto
       {
         label: 'Count',
         fill: "start",
-        backgroundColor: (context ) => {
+        backgroundColor: (context) => {
           const ctx = context.chart.ctx;
           const gradient = ctx.createLinearGradient(50, 0, 0, 200);
           gradient.addColorStop(0, "#86705E");
@@ -95,26 +92,24 @@ export default function Barchart({  marineTrafficHistoryData,  spidertracksHisto
       legend: {
         display: false // Disable legend
       },
-      
     }
   };
-  
 
   return (
     <div className="bar_chart_box">
-        <StyledSelect value={selectedDataset} onChange={handleDatasetChange}>
-      <BoldMenuItem value="traksatHistoryData" isSelected={selectedDataset === 'traksatHistoryData'}>
-        Traksat Bar Graph By Day (10-days)
-      </BoldMenuItem>
-      <BoldMenuItem value="marineTrafficHistoryData" isSelected={selectedDataset === 'marineTrafficHistoryData'}>
-        MarineTraffic Bar Graph By Day (10-days)
-      </BoldMenuItem>
-      <BoldMenuItem value=" spidertracksHistoryData" isSelected={selectedDataset === ' spidertracksHistoryData'}>
-        Spidertracks Bar Graph By Day (10-days)
-      </BoldMenuItem>
-    </StyledSelect>
+      <StyledSelect value={selectedDataset} onChange={handleDatasetChange}>
+        <BoldMenuItem value="traksatData" isSelected={selectedDataset === 'traksatData'}>
+          Traksat Bar Graph By Day (10-days)
+        </BoldMenuItem>
+        <BoldMenuItem value="marineTrafficData" isSelected={selectedDataset === 'marineTrafficData'}>
+          MarineTraffic Bar Graph By Day (10-days)
+        </BoldMenuItem>
+        <BoldMenuItem value="spidertracksData" isSelected={selectedDataset === 'spidertracksData'}>
+          Spidertracks Bar Graph By Day (10-days)
+        </BoldMenuItem>
+      </StyledSelect>
 
-      <Bar data={data} options={options}  />
+      <Bar data={data} options={options} />
     </div>
   );
 }
