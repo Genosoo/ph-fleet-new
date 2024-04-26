@@ -1,0 +1,125 @@
+@tailwind components; 
+
+
+@layer components{
+
+    .vesselProfileContainer{
+        @apply p-5 font-manrope text-[#404958]
+        flex gap-5
+    }
+
+     .vesselProfileWrapper{
+        @apply w-full lg:w-[50%] flex flex-col gap-5
+     }
+
+    .vesselProfileBoxWrapper{
+        box-shadow: 0 0 10px #00000012;
+        @apply flex p-5 flex-col gap-4 rounded-lg border border-[#EAEAEC]
+    }
+
+    .vesselProfileBoxWrapper h2{
+        @apply font-bold text-base
+    }
+
+    .vesselProfileBox1{
+       @apply flex gap-5
+    }
+    .vesselProfileBox1 .ant-image-img{
+        @apply border-4 border-[#404958]
+        rounded-lg  w-[250px] h-[250px] object-cover
+    }
+
+    .vesselProfileBox1 span{
+        @apply flex flex-col items-start mt-5
+    }
+
+    .vesselProfileBox1 span h3{
+        @apply text-[2rem] font-bold
+    }
+
+    .vesselProfileBox1 span h4{
+        @apply text-sm font-semibold text-[#2ECC71]
+        bg-[#EBFAF1] p-3 px-10 rounded-full mt-5
+    }
+
+    .vesselProfileBox1 span p{
+        @apply text-lg font-semibold
+    }
+
+
+    
+    .vesselProfileBoxWrapper2{
+        box-shadow: 0 0 10px #00000012;
+        @apply flex p-5 flex-col gap-4 rounded-lg border border-[#EAEAEC]
+    }
+
+    .vesselProfileBoxWrapper2 h2{
+        @apply font-bold text-base
+    }
+
+    .vesselProfileBox2{
+        @apply flex flex-col gap-5
+    }
+
+
+    .vesselProfileImageCardFlex{
+        @apply flex gap-5
+    }
+
+    .vesselProfileImageCard{
+        @apply w-[50%]  rounded-lg  border border-[#EAEAEC]
+        text-center  overflow-hidden
+    }
+
+    .vesselProfileImageCard .ant-image-img{
+        @apply  border border-[#EAEAEC] h-full -mb-2
+    }
+
+    .vesselProfileImageCard p{
+        @apply p-2 text-sm border-b border-[#EAEAEC] font-medium
+    }
+
+
+    
+    
+    .vesselProfileBoxWrapper3{
+        box-shadow: 0 0 10px #00000012;
+        @apply flex p-5 flex-col gap-4 rounded-lg border border-[#EAEAEC]
+    }
+
+    .vesselProfileBoxWrapper3 h2{
+        @apply font-bold text-base
+    }
+
+    .vesselProfileBox3{
+        @apply flex flex-col gap-5
+    }
+
+    .vesselProfileBox3 span{
+        @apply flex flex-col gap-2
+    }
+
+    .vesselProfileBox3 span h3{
+        @apply font-medium text-sm 
+    }
+
+    .vesselProfileBox3 span p{
+        @apply bg-[#F9F9F9] p-3 rounded-lg
+        text-[#8E8E8E] font-semibold
+    }
+
+
+    .vesselProfileBoxWrapper4{
+        box-shadow: 0 0 10px #00000012;
+        @apply flex p-5 flex-col gap-4 rounded-lg border border-[#EAEAEC]
+    }
+
+    .vesselProfileBoxWrapper4 h2{
+        @apply font-bold text-base
+    }
+
+    .vesselProfileBox4{
+        @apply h-[400px] rounded-lg overflow-hidden
+    }
+  
+}

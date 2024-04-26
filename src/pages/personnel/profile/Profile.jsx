@@ -1,3 +1,4 @@
+import "./PersonnelProfile.css"
 import { useLocation} from 'react-router-dom';
 import { baseUrl } from '../../../api/api_urls';
 import noImage from '../../../assets/no-user-image.png'
@@ -6,6 +7,7 @@ import { MapContainer, TileLayer } from 'react-leaflet';
 import { DataContext } from '../../../context/DataProvider';
 import { useContext } from 'react';
 import PersonnelMarker from './PersonnelMarker';
+import { Image } from "antd";
 
 export default function Profile() {
   const { personnelHistory, checkInData } = useContext(DataContext)
@@ -62,7 +64,7 @@ const statusTextColors = {
           <div className='personnelProfileBox1'>
               <h1>Personnel Profile</h1>
               <div className='personnelProfileDetailBox1'>
-                  <img 
+                  <Image
                     src={`${baseUrl}${item?.personal_details?.image}`} alt="" 
                     onError={(e) => {  e.target.src = noImage;
                         }}/>

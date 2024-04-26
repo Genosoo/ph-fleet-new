@@ -19,6 +19,7 @@ export default function UpdateForm() {
   const [personnelRank, setPersonnelRank] = useState([])
   const location = useLocation();
   console.log({location });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const item = location.state.personnel;
 
@@ -72,7 +73,7 @@ export default function UpdateForm() {
         message.error('Please enter a valid mobile number starting with "09" and containing 11 digits.');
         return;
     }
-
+    setIsSubmitting(true)
     try {
         const updatedFormData = { ...formData, id: item.id };
         const response = await axios.put(apiUsers, updatedFormData, {
@@ -96,6 +97,8 @@ export default function UpdateForm() {
     } catch (error) {
         console.error('Error updating user:', error);
         message.error(error.response.data.error.username);
+    } finally {
+        setIsSubmitting(false);
     }
 };
 
@@ -301,7 +304,9 @@ export default function UpdateForm() {
           </StyledFormControl>
               </div>
 
-          <button className="usersFormBtnAdd" onClick={handleUpdateUser}>Update User</button>
+          <button className="usersFormBtnAdd" onClick={handleUpdateUser} disabled={isSubmitting}>
+            {isSubmitting ? "Updating Personnel..." : "Update Personnel"}
+          </button>
         </div>
 
        

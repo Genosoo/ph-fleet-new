@@ -50,7 +50,8 @@ import PersonnelAddForm from '../pages/personnel/table/forms/AddForm';
 import PersonnelUpdateForm from '../pages/personnel/table/forms/UpdateForm';
 import VesselAddForm from '../pages/vessels/table/forms/AddForm';
 import VesselUpdateForm from '../pages/vessels/table/forms/UpdateForm';
-
+import AircraftAddForm from '../pages/aircrafts/table/forms/AddForm';
+import AircraftUpdateForm from '../pages/aircrafts/table/forms/UpdateForm';
 export default function RouteDashboard() {
   const { accountData } = useContext(DataContext)
 
@@ -102,6 +103,10 @@ export default function RouteDashboard() {
             
             <Route path='aircrafts' element={<Aircrafts />} />
             <Route path='/aircrafts/profile' element={<AircraftProfile/>} />
+            <Route path='/aircrafts/add-aircraft' element={<AircraftAddForm />} />
+            <Route path='/aircrafts/update-aircraft' element={<AircraftUpdateForm/>} />
+            
+            
 
             <Route path='commercial-vessels' element={<VesselsCommercial />} />
             <Route path='commercial-aircrafts' element={<AircraftsCommercial />} />

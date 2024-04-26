@@ -1,0 +1,196 @@
+@tailwind components;
+
+@layer components {
+    
+    
+    .usersProfileMainContainer{
+        @apply font-manrope  pr-10
+    }
+
+    .usersProfileHeader{
+        @apply font-manrope pb-5 flex w-full items-center justify-end
+    }
+
+    .usersProfileHeader button{
+        @apply bg-[#86705E] text-white p-3 px-5
+         rounded-lg flex items-center gap-3 hover:bg-[#404958]
+         duration-150
+    }
+
+    .usersProfileContainer{
+        @apply font-manrope pb-10 flex gap-7  items-start
+    }
+
+
+    .usersProfileWrapper{
+        @apply flex flex-col gap-7 w-[50%]  
+    }
+
+    .usersProfileBox1{
+        box-shadow: 0 0 10px #00000012;
+        @apply border text-[#404958] p-5 rounded-xl 
+        flex flex-col gap-5 w-full
+    }
+
+    .usersProfileBox1 h1{
+        @apply text-lg font-bold
+    }
+
+    .usersProfileDetailBox1 {
+        @apply flex items-center gap-10
+    }
+
+    .usersProfileDetailBox1 .ant-image-img{
+        @apply w-[200px] h-[200px] rounded-full object-cover
+        border-2 p-2 border-[#404958]
+    }
+
+    .usersProfileDetailBox1 .ant-image-mask{
+        @apply rounded-full
+    }
+
+    .usersProfileDetailBox1 span{
+        @apply flex flex-col items-start
+    }
+
+    .usersProfileDetailBox1 span h2{
+        @apply font-bold text-[2rem]
+    }
+
+    .usersProfileDetailBox1 span h4{
+        @apply font-bold text-lg text-[#8E8E8E]
+    }
+
+    .usersProfileDetailBox1 span p{
+        @apply bg-green-200 text-center
+        rounded-full text-green-700 p-2 mt-3
+        text-sm px-5 font-bold
+    }
+
+    .usersProfileBox2{
+        box-shadow: 0 0 10px #00000012;
+        @apply border text-[#404958] p-5 rounded-xl 
+        flex flex-col gap-5   w-full
+    }
+    
+    .usersProfileBox2 h1{
+        @apply text-lg font-bold   
+    }
+
+    .usersProfileDetailBox2 {
+        @apply flex items-center gap-5
+        flex-col
+    }
+
+    .usersProfileDetailBox2 span{
+        @apply flex flex-col gap-1 w-full
+        
+    }
+
+    .usersProfileDetailBox2 span p{
+        @apply font-normal text-base
+    }
+    
+    .usersProfileDetailBox2 span h4{
+        @apply bg-[#F9F9F9] text-[#8E8E8E] 
+        font-bold p-2 text-base rounded-lg
+    }
+
+
+    .usersProfileWrapper2{
+        @apply flex flex-col gap-7 w-[50%]
+    }
+
+
+    .usersProfileBox3{
+        @apply border text-[#404958] p-5 rounded-xl w-full
+        flex flex-col gap-5 
+    }
+
+    .usersProfileBox3 h1{
+        @apply text-lg font-bold   
+    }
+
+
+    .usersProfileMapBox{
+        @apply w-full h-[500px] rounded-xl overflow-hidden
+    }
+
+
+
+    .usersProfileBox4{
+        @apply border text-[#404958] p-5 rounded-xl w-full
+        flex flex-col gap-5 
+    }
+
+    .usersProfileBox4 h1{
+        @apply text-lg font-bold   
+    }
+
+    .spanheader{
+        @apply flex  gap-5 bg-[#404958] text-white text-sm rounded-lg
+    }
+
+    .spanheader p{
+        @apply w-[200px] p-3 
+    }
+
+    .boxLogDetails{
+        @apply flex flex-col gap-5 h-[450px] overflow-y-auto pr-3 
+    }
+
+    .boxLogDetails::-webkit-scrollbar {
+            width: 10px;
+        height: 10px;
+      }
+    
+    .boxLogDetails::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+    
+    .boxLogDetails::-webkit-scrollbar-thumb {
+        background: #404958;
+        border-radius: 10px;
+      }
+    
+    .boxLogDetails::-webkit-scrollbar-thumb:hover {
+        background: #555;
+      }
+
+    .spanDetails{
+        @apply flex gap-5 border  border-[#DCDCDC] rounded-lg items-center
+    }
+
+    .spanDetails p{
+        @apply  py-5 w-[200px] p-3 
+    }
+
+    .statusLog{
+        @apply bg-green-300 rounded-full text-center text-green-800 m-3
+    }
+
+    .userStatusBox{
+        @apply flex items-center justify-center gap-3 p-3 rounded-full
+    }
+
+    .userStatusDot{
+        @apply w-[10px] h-[10px] rounded-full
+    }
+
+    .usersProfileStatusBox{
+        @apply flex items-center justify-center gap-3 p-2 text-sm px-6 rounded-full mt-4
+    }
+
+    .statusDot{
+        @apply w-[10px] h-[10px] rounded-full
+    }
+
+    .logStatusBox{
+        @apply flex items-center justify-center gap-3 p-2 text-sm px-6 rounded-full  w-[200px]
+    }
+
+    .no-check-in-marker{
+        @apply  bg-black 
+    }
+}
+

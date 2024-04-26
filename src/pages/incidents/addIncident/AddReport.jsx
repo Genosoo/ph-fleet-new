@@ -38,6 +38,7 @@ export default function AddReport() {
     const [showDeviceMarker, setShowDeviceMarker] = useState(true);
     const [deviceLocation, setDeviceLocation] = useState(null);
     const [locationChoice, setLocationChoice] = useState('map');
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
 
     useEffect(() => {
@@ -127,6 +128,7 @@ export default function AddReport() {
               return;
           }
 
+          setIsSubmitting(true)
         try {
           if (formData.incident_image) {
             const response = await axios.post(apiIncident, formData, {
@@ -154,6 +156,8 @@ export default function AddReport() {
         } catch (error) {
             console.error('Error adding report:', error);
             message.error("Failed to add incident!");
+        } finally{
+          setIsSubmitting(false)
         }
     };
 
@@ -308,8 +312,8 @@ export default function AddReport() {
                 
                  </div>
 
-                 <StyledButtonAdd variant="contained" onClick={handleAddReport}>
-                   Submit Report
+                 <StyledButtonAdd variant="contained" onClick={handleAddReport} disabled={isSubmitting}>
+                   {isSubmitting ? "Submitting Report..." : "Submit Report"}
                   </StyledButtonAdd>
 
                 </div>

@@ -1,5 +1,7 @@
+import "./VesselsProfile.css"
 import { useLocation} from 'react-router-dom';
-import { baseUrl } from '../../../api/api_urls';
+import { Image } from 'antd';
+import { baseUrl } from "../../../api/api_urls";
 import noImage from '../../../assets/no-image.png'
 import { MapContainer, TileLayer } from 'react-leaflet';
 import TrakSatMarker from './TrakSatMarker';
@@ -9,115 +11,132 @@ export default function Profile() {
   console.log({location});
 
   const item = location.state.vessel;
-
-
   return (
-    <div className='vesselsProfileContainer'>
-       <div className="vesselsProfileBox1">
-         <h4 className='vesselsProfileTitle'>Vessel Profile</h4>
-         <div className="vesselsProfileInitial">
-          {item && item.image_main ? ( // Check if personal_details and image are not null
-              <img className='vesselsProfilePhoto' src={`${baseUrl}${item.image_main}`} alt="" />
-            ) : (
-              <img className='vesselsProfilePhoto' src={noImage} alt="" />
-            )}
+    <div className="vesselProfileContainer">
+      <div className="vesselProfileWrapper">
+          <div className="vesselProfileBoxWrapper">
+            <h2>Vessel Profile</h2>
+            <div className="vesselProfileBox1">
+              <div className="vesselProfilePhotoBox">
+              {item && item.image_main ? (
+                          <Image src={`${baseUrl}${item.image_main}`} alt=""
+                          onError={(e) => {
+                            e.target.src = noImage; 
+                        }}  />
+                        ) : (
+                          <Image src={noImage} alt="" />
+                        )}
+                </div>
 
+                <span>
+                  <h3>{item?.vessel_name || "N/A"}</h3>
+                  <p>{item?.vessel_type_details?.type_name || "N/A"}</p>
+                  <h4>{item?.vessel_status_details?.status_name || "N/A"}</h4>
+                </span>
 
-            <div className="textBoxWrapper">
-              <div className='textBox1 textBox'>
-                  <span>
-                    <p>Name</p>
-                    <h3>{item?.vessel_name || "N/A"}</h3>
-                  </span>
-                  <span>
-                    <p>Class</p>
-                    <h3>{item?.vessel_class_details?.class_name || "N/A"}</h3>
-                  </span>
-                  <span>
-                    <p>Unit</p>
-                    <h3>{item?.unit_details?.unit_name || "N/A"}</h3>
-                  </span>
-              </div>
-              <div className='textBox3 textBox'>
-                  <span>
-                    <p>Type</p>
-                    <h3>{item?.vessel_type_details?.type_name || "N/A"}</h3>
-                  </span>
-                  <span>
-                    <p>Hull Number</p>
-                    <h3>{item?.hull_number || "N/A"}</h3>
-                  </span>
-                  <span>
-                    <p>Origin</p>
-                    <h3>{item?.origin || "N/A"}</h3>
-                  </span>
-              </div>
-              <div className='textBox3 textBox'>
-                  <span>
-                    <p>Capacity</p>
-                    <h3>{item?.capacity || "N/A"}</h3>
-                  </span>
-                  <span>
-                    <p>Status</p>
-                    <h3>{item?.vessel_status_details?.status_name || "N/A"}</h3>
-                  </span>
-                
-              </div>
             </div>
           </div>
-       </div>
+      
+         
 
-       <div className="vesselsProfileBox2">
-           <div className="profileCardBox1">
-               <h3 className="vesselsProfileTitle">Perspectives</h3>
-               <div className="profileBoxImg">
-                <div className="profileCardImg">
-                    {item && item.image_front ? ( // Check if personal_details and image are not null
-                      <img src={`${baseUrl}${item.image_front}`} alt="" />
-                    ) : (
-                      <img src={noImage} alt="" />
-                    )}
-                      <p>Front View</p> 
-                  </div>
-                  <div className="profileCardImg">
-                  {item && item.image_back ? ( // Check if personal_details and image are not null
-                      <img src={`${baseUrl}${item.image_back}`} alt="" />
-                    ) : (
-                      <img src={noImage} alt="" />
-                    )}
-                      <p>Back View</p> 
-                  </div>
-               </div>
-               <div className="profileBoxImg">
-                <div className="profileCardImg">
-                    {item && item.image_left ? ( // Check if personal_details and image are not null
-                      <img src={`${baseUrl}${item.image_left}`} alt="" />
-                    ) : (
-                      <img src={noImage} alt="" />
-                    )}
-                      <p>Left Side View</p> 
-                  </div>
-                  <div className="profileCardImg">
-                      {item && item.image_right ? ( // Check if personal_details and image are not null
-                      <img src={`${baseUrl}${item.image_right}`} alt="" />
-                    ) : (
-                      <img src={noImage} alt="" />
-                    )}
-                      <p>Right Side View</p> 
-                  </div>
-               </div>
-           </div>
-           <div className="profileCardBox2 px-5">
-              <h3 className="vesselsProfileTitle -ml-2">Location</h3>
 
-             <div className="profileMapBox">
+            <div className="vesselProfileBoxWrapper3">
+                <h2>Vessel Details</h2>
+                <div className="vesselProfileBox3">
+                  <span>
+                        <h3>Hull Number</h3>
+                        <p>{item?.hull_number || "N/A"}</p>
+                  </span>
+                  <span>
+                        <h3>Name</h3>
+                        <p>{item?.vessel_name || "N/A"}</p>
+                  </span>
+                  <span>
+                        <h3>Type</h3>
+                        <p>{item?.vessel_type_details?.type_name || "N/A"}</p>
+                  </span>
+                  <span>
+                        <h3>Class Name</h3>
+                        <p>{item?.vessel_class_details?.class_name || "N/A"}</p>
+                  </span>
+                  <span>
+                        <h3>Unit</h3>
+                        <p>{item?.unit_details?.unit_name || "N/A"}</p>
+                  </span>
+                  <span>
+                        <h3>Origin</h3>
+                        <p>{item?.origin || "N/A"}</p>
+                  </span>
+                  <span>
+                        <h3>Capacity</h3>
+                        <p>{item?.capacity || "N/A"}</p>
+                  </span>
+                  <span>
+                        <h3>Status</h3>
+                        <p>{item?.vessel_status_details?.status_name || "N/A"}</p>
+                  </span>
+                </div>
+            </div>
+
+      </div>
+
+
+      <div className="vesselProfileWrapper">
+
+      <div className="vesselProfileBoxWrapper2">
+                <h2>Perspectives</h2>
+                <div className="vesselProfileBox2">
+                    <div className="vesselProfileImageCardFlex">
+                    <div className="vesselProfileImageCard">
+                        <p>Front View</p>
+                        {item && item.image_front ? (
+                          <Image   src={`${baseUrl}${item.image_front}`} alt="" />
+                        ) : (
+                          <Image  src={noImage} alt="" />
+                        )}
+                    </div>
+
+                    <div className="vesselProfileImageCard">
+                        <p>Back View</p>
+                        {item && item.image_back ? (
+                          <Image src={`${baseUrl}${item.image_back}`} alt="" />
+                        ) : (
+                          <Image src={noImage} alt="" />
+                        )}
+                    </div>
+                    </div>
+                    
+                    <div className="vesselProfileImageCardFlex">
+                    <div className="vesselProfileImageCard">
+                        <p>Right Side View</p>
+                        {item && item.image_right ? (
+                          <Image   src={`${baseUrl}${item.image_right}`} alt="" />
+                        ) : (
+                          <Image  src={noImage} alt="" />
+                        )}
+                    </div>
+
+                    <div className="vesselProfileImageCard">
+                        <p>Left Side View</p>
+                        {item && item.image_left ? (
+                          <Image src={`${baseUrl}${item.image_left}`} alt="" />
+                        ) : (
+                          <Image src={noImage} alt="" />
+                        )}
+                    </div>
+                    </div>
+                </div>
+            </div>
+        <div className="vesselProfileBoxWrapper4">
+          <h2>Location</h2>
+             <div className="vesselProfileBox4">
              <MapContainer  zoomControl={false} center={[12.8797, 121.7740]} zoom={6} style={{ height: '100%', width: '100%' }}>
-                        <TileLayer url="http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&hl=en" subdomains={['mt0', 'mt1', 'mt2', 'mt3']} />
-                      <TrakSatMarker selectedVessel={item.traksat_details} />
+                <TileLayer url="http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&hl=en" subdomains={['mt0', 'mt1', 'mt2', 'mt3']} />
+               <TrakSatMarker selectedVessel={item.traksat_details} />
              </MapContainer>
              </div>
-           </div>
-       </div>
+        </div>
+      </div>
     </div>
   )
 }

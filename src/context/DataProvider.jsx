@@ -24,7 +24,8 @@ import {
   apiIncidentStatus,
   apiPersonnelHistory,
   apiReportIn,
-  apiTrakSatHistory
+  apiTrakSatHistory,
+  apiUnit
 } from '../api/api_urls';
 
 export const DataContext = createContext();
@@ -97,6 +98,7 @@ export default function DataProvider({ children }) {
           personnelHistoryResponse,
 
           reportInResponse,
+          unitResponse,
 
 
 
@@ -126,6 +128,7 @@ export default function DataProvider({ children }) {
           axios.get(apiPersonnelHistory),
           
           axios.get(apiReportIn),
+          axios.get(apiUnit),
 
         ]);
 
@@ -156,6 +159,7 @@ export default function DataProvider({ children }) {
           personnelHistory: personnelHistoryResponse.data.success,
 
           reportInData: reportInResponse.data.success,
+          unitData: unitResponse.data.success,
 
 
         });

@@ -17,6 +17,7 @@ export default function AddForm() {
   const [unitData, setUnitData] = useState([])
   const [personnelStatus, setPersonnelStatus] = useState([])
   const [personnelRank, setPersonnelRank] = useState([])
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [formData, setFormData] = useState({
     username: "",
@@ -80,7 +81,7 @@ export default function AddForm() {
         return;
     }
 
-
+    setIsSubmitting(true);
 
     try {
         const response = await axios.post(apiUsers, formData, {
@@ -113,6 +114,8 @@ export default function AddForm() {
     } catch (error) {
         console.error('Error adding user:', error);
         message.error(error.response.data.error.username);
+    } finally {
+        setIsSubmitting(false)
     }
 };
 
@@ -352,7 +355,9 @@ const handleImageChange = (e) => {
           </StyledFormControl>
               </div>
 
-          <button className="usersFormBtnAdd" onClick={handleAddUser}>Add User</button>
+          <button className="usersFormBtnAdd" onClick={handleAddUser} disabled={isSubmitting}>
+            {isSubmitting ? "Adding User..." : "Add User"}
+          </button>
         </div>
 
        

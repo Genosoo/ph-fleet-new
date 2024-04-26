@@ -49,7 +49,6 @@ export const StyledTableContainer = styled(TableContainer)`
 
   &::-webkit-scrollbar-thumb {
     background: #404958;
-    border-radius: 10px;
   }
 
   &::-webkit-scrollbar-thumb:hover {

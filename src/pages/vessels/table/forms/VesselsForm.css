@@ -5,20 +5,24 @@
 
     .vesselsFormContainer{
         @apply font-manrope flex gap-5 p-5 text-[#404958]
+        flex-col lg:flex-row
     }
 
     .vesselsFormWrapper{
-        @apply lg:w-[50%] flex flex-col gap-5
+        @apply w-full lg:w-[50%] flex flex-col gap-5
     }
 
     .vesselsFormWrapper2{
-        @apply lg:w-[50%]
+        @apply w-full lg:w-[50%]
     }
 
     .vesselsFormDetail{
         box-shadow: 0 0 10px #00000036;
         @apply flex  gap-4  bg-white p-5 rounded-lg
         flex-col
+    }
+    .vesselsFormDetail h2{
+        @apply font-bold text-base
     }
 
     .vesselsFormImgBox{
@@ -82,6 +86,10 @@
         flex-col
     }
 
+    .vesselsImageContainer h2{
+        @apply  font-bold text-base
+    }
+
     .vesselsImageWrapper{
         @apply flex gap-4 
     }
@@ -95,10 +103,39 @@
         @apply text-sm border-b  w-full text-center p-3 font-medium  
     }
 
+    .vesselsImageMainCard{
+        border: 2px dashed #8E8E8E;
+        @apply flex flex-col w-full h-[400px] rounded-lg 
+        items-center justify-center overflow-hidden relative mt-3 
+    }
+
+
+    .vesselsImageMainCard svg{
+        @apply text-[2rem] text-[#DCDCDC]
+    }
+
+    .vesselsImageMainCard p{
+        @apply font-manrope font-normal text-[#8E8E8E] text-sm
+
+    }
+
+    .vesselsImageMainCard p span{
+        @apply text-[#0DB0E6]
+    }
+
+    .vesselsImageMainCard img{
+        @apply absolute 
+    }
+
+
     .vesselsImageCard{
         border: 2px dashed #8E8E8E;
         @apply flex flex-col w-full h-[220px] rounded-lg 
         items-center justify-center overflow-hidden relative mt-3 
+        object-cover 
+    }
+    .vesselsImageCard img{
+        @apply object-contain
     }
 
     .vesselsImageCard svg{

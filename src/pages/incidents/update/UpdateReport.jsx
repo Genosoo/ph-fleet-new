@@ -43,6 +43,7 @@ export default function UpdateReport() {
     const [deviceLocation, setDeviceLocation] = useState(null);
     const [locationChoice, setLocationChoice] = useState('map');
     const [selectedImage, setSelectedImage] = useState(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
 
     const handleMapChange = async (location) => {
@@ -190,6 +191,7 @@ export default function UpdateReport() {
     };
 
     const handleUpdateUser = async () => {
+      setIsSubmitting(true)
       try {
           const updatedFormData = { ...formData, id: incidentId };
 
@@ -210,6 +212,8 @@ export default function UpdateReport() {
       } catch (error) {
           console.error('Error updating user:', error);
           message.error("Failed to update incident!");
+      } finally{
+        setIsSubmitting(false)
       }
   };
 
@@ -327,7 +331,9 @@ export default function UpdateReport() {
                       </MapContainer>
                     </div>   
             
-                <StyledButtonAdd onClick={handleUpdateUser}>Update Report</StyledButtonAdd>
+                <StyledButtonAdd onClick={handleUpdateUser} disabled={isSubmitting}>
+                  {isSubmitting ? "Updating Report" : "Update Report"}
+                </StyledButtonAdd>
     </div>
   )
 }

@@ -19,6 +19,7 @@ export default function UpdateForm() {
   const [personnelRank, setPersonnelRank] = useState([])
   const location = useLocation();
   console.log({location });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const item = location.state.user;
 
@@ -73,6 +74,7 @@ export default function UpdateForm() {
         return;
     }
 
+    setIsSubmitting(true)
     try {
         const updatedFormData = { ...formData, id: item.id };
         const response = await axios.put(apiUsers, updatedFormData, {
@@ -96,6 +98,8 @@ export default function UpdateForm() {
     } catch (error) {
         console.error('Error updating user:', error);
         message.error(error.response.data.error.username);
+    } finally{
+     setIsSubmitting(false)
     }
 };
 
@@ -301,7 +305,9 @@ export default function UpdateForm() {
           </StyledFormControl>
               </div>
 
-          <button className="usersFormBtnAdd" onClick={handleUpdateUser}>Update User</button>
+          <button className="usersFormBtnAdd" onClick={handleUpdateUser} disabled={isSubmitting}>
+            {isSubmitting ? "Updating User..." : "Update User"}
+          </button>
         </div>
 
        
