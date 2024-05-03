@@ -46,11 +46,11 @@ export default function Profile() {
 
        <div className="officesMapContainer">
          <h2>Location</h2>
-         <div className="officeMapBox">
+         <div className="officesMapBox">
          <MapContainer zoomControl={false}  center={[12.8797, 121.7740]} zoom={6} style={{ height: '100%', width: '100%'}}>
-              <TileLayer url="http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&hl=en" subdomains={['mt0', 'mt1', 'mt2', 'mt3']} />
-              <OfficeMarker selectedOffice={item} />
-            </MapContainer>
+            <TileLayer url="http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&hl=en" subdomains={['mt0', 'mt1', 'mt2', 'mt3']} />
+            <OfficeMarker selectedOffice={item} />
+         </MapContainer>
          </div>
        </div>
     </div>

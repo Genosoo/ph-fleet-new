@@ -1,15 +1,15 @@
-import TableComponent from "./table/TableComponent";
-import "./Styles.css"
-import GetToken from "../../components/token/GetToken";
+import OfficesTable from './table/OfficesTable';
+import './Offices.css'
+import ButtonAdd from './button/ButtonAdd';
+
 
 export default function Page() {
-  const csrfToken = GetToken()
-
   return (
-    <div className="officesContainer">
-       <TableComponent  
-        csrfToken={csrfToken}
-        />
+    <div className='officesContainer'>
+       <div className="officesHeader">
+          <ButtonAdd />
+       </div>
+        <OfficesTable />
     </div>
   )
 }

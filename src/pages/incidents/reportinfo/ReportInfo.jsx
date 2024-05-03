@@ -4,6 +4,7 @@ import noImage from '../../../assets/incident/no-incident-image.svg'
 import IncidentMarker from './IncidentsMarker';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import { Image } from 'antd';
 
 
 export default function ReportInfo() {
@@ -38,7 +39,7 @@ export default function ReportInfo() {
             <span>
                 <h3>Reporter</h3>
                 <p className='desc'>
-                <img
+                <Image
                     src={`${baseUrl}${reporter?.image}`}
                     alt="Reporter"
                     onError={(e) => {
@@ -58,7 +59,7 @@ export default function ReportInfo() {
         <div className="reportInfoWrapper2">
             <div className="reportInfoBox reportInfoBox3">
                 <h3>Incident Image</h3>
-                <img  src={`${baseUrl}${item.incident_image}`} alt="image"   onError={(e) => {
+                <Image  src={`${baseUrl}${item.incident_image}`} alt="image"   onError={(e) => {
                     e.target.src = noImage
                 }} />
             </div>

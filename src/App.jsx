@@ -5,11 +5,13 @@ import Layout from './layout/Layout'
 import PrivateRoute from './auth/privateRoute/PrivateRoute'
 import UnderConstruction from './pages/UnderConstruction'
 import MarineTrafficList from './pages/dashboard/listPage/MarineTrafficList';
+import Test from './Test';
 
 export default function App() {
 
   return (
     <Routes>
+      <Route path='/test' element={<Test />} />
       <Route path='/login' element={<Login />} />
       <Route path='' element={<Login />} />
       <Route element={<Layout />} >

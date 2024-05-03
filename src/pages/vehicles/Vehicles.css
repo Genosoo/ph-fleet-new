@@ -1,0 +1,106 @@
+@tailwind components;
+
+@layer components {
+    .vehiclesContainer{
+        @apply pr-10  flex flex-col gap-5  
+    }
+
+    .vehiclesHeader{
+      @apply flex items-end justify-end 
+    }
+
+    .vehiclesTableContainer{
+        @apply flex flex-col gap-5 
+    }
+
+    
+    .vehicleProfileContainer{
+        @apply font-manrope flex gap-5 p-6  flex-col lg:flex-row
+      }
+  
+      .vehicleDetails{
+          @apply  border  rounded-xl 
+          p-10 text-[#404958] flex flex-col
+          gap-5 shadow-lg w-[50%]
+      }
+  
+      .vehicleDetails h2{
+          @apply text-lg font-bold text-[#404958]
+      }
+  
+  
+      .vehicleDetails span h4{
+          @apply text-base
+      }
+  
+      .vehicleDetails span p {
+          @apply bg-[#F9F9F9] p-3 rounded-lg font-bold text-[#8E8E8E]
+      }
+
+      .vehicleMapContainer{
+        @apply border  rounded-xl p-10 flex flex-col
+        gap-5  shadow-lg w-[50%]
+        }
+
+        .vehicleMapContainer h2{
+            @apply font-bold text-lg text-[#404958]
+        } 
+
+        .vehicleMapBox{
+        @apply w-full lg:h-full rounded-lg overflow-hidden
+        h-[400px]
+    }
+
+      /*================================= VEHICLES FORM  ================================= */
+  
+      .vehiclesFormContainer{
+        @apply flex pb-10 mt-10 gap-5 flex-col font-manrope pr-10 text-[#404958]
+      }
+
+      .vehiclesFormAddBtn{
+        @apply bg-[#0DB0E6] text-white p-2 rounded-lg  hover:bg-[#404958] hover:text-white duration-150
+      }
+
+      .vehiclesFormFlex{
+        @apply flex gap-5 w-full flex-col lg:flex-row
+      }
+
+      .vehiclesFormWrapper{
+        box-shadow: 0 0 10px #00000012;
+        @apply lg:w-[50%]  flex flex-col gap-5 p-5 border  rounded-xl 
+      }
+
+      .vehiclesFormWrapper2{
+        box-shadow: 0 0 10px #00000012;
+        @apply lg:w-[50%]  flex flex-col gap-5 p-5 border  rounded-xl 
+      }
+
+
+      .vehiclesForm{
+        @apply flex flex-col w-[50%] p-5 gap-5
+      }
+
+      .vehiclesFormBox{
+        @apply flex flex-col gap-2 items-start
+      }
+
+      
+
+      .vehiclesFormBox2{
+        @apply flex gap-2 text-sm font-medium
+      }
+
+      .vehiclesFormBox span label{
+        @apply text-sm font-medium
+      }
+
+      .vehiclesFormMap{
+          @apply  rounded-lg overflow-hidden
+          h-[400px] w-full
+      }
+
+      .vehiclesFormCheckbox{
+        @apply flex gap-5
+      }
+
+}

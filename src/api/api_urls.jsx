@@ -61,6 +61,9 @@ export const apiTraksatSetting = `${baseUrl}/api/traksat_settings/`
 
 
 // SPIDERTRACKS
+export const apiSpidertracksData = `${baseUrl}/api/spidertracks_latest/`;
+
+
 export const apiSpiderTrakData = `${baseUrl}/api/spidertracks_latest/`;
 export const apiSpiderTrakHistory = `${baseUrl}/api/spidertracks_history/`
 export const apiLatestSpiderTrak = `${baseUrl}/api/get_spidertracks_latest/`;

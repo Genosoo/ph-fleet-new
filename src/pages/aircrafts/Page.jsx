@@ -1,13 +1,15 @@
-import TableComponent from "./table/TableComponent";
-import GetToken from "../../components/token/GetToken";
-import './Styles.css'
+import './Aircraft.css'
+import ButtonAdd from './button/ButtonAdd';
+import AircraftTable from './table/AircraftTable';
+
 
 export default function Page() {
- const csrfToken =  GetToken()
-
   return (
-    <main className="aircraftsContainer">
-       <TableComponent csrfToken={csrfToken}/>
-    </main>
+    <div className='officesContainer'>
+       <div className="officesHeader">
+          <ButtonAdd />
+       </div>
+        <AircraftTable />
+    </div>
   )
 }

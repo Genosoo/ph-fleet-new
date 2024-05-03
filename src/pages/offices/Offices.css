@@ -1,0 +1,113 @@
+@tailwind components;
+
+
+@layer components{
+    .officesContainer{
+        @apply pr-10  flex flex-col gap-5  
+    }
+
+    .officesHeader{
+      @apply flex items-end justify-end 
+    }
+
+    .officesTableContainer{
+        @apply flex flex-col gap-5 
+    }
+
+    
+
+    .officesProfileContainer{
+        @apply font-manrope flex gap-5 p-6  flex-col lg:flex-row
+      }
+  
+      .officesDetails{
+          @apply  border w-full rounded-xl 
+          p-10 text-[#404958] flex flex-col
+          gap-5 shadow-lg
+      }
+  
+      .officesDetails h2{
+          @apply text-lg font-bold text-[#404958]
+      }
+  
+  
+      .officesDetails span h4{
+          @apply text-base
+      }
+  
+      .officesDetails span p {
+          @apply bg-[#F9F9F9] p-3 rounded-lg font-bold text-[#8E8E8E]
+      }
+  
+      .officesMapContainer{
+          @apply border w-full rounded-xl p-10 flex flex-col
+          gap-5  shadow-lg
+      }
+  
+      .officesMapContainer h2{
+          @apply font-bold text-lg text-[#404958]
+      } 
+
+      .officesMapBox{
+        @apply w-full lg:h-full rounded-lg overflow-hidden
+        h-[400px]
+    }
+
+
+
+      /*================================= OFFICE FORM  ================================= */
+  
+      .officesFormContainer{
+        @apply flex pb-10 mt-10 gap-5 flex-col font-manrope pr-10 text-[#404958]
+      }
+
+      .officesFormAddBtn{
+        @apply bg-[#0DB0E6] text-white p-2 rounded-lg  hover:bg-[#404958] hover:text-white duration-150
+      }
+
+      .officesFormFlex{
+        @apply flex gap-5 w-full flex-col lg:flex-row
+      }
+
+      .officesFormWrapper{
+        box-shadow: 0 0 10px #00000012;
+        @apply lg:w-[50%]  flex flex-col gap-5 p-5 border  rounded-xl 
+      }
+
+      .officesFormWrapper2{
+        box-shadow: 0 0 10px #00000012;
+        @apply lg:w-[50%]  flex flex-col gap-5 p-5 border  rounded-xl 
+      }
+
+
+      .officesForm{
+        @apply flex flex-col w-[50%] p-5 gap-5
+      }
+
+      .officesFormBox{
+        @apply flex flex-col gap-2 items-start
+      }
+
+      
+
+      .officesFormBox2{
+        @apply flex gap-2 text-sm font-medium
+      }
+
+      .officesFormBox span label{
+        @apply text-sm font-medium
+      }
+
+      .officesFormMap{
+          @apply  rounded-lg overflow-hidden
+          h-[400px] w-full
+      }
+
+      .officesFormCheckbox{
+        @apply flex gap-5
+      }
+
+    
+      
+  
+}

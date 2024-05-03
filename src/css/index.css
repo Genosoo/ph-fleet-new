@@ -601,6 +601,19 @@
   }
 }
 
+.ant-modal-root .ant-modal-mask{
+  background-color: #00000023;
+}
+
+.ant-table-cell{
+  @apply font-manrope
+}
+
+.ant-table-cell .ant-btn{
+  @apply font-manrope flex items-center
+}
+
+
 
 /* .ant-image-preview-operations{
   background-color: #fff;

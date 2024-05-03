@@ -9,8 +9,8 @@ export default function Profile() {
 
   const item = location.state.vehicle;
   return (
-    <div className='officesProfileContainer'>
-       <div className="officesDetails">
+    <div className='vehicleProfileContainer'>
+       <div className="vehicleDetails">
             <h2>Vehicle Details</h2>
 
             <span>
@@ -50,9 +50,9 @@ export default function Profile() {
             </span>
        </div>
 
-       <div className="officesMapContainer">
+       <div className="vehicleMapContainer">
          <h2>Location</h2>
-         <div className="officeMapBox">
+         <div className="vehicleMapBox">
          <MapContainer zoomControl={false}  center={[12.8797, 121.7740]} zoom={6} style={{ height: '100%', width: '100%'}}>
               <TileLayer url="http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&hl=en" subdomains={['mt0', 'mt1', 'mt2', 'mt3']} />
               <VehiclesMarker selectedVehicle={item} />

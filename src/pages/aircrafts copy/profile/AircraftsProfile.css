@@ -1,0 +1,125 @@
+@tailwind components; 
+
+
+@layer components{
+
+    .aircraftProfileContainer{
+        @apply p-5 font-manrope text-[#404958]
+        flex gap-5
+    }
+
+     .aircraftProfileWrapper{
+        @apply w-full lg:w-[50%] flex flex-col gap-5
+     }
+
+    .aircraftProfileBoxWrapper{
+        box-shadow: 0 0 10px #00000012;
+        @apply flex p-5 flex-col gap-4 rounded-lg border border-[#EAEAEC]
+    }
+
+    .aircraftProfileBoxWrapper h2{
+        @apply font-bold text-base
+    }
+
+    .aircraftProfileBox1{
+       @apply flex gap-5
+    }
+    .aircraftProfileBox1 .ant-image-img{
+        @apply border-4 border-[#404958]
+        rounded-lg  w-[250px] h-[250px] object-cover
+    }
+
+    .aircraftProfileBox1 span{
+        @apply flex flex-col items-start mt-5
+    }
+
+    .aircraftProfileBox1 span h3{
+        @apply text-[2rem] font-bold
+    }
+
+    .aircraftProfileBox1 span h4{
+        @apply text-sm font-semibold text-[#2ECC71]
+        bg-[#EBFAF1] p-3 px-10 rounded-full mt-5
+    }
+
+    .aircraftProfileBox1 span p{
+        @apply text-lg font-semibold
+    }
+
+
+    
+    .aircraftProfileBoxWrapper2{
+        box-shadow: 0 0 10px #00000012;
+        @apply flex p-5 flex-col gap-4 rounded-lg border border-[#EAEAEC]
+    }
+
+    .aircraftProfileBoxWrapper2 h2{
+        @apply font-bold text-base
+    }
+
+    .aircraftProfileBox2{
+        @apply flex flex-col gap-5
+    }
+
+
+    .aircraftProfileImageCardFlex{
+        @apply flex gap-5
+    }
+
+    .aircraftProfileImageCard{
+        @apply w-[50%]  rounded-lg  border border-[#EAEAEC]
+        text-center  overflow-hidden
+    }
+
+    .aircraftProfileImageCard .ant-image-img{
+        @apply  border border-[#EAEAEC] h-full -mb-2
+    }
+
+    .aircraftProfileImageCard p{
+        @apply p-2 text-sm border-b border-[#EAEAEC] font-medium
+    }
+
+
+    
+    
+    .aircraftProfileBoxWrapper3{
+        box-shadow: 0 0 10px #00000012;
+        @apply flex p-5 flex-col gap-4 rounded-lg border border-[#EAEAEC]
+    }
+
+    .aircraftProfileBoxWrapper3 h2{
+        @apply font-bold text-base
+    }
+
+    .aircraftProfileBox3{
+        @apply flex flex-col gap-5
+    }
+
+    .aircraftProfileBox3 span{
+        @apply flex flex-col gap-2
+    }
+
+    .aircraftProfileBox3 span h3{
+        @apply font-medium text-sm 
+    }
+
+    .aircraftProfileBox3 span p{
+        @apply bg-[#F9F9F9] p-3 rounded-lg
+        text-[#8E8E8E] font-semibold
+    }
+
+
+    .aircraftProfileBoxWrapper4{
+        box-shadow: 0 0 10px #00000012;
+        @apply flex p-5 flex-col gap-4 rounded-lg border border-[#EAEAEC]
+    }
+
+    .aircraftProfileBoxWrapper4 h2{
+        @apply font-bold text-base
+    }
+
+    .aircraftProfileBox4{
+        @apply h-[400px] rounded-lg overflow-hidden
+    }
+  
+}

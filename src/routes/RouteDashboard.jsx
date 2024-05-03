@@ -50,13 +50,15 @@ import PersonnelAddForm from '../pages/personnel/table/forms/AddForm';
 import PersonnelUpdateForm from '../pages/personnel/table/forms/UpdateForm';
 import VesselAddForm from '../pages/vessels/table/forms/AddForm';
 import VesselUpdateForm from '../pages/vessels/table/forms/UpdateForm';
-import AircraftAddForm from '../pages/aircrafts/table/forms/AddForm';
-import AircraftUpdateForm from '../pages/aircrafts/table/forms/UpdateForm';
+import AircraftAddForm from '../pages/aircrafts/forms/AddForm';
+import AircraftUpdateForm from '../pages/aircrafts/forms/UpdateForm';
+import AddForm from '../pages/offices/forms/Addform';
+import UpdateForm from '../pages/offices/forms/UpdateForm';
+import VehicleAddForm from '../pages/vehicles/forms/AddForm'
+import VehicleUpdateForm from '../pages/vehicles/forms/UpdateForm'
+
 export default function RouteDashboard() {
   const { accountData } = useContext(DataContext)
-
-
-
 
   // Check if accountData.groups exists before accessing its properties
   const isAdministrator = accountData.roles && accountData.roles[0] === 'Administrator';
@@ -112,9 +114,14 @@ export default function RouteDashboard() {
             <Route path='commercial-aircrafts' element={<AircraftsCommercial />} />
             <Route path='settings' element={<Settings />} />
             <Route path='offices' element={<Offices />} />
+            <Route path='/offices/add-office' element={<AddForm />} />
+            <Route path='/offices/update-office' element={<UpdateForm />} />
+
             <Route path='/offices/profile' element={<OfficeProfile />} />
             <Route path='vehicles' element={<Vehicles />} />
             <Route path='/vehicles/profile' element={<VehicleProfile />} />
+            <Route path='/vehicles/add-vehicle' element={<VehicleAddForm/>} />
+            <Route path='/vehicles/update-vehicle' element={<VehicleUpdateForm />} />
 
             <Route path='marinetraffic-list' element={<MarineTrafficList />} />
             <Route path='traksat-list' element={<TracksatList />} />
